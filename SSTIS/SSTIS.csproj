@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1D65310B-2CF5-4FC3-9F5E-6EF9EB0BD37B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SSTIS</RootNamespace>
+    <AssemblyName>SSTIS</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ABMClientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABMClientes.Designer.cs">
+      <DependentUpon>ABMClientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABMCoberturas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABMCoberturas.Designer.cs">
+      <DependentUpon>ABMCoberturas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABMUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABMUsuarios.Designer.cs">
+      <DependentUpon>ABMUsuarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdminFamiliaUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminFamiliaUsuario.Designer.cs">
+      <DependentUpon>AdminFamiliaUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdministracionFamilia-Usuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdministracionFamilia-Usuario.Designer.cs">
+      <DependentUpon>AdministracionFamilia-Usuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdministracionPatenteUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdministracionPatenteUsuario.Designer.cs">
+      <DependentUpon>AdministracionPatenteUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AprobarDesaprobarPoliza.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AprobarDesaprobarPoliza.Designer.cs">
+      <DependentUpon>AprobarDesaprobarPoliza.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Bitacora.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bitacora.Designer.cs">
+      <DependentUpon>Bitacora.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CambiarContraseña.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CambiarContraseña.Designer.cs">
+      <DependentUpon>CambiarContraseña.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CambiarIdioma.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CambiarIdioma.Designer.cs">
+      <DependentUpon>CambiarIdioma.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Clientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Clientes.Designer.cs">
+      <DependentUpon>Clientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CopiaDeSeguridad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CopiaDeSeguridad.Designer.cs">
+      <DependentUpon>CopiaDeSeguridad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrearFamilia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrearFamilia.Designer.cs">
+      <DependentUpon>CrearFamilia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DetalleCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DetalleCliente.Designer.cs">
+      <DependentUpon>DetalleCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DetallePoliza.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DetallePoliza.Designer.cs">
+      <DependentUpon>DetallePoliza.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DetalleVehiculo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DetalleVehiculo.Designer.cs">
+      <DependentUpon>DetalleVehiculo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Factura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Factura.Designer.cs">
+      <DependentUpon>Factura.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FamiliaPatente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FamiliaPatente.Designer.cs">
+      <DependentUpon>FamiliaPatente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModificarFamiliaPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModificarFamiliaPopup.Designer.cs">
+      <DependentUpon>ModificarFamiliaPopup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NuevaFamiliaPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NuevaFamiliaPopup.Designer.cs">
+      <DependentUpon>NuevaFamiliaPopup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NuevoUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NuevoUsuario.Designer.cs">
+      <DependentUpon>NuevoUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Principal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Principal.Designer.cs">
+      <DependentUpon>Principal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RealizarCopiaSeguridad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RealizarCopiaSeguridad.Designer.cs">
+      <DependentUpon>RealizarCopiaSeguridad.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ABMClientes.resx">
+      <DependentUpon>ABMClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABMCoberturas.resx">
+      <DependentUpon>ABMCoberturas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABMUsuarios.resx">
+      <DependentUpon>ABMUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminFamiliaUsuario.resx">
+      <DependentUpon>AdminFamiliaUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdministracionFamilia-Usuario.resx">
+      <DependentUpon>AdministracionFamilia-Usuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdministracionPatenteUsuario.resx">
+      <DependentUpon>AdministracionPatenteUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AprobarDesaprobarPoliza.resx">
+      <DependentUpon>AprobarDesaprobarPoliza.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bitacora.resx">
+      <DependentUpon>Bitacora.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CambiarContraseña.resx">
+      <DependentUpon>CambiarContraseña.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CambiarIdioma.resx">
+      <DependentUpon>CambiarIdioma.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Clientes.resx">
+      <DependentUpon>Clientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CopiaDeSeguridad.resx">
+      <DependentUpon>CopiaDeSeguridad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrearFamilia.resx">
+      <DependentUpon>CrearFamilia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DetalleCliente.resx">
+      <DependentUpon>DetalleCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DetallePoliza.resx">
+      <DependentUpon>DetallePoliza.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DetalleVehiculo.resx">
+      <DependentUpon>DetalleVehiculo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Factura.resx">
+      <DependentUpon>Factura.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FamiliaPatente.resx">
+      <DependentUpon>FamiliaPatente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModificarFamiliaPopup.resx">
+      <DependentUpon>ModificarFamiliaPopup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NuevaFamiliaPopup.resx">
+      <DependentUpon>NuevaFamiliaPopup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NuevoUsuario.resx">
+      <DependentUpon>NuevoUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Principal.resx">
+      <DependentUpon>Principal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="RealizarCopiaSeguridad.resx">
+      <DependentUpon>RealizarCopiaSeguridad.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL.csproj">
+      <Project>{38f6ce63-4a59-4dc9-b8a1-86d652931239}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
