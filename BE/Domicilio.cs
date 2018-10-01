@@ -1,8 +1,11 @@
-﻿namespace BE
+﻿using System;
+
+namespace BE
 {
     public class Domicilio
     {
-        public int IdDomicilio { get; set; }
+        public Guid IdDomicilio { get; set; }
         public string Direccion { get; set; }
+        public Localidad Localidad { get; set; }
     }
 }

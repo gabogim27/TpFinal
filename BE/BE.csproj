@@ -43,7 +43,9 @@
     <Compile Include="Contacto.cs" />
     <Compile Include="Domicilio.cs" />
     <Compile Include="ICRUD.cs" />
+    <Compile Include="Localidad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Provincia.cs" />
     <Compile Include="Usuario.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

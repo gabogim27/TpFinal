@@ -1,8 +1,10 @@
-﻿namespace BE
+﻿using System;
+
+namespace BE
 {
     public class Contacto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Telefono { get; set; }
         public string Celular { get; set; }
     }

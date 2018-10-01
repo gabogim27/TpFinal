@@ -31,23 +31,28 @@
         public static SqlConnection Connection()
         {
             var conn = new SqlConnection();
-            conn.ConnectionString = @"Data Source=DESKTOP\SQLEXPRESS;Initial Catalog=SYSANALIZER2;Integrated Security=True";
+            conn.ConnectionString = @"Data Source=EZE1-LHP-B01637;Initial Catalog=SistemaTIS;Integrated Security=True";
             return conn;
         }
 
 
         public bool Create(BE.Usuario ObjAlta)
         {
-            var queryString = string.Format("INSERT INTO dbo.Usuario(Nombre, Apellido, Password, Email, Telefono, ContadorIngresosIncorrectos, IdCanalVenta, IdIdioma, PrimerLogin) values ({0}{1}{2}{3}{4}{5}{6}{7}{8})",
-                ObjAlta.nombre,
-                ObjAlta.apellido,
-                Encriptar(ObjAlta.contraseña),
-                ObjAlta.email,
-                ObjAlta.telefono,
-                ObjAlta.cIngresos = 0,
-                ObjAlta.idCanalVenta,
-                ObjAlta.idIdioma,
-                ObjAlta.primerLogin = true);
+            var queryString = string.Format("INSERT INTO dbo.Usuario(Id, Nombre, Apellido, Password, Email, CantLoginsFallidos, Estado, IdDomicilio, IdContacto, IdIdioma, PrimerLogin) values ({0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10})",
+                ObjAlta.Id = Guid.NewGuid(),
+                ObjAlta.Nombre,
+                ObjAlta.Apellido,
+                Encriptar(ObjAlta.Password),
+                ObjAlta.Email,
+                ObjAlta.CantIngresosFallidos,
+                ObjAlta.Estado = true,              
+                ObjAlta.CantIngresosFallidos = 0,
+                ObjAlta.Domicilio.IdDomicilio,
+                ObjAlta.IdIdioma,
+                ObjAlta.Contacto.Id,
+                ObjAlta.IdIdioma,
+                ObjAlta.PrimerLogin
+                );
 
             bool returnValue = false;
 
@@ -93,17 +98,16 @@
 
                     foreach (DataRow dr in Dt.Rows)
                     {
-                        usuario.id = Convert.ToInt32(dr["IdUsuario"]);
-                        usuario.nombre = Convert.ToString(dr["Nombre"]);
-                        usuario.apellido = Convert.ToString(dr["Apellido"]);
-                        usuario.contraseña = Convert.ToString(dr["Password"]);
-                        usuario.email = Convert.ToString(dr["Email"]);
-                        usuario.telefono = Convert.ToInt32(dr["Telefono"]);
-                        usuario.cIngresos = Convert.ToInt32(dr["ContadorIngresosIncorrectos"]);
-                        usuario.activo = Convert.ToBoolean(dr["Activo"]);
-                        usuario.idCanalVenta = Convert.ToInt32(dr["IdCanalVenta"]);
-                        usuario.idIdioma = Convert.ToInt32(dr["IdIdioma"]);
-                        usuario.primerLogin = Convert.ToBoolean(dr["PrimerLogin"]);
+                        usuario.Nombre = Convert.ToString(dr["Nombre"]);
+                        usuario.Apellido = Convert.ToString(dr["Apellido"]);
+                        usuario.Password = Convert.ToString(dr["Password"]);
+                        usuario.Email = Convert.ToString(dr["Email"]);
+                        usuario.Contacto.Id = Guid.Parse(dr["IdContacto"].ToString());
+                        usuario.CantIngresosFallidos = Convert.ToInt32(dr["CantIngresosFallidos"]);
+                        usuario.Estado = Convert.ToBoolean(dr["Estado"]);
+                        usuario.PrimerLogin = Convert.ToBoolean(dr["PrimerLogin"]);
+                        usuario.IdIdioma = Guid.Parse(dr["IdIdioma"].ToString());
+                        usuario.Domicilio.IdDomicilio = Guid.Parse(dr["IdDomicilio"].ToString());
                     }
                     return new List<BE.Usuario>();
                 }
@@ -128,9 +132,9 @@
         public bool LogIn(string email, string contraseña)
         {
             BE.Usuario usu = ObtenerUsuarioConEmail(email);
-            if (!usu.primerLogin)
+            if (!usu.PrimerLogin)
             {
-                var cIngresoInc = usu.cIngresos;
+                var cIngresoInc = usu.CantIngresosFallidos;
 
                 if (cIngresoInc < 3)
                 {
@@ -149,7 +153,7 @@
 
         private bool ValidarContraseña(BE.Usuario usuario, string contEncriptada)
         {
-            if (usuario.contraseña == contEncriptada)
+            if (usuario.Password == contEncriptada)
             {
                 return true;
             }
@@ -178,17 +182,16 @@
 
                 foreach (DataRow dr in Dt.Rows)
                 {
-                    usuario.id = Convert.ToInt32(dr["IdUsuario"]);
-                    usuario.nombre = Convert.ToString(dr["Nombre"]);
-                    usuario.apellido = Convert.ToString(dr["Apellido"]);
-                    usuario.contraseña = Convert.ToString(dr["Password"]);
-                    usuario.email = Convert.ToString(dr["Email"]);
-                    usuario.telefono = Convert.ToInt32(dr["Telefono"]);
-                    usuario.cIngresos = Convert.ToInt32(dr["ContadorIngresosIncorrectos"]);
-                    usuario.activo = Convert.ToBoolean(dr["Activo"]);
-                    usuario.idCanalVenta = Convert.ToInt32(dr["IdCanalVenta"]);
-                    usuario.idIdioma = Convert.ToInt32(dr["IdIdioma"]);
-                    usuario.primerLogin = Convert.ToBoolean(dr["PrimerLogin"]);
+                    usuario.Nombre = Convert.ToString(dr["Nombre"]);
+                    usuario.Apellido = Convert.ToString(dr["Apellido"]);
+                    usuario.Password = Convert.ToString(dr["Password"]);
+                    usuario.Email = Convert.ToString(dr["Email"]);
+                    usuario.Contacto.Id = Guid.Parse(dr["IdContacto"].ToString());
+                    usuario.CantIngresosFallidos = Convert.ToInt32(dr["CantIngresosFallidos"]);
+                    usuario.Estado = Convert.ToBoolean(dr["Estado"]);
+                    usuario.PrimerLogin = Convert.ToBoolean(dr["PrimerLogin"]);
+                    usuario.IdIdioma = Guid.Parse(dr["IdIdioma"].ToString());
+                    usuario.Domicilio.IdDomicilio = Guid.Parse(dr["IdDomicilio"].ToString());
                 }
                 return usuario;
             }
