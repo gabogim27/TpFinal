@@ -71,14 +71,14 @@
             // 
             // txtCelular
             // 
-            this.txtCelular.Location = new System.Drawing.Point(121, 185);
+            this.txtCelular.Location = new System.Drawing.Point(121, 153);
             this.txtCelular.Name = "txtCelular";
             this.txtCelular.Size = new System.Drawing.Size(100, 20);
             this.txtCelular.TabIndex = 18;
             // 
             // txtTelFijo
             // 
-            this.txtTelFijo.Location = new System.Drawing.Point(121, 153);
+            this.txtTelFijo.Location = new System.Drawing.Point(121, 121);
             this.txtTelFijo.Name = "txtTelFijo";
             this.txtTelFijo.Size = new System.Drawing.Size(100, 20);
             this.txtTelFijo.TabIndex = 17;
@@ -93,7 +93,7 @@
             // Label11
             // 
             this.Label11.AutoSize = true;
-            this.Label11.Location = new System.Drawing.Point(7, 128);
+            this.Label11.Location = new System.Drawing.Point(7, 96);
             this.Label11.Name = "Label11";
             this.Label11.Size = new System.Drawing.Size(56, 13);
             this.Label11.TabIndex = 15;
@@ -102,7 +102,7 @@
             // Label9
             // 
             this.Label9.AutoSize = true;
-            this.Label9.Location = new System.Drawing.Point(6, 162);
+            this.Label9.Location = new System.Drawing.Point(6, 130);
             this.Label9.Name = "Label9";
             this.Label9.Size = new System.Drawing.Size(71, 13);
             this.Label9.TabIndex = 13;
@@ -111,7 +111,7 @@
             // Label8
             // 
             this.Label8.AutoSize = true;
-            this.Label8.Location = new System.Drawing.Point(7, 188);
+            this.Label8.Location = new System.Drawing.Point(7, 156);
             this.Label8.Name = "Label8";
             this.Label8.Size = new System.Drawing.Size(42, 13);
             this.Label8.TabIndex = 12;
@@ -271,7 +271,7 @@
             // cboLocalidad
             // 
             this.cboLocalidad.FormattingEnabled = true;
-            this.cboLocalidad.Location = new System.Drawing.Point(121, 125);
+            this.cboLocalidad.Location = new System.Drawing.Point(121, 93);
             this.cboLocalidad.Name = "cboLocalidad";
             this.cboLocalidad.Size = new System.Drawing.Size(121, 21);
             this.cboLocalidad.TabIndex = 21;
@@ -279,7 +279,7 @@
             // cboProvincia
             // 
             this.cboProvincia.FormattingEnabled = true;
-            this.cboProvincia.Location = new System.Drawing.Point(121, 89);
+            this.cboProvincia.Location = new System.Drawing.Point(121, 57);
             this.cboProvincia.Name = "cboProvincia";
             this.cboProvincia.Size = new System.Drawing.Size(121, 21);
             this.cboProvincia.TabIndex = 20;
@@ -287,7 +287,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 92);
+            this.label13.Location = new System.Drawing.Point(6, 60);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(54, 13);
             this.label13.TabIndex = 19;

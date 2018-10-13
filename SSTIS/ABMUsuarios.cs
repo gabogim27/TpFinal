@@ -65,7 +65,7 @@ namespace SSTIS
                     nuevoUsuario.Contacto.Telefono = txtTelFijo.Text;
                     nuevoUsuario.Domicilio.Localidad = new BE.Localidad();
                     nuevoUsuario.Domicilio.Localidad.IdLocalidad = Guid.Parse(cboLocalidad.SelectedValue.ToString());
-                    nuevoUsuario.Domicilio.Localidad.Provincia = new BE.Provincia();
+                    nuevoUsuario.Domicilio.Localidad.Provincia = new BE.Localidad();
                     nuevoUsuario.Domicilio.Localidad.Provincia.IdProvincia = Guid.Parse(cboProvincia.SelectedValue.ToString());
                     BLL.Usuario.Getinstancia().Create(nuevoUsuario);
                 }
@@ -97,7 +97,12 @@ namespace SSTIS
 
         private void CargarCombos()
         {
-            throw new NotImplementedException();
+            //Retrieve provincias
+            var provincias = BLL.Provincia.Getinstancia().Retrive();
+            cboProvincia.DataSource = provincias; 
+            cboProvincia.DisplayMember = "Descripcion";
+            cboProvincia.ValueMember = "IdProvincia";
+            //Retrieve Localidades
         }
     }
 }

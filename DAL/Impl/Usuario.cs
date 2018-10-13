@@ -6,8 +6,9 @@
     using System.Data;
     using System.Data.SqlClient;
     using System.Linq;
-    using System.Security.Cryptography;
     using System.Text;
+    using EasyEncryption;
+    using Dapper;
 
     public class Usuario : BE.ICRUD<BE.Usuario>
     {
@@ -38,11 +39,16 @@
 
         public bool Create(BE.Usuario ObjAlta)
         {
+            Random random = new Random();
+            string nuevoPass = random.Next().ToString();
+            var contraseñaEncriptada = MD5.ComputeMD5Hash(ObjAlta.Password = nuevoPass);
+
+
             var queryString = string.Format("INSERT INTO dbo.Usuario(Id, Nombre, Apellido, Password, Email, CantLoginsFallidos, Estado, IdDomicilio, IdContacto, IdIdioma, PrimerLogin) values ({0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10})",
                 ObjAlta.Id = Guid.NewGuid(),
                 ObjAlta.Nombre,
                 ObjAlta.Apellido,
-                Encriptar(ObjAlta.Password),
+                contraseñaEncriptada,
                 ObjAlta.Email,
                 ObjAlta.CantIngresosFallidos,
                 ObjAlta.Estado = true,              
@@ -56,14 +62,11 @@
 
             bool returnValue = false;
 
-            using (SqlConnection connection = Connection())
+            using (IDbConnection connection = Connection())
             {
-                SqlCommand command = new SqlCommand(queryString, connection);
                 try
                 {
-                    connection.Open();
-                    command.ExecuteNonQuery();
-
+                    connection.Execute(queryString);
                 }
                 catch (Exception ex)
                 {
@@ -80,36 +83,12 @@
             var queryString = "SELECT * FROM dbo.Usuario;";
             var comm = new SqlCommand();
 
-            using (SqlConnection connection = Connection())
+            using (IDbConnection connection = Connection())
             {
                 try
                 {
 
-                    comm.CommandText = queryString;
-                    comm.Connection = connection;
-                    comm.CommandType = CommandType.Text;
-
-                    var Da = new SqlDataAdapter();
-                    Da.SelectCommand = comm;
-
-                    DataTable Dt = new DataTable();
-
-                    Da.Fill(Dt);
-
-                    foreach (DataRow dr in Dt.Rows)
-                    {
-                        usuario.Nombre = Convert.ToString(dr["Nombre"]);
-                        usuario.Apellido = Convert.ToString(dr["Apellido"]);
-                        usuario.Password = Convert.ToString(dr["Password"]);
-                        usuario.Email = Convert.ToString(dr["Email"]);
-                        usuario.Contacto.Id = Guid.Parse(dr["IdContacto"].ToString());
-                        usuario.CantIngresosFallidos = Convert.ToInt32(dr["CantIngresosFallidos"]);
-                        usuario.Estado = Convert.ToBoolean(dr["Estado"]);
-                        usuario.PrimerLogin = Convert.ToBoolean(dr["PrimerLogin"]);
-                        usuario.IdIdioma = Guid.Parse(dr["IdIdioma"].ToString());
-                        usuario.Domicilio.IdDomicilio = Guid.Parse(dr["IdDomicilio"].ToString());
-                    }
-                    return new List<BE.Usuario>();
+                    return (List<BE.Usuario>)connection.Query<BE.Usuario>(queryString);
                 }
                 catch (Exception)
                 {
@@ -138,13 +117,13 @@
 
                 if (cIngresoInc < 3)
                 {
-                    string contEncriptada = Encriptar(contraseña);
-                    bool ingresa = ValidarContraseña(usu, contEncriptada);
-                    if (!ingresa)
-                    {
-                        cIngresoInc++;
-                        //AumentarIngresos();
-                    }
+                    //string contEncriptada = Encriptar(contraseña);
+                    //bool ingresa = ValidarContraseña(usu, contEncriptada);
+                    //if (!ingresa)
+                    //{
+                    //    cIngresoInc++;
+                    //    //AumentarIngresos();
+                    //}
                 }
                 return false;
             }
@@ -197,17 +176,17 @@
             }
         }
 
-        public string Encriptar(string contraseña)
-        {
-            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(contraseña));
-            byte[] encriptado = md5.Hash;
-            StringBuilder str = new StringBuilder();
-            for (int i = 1; i < encriptado.Length; i++)
-            {
-                str.Append(encriptado[i].ToString("x2"));
-            }
-            return str.ToString();
-        }
+        //public string Encriptar(string contraseña)
+        //{
+        //    MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+        //    md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(contraseña));
+        //    byte[] encriptado = md5.Hash;
+        //    StringBuilder str = new StringBuilder();
+        //    for (int i = 1; i < encriptado.Length; i++)
+        //    {
+        //        str.Append(encriptado[i].ToString("x2"));
+        //    }
+        //    return str.ToString();
+        //}
     }
 }
