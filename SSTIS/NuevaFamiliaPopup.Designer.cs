@@ -28,26 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Button1 = new System.Windows.Forms.Button();
-            this.TextBox1 = new System.Windows.Forms.TextBox();
+            this.btnAceptar = new System.Windows.Forms.Button();
+            this.txtFamilia = new System.Windows.Forms.TextBox();
             this.Label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // Button1
+            // btnAceptar
             // 
-            this.Button1.Location = new System.Drawing.Point(119, 100);
-            this.Button1.Name = "Button1";
-            this.Button1.Size = new System.Drawing.Size(131, 37);
-            this.Button1.TabIndex = 5;
-            this.Button1.Text = "Acpetar";
-            this.Button1.UseVisualStyleBackColor = true;
+            this.btnAceptar.Location = new System.Drawing.Point(119, 100);
+            this.btnAceptar.Name = "btnAceptar";
+            this.btnAceptar.Size = new System.Drawing.Size(131, 37);
+            this.btnAceptar.TabIndex = 5;
+            this.btnAceptar.Text = "Acpetar";
+            this.btnAceptar.UseVisualStyleBackColor = true;
+            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
-            // TextBox1
+            // txtFamilia
             // 
-            this.TextBox1.Location = new System.Drawing.Point(119, 49);
-            this.TextBox1.Name = "TextBox1";
-            this.TextBox1.Size = new System.Drawing.Size(131, 20);
-            this.TextBox1.TabIndex = 4;
+            this.txtFamilia.Location = new System.Drawing.Point(119, 49);
+            this.txtFamilia.Name = "txtFamilia";
+            this.txtFamilia.Size = new System.Drawing.Size(131, 20);
+            this.txtFamilia.TabIndex = 4;
             // 
             // Label1
             // 
@@ -63,8 +64,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(353, 180);
-            this.Controls.Add(this.Button1);
-            this.Controls.Add(this.TextBox1);
+            this.Controls.Add(this.btnAceptar);
+            this.Controls.Add(this.txtFamilia);
             this.Controls.Add(this.Label1);
             this.Name = "NuevaFamiliaPopup";
             this.Text = "NuevaFamiliaPopup";
@@ -75,8 +76,8 @@
 
         #endregion
 
-        internal System.Windows.Forms.Button Button1;
-        internal System.Windows.Forms.TextBox TextBox1;
+        internal System.Windows.Forms.Button btnAceptar;
+        internal System.Windows.Forms.TextBox txtFamilia;
         internal System.Windows.Forms.Label Label1;
     }
 }

@@ -16,5 +16,29 @@ namespace SSTIS
         {
             InitializeComponent();
         }
+
+        private void btnAceptar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var objFamilia = new BE.Familia();
+
+                if (!string.IsNullOrEmpty(txtFamilia.Text.Trim()))
+                {
+                    objFamilia.IdFamilia = Guid.NewGuid();
+                    objFamilia.Descripcion = txtFamilia.Text.Trim();
+                    BLL.Familia.Getinstancia().Create(objFamilia);
+                }
+                else
+                {
+                    MessageBox.Show("Por favor ingrese una familia valida!!!");
+                }                
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

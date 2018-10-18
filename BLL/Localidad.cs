@@ -1,22 +1,23 @@
 ﻿namespace BLL
 {
+    using System;
     using System.Collections.Generic;
     using BE;
 
     public class Localidad : BE.ICRUD<BE.Localidad>
     {
 
-        private Provincia()
+        private Localidad()
         {
         }
 
-        private static Provincia instancia;
+        private static Localidad instancia;
 
-        public static Provincia Getinstancia()
+        public static Localidad Getinstancia()
         {
             if (instancia == null)
             {
-                instancia = new Provincia();
+                instancia = new Localidad();
             }
             return instancia;
         }
@@ -28,7 +29,7 @@
 
         public List<BE.Localidad> Retrive()
         {
-            return DAL.Impl.Provincia.Getinstancia().Retrive();
+            return DAL.Impl.Localidad.Getinstancia().Retrive();
         }
 
         public bool Delete(BE.Localidad ObjDel)
@@ -37,6 +38,11 @@
         }
 
         public bool Update(BE.Localidad ObjUpd)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public BE.Localidad GetById(Guid id)
         {
             throw new System.NotImplementedException();
         }

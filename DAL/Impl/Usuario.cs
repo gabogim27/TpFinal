@@ -9,6 +9,9 @@
     using System.Text;
     using EasyEncryption;
     using Dapper;
+    using DAL.Impl;
+    using BE;
+    using DAL.Utils;
 
     public class Usuario : BE.ICRUD<BE.Usuario>
     {
@@ -29,44 +32,53 @@
             return instancia;
         }
 
-        public static SqlConnection Connection()
-        {
-            var conn = new SqlConnection();
-            conn.ConnectionString = @"Data Source=EZE1-LHP-B01637;Initial Catalog=SistemaTIS;Integrated Security=True";
-            return conn;
-        }
-
-
         public bool Create(BE.Usuario ObjAlta)
         {
             Random random = new Random();
             string nuevoPass = random.Next().ToString();
             var contraseñaEncriptada = MD5.ComputeMD5Hash(ObjAlta.Password = nuevoPass);
 
+            //Damos de alta el domicilio del usuario
+            var objDomicilio = new BE.Domicilio();
+            objDomicilio.IdDomicilio = Guid.NewGuid();
+            objDomicilio.Direccion = ObjAlta.Domicilio.Direccion;
+            objDomicilio.CodPostal = "1665";//agregar esto en la UI
+            var localidad = Impl.Localidad.Getinstancia().GetById(ObjAlta.Domicilio.Localidad.IdLocalidad);
+            objDomicilio.Localidad = localidad;
 
-            var queryString = string.Format("INSERT INTO dbo.Usuario(Id, Nombre, Apellido, Password, Email, CantLoginsFallidos, Estado, IdDomicilio, IdContacto, IdIdioma, PrimerLogin) values ({0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10})",
+            Impl.Domicilio.GetInstancia().Create(objDomicilio);
+            //Damos de alta el contacto del usuario
+            var objContacto = new BE.Contacto();
+            objContacto.Id = Guid.NewGuid();
+            objContacto.Telefono = ObjAlta.Contacto.Telefono;
+            objContacto.Celular = ObjAlta.Contacto.Celular;
+            DAL.Impl.Contacto.GetInstancia().Create(objContacto);
+
+            var queryString = string.Format("INSERT INTO dbo.Usuario(IdUsuario, Nombre, Apellido, Password, Email, " +
+                "CantLoginsFallidos, Estado, IdDomicilio, IdContacto, IdIdioma, PrimerLogin) values " +
+                "('{0}','{1}','{2}','{3}','{4}',{5},{6},'{7}','{8}','{9}',{10})",
                 ObjAlta.Id = Guid.NewGuid(),
                 ObjAlta.Nombre,
                 ObjAlta.Apellido,
                 contraseñaEncriptada,
                 ObjAlta.Email,
-                ObjAlta.CantIngresosFallidos,
-                ObjAlta.Estado = true,              
                 ObjAlta.CantIngresosFallidos = 0,
-                ObjAlta.Domicilio.IdDomicilio,
-                ObjAlta.IdIdioma,
-                ObjAlta.Contacto.Id,
-                ObjAlta.IdIdioma,
-                ObjAlta.PrimerLogin
+                Convert.ToByte(ObjAlta.Estado = true),              
+                objDomicilio.IdDomicilio,
+                objContacto.Id,
+                ObjAlta.IdIdioma = new Guid("632302C5-266A-440D-9F39-6DC6DDEBAACF"),//cambiar el id este, hacerlo bien                
+                Convert.ToByte(ObjAlta.PrimerLogin)
                 );
 
-            bool returnValue = false;
+            var returnValue = false;
 
-            using (IDbConnection connection = Connection())
+            using (IDbConnection connection = SqlUtils.Connection())
             {
                 try
                 {
                     connection.Execute(queryString);
+                   
+                    return !returnValue;
                 }
                 catch (Exception ex)
                 {
@@ -83,7 +95,7 @@
             var queryString = "SELECT * FROM dbo.Usuario;";
             var comm = new SqlCommand();
 
-            using (IDbConnection connection = Connection())
+            using (IDbConnection connection = SqlUtils.Connection())
             {
                 try
                 {
@@ -146,7 +158,7 @@
             var queryString = string.Format("SELECT * FROM dbo.Usuario WHERE Email = '{0}'", email);
             var comm = new SqlCommand();
 
-            using (SqlConnection connection = Connection())
+            using (SqlConnection connection = SqlUtils.Connection())
             {
                 comm.CommandText = queryString;
                 comm.Connection = connection;
@@ -174,6 +186,11 @@
                 }
                 return usuario;
             }
+        }
+
+        public BE.Usuario GetById(Guid id)
+        {
+            throw new NotImplementedException();
         }
 
         //public string Encriptar(string contraseña)

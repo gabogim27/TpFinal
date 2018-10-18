@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
 using BE;
+using DAL.Utils;
 using Dapper;
 
 namespace DAL.Impl
@@ -26,34 +27,17 @@ namespace DAL.Impl
             return instancia;
         }
 
-        public static SqlConnection Connection()
-        {
-            var conn = new SqlConnection();
-            conn.ConnectionString = @"Data Source=EZE1-LHP-B01637;Initial Catalog=SistemaTIS;Integrated Security=True";
-            return conn;
-        }
-
-        public bool Create(BE.Localidad ObjAlta)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Delete(BE.Localidad ObjDel)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<BE.Localidad> Retrive()
+        public List<BE.Provincia> Retrive()
         {
             var queryString = "SELECT * FROM dbo.Provincia;";
             var comm = new SqlCommand();
 
-            using (IDbConnection connection = Connection())
+            using (IDbConnection connection = SqlUtils.Connection())
             {
                 try
                 {
 
-                    return (List<BE.Localidad>)connection.Query<BE.Localidad>(queryString);
+                    return (List<BE.Provincia>)connection.Query<BE.Provincia>(queryString);
                 }
                 catch (Exception)
                 {
@@ -63,20 +47,11 @@ namespace DAL.Impl
             }
         }
 
-        public bool Update(BE.Localidad ObjUpd)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool Create(BE.Provincia ObjAlta)
         {
             throw new NotImplementedException();
         }
 
-        List<BE.Provincia> ICRUD<BE.Provincia>.Retrive()
-        {
-            throw new NotImplementedException();
-        }
 
         public bool Delete(BE.Provincia ObjDel)
         {
@@ -84,6 +59,16 @@ namespace DAL.Impl
         }
 
         public bool Update(BE.Provincia ObjUpd)
+        {
+            throw new NotImplementedException();
+        }
+
+        public BE.Provincia GetById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public BE.Provincia GetById(BE.Provincia ObjToSearch)
         {
             throw new NotImplementedException();
         }

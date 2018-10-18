@@ -8,6 +8,6 @@ namespace BE
 
         public string Descripcion { get; set; }
 
-        public Localidad _Localidad { get; set; }
+        public Provincia _Provincia { get; set; }
     }
 }

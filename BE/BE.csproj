@@ -44,11 +44,15 @@
     <Compile Include="Contacto.cs" />
     <Compile Include="DigitoVerificador.cs" />
     <Compile Include="Domicilio.cs" />
+    <Compile Include="Familia.cs" />
+    <Compile Include="FamiliaPatente.cs" />
     <Compile Include="ICRUD.cs" />
     <Compile Include="Localidad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provincia.cs" />
     <Compile Include="Usuario.cs" />
+    <Compile Include="UsuarioFamilia.cs" />
+    <Compile Include="UsuarioPatente.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

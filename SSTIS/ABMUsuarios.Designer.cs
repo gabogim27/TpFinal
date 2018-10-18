@@ -140,7 +140,7 @@
             // 
             // Button6
             // 
-            this.Button6.Location = new System.Drawing.Point(238, 194);
+            this.Button6.Location = new System.Drawing.Point(6, 391);
             this.Button6.Name = "Button6";
             this.Button6.Size = new System.Drawing.Size(144, 30);
             this.Button6.TabIndex = 9;
@@ -167,7 +167,7 @@
             // 
             // Button2
             // 
-            this.Button2.Location = new System.Drawing.Point(238, 101);
+            this.Button2.Location = new System.Drawing.Point(6, 298);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(144, 30);
             this.Button2.TabIndex = 5;
@@ -176,7 +176,7 @@
             // 
             // Button4
             // 
-            this.Button4.Location = new System.Drawing.Point(238, 143);
+            this.Button4.Location = new System.Drawing.Point(6, 340);
             this.Button4.Name = "Button4";
             this.Button4.Size = new System.Drawing.Size(144, 30);
             this.Button4.TabIndex = 7;
@@ -193,16 +193,16 @@
             this.GroupBox3.Controls.Add(this.Button5);
             this.GroupBox3.Controls.Add(this.Button2);
             this.GroupBox3.Controls.Add(this.Button4);
-            this.GroupBox3.Location = new System.Drawing.Point(12, 213);
+            this.GroupBox3.Location = new System.Drawing.Point(438, 12);
             this.GroupBox3.Name = "GroupBox3";
-            this.GroupBox3.Size = new System.Drawing.Size(407, 246);
+            this.GroupBox3.Size = new System.Drawing.Size(160, 422);
             this.GroupBox3.TabIndex = 15;
             this.GroupBox3.TabStop = false;
             this.GroupBox3.Text = "Accion";
             // 
             // Button8
             // 
-            this.Button8.Location = new System.Drawing.Point(238, 41);
+            this.Button8.Location = new System.Drawing.Point(6, 238);
             this.Button8.Name = "Button8";
             this.Button8.Size = new System.Drawing.Size(144, 30);
             this.Button8.TabIndex = 11;
@@ -236,7 +236,7 @@
             this.Column1});
             this.DataGridView1.Location = new System.Drawing.Point(3, 19);
             this.DataGridView1.Name = "DataGridView1";
-            this.DataGridView1.Size = new System.Drawing.Size(243, 156);
+            this.DataGridView1.Size = new System.Drawing.Size(385, 156);
             this.DataGridView1.TabIndex = 0;
             // 
             // Nombre
@@ -261,7 +261,7 @@
             this.GroupBox2.Controls.Add(this.Label9);
             this.GroupBox2.Controls.Add(this.Label8);
             this.GroupBox2.Controls.Add(this.Label6);
-            this.GroupBox2.Location = new System.Drawing.Point(442, 254);
+            this.GroupBox2.Location = new System.Drawing.Point(12, 414);
             this.GroupBox2.Name = "GroupBox2";
             this.GroupBox2.Size = new System.Drawing.Size(361, 214);
             this.GroupBox2.TabIndex = 14;
@@ -304,7 +304,7 @@
             this.GroupBox1.Controls.Add(this.Label4);
             this.GroupBox1.Controls.Add(this.Label2);
             this.GroupBox1.Controls.Add(this.Label1);
-            this.GroupBox1.Location = new System.Drawing.Point(442, 36);
+            this.GroupBox1.Location = new System.Drawing.Point(15, 205);
             this.GroupBox1.Name = "GroupBox1";
             this.GroupBox1.Size = new System.Drawing.Size(361, 203);
             this.GroupBox1.TabIndex = 13;
@@ -368,9 +368,9 @@
             this.Label4.AutoSize = true;
             this.Label4.Location = new System.Drawing.Point(6, 131);
             this.Label4.Name = "Label4";
-            this.Label4.Size = new System.Drawing.Size(36, 13);
+            this.Label4.Size = new System.Drawing.Size(38, 13);
             this.Label4.TabIndex = 3;
-            this.Label4.Text = "E-mai:";
+            this.Label4.Text = "E-mail:";
             // 
             // Label2
             // 
@@ -394,7 +394,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(879, 507);
+            this.ClientSize = new System.Drawing.Size(603, 616);
             this.Controls.Add(this.GroupBox3);
             this.Controls.Add(this.GroupBox4);
             this.Controls.Add(this.GroupBox2);

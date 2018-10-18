@@ -65,8 +65,8 @@ namespace SSTIS
                     nuevoUsuario.Contacto.Telefono = txtTelFijo.Text;
                     nuevoUsuario.Domicilio.Localidad = new BE.Localidad();
                     nuevoUsuario.Domicilio.Localidad.IdLocalidad = Guid.Parse(cboLocalidad.SelectedValue.ToString());
-                    nuevoUsuario.Domicilio.Localidad.Provincia = new BE.Localidad();
-                    nuevoUsuario.Domicilio.Localidad.Provincia.IdProvincia = Guid.Parse(cboProvincia.SelectedValue.ToString());
+                    nuevoUsuario.Domicilio.Localidad._Provincia = new Provincia();
+                    nuevoUsuario.Domicilio.Localidad._Provincia.IdProvincia = Guid.Parse(cboProvincia.SelectedValue.ToString());
                     BLL.Usuario.Getinstancia().Create(nuevoUsuario);
                 }
             }
@@ -103,6 +103,10 @@ namespace SSTIS
             cboProvincia.DisplayMember = "Descripcion";
             cboProvincia.ValueMember = "IdProvincia";
             //Retrieve Localidades
+            var localidades = BLL.Localidad.Getinstancia().Retrive();
+            cboLocalidad.DataSource = localidades;
+            cboLocalidad.DisplayMember = "Descripcion";
+            cboLocalidad.ValueMember = "IdLocalidad";
         }
     }
 }

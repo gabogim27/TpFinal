@@ -1,5 +1,6 @@
 ﻿namespace BLL
 {
+    using System;
     using System.Collections.Generic;
     using BE;
 
@@ -27,7 +28,7 @@
             throw new System.NotImplementedException();
         }
 
-        List<BE.Provincia> ICRUD<BE.Provincia>.Retrive()
+        public List<BE.Provincia> Retrive()
         {
             return DAL.Impl.Provincia.Getinstancia().Retrive();
         }
@@ -38,6 +39,11 @@
         }
 
         public bool Update(BE.Provincia ObjUpd)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public BE.Provincia GetById(Guid id)
         {
             throw new System.NotImplementedException();
         }

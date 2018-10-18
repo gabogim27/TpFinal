@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BE;
+using DAL.Utils;
 using Dapper;
 
 namespace DAL.Impl
@@ -25,14 +26,7 @@ namespace DAL.Impl
                 instancia = new Localidad();
             }
             return instancia;
-        }
-
-        public static SqlConnection Connection()
-        {
-            var conn = new SqlConnection();
-            conn.ConnectionString = @"Data Source=EZE1-LHP-B01637;Initial Catalog=SistemaTIS;Integrated Security=True";
-            return conn;
-        }
+        }       
 
         public bool Create(BE.Localidad ObjAlta)
         {
@@ -49,7 +43,7 @@ namespace DAL.Impl
             var queryString = "SELECT * FROM dbo.Localidad;";
             var comm = new SqlCommand();
 
-            using (IDbConnection connection = Connection())
+            using (IDbConnection connection = SqlUtils.Connection())
             {
                 try
                 {
@@ -67,6 +61,23 @@ namespace DAL.Impl
         public bool Update(BE.Localidad ObjUpd)
         {
             throw new NotImplementedException();
+        }
+
+        public BE.Localidad GetById(Guid localidadId)
+        {
+            var query = string.Format("Select * from dbo.Localidad loc inner join dbo.provincia prov on loc.IdLocalidad = '{0}'", localidadId);
+
+            using (IDbConnection connection = SqlUtils.Connection())
+            {
+                try
+                {
+                    return (BE.Localidad)connection.Query<BE.Localidad>(query).FirstOrDefault();
+                }
+                catch (Exception ex)
+                {
+                    throw new KeyNotFoundException();
+                }
+            }
         }
     }
 }

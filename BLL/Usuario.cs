@@ -1,6 +1,9 @@
 ﻿namespace BLL
 {
+    using System;
     using System.Collections.Generic;
+    using BE;
+
     public class Usuario : BE.ICRUD<BE.Usuario>
     {
 
@@ -43,6 +46,11 @@
         public bool Update(BE.Usuario ObjUpd)
         {
             return DAL.Usuario.Getinstancia().Update(ObjUpd);
+        }
+
+        public BE.Usuario GetById(Guid id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
