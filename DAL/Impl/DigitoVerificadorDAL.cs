@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 
 namespace DAL.Impl
 {
-    public class DigitoVerificador : IDigitoVerificador
+    public class DigitoVerificadorDAL : IDigitoVerificador
     {
         public static SqlConnection Connection()
         {

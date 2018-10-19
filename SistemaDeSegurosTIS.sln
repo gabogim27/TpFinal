@@ -3,18 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BE", "BE\BE.csproj", "{5254CDDB-BCB5-4D44-80E2-ACA6AB71DFFA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TIS.BusinessEntity", "BE\TIS.BusinessEntity.csproj", "{5254CDDB-BCB5-4D44-80E2-ACA6AB71DFFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{38F6CE63-4A59-4DC9-B8A1-86D652931239}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TIS.BusinessLayer", "BLL\TIS.BusinessLayer.csproj", "{38F6CE63-4A59-4DC9-B8A1-86D652931239}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{E65D285D-3D62-4FF6-BE74-844E358A140D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TIS.DataAccessLayer", "DAL\TIS.DataAccessLayer.csproj", "{E65D285D-3D62-4FF6-BE74-844E358A140D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{21473F8A-C31E-439C-B133-4BAE60111683}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSTIS", "SSTIS\SSTIS.csproj", "{1D65310B-2CF5-4FC3-9F5E-6EF9EB0BD37B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TIS.UserInterface", "SSTIS\TIS.UserInterface.csproj", "{1D65310B-2CF5-4FC3-9F5E-6EF9EB0BD37B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

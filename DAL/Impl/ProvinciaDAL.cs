@@ -10,19 +10,19 @@ using Dapper;
 
 namespace DAL.Impl
 {
-    public class Provincia : ICRUD<BE.Provincia>
+    public class ProvinciaDAL : ICRUD<BE.Provincia>
     {
-        private static Provincia instancia;
+        private static ProvinciaDAL instancia;
 
-        private Provincia()
+        private ProvinciaDAL()
         {
         }
 
-        public static Provincia Getinstancia()
+        public static ProvinciaDAL Getinstancia()
         {
             if (instancia == null)
             {
-                instancia = new Provincia();
+                instancia = new ProvinciaDAL();
             }
             return instancia;
         }

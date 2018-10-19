@@ -35,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector, Version=4.3.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.3.0\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -193,6 +199,7 @@
     <Compile Include="RealizarCopiaSeguridad.Designer.cs">
       <DependentUpon>RealizarCopiaSeguridad.cs</DependentUpon>
     </Compile>
+    <Compile Include="SimpleConfigInjector.cs" />
     <EmbeddedResource Include="ABMClientes.resx">
       <DependentUpon>ABMClientes.cs</DependentUpon>
     </EmbeddedResource>
@@ -276,6 +283,7 @@
       <DependentUpon>RealizarCopiaSeguridad.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -287,13 +295,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BE\BE.csproj">
+    <ProjectReference Include="..\BE\TIS.BusinessEntity.csproj">
       <Project>{5254CDDB-BCB5-4D44-80E2-ACA6AB71DFFA}</Project>
-      <Name>BE</Name>
+      <Name>TIS.BusinessEntity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BLL\BLL.csproj">
+    <ProjectReference Include="..\BLL\TIS.BusinessLayer.csproj">
       <Project>{38f6ce63-4a59-4dc9-b8a1-86d652931239}</Project>
-      <Name>BLL</Name>
+      <Name>TIS.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL\TIS.DataAccessLayer.csproj">
+      <Project>{E65D285D-3D62-4FF6-BE74-844E358A140D}</Project>
+      <Name>TIS.DataAccessLayer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

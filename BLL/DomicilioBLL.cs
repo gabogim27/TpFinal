@@ -6,26 +6,26 @@
     using System.Data.SqlClient;
     using BE;
 
-    public class Domicilio : BE.ICRUD<BE.Domicilio>
+    public class DomicilioBLL : BE.ICRUD<BE.Domicilio>
     {
-        private Domicilio()
+        private DomicilioBLL()
         {
         }
 
-        private static Domicilio instancia;
+        private static DomicilioBLL instancia;
 
-        public static Domicilio Getinstancia()
+        public static DomicilioBLL Getinstancia()
         {
             if (instancia == null)
             {
-                instancia = new Domicilio();
+                instancia = new DomicilioBLL();
             }
             return instancia;
         }
 
         public bool Create(BE.Domicilio ObjAlta)
         {
-            return DAL.Impl.Domicilio.GetInstancia().Create(ObjAlta);
+            return DAL.Impl.DomicilioDAL.GetInstancia().Create(ObjAlta);
         }
 
         public bool Delete(BE.Domicilio ObjDel)

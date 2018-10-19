@@ -7,24 +7,24 @@
     using System.Threading.Tasks;
     using BE;
 
-    public class Contacto : BE.ICRUD<BE.Contacto>
+    public class ContactoBLL : BE.ICRUD<BE.Contacto>
     {
-        private static Contacto instancia;
+        private static ContactoBLL instancia;
         
-        private Contacto() { }
+        private ContactoBLL() { }
 
-        public static Contacto GetInstancia()
+        public static ContactoBLL GetInstancia()
         {
             if (instancia == null)
             {
-                return new Contacto();
+                return new ContactoBLL();
             }
             return instancia;
         }
 
         public bool Create(BE.Contacto ObjAlta)
         {
-            return DAL.Impl.Contacto.GetInstancia().Create(ObjAlta);
+            return DAL.Impl.ContactoDAL.GetInstancia().Create(ObjAlta);
         }
 
         public bool Delete(BE.Contacto ObjDel)

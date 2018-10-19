@@ -12,27 +12,28 @@
     using DAL.Impl;
     using BE;
     using DAL.Utils;
+    using DAL.Interfaces;
 
-    public class Usuario : BE.ICRUD<BE.Usuario>
+    public class UsuarioDao : IDao<Usuario>
     {
-        private static Usuario instancia;
+        //private static UsuarioDAL instancia;
 
-        SqlCommand comm = new SqlCommand();
+        //SqlCommand comm = new SqlCommand();
 
-        private Usuario()
-        {
-        }
+        //private UsuarioDAL()
+        //{
+        //}
 
-        public static Usuario Getinstancia()
-        {
-            if (instancia == null)
-            {
-                instancia = new Usuario();
-            }
-            return instancia;
-        }
+        //public static UsuarioDAL Getinstancia()
+        //{
+        //    if (instancia == null)
+        //    {
+        //        instancia = new UsuarioDAL();
+        //    }
+        //    return instancia;
+        //}
 
-        public bool Create(BE.Usuario ObjAlta)
+        public bool Create(Usuario ObjAlta)
         {
             Random random = new Random();
             string nuevoPass = random.Next().ToString();
@@ -43,18 +44,18 @@
             objDomicilio.IdDomicilio = Guid.NewGuid();
             objDomicilio.Direccion = ObjAlta.Domicilio.Direccion;
             objDomicilio.CodPostal = "1665";//agregar esto en la UI
-            var localidad = Impl.Localidad.Getinstancia().GetById(ObjAlta.Domicilio.Localidad.IdLocalidad);
+            var localidad = Impl.LocalidadDAL.Getinstancia().GetById(ObjAlta.Domicilio.Localidad.IdLocalidad);
             objDomicilio.Localidad = localidad;
 
-            Impl.Domicilio.GetInstancia().Create(objDomicilio);
+            Impl.DomicilioDAL.GetInstancia().Create(objDomicilio);
             //Damos de alta el contacto del usuario
             var objContacto = new BE.Contacto();
             objContacto.Id = Guid.NewGuid();
             objContacto.Telefono = ObjAlta.Contacto.Telefono;
             objContacto.Celular = ObjAlta.Contacto.Celular;
-            DAL.Impl.Contacto.GetInstancia().Create(objContacto);
+            DAL.Impl.ContactoDAL.GetInstancia().Create(objContacto);
 
-            var queryString = string.Format("INSERT INTO dbo.Usuario(IdUsuario, Nombre, Apellido, Password, Email, " +
+            var queryString = string.Format("INSERT INTO dbo.UsuarioDAL(IdUsuario, Nombre, Apellido, Password, Email, " +
                 "CantLoginsFallidos, Estado, IdDomicilio, IdContacto, IdIdioma, PrimerLogin) values " +
                 "('{0}','{1}','{2}','{3}','{4}',{5},{6},'{7}','{8}','{9}',{10})",
                 ObjAlta.Id = Guid.NewGuid(),
@@ -89,7 +90,7 @@
             return returnValue;
         }
 
-        public List<BE.Usuario> Retrive()
+        public List<Usuario> Retrive()
         {
             var usuario = new BE.Usuario();
             var queryString = "SELECT * FROM dbo.Usuario;";
@@ -100,7 +101,7 @@
                 try
                 {
 
-                    return (List<BE.Usuario>)connection.Query<BE.Usuario>(queryString);
+                    return (List<Usuario>)connection.Query<Usuario>(queryString);
                 }
                 catch (Exception)
                 {
@@ -108,6 +109,16 @@
                     throw;
                 }
             }
+        }
+
+        public bool Delete(object ObjDel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Update(object ObjUpd)
+        {
+            throw new NotImplementedException();
         }
 
         public bool Delete(BE.Usuario ObjDel)
@@ -155,7 +166,7 @@
         private BE.Usuario ObtenerUsuarioConEmail(string email)
         {
             var usuario = new BE.Usuario();
-            var queryString = string.Format("SELECT * FROM dbo.Usuario WHERE Email = '{0}'", email);
+            var queryString = string.Format("SELECT * FROM dbo.UsuarioDAL WHERE Email = '{0}'", email);
             var comm = new SqlCommand();
 
             using (SqlConnection connection = SqlUtils.Connection())
@@ -191,8 +202,7 @@
         public BE.Usuario GetById(Guid id)
         {
             throw new NotImplementedException();
-        }
-
+        }       
         //public string Encriptar(string contraseña)
         //{
         //    MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();

@@ -11,19 +11,19 @@ using Dapper;
 
 namespace DAL.Impl
 {
-    public class Localidad : BE.ICRUD<BE.Localidad>
+    public class LocalidadDAL : BE.ICRUD<BE.Localidad>
     {
-        private static Localidad instancia;
+        private static LocalidadDAL instancia;
 
-        private Localidad()
+        private LocalidadDAL()
         {
         }
 
-        public static Localidad Getinstancia()
+        public static LocalidadDAL Getinstancia()
         {
             if (instancia == null)
             {
-                instancia = new Localidad();
+                instancia = new LocalidadDAL();
             }
             return instancia;
         }       

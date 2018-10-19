@@ -4,20 +4,20 @@
     using System.Collections.Generic;
     using BE;
 
-    public class Provincia : BE.ICRUD<BE.Provincia>
+    public class ProvinciaBLL : BE.ICRUD<BE.Provincia>
     {
 
-        private Provincia()
+        private ProvinciaBLL()
         {
         }
 
-        private static Provincia instancia;
+        private static ProvinciaBLL instancia;
 
-        public static Provincia Getinstancia()
+        public static ProvinciaBLL Getinstancia()
         {
             if (instancia == null)
             {
-                instancia = new Provincia();
+                instancia = new ProvinciaBLL();
             }
             return instancia;
         }
@@ -30,7 +30,7 @@
 
         public List<BE.Provincia> Retrive()
         {
-            return DAL.Impl.Provincia.Getinstancia().Retrive();
+            return DAL.Impl.ProvinciaDAL.Getinstancia().Retrive();
         }
 
         public bool Delete(BE.Provincia ObjDel)

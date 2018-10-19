@@ -8,17 +8,17 @@
     using System.Data;
     using System.Data.SqlClient;
 
-    public class Domicilio : ICRUD<BE.Domicilio>
+    public class DomicilioDAL : ICRUD<BE.Domicilio>
     {
-        private static Domicilio instancia;
+        private static DomicilioDAL instancia;
 
-        private Domicilio() { }
+        private DomicilioDAL() { }
 
-        public static Domicilio GetInstancia()
+        public static DomicilioDAL GetInstancia()
         {
             if (instancia == null)
             {
-                instancia = new Domicilio();
+                instancia = new DomicilioDAL();
             }
             return instancia;
         }

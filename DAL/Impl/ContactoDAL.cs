@@ -6,63 +6,65 @@
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using System.Data.SqlClient;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
 
-    public class Familia : ICRUD<BE.Familia>
+    public class ContactoDAL : BE.ICRUD<BE.Contacto>
     {
-        private Familia() { }
+        private static ContactoDAL instancia;
 
-        private static Familia instancia;
+        private ContactoDAL() { }
 
-        public static Familia Getinstancia()
+        public static ContactoDAL GetInstancia()
         {
             if (instancia == null)
             {
-                instancia = new Familia();
+                return new ContactoDAL();
             }
             return instancia;
         }
 
-        public bool Create(BE.Familia ObjAlta)
+        public bool Create(BE.Contacto ObjAlta)
         {
-            var sqlQuery = string.Format("@INSERT INTO dbo.Familia (idFamilia, Descripcion) values ('{0}', {1})", ObjAlta.IdFamilia.ToString(), ObjAlta.Descripcion);
-            var returnValue = false;
+            var queryString = string.Format("INSERT INTO dbo.Contacto(IdContacto, Telefono, Celular) values " +
+                "('{0}','{1}','{2}')",
+                ObjAlta.Id = Guid.NewGuid(),
+                ObjAlta.Telefono,
+                ObjAlta.Celular);
 
             using (IDbConnection connection = SqlUtils.Connection())
             {
                 try
                 {
-                    connection.Execute(sqlQuery);
-
-                    return !returnValue;
+                    connection.Execute(queryString);
+                    return true;
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                    return false;
                 }
             }
-
-            return returnValue;
         }
 
-        public bool Delete(BE.Familia ObjDel)
+        List<BE.Contacto> ICRUD<BE.Contacto>.Retrive()
         {
             throw new NotImplementedException();
         }
 
-        public BE.Familia GetById(Guid id)
+        public bool Delete(BE.Contacto ObjDel)
         {
             throw new NotImplementedException();
         }
 
-        public List<BE.Familia> Retrive()
+        public bool Update(BE.Contacto ObjUpd)
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(BE.Familia ObjUpd)
+        public BE.Contacto GetById(Guid id)
         {
             throw new NotImplementedException();
         }

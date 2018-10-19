@@ -4,20 +4,20 @@
     using System.Collections.Generic;
     using BE;
 
-    public class Localidad : BE.ICRUD<BE.Localidad>
+    public class LocalidadBLL : BE.ICRUD<BE.Localidad>
     {
 
-        private Localidad()
+        private LocalidadBLL()
         {
         }
 
-        private static Localidad instancia;
+        private static LocalidadBLL instancia;
 
-        public static Localidad Getinstancia()
+        public static LocalidadBLL Getinstancia()
         {
             if (instancia == null)
             {
-                instancia = new Localidad();
+                instancia = new LocalidadBLL();
             }
             return instancia;
         }
@@ -29,7 +29,7 @@
 
         public List<BE.Localidad> Retrive()
         {
-            return DAL.Impl.Localidad.Getinstancia().Retrive();
+            return DAL.Impl.LocalidadDAL.Getinstancia().Retrive();
         }
 
         public bool Delete(BE.Localidad ObjDel)

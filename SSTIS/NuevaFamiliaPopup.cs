@@ -27,7 +27,7 @@ namespace SSTIS
                 {
                     objFamilia.IdFamilia = Guid.NewGuid();
                     objFamilia.Descripcion = txtFamilia.Text.Trim();
-                    BLL.Familia.Getinstancia().Create(objFamilia);
+                    BLL.FamiliaBLL.Getinstancia().Create(objFamilia);
                 }
                 else
                 {

@@ -27,7 +27,7 @@ namespace SysAnalizer
             string usuario = txt_user.Text;
             string contraseña = txt_contraseña.Text;
 
-            BLL.Usuario.Getinstancia().logIn(usuario,contraseña);
+            //BLL.UsuarioBLL.Getinstancia().logIn(usuario,contraseña);
         }
     }
 }

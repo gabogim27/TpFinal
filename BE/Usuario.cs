@@ -12,7 +12,7 @@ namespace BE
         public int CantIngresosFallidos { get; set; }
         public bool Estado { get; set; }
         public bool PrimerLogin { get; set; }
-        public bool Sexo { get; set; }
+        public string Sexo { get; set; }
         public Guid IdIdioma { get; set; }
         public Domicilio Domicilio { get; set; }
         public Contacto Contacto { get; set; }
