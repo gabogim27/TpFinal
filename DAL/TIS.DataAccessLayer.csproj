@@ -60,7 +60,7 @@
     <Compile Include="Impl\FamiliaDAL.cs" />
     <Compile Include="Impl\LocalidadDAL.cs" />
     <Compile Include="Impl\ProvinciaDAL.cs" />
-    <Compile Include="Impl\UsuarioDAL.cs" />
+    <Compile Include="Impl\UsuarioDao.cs" />
     <Compile Include="Interfaces\IDao.cs" />
     <Compile Include="Interfaces\IDigitoVerificador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

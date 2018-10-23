@@ -55,7 +55,7 @@
             objContacto.Celular = ObjAlta.Contacto.Celular;
             DAL.Impl.ContactoDAL.GetInstancia().Create(objContacto);
 
-            var queryString = string.Format("INSERT INTO dbo.UsuarioDAL(IdUsuario, Nombre, Apellido, Password, Email, " +
+            var queryString = string.Format("INSERT INTO dbo.Usuario(IdUsuario, Nombre, Apellido, Password, Email, " +
                 "CantLoginsFallidos, Estado, IdDomicilio, IdContacto, IdIdioma, PrimerLogin) values " +
                 "('{0}','{1}','{2}','{3}','{4}',{5},{6},'{7}','{8}','{9}',{10})",
                 ObjAlta.Id = Guid.NewGuid(),
