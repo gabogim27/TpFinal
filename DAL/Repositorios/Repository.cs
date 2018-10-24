@@ -1,6 +1,6 @@
 ﻿using BE;
 
-namespace BLL
+namespace DAL.Repositorios
 {
     using DAL.Interfaces;
     using System;

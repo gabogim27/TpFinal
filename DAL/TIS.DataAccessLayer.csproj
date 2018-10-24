@@ -54,16 +54,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="Impl\ContactoDAL.cs" />
-    <Compile Include="Impl\DigitoVerificadorDAL.cs" />
-    <Compile Include="Impl\DomicilioDAL.cs" />
-    <Compile Include="Impl\FamiliaDAL.cs" />
-    <Compile Include="Impl\LocalidadDAL.cs" />
-    <Compile Include="Impl\ProvinciaDAL.cs" />
-    <Compile Include="Impl\UsuarioDao.cs" />
+    <Compile Include="Dao\ContactoDAL.cs" />
+    <Compile Include="Dao\DigitoVerificadorDAL.cs" />
+    <Compile Include="Dao\DomicilioDAL.cs" />
+    <Compile Include="Dao\FamiliaDAL.cs" />
+    <Compile Include="Dao\LocalidadDAL.cs" />
+    <Compile Include="Dao\ProvinciaDAL.cs" />
+    <Compile Include="Dao\UsuarioDao.cs" />
     <Compile Include="Interfaces\IDao.cs" />
     <Compile Include="Interfaces\IDigitoVerificador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\RepositorioUsuario.cs" />
+    <Compile Include="Repositorios\Repository.cs" />
     <Compile Include="Utils\SqlUtils.cs" />
   </ItemGroup>
   <ItemGroup>

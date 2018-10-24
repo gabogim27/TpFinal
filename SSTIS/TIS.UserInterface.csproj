@@ -161,6 +161,8 @@
     <Compile Include="FamiliaPatente.Designer.cs">
       <DependentUpon>FamiliaPatente.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IABMUsuarios.cs" />
+    <Compile Include="Interfaces\INuevoUsuario.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>

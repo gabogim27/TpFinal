@@ -1,4 +1,4 @@
-﻿namespace DAL
+﻿namespace DAL.Impl
 {
     using System;
     using System.Collections.Generic;
@@ -16,23 +16,6 @@
 
     public class UsuarioDao : IDao<Usuario>
     {
-        //private static UsuarioDAL instancia;
-
-        //SqlCommand comm = new SqlCommand();
-
-        //private UsuarioDAL()
-        //{
-        //}
-
-        //public static UsuarioDAL Getinstancia()
-        //{
-        //    if (instancia == null)
-        //    {
-        //        instancia = new UsuarioDAL();
-        //    }
-        //    return instancia;
-        //}
-
         public bool Create(Usuario ObjAlta)
         {
             Random random = new Random();

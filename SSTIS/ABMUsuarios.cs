@@ -10,20 +10,31 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLL;
+using BLL.Interfaces;
 using DAL.Interfaces;
+using SSTIS.Interfaces;
 
 namespace SSTIS
 {
-    public partial class ABMUsuarios : Form
+    public partial class ABMUsuarios : Form, IABMUsuarios
     {
+        public IServicio<Usuario> ServicioUsuario { get; set; }
+        public INuevoUsuario nuevoUsuario { get; set; }
 
-        public ABMUsuarios(IRepository<Usuario> repository)
+        public ABMUsuarios(IServicio<Usuario> servicioUsuario, INuevoUsuario nuevoUsuario)
         {
             InitializeComponent();
-            this.Repository = repository;
+            this.ServicioUsuario = servicioUsuario;
+            this.nuevoUsuario = nuevoUsuario;
         }
 
-        public IRepository<Usuario> Repository { get; set; }
+        //public ABMUsuarios(IRepository<Usuario> repository)
+        //{
+        //    InitializeComponent();
+        //    this.Repository = repository;
+        //}
+
+        //public IRepository<Usuario> Repository { get; set; }
 
         //public ABMUsuarios()
         //{
@@ -55,71 +66,8 @@ namespace SSTIS
 
         private void btnCrearUsuario_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (!string.IsNullOrEmpty(txtEmail.Text.Trim()))
-                {
-                    var mailValido = ValidarEmail(txtEmail.Text);
-                    if (!mailValido)
-                    {
-                        MessageBox.Show("El e-mail ingresado esta en formato incorrecto. Por favor corrijalo!!!");
-                        return;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Por favor ingrese un E-mail");
-                    return;
-                }
-
-                if (!string.IsNullOrEmpty(txtNombre.Text.Trim()) && !string.IsNullOrEmpty(txtNombre.Text.Trim()) &&
-                    !string.IsNullOrEmpty(txtDomicilio.Text.Trim()) && !string.IsNullOrEmpty(txtCelular.Text.Trim()) &&
-                    !string.IsNullOrEmpty(txtTelFijo.Text.Trim()) && cboLocalidad.SelectedIndex != -1 &&
-                    cboProvincia.SelectedIndex != -1)
-                {
-                    var nuevoUsuario = new BE.Usuario();
-
-                    var sexo = "";
-                    var isChecked = rdbSexo.Checked;
-                    if (isChecked)
-                        sexo = rdbSexo.Text;
-                    else
-                        sexo = rdbSexo2.Text;
-                    nuevoUsuario.Nombre = txtNombre.Text;
-                    nuevoUsuario.Apellido = txtApellido.Text;
-                    nuevoUsuario.Email = txtEmail.Text;
-                    nuevoUsuario.Domicilio = new BE.Domicilio();
-                    nuevoUsuario.Domicilio.Direccion = txtDomicilio.Text;
-                    nuevoUsuario.Contacto = new BE.Contacto();
-                    nuevoUsuario.Contacto.Celular = txtCelular.Text;
-                    nuevoUsuario.Contacto.Telefono = txtTelFijo.Text;
-                    nuevoUsuario.Sexo = sexo;
-                    nuevoUsuario.Domicilio.Localidad = new BE.Localidad();
-                    nuevoUsuario.Domicilio.Localidad.IdLocalidad = Guid.Parse(cboLocalidad.SelectedValue.ToString());
-                    nuevoUsuario.Domicilio.Localidad._Provincia = new Provincia();
-                    nuevoUsuario.Domicilio.Localidad._Provincia.IdProvincia = Guid.Parse(cboProvincia.SelectedValue.ToString());
-                    this.Repository.Create(nuevoUsuario);
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw new Exception(ex.Message);
-            }
-        }
-
-        private bool ValidarEmail(string email)
-        {
-            try
-            {
-                MailAddress m = new MailAddress(email);
-                return true;
-            }
-            catch (FormatException)
-            {
-                return false;
-            }
-        }
+            nuevoUsuario.Show();
+        }        
 
         private void ABMUsuarios_Load(object sender, EventArgs e)
         {
