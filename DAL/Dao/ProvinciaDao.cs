@@ -7,26 +7,12 @@ using System.Threading.Tasks;
 using BE;
 using DAL.Utils;
 using Dapper;
+using DAL.Interfaces;
 
 namespace DAL.Impl
 {
-    public class ProvinciaDAL : ICRUD<BE.Provincia>
+    public class ProvinciaDao : IDao<Provincia>
     {
-        private static ProvinciaDAL instancia;
-
-        private ProvinciaDAL()
-        {
-        }
-
-        public static ProvinciaDAL Getinstancia()
-        {
-            if (instancia == null)
-            {
-                instancia = new ProvinciaDAL();
-            }
-            return instancia;
-        }
-
         public List<BE.Provincia> Retrive()
         {
             var queryString = "SELECT * FROM dbo.Provincia;";

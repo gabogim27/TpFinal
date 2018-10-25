@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using BE;
 using BLL;
 using BLL.Interfaces;
+using DAL.Repositorios;
 using SSTIS.Interfaces;
 
 namespace SSTIS
@@ -17,11 +18,16 @@ namespace SSTIS
     public partial class NuevoUsuario : Form, INuevoUsuario
     {
         public IServicio<Usuario> ServicioUsuario { get; set; }
+        public IServicio<Localidad> ServicioLocalidad;
+        public IServicio<Provincia> ServicioProvincia { get; set; }
 
-        public NuevoUsuario(IServicio<Usuario> servicioUsuario)
+        public NuevoUsuario(IServicio<Usuario> servicioUsuario, IServicio<Localidad> servicioLocalidad,
+            IServicio<Provincia> servicioProvincia)
         {
             InitializeComponent();
             this.ServicioUsuario = servicioUsuario;
+            this.ServicioLocalidad = servicioLocalidad;
+            this.ServicioProvincia = servicioProvincia;
         }
        
         private void Button1_Click(object sender, EventArgs e)
@@ -82,12 +88,12 @@ namespace SSTIS
         private void CargarCombos()
         {
             //Retrieve provincias
-            var provincias = BLL.ProvinciaBLL.Getinstancia().Retrive();
+            var provincias = ServicioProvincia.Retrive();
             cboProvincia.DataSource = provincias;
             cboProvincia.DisplayMember = "Descripcion";
             cboProvincia.ValueMember = "IdProvincia";
             //Retrieve Localidades
-            var localidades = BLL.LocalidadBLL.Getinstancia().Retrive();
+            var localidades = ServicioLocalidad.Retrive();
             cboLocalidad.DataSource = localidades;
             cboLocalidad.DisplayMember = "Descripcion";
             cboLocalidad.ValueMember = "IdLocalidad";

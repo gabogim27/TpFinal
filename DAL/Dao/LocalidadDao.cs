@@ -8,25 +8,12 @@ using System.Threading.Tasks;
 using BE;
 using DAL.Utils;
 using Dapper;
+using DAL.Interfaces;
 
 namespace DAL.Impl
 {
-    public class LocalidadDAL : BE.ICRUD<BE.Localidad>
+    public class LocalidadDao : IDao<Localidad>
     {
-        private static LocalidadDAL instancia;
-
-        private LocalidadDAL()
-        {
-        }
-
-        public static LocalidadDAL Getinstancia()
-        {
-            if (instancia == null)
-            {
-                instancia = new LocalidadDAL();
-            }
-            return instancia;
-        }       
 
         public bool Create(BE.Localidad ObjAlta)
         {

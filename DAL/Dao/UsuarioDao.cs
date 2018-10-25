@@ -17,39 +17,19 @@
     public class UsuarioDao : IDao<Usuario>
     {
         public bool Create(Usuario ObjAlta)
-        {
-            Random random = new Random();
-            string nuevoPass = random.Next().ToString();
-            var contraseñaEncriptada = MD5.ComputeMD5Hash(ObjAlta.Password = nuevoPass);
-
-            //Damos de alta el domicilio del usuario
-            var objDomicilio = new BE.Domicilio();
-            objDomicilio.IdDomicilio = Guid.NewGuid();
-            objDomicilio.Direccion = ObjAlta.Domicilio.Direccion;
-            objDomicilio.CodPostal = "1665";//agregar esto en la UI
-            var localidad = Impl.LocalidadDAL.Getinstancia().GetById(ObjAlta.Domicilio.Localidad.IdLocalidad);
-            objDomicilio.Localidad = localidad;
-
-            Impl.DomicilioDAL.GetInstancia().Create(objDomicilio);
-            //Damos de alta el contacto del usuario
-            var objContacto = new BE.Contacto();
-            objContacto.Id = Guid.NewGuid();
-            objContacto.Telefono = ObjAlta.Contacto.Telefono;
-            objContacto.Celular = ObjAlta.Contacto.Celular;
-            DAL.Impl.ContactoDAL.GetInstancia().Create(objContacto);
-
+        {           
             var queryString = string.Format("INSERT INTO dbo.Usuario(IdUsuario, Nombre, Apellido, Password, Email, " +
                 "CantLoginsFallidos, Estado, IdDomicilio, IdContacto, IdIdioma, PrimerLogin) values " +
                 "('{0}','{1}','{2}','{3}','{4}',{5},{6},'{7}','{8}','{9}',{10})",
                 ObjAlta.Id = Guid.NewGuid(),
                 ObjAlta.Nombre,
                 ObjAlta.Apellido,
-                contraseñaEncriptada,
+                ObjAlta.ContraseñaEncriptada,
                 ObjAlta.Email,
                 ObjAlta.CantIngresosFallidos = 0,
-                Convert.ToByte(ObjAlta.Estado = true),              
-                objDomicilio.IdDomicilio,
-                objContacto.Id,
+                Convert.ToByte(ObjAlta.Estado = true),
+                ObjAlta.Domicilio.IdDomicilio,
+                ObjAlta.Contacto.Id,
                 ObjAlta.IdIdioma = new Guid("632302C5-266A-440D-9F39-6DC6DDEBAACF"),//cambiar el id este, hacerlo bien                
                 Convert.ToByte(ObjAlta.PrimerLogin)
                 );

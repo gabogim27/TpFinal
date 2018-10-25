@@ -1,4 +1,6 @@
-﻿namespace DAL.Impl
+﻿using DAL.Interfaces;
+
+namespace DAL.Impl
 {
     using BE;
     using DAL.Utils;
@@ -11,21 +13,8 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class ContactoDAL : BE.ICRUD<BE.Contacto>
+    public class ContactoDao : IDao<Contacto>
     {
-        private static ContactoDAL instancia;
-
-        private ContactoDAL() { }
-
-        public static ContactoDAL GetInstancia()
-        {
-            if (instancia == null)
-            {
-                return new ContactoDAL();
-            }
-            return instancia;
-        }
-
         public bool Create(BE.Contacto ObjAlta)
         {
             var queryString = string.Format("INSERT INTO dbo.Contacto(IdContacto, Telefono, Celular) values " +
@@ -48,8 +37,8 @@
                 }
             }
         }
-
-        List<BE.Contacto> ICRUD<BE.Contacto>.Retrive()
+       
+        public List<Contacto> Retrive()
         {
             throw new NotImplementedException();
         }

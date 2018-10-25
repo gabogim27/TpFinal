@@ -16,5 +16,6 @@ namespace BE
         public Guid IdIdioma { get; set; }
         public Domicilio Domicilio { get; set; }
         public Contacto Contacto { get; set; }
+        public string ContraseñaEncriptada { get; set; }
     }
 }

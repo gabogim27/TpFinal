@@ -1,27 +1,20 @@
-﻿namespace BLL
+﻿using BLL.Interfaces;
+
+namespace BLL
 {
     using System;
     using System.Collections.Generic;
     using BE;
 
-    public class ProvinciaBLL : BE.ICRUD<BE.Provincia>
+    public class ServicioProvincia : IServicio<Provincia>
     {
 
-        private ProvinciaBLL()
-        {
-        }
+        public IRepository<Provincia> RepositorioProvincia;
 
-        private static ProvinciaBLL instancia;
-
-        public static ProvinciaBLL Getinstancia()
+        public ServicioProvincia(IRepository<Provincia> repositorioProvincia)
         {
-            if (instancia == null)
-            {
-                instancia = new ProvinciaBLL();
-            }
-            return instancia;
-        }
-        
+            this.RepositorioProvincia = repositorioProvincia ?? throw new ArgumentNullException(nameof(repositorioProvincia));
+        }            
         
         public bool Create(BE.Provincia ObjAlta)
         {
@@ -30,7 +23,7 @@
 
         public List<BE.Provincia> Retrive()
         {
-            return DAL.Impl.ProvinciaDAL.Getinstancia().Retrive();
+            return RepositorioProvincia.Retrive();
         }
 
         public bool Delete(BE.Provincia ObjDel)

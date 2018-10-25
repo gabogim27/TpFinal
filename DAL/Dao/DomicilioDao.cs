@@ -1,4 +1,6 @@
-﻿namespace DAL.Impl
+﻿using DAL.Interfaces;
+
+namespace DAL.Impl
 {
     using BE;
     using DAL.Utils;
@@ -8,21 +10,9 @@
     using System.Data;
     using System.Data.SqlClient;
 
-    public class DomicilioDAL : ICRUD<BE.Domicilio>
+    public class DomicilioDao : IDao<Domicilio>
     {
-        private static DomicilioDAL instancia;
-
-        private DomicilioDAL() { }
-
-        public static DomicilioDAL GetInstancia()
-        {
-            if (instancia == null)
-            {
-                instancia = new DomicilioDAL();
-            }
-            return instancia;
-        }
-
+  
         public bool Create(BE.Domicilio ObjAlta)
         {
             var queryString = string.Format("INSERT INTO dbo.Domicilio(IdDomicilio, Direccion, IdLocalidad, CodPostal) values " +

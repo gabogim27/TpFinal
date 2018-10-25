@@ -26,9 +26,27 @@ namespace SysAnalizer
         static void Main()
         {
             var container = new Container();
+            //Usuario
             container.Register<IServicio<Usuario>, ServicioUsuario>(Lifestyle.Singleton);
             container.Register<IRepository<Usuario>, RepositorioUsuario>(Lifestyle.Singleton);
             container.Register<IDao<Usuario>, UsuarioDao>(Lifestyle.Singleton);
+            //Localidad
+            container.Register<IServicio<Localidad>, ServicioLocalidad>(Lifestyle.Singleton);
+            container.Register<IRepository<Localidad>, RepositorioLocalidad>(Lifestyle.Singleton);
+            container.Register<IDao<Localidad>, LocalidadDao>(Lifestyle.Singleton);
+            //Provincia
+            container.Register<IServicio<Provincia>, ServicioProvincia>(Lifestyle.Singleton);
+            container.Register<IRepository<Provincia>, RepositorioProvincia>(Lifestyle.Singleton);
+            container.Register<IDao<Provincia>, ProvinciaDao>(Lifestyle.Singleton);
+            //Domicilio
+            container.Register<IServicio<Domicilio>, ServicioDomicilio>(Lifestyle.Singleton);
+            container.Register<IRepository<Domicilio>, RepositorioDomicilio>(Lifestyle.Singleton);
+            container.Register<IDao<Domicilio>, DomicilioDao>(Lifestyle.Singleton);
+            //Contacto
+            container.Register<IServicio<Contacto>, ServicioContacto>(Lifestyle.Singleton);
+            container.Register<IRepository<Contacto>, RepositorioContacto>(Lifestyle.Singleton);
+            container.Register<IDao<Contacto>, ContactoDao>(Lifestyle.Singleton);
+            //Formularios
             container.Register<INuevoUsuario, NuevoUsuario>(Lifestyle.Singleton);
             container.Register<IABMUsuarios, ABMUsuarios>(Lifestyle.Singleton);
             log4net.Config.XmlConfigurator.Configure();

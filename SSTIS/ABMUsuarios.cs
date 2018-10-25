@@ -19,13 +19,19 @@ namespace SSTIS
     public partial class ABMUsuarios : Form, IABMUsuarios
     {
         public IServicio<Usuario> ServicioUsuario { get; set; }
+        public IServicio<Localidad> ServicioLocalidad { get; set; }
+        public IServicio<Provincia> ServicioProvincia { get; set; }
+
         public INuevoUsuario nuevoUsuario { get; set; }
 
-        public ABMUsuarios(IServicio<Usuario> servicioUsuario, INuevoUsuario nuevoUsuario)
+        public ABMUsuarios(IServicio<Usuario> servicioUsuario, INuevoUsuario nuevoUsuario, 
+            IServicio<Localidad> servicioLocalidad, IServicio<Provincia> servicioProvincia)
         {
             InitializeComponent();
             this.ServicioUsuario = servicioUsuario;
             this.nuevoUsuario = nuevoUsuario;
+            this.ServicioLocalidad = servicioLocalidad;
+            this.ServicioProvincia = servicioProvincia;
         }
 
         //public ABMUsuarios(IRepository<Usuario> repository)
@@ -77,12 +83,12 @@ namespace SSTIS
         private void CargarCombos()
         {
             //Retrieve provincias
-            var provincias = BLL.ProvinciaBLL.Getinstancia().Retrive();
+            var provincias = ServicioProvincia.Retrive();
             cboProvincia.DataSource = provincias; 
             cboProvincia.DisplayMember = "Descripcion";
             cboProvincia.ValueMember = "IdProvincia";
             //Retrieve Localidades
-            var localidades = BLL.LocalidadBLL.Getinstancia().Retrive();
+            var localidades = ServicioLocalidad.Retrive();
             cboLocalidad.DataSource = localidades;
             cboLocalidad.DisplayMember = "Descripcion";
             cboLocalidad.ValueMember = "IdLocalidad";
