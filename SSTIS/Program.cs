@@ -64,6 +64,8 @@ namespace SysAnalizer
             container.Register<IABMUsuarios, ABMUsuarios>(Lifestyle.Transient);
             container.Register<ILogin, Login>(Lifestyle.Transient);
             container.Register<IPrincipal, Principal>(Lifestyle.Transient);
+            container.Register<IRealizarCopiaSeguridad, RealizarCopiaSeguridad>(Lifestyle.Transient);
+            container.Register<IRestaurarCopiaDeSeguridad, RestaurarCopiaDeSeguridad>(Lifestyle.Transient);
             log4net.Config.XmlConfigurator.Configure();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

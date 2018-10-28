@@ -28,6 +28,7 @@ namespace SSTIS
         public IServicioLocalidad ServicioLocalidadImplementor;
 
         public INuevoUsuario nuevoUsuario { get; set; }
+        private static Usuario usuario { get; set; }
 
         public ABMUsuarios(IServicio<Usuario> servicioUsuario, INuevoUsuario nuevoUsuario,
             IServicio<Localidad> servicioLocalidad, IServicio<Provincia> servicioProvincia,
@@ -200,7 +201,7 @@ namespace SSTIS
                     cboProvincia.SelectedIndex != -1)
                 {
                     var idUsuarioSeleccionado = Guid.Parse(dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString());
-                    var usuario = ServicioUsuario.GetById(idUsuarioSeleccionado);
+                    var usuario = GetUsuarioById(idUsuarioSeleccionado);
 
                     usuario.Nombre = txtNombre.Text.Trim();
                     usuario.Apellido = txtApellido.Text.Trim();
@@ -238,6 +239,12 @@ namespace SSTIS
             
         }
 
+        private Usuario GetUsuarioById(Guid idUsuarioSeleccionado)
+        {
+            usuario = ServicioUsuario.GetById(idUsuarioSeleccionado);
+            return usuario;
+        }
+
         private void dgvUsuarios_RowEnter(object sender, DataGridViewCellEventArgs e)
         {          
         }
@@ -252,6 +259,8 @@ namespace SSTIS
             try
             {
                 cboLocalidad.Enabled = true;
+                //Cargamos en memoria el usuario seleccionado de la grilla
+                GetUsuarioById(Guid.Parse(dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString()));
                 txtNombre.Text = dgvUsuarios.SelectedRows[0].Cells[3].Value.ToString();
                 txtApellido.Text = dgvUsuarios.SelectedRows[0].Cells[4].Value.ToString();
                 txtEmail.Text = dgvUsuarios.SelectedRows[0].Cells[5].Value.ToString();
@@ -297,6 +306,29 @@ namespace SSTIS
             cboLocalidad.DataSource = localidadesByProvinciaId;
             cboLocalidad.DisplayMember = "Descripcion";
             cboLocalidad.ValueMember = "IdLocalidad";
+        }
+
+        private void btnEliminarUsuario_Click(object sender, EventArgs e)
+        {
+            if (dgvUsuarios.Rows.Count != 0)
+            {
+                var confirmResult = MessageBox.Show("Estas seguro de querer eliminar el usuario: " +
+                                                    dgvUsuarios.SelectedRows[0].Cells[5].Value.ToString(),
+                    "Confirme baja de usuario",
+                    MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    if (ServicioUsuario.Delete(usuario))
+                        MessageBox.Show("Baja dada exitosamente");
+                    MessageBox.Show("Ocurrio un error al dar de baja el usuario, por favor contacte " +
+                                    "al administrador.");
+                }              
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar un usuario de la grilla para proceder con la baja.");
+            }
+           
         }
     }
 }

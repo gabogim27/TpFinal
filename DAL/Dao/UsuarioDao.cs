@@ -96,7 +96,21 @@ namespace DAL.Impl
 
         public bool Delete(BE.Usuario ObjDel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var queryString = string.Format("delete from dbo.Usuario where " +
+                                                "IdUsuario = '{0}'",
+                    ObjDel.IdUsuario
+                );
+
+                return SqlUtils.Exec(queryString);
+            }
+            catch (Exception e)
+            {
+                log.ErrorFormat("Ocurrio un error al intentar eliminar el usuario: {0}", ObjDel.IdUsuario);
+            }
+
+            return false;
         }
 
         public bool Update(BE.Usuario ObjUpd)

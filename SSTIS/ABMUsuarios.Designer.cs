@@ -39,7 +39,7 @@
             this.Button6 = new System.Windows.Forms.Button();
             this.Button3 = new System.Windows.Forms.Button();
             this.Button5 = new System.Windows.Forms.Button();
-            this.Button2 = new System.Windows.Forms.Button();
+            this.btnEliminarUsuario = new System.Windows.Forms.Button();
             this.Button4 = new System.Windows.Forms.Button();
             this.GroupBox3 = new System.Windows.Forms.GroupBox();
             this.Button8 = new System.Windows.Forms.Button();
@@ -166,14 +166,15 @@
             this.Button5.Text = "Bloquear ";
             this.Button5.UseVisualStyleBackColor = true;
             // 
-            // Button2
+            // btnEliminarUsuario
             // 
-            this.Button2.Location = new System.Drawing.Point(6, 298);
-            this.Button2.Name = "Button2";
-            this.Button2.Size = new System.Drawing.Size(144, 30);
-            this.Button2.TabIndex = 5;
-            this.Button2.Text = "Eliminar Usuario";
-            this.Button2.UseVisualStyleBackColor = true;
+            this.btnEliminarUsuario.Location = new System.Drawing.Point(6, 298);
+            this.btnEliminarUsuario.Name = "btnEliminarUsuario";
+            this.btnEliminarUsuario.Size = new System.Drawing.Size(144, 30);
+            this.btnEliminarUsuario.TabIndex = 5;
+            this.btnEliminarUsuario.Text = "Eliminar Usuario";
+            this.btnEliminarUsuario.UseVisualStyleBackColor = true;
+            this.btnEliminarUsuario.Click += new System.EventHandler(this.btnEliminarUsuario_Click);
             // 
             // Button4
             // 
@@ -192,7 +193,7 @@
             this.GroupBox3.Controls.Add(this.Button6);
             this.GroupBox3.Controls.Add(this.Button3);
             this.GroupBox3.Controls.Add(this.Button5);
-            this.GroupBox3.Controls.Add(this.Button2);
+            this.GroupBox3.Controls.Add(this.btnEliminarUsuario);
             this.GroupBox3.Controls.Add(this.Button4);
             this.GroupBox3.Location = new System.Drawing.Point(438, 12);
             this.GroupBox3.Name = "GroupBox3";
@@ -437,7 +438,7 @@
         internal System.Windows.Forms.Button Button6;
         internal System.Windows.Forms.Button Button3;
         internal System.Windows.Forms.Button Button5;
-        internal System.Windows.Forms.Button Button2;
+        internal System.Windows.Forms.Button btnEliminarUsuario;
         internal System.Windows.Forms.Button Button4;
         internal System.Windows.Forms.GroupBox GroupBox3;
         internal System.Windows.Forms.Button Button8;
