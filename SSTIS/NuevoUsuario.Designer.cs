@@ -44,6 +44,7 @@
             this.Label6 = new System.Windows.Forms.Label();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.GroupBox2 = new System.Windows.Forms.GroupBox();
+            this.cboProvincia = new System.Windows.Forms.ComboBox();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.txtApellido = new System.Windows.Forms.TextBox();
             this.txtNombre = new System.Windows.Forms.TextBox();
@@ -54,7 +55,8 @@
             this.Label2 = new System.Windows.Forms.Label();
             this.Label1 = new System.Windows.Forms.Label();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
-            this.cboProvincia = new System.Windows.Forms.ComboBox();
+            this.txtCp = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.GroupBox3.SuspendLayout();
             this.GroupBox2.SuspendLayout();
             this.GroupBox1.SuspendLayout();
@@ -116,14 +118,14 @@
             // 
             // txtCelular
             // 
-            this.txtCelular.Location = new System.Drawing.Point(121, 131);
+            this.txtCelular.Location = new System.Drawing.Point(121, 158);
             this.txtCelular.Name = "txtCelular";
             this.txtCelular.Size = new System.Drawing.Size(100, 20);
             this.txtCelular.TabIndex = 18;
             // 
             // txtTelFijo
             // 
-            this.txtTelFijo.Location = new System.Drawing.Point(122, 103);
+            this.txtTelFijo.Location = new System.Drawing.Point(122, 130);
             this.txtTelFijo.Name = "txtTelFijo";
             this.txtTelFijo.Size = new System.Drawing.Size(100, 20);
             this.txtTelFijo.TabIndex = 17;
@@ -156,7 +158,7 @@
             // Label9
             // 
             this.Label9.AutoSize = true;
-            this.Label9.Location = new System.Drawing.Point(6, 106);
+            this.Label9.Location = new System.Drawing.Point(6, 133);
             this.Label9.Name = "Label9";
             this.Label9.Size = new System.Drawing.Size(71, 13);
             this.Label9.TabIndex = 13;
@@ -165,7 +167,7 @@
             // Label8
             // 
             this.Label8.AutoSize = true;
-            this.Label8.Location = new System.Drawing.Point(12, 138);
+            this.Label8.Location = new System.Drawing.Point(12, 165);
             this.Label8.Name = "Label8";
             this.Label8.Size = new System.Drawing.Size(42, 13);
             this.Label8.TabIndex = 12;
@@ -192,6 +194,8 @@
             // 
             // GroupBox2
             // 
+            this.GroupBox2.Controls.Add(this.txtCp);
+            this.GroupBox2.Controls.Add(this.label3);
             this.GroupBox2.Controls.Add(this.cboProvincia);
             this.GroupBox2.Controls.Add(this.cboLocalidad);
             this.GroupBox2.Controls.Add(this.txtCelular);
@@ -202,12 +206,22 @@
             this.GroupBox2.Controls.Add(this.Label9);
             this.GroupBox2.Controls.Add(this.Label8);
             this.GroupBox2.Controls.Add(this.Label6);
-            this.GroupBox2.Location = new System.Drawing.Point(67, 268);
+            this.GroupBox2.Location = new System.Drawing.Point(67, 240);
             this.GroupBox2.Name = "GroupBox2";
-            this.GroupBox2.Size = new System.Drawing.Size(361, 166);
+            this.GroupBox2.Size = new System.Drawing.Size(361, 194);
             this.GroupBox2.TabIndex = 8;
             this.GroupBox2.TabStop = false;
             this.GroupBox2.Text = "Otros datos";
+            // 
+            // cboProvincia
+            // 
+            this.cboProvincia.FormattingEnabled = true;
+            this.cboProvincia.Location = new System.Drawing.Point(121, 48);
+            this.cboProvincia.Name = "cboProvincia";
+            this.cboProvincia.Size = new System.Drawing.Size(121, 21);
+            this.cboProvincia.TabIndex = 21;
+            this.cboProvincia.SelectedIndexChanged += new System.EventHandler(this.cboProvincia_SelectedIndexChanged);
+            this.cboProvincia.SelectionChangeCommitted += new System.EventHandler(this.cboProvincia_SelectionChangeCommitted);
             // 
             // txtEmail
             // 
@@ -306,13 +320,21 @@
             this.GroupBox1.TabStop = false;
             this.GroupBox1.Text = "Datos";
             // 
-            // cboProvincia
+            // txtCp
             // 
-            this.cboProvincia.FormattingEnabled = true;
-            this.cboProvincia.Location = new System.Drawing.Point(121, 48);
-            this.cboProvincia.Name = "cboProvincia";
-            this.cboProvincia.Size = new System.Drawing.Size(121, 21);
-            this.cboProvincia.TabIndex = 21;
+            this.txtCp.Location = new System.Drawing.Point(122, 104);
+            this.txtCp.Name = "txtCp";
+            this.txtCp.Size = new System.Drawing.Size(100, 20);
+            this.txtCp.TabIndex = 23;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 107);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(75, 13);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "Código Postal:";
             // 
             // NuevoUsuario
             // 
@@ -368,5 +390,7 @@
         internal System.Windows.Forms.Label Label1;
         internal System.Windows.Forms.GroupBox GroupBox1;
         internal System.Windows.Forms.ComboBox cboProvincia;
+        internal System.Windows.Forms.TextBox txtCp;
+        internal System.Windows.Forms.Label label3;
     }
 }

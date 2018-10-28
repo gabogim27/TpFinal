@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BE;
@@ -11,7 +12,7 @@ using DAL.Interfaces;
 
 namespace DAL.Impl
 {
-    public class ProvinciaDao : IDao<Provincia>
+    public class ProvinciaDao : IDao<Provincia>, IProvinciaDao
     {
         public List<BE.Provincia> Retrive()
         {
@@ -49,12 +50,24 @@ namespace DAL.Impl
             throw new NotImplementedException();
         }
 
-        public BE.Provincia GetById(Guid id)
+        public Provincia GetById(Guid id)
         {
-            throw new NotImplementedException();
+            var query = string.Format("Select * from dbo.Provincia where IdProvincia = '{0}'", id);
+
+            using (IDbConnection connection = SqlUtils.Connection())
+            {
+                try
+                {
+                    return (BE.Provincia)connection.Query<BE.Provincia>(query).FirstOrDefault();
+                }
+                catch (Exception ex)
+                {
+                    throw new KeyNotFoundException();
+                }
+            }
         }
 
-        public BE.Provincia GetById(BE.Provincia ObjToSearch)
+        public Provincia GetProvinciaByLocalidadId(Guid idLocalidad)
         {
             throw new NotImplementedException();
         }

@@ -1,4 +1,4 @@
-﻿namespace SysAnalizer
+﻿namespace SSTIS
 {
     partial class Principal
     {
@@ -28,69 +28,264 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Principal));
+            this.MenuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.EdicionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.LoginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AccionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.GestionPólizasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EmisiónDePólizasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BuscarPólizaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.GestionClientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.VerClientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.GestionFacturasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.VerDetalleFacturaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.GestionVehiculosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.VerVehiculoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AyudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CambiarIdiomaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AdministrarPatenteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AdministrarFamiliaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.GestionIdiomasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SeguridadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RealizarCopiaDeSeguridadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RestaurarCopiaDeSeguridadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.VisualizarBitácoraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AyudaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.CambiarIdiomaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.CerrarSesiónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // MenuStrip1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(124, 71);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Ventas";
-            this.button1.UseVisualStyleBackColor = true;
+            this.MenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.EdicionToolStripMenuItem,
+            this.AccionesToolStripMenuItem,
+            this.AyudaToolStripMenuItem,
+            this.SeguridadToolStripMenuItem,
+            this.AyudaToolStripMenuItem1,
+            this.CerrarSesiónToolStripMenuItem});
+            this.MenuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.MenuStrip1.Name = "MenuStrip1";
+            this.MenuStrip1.Size = new System.Drawing.Size(955, 24);
+            this.MenuStrip1.TabIndex = 27;
+            this.MenuStrip1.Text = "MenuStrip1";
             // 
-            // button2
+            // EdicionToolStripMenuItem
             // 
-            this.button2.Location = new System.Drawing.Point(142, 12);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(124, 71);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Productos";
-            this.button2.UseVisualStyleBackColor = true;
+            this.EdicionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LoginToolStripMenuItem});
+            this.EdicionToolStripMenuItem.Name = "EdicionToolStripMenuItem";
+            this.EdicionToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.EdicionToolStripMenuItem.Text = "Home";
             // 
-            // button3
+            // LoginToolStripMenuItem
             // 
-            this.button3.Location = new System.Drawing.Point(402, 12);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(124, 71);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Clientes";
-            this.button3.UseVisualStyleBackColor = true;
+            this.LoginToolStripMenuItem.Name = "LoginToolStripMenuItem";
+            this.LoginToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.LoginToolStripMenuItem.Text = "Login ";
+            this.LoginToolStripMenuItem.Click += new System.EventHandler(this.LoginToolStripMenuItem_Click);
             // 
-            // button4
+            // AccionesToolStripMenuItem
             // 
-            this.button4.Location = new System.Drawing.Point(272, 12);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(124, 71);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "Stock";
-            this.button4.UseVisualStyleBackColor = true;
+            this.AccionesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.GestionPólizasToolStripMenuItem,
+            this.GestionClientesToolStripMenuItem,
+            this.GestionFacturasToolStripMenuItem,
+            this.GestionVehiculosToolStripMenuItem});
+            this.AccionesToolStripMenuItem.Name = "AccionesToolStripMenuItem";
+            this.AccionesToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+            this.AccionesToolStripMenuItem.Text = "Acciones";
+            // 
+            // GestionPólizasToolStripMenuItem
+            // 
+            this.GestionPólizasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.EmisiónDePólizasToolStripMenuItem,
+            this.BuscarPólizaToolStripMenuItem});
+            this.GestionPólizasToolStripMenuItem.Name = "GestionPólizasToolStripMenuItem";
+            this.GestionPólizasToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.GestionPólizasToolStripMenuItem.Text = "Gestion Pólizas";
+            // 
+            // EmisiónDePólizasToolStripMenuItem
+            // 
+            this.EmisiónDePólizasToolStripMenuItem.Name = "EmisiónDePólizasToolStripMenuItem";
+            this.EmisiónDePólizasToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.EmisiónDePólizasToolStripMenuItem.Text = "Emisión de Pólizas";
+            // 
+            // BuscarPólizaToolStripMenuItem
+            // 
+            this.BuscarPólizaToolStripMenuItem.Name = "BuscarPólizaToolStripMenuItem";
+            this.BuscarPólizaToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.BuscarPólizaToolStripMenuItem.Text = "Ver Pólizas";
+            // 
+            // GestionClientesToolStripMenuItem
+            // 
+            this.GestionClientesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.VerClientesToolStripMenuItem});
+            this.GestionClientesToolStripMenuItem.Name = "GestionClientesToolStripMenuItem";
+            this.GestionClientesToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.GestionClientesToolStripMenuItem.Text = "Gestion Clientes";
+            // 
+            // VerClientesToolStripMenuItem
+            // 
+            this.VerClientesToolStripMenuItem.Name = "VerClientesToolStripMenuItem";
+            this.VerClientesToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.VerClientesToolStripMenuItem.Text = "Ver Datos Cliente";
+            // 
+            // GestionFacturasToolStripMenuItem
+            // 
+            this.GestionFacturasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.VerDetalleFacturaToolStripMenuItem});
+            this.GestionFacturasToolStripMenuItem.Name = "GestionFacturasToolStripMenuItem";
+            this.GestionFacturasToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.GestionFacturasToolStripMenuItem.Text = "Gestion Facturas";
+            // 
+            // VerDetalleFacturaToolStripMenuItem
+            // 
+            this.VerDetalleFacturaToolStripMenuItem.Name = "VerDetalleFacturaToolStripMenuItem";
+            this.VerDetalleFacturaToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.VerDetalleFacturaToolStripMenuItem.Text = "Ver Detalle Factura";
+            // 
+            // GestionVehiculosToolStripMenuItem
+            // 
+            this.GestionVehiculosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.VerVehiculoToolStripMenuItem});
+            this.GestionVehiculosToolStripMenuItem.Name = "GestionVehiculosToolStripMenuItem";
+            this.GestionVehiculosToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.GestionVehiculosToolStripMenuItem.Text = "Gestion Vehiculos";
+            // 
+            // VerVehiculoToolStripMenuItem
+            // 
+            this.VerVehiculoToolStripMenuItem.Name = "VerVehiculoToolStripMenuItem";
+            this.VerVehiculoToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.VerVehiculoToolStripMenuItem.Text = "Ver Datos Vehiculo";
+            // 
+            // AyudaToolStripMenuItem
+            // 
+            this.AyudaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CambiarIdiomaToolStripMenuItem,
+            this.AdministrarPatenteToolStripMenuItem,
+            this.AdministrarFamiliaToolStripMenuItem,
+            this.GestionIdiomasToolStripMenuItem});
+            this.AyudaToolStripMenuItem.Name = "AyudaToolStripMenuItem";
+            this.AyudaToolStripMenuItem.Size = new System.Drawing.Size(100, 20);
+            this.AyudaToolStripMenuItem.Text = "Administración";
+            // 
+            // CambiarIdiomaToolStripMenuItem
+            // 
+            this.CambiarIdiomaToolStripMenuItem.Name = "CambiarIdiomaToolStripMenuItem";
+            this.CambiarIdiomaToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.CambiarIdiomaToolStripMenuItem.Text = "Administrar Usuario";
+            // 
+            // AdministrarPatenteToolStripMenuItem
+            // 
+            this.AdministrarPatenteToolStripMenuItem.Name = "AdministrarPatenteToolStripMenuItem";
+            this.AdministrarPatenteToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.AdministrarPatenteToolStripMenuItem.Text = "Administrar Patente";
+            // 
+            // AdministrarFamiliaToolStripMenuItem
+            // 
+            this.AdministrarFamiliaToolStripMenuItem.Name = "AdministrarFamiliaToolStripMenuItem";
+            this.AdministrarFamiliaToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.AdministrarFamiliaToolStripMenuItem.Text = "Administrar Familia";
+            // 
+            // GestionIdiomasToolStripMenuItem
+            // 
+            this.GestionIdiomasToolStripMenuItem.Name = "GestionIdiomasToolStripMenuItem";
+            this.GestionIdiomasToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.GestionIdiomasToolStripMenuItem.Text = "Administrar Idiomas";
+            // 
+            // SeguridadToolStripMenuItem
+            // 
+            this.SeguridadToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.RealizarCopiaDeSeguridadToolStripMenuItem,
+            this.RestaurarCopiaDeSeguridadToolStripMenuItem,
+            this.VisualizarBitácoraToolStripMenuItem});
+            this.SeguridadToolStripMenuItem.Name = "SeguridadToolStripMenuItem";
+            this.SeguridadToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
+            this.SeguridadToolStripMenuItem.Text = "Seguridad";
+            // 
+            // RealizarCopiaDeSeguridadToolStripMenuItem
+            // 
+            this.RealizarCopiaDeSeguridadToolStripMenuItem.Name = "RealizarCopiaDeSeguridadToolStripMenuItem";
+            this.RealizarCopiaDeSeguridadToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.RealizarCopiaDeSeguridadToolStripMenuItem.Text = "Realizar Copia de Seguridad";
+            // 
+            // RestaurarCopiaDeSeguridadToolStripMenuItem
+            // 
+            this.RestaurarCopiaDeSeguridadToolStripMenuItem.Name = "RestaurarCopiaDeSeguridadToolStripMenuItem";
+            this.RestaurarCopiaDeSeguridadToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.RestaurarCopiaDeSeguridadToolStripMenuItem.Text = "Restaurar Copia de Seguridad";
+            // 
+            // VisualizarBitácoraToolStripMenuItem
+            // 
+            this.VisualizarBitácoraToolStripMenuItem.Name = "VisualizarBitácoraToolStripMenuItem";
+            this.VisualizarBitácoraToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.VisualizarBitácoraToolStripMenuItem.Text = "Visualizar Bitácora";
+            // 
+            // AyudaToolStripMenuItem1
+            // 
+            this.AyudaToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CambiarIdiomaToolStripMenuItem1});
+            this.AyudaToolStripMenuItem1.Name = "AyudaToolStripMenuItem1";
+            this.AyudaToolStripMenuItem1.Size = new System.Drawing.Size(53, 20);
+            this.AyudaToolStripMenuItem1.Text = "Ayuda";
+            // 
+            // CambiarIdiomaToolStripMenuItem1
+            // 
+            this.CambiarIdiomaToolStripMenuItem1.Name = "CambiarIdiomaToolStripMenuItem1";
+            this.CambiarIdiomaToolStripMenuItem1.Size = new System.Drawing.Size(159, 22);
+            this.CambiarIdiomaToolStripMenuItem1.Text = "Cambiar Idioma";
+            // 
+            // CerrarSesiónToolStripMenuItem
+            // 
+            this.CerrarSesiónToolStripMenuItem.Name = "CerrarSesiónToolStripMenuItem";
+            this.CerrarSesiónToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
+            this.CerrarSesiónToolStripMenuItem.Text = "Cerrar Sesión";
             // 
             // Principal
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(605, 451);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.IsMdiContainer = true;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.ClientSize = new System.Drawing.Size(955, 567);
+            this.Controls.Add(this.MenuStrip1);
             this.Name = "Principal";
-            this.Text = "Sys Analizer";
+            this.Text = "Principal";
+            this.MenuStrip1.ResumeLayout(false);
+            this.MenuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        internal System.Windows.Forms.MenuStrip MenuStrip1;
+        internal System.Windows.Forms.ToolStripMenuItem EdicionToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem LoginToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem AccionesToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem GestionPólizasToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem EmisiónDePólizasToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem BuscarPólizaToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem GestionClientesToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem VerClientesToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem GestionFacturasToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem VerDetalleFacturaToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem GestionVehiculosToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem VerVehiculoToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem AyudaToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem CambiarIdiomaToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem AdministrarPatenteToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem AdministrarFamiliaToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem GestionIdiomasToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem SeguridadToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem RealizarCopiaDeSeguridadToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem RestaurarCopiaDeSeguridadToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem VisualizarBitácoraToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem AyudaToolStripMenuItem1;
+        internal System.Windows.Forms.ToolStripMenuItem CambiarIdiomaToolStripMenuItem1;
+        internal System.Windows.Forms.ToolStripMenuItem CerrarSesiónToolStripMenuItem;
     }
 }

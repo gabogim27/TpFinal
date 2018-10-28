@@ -10,13 +10,15 @@ namespace DAL.Repositorios
     using System.Text;
     using System.Threading.Tasks;
 
-    public class RepositorioUsuario : IRepository<Usuario>
+    public class RepositorioUsuario : IRepository<Usuario>, IRepositorioUsuario
     {
         public IDao<Usuario> UsuarioDao { get; }
+        public IUsuarioDao UsuarioDaoImplementor { get; set; }
 
-        public RepositorioUsuario(IDao<Usuario> usuarioDao)
+        public RepositorioUsuario(IDao<Usuario> usuarioDao, IUsuarioDao UsuarioDaoImplementor)
         {
             this.UsuarioDao = usuarioDao ?? throw new ArgumentNullException(nameof(usuarioDao));
+            this.UsuarioDaoImplementor = UsuarioDaoImplementor;
         }
         public bool Create(Usuario ObjAlta)
         {
@@ -25,22 +27,32 @@ namespace DAL.Repositorios
 
         public Usuario GetById(Guid id)
         {
-            throw new NotImplementedException();
+            return UsuarioDao.GetById(id);
         }
 
         public List<Usuario> Retrive()
         {
-            throw new NotImplementedException();
+            return UsuarioDao.Retrive();
         }
 
         public bool Delete(Usuario ObjDel)
         {
-            throw new NotImplementedException();
+            return UsuarioDao.Delete(ObjDel);
         }
 
         public bool Update(Usuario ObjUpd)
         {
-            throw new NotImplementedException();
+            return UsuarioDao.Update(ObjUpd);
+        }
+
+        public bool LogIn(string email, string contraseña)
+        {
+            return UsuarioDaoImplementor.LogIn(email, contraseña);
+        }
+
+        public Usuario ObtenerUsuarioConEmail(string email)
+        {
+            return UsuarioDaoImplementor.ObtenerUsuarioConEmail(email);
         }
     }
 }

@@ -9,11 +9,13 @@ using BE;
 using DAL.Utils;
 using Dapper;
 using DAL.Interfaces;
+using log4net;
 
 namespace DAL.Impl
 {
-    public class LocalidadDao : IDao<Localidad>
+    public class LocalidadDao : IDao<Localidad>, ILocalidadDao
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(LocalidadDao));
 
         public bool Create(BE.Localidad ObjAlta)
         {
@@ -52,7 +54,7 @@ namespace DAL.Impl
 
         public BE.Localidad GetById(Guid localidadId)
         {
-            var query = string.Format("Select * from dbo.Localidad loc inner join dbo.provincia prov on loc.IdLocalidad = '{0}'", localidadId);
+            var query = string.Format("Select * from dbo.Localidad where IdLocalidad = '{0}'", localidadId);
 
             using (IDbConnection connection = SqlUtils.Connection())
             {
@@ -64,6 +66,23 @@ namespace DAL.Impl
                 {
                     throw new KeyNotFoundException();
                 }
+            }
+        }
+
+        public List<Localidad> GetLocalidadesByProvinciaId(Guid provinciaId)
+        {
+            try
+            {
+                var query = string.Format("select loc.* from LOCALIDAD loc inner join " +
+                                          "PROVINCIA prov on loc.IdProvincia = prov.IdProvincia " +
+                                          "where loc.IdProvincia = '{0}'", provinciaId);
+                log.InfoFormat("Buscando Localidades para la provincia: {0}", provinciaId);
+                return SqlUtils.Exec<Localidad>(query);
+            }
+            catch (Exception ex)
+            {
+                log.ErrorFormat("Ocurrio un error al buscar las localidades para la provincia: {0}. Error: {1}", provinciaId, ex.Message);
+                return null;
             }
         }
     }

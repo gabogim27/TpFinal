@@ -1,4 +1,5 @@
 ﻿using DAL.Interfaces;
+using log4net;
 
 namespace DAL.Impl
 {
@@ -8,18 +9,16 @@ namespace DAL.Impl
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using System.Data.SqlClient;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class ContactoDao : IDao<Contacto>
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(ContactoDao));
+
         public bool Create(BE.Contacto ObjAlta)
         {
             var queryString = string.Format("INSERT INTO dbo.Contacto(IdContacto, Telefono, Celular) values " +
                 "('{0}','{1}','{2}')",
-                ObjAlta.Id = Guid.NewGuid(),
+                ObjAlta.IdContacto = Guid.NewGuid(),
                 ObjAlta.Telefono,
                 ObjAlta.Celular);
 
@@ -28,11 +27,12 @@ namespace DAL.Impl
                 try
                 {
                     connection.Execute(queryString);
+                    log.InfoFormat("Contacto con IdUsuario: {0} persistido correctamente", ObjAlta.IdContacto);
                     return true;
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    log.ErrorFormat("Hubo un error al persistir el contacto: {0}", ex.Message);
                     return false;
                 }
             }
@@ -50,7 +50,23 @@ namespace DAL.Impl
 
         public bool Update(BE.Contacto ObjUpd)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var queryString = string.Format("Update dbo.Contacto set " +
+                                                "Telefono = '{0}', Celular = '{1}'" +
+                                                " where IdContacto = '{2}'",
+                    ObjUpd.Telefono,
+                    ObjUpd.Celular,
+                    ObjUpd.IdContacto
+                );
+
+                return SqlUtils.Exec(queryString);
+            }
+            catch (Exception ex)
+            {
+                log.ErrorFormat("Ocurrio un error al intentar actualizar el contacto con Id: {0}", ObjUpd.IdContacto);
+                return false;
+            }
         }
 
         public BE.Contacto GetById(Guid id)

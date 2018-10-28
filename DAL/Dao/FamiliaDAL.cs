@@ -10,7 +10,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class FamiliaDAL : ICRUD<BE.Familia>
+    public class FamiliaDAL
     {
         private FamiliaDAL() { }
 

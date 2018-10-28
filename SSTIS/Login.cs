@@ -7,27 +7,52 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BE;
+using BLL.Interfaces;
+using SSTIS.Interfaces;
+using SSTIS.Utils;
 
-namespace SysAnalizer
+namespace SSTIS
 {
-    public partial class Login : Form
+    public partial class Login : Form, ILogin
     {
-        public Login()
+        public IServicio<Usuario> ServicioUsuario { get; set; }
+        public IServicioUsuario ServicioUsuarioImplementor { get; set; }
+        public IPrincipal Principal;
+
+        public Login(IServicio<Usuario> servicioUsuario, IServicioUsuario servicioUsuarioImplementor, IPrincipal principal)
         {
+            this.ServicioUsuario = servicioUsuario;
+            this.ServicioUsuarioImplementor = servicioUsuarioImplementor;
+            this.Principal = principal;
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Login_Load(object sender, EventArgs e)
         {
-
         }
 
         private void btn_ingresar_Click(object sender, EventArgs e)
         {
-            string usuario = txt_user.Text;
-            string contraseña = txt_contraseña.Text;
+            string email = txtEmail.Text;
+            string contraseña = txtContrasenia.Text;
+            var usuarioActivo = ServicioUsuarioImplementor.ObtenerUsuarioConEmail(email);
 
-            //BLL.UsuarioBLL.Getinstancia().logIn(usuario,contraseña);
+            if (ServicioUsuarioImplementor.LogIn(email, contraseña))
+            {
+                LoginInfo.Usuario = usuarioActivo;
+                this.Hide();
+                Principal.Show();
+            }
+            else
+            {
+                MessageBox.Show("Ocurrio un error al loguearse. Por favor verifique los datos ingresados");
+            }
+        }
+
+        private void txtEmail_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

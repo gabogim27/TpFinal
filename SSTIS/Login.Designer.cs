@@ -1,4 +1,4 @@
-﻿namespace SysAnalizer
+﻿namespace SSTIS
 {
     partial class Login
     {
@@ -30,8 +30,8 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.txt_user = new System.Windows.Forms.TextBox();
-            this.txt_contraseña = new System.Windows.Forms.TextBox();
+            this.txtEmail = new System.Windows.Forms.TextBox();
+            this.txtContrasenia = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.Lnk_Recuperar_Password = new System.Windows.Forms.LinkLabel();
             this.btn_ingresar = new System.Windows.Forms.Button();
@@ -56,25 +56,26 @@
             this.label2.Location = new System.Drawing.Point(10, 54);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(46, 13);
+            this.label2.Size = new System.Drawing.Size(38, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Usuario:";
+            this.label2.Text = "E-mail:";
             // 
-            // txt_user
+            // txtEmail
             // 
-            this.txt_user.Location = new System.Drawing.Point(12, 71);
-            this.txt_user.Margin = new System.Windows.Forms.Padding(2);
-            this.txt_user.Name = "txt_user";
-            this.txt_user.Size = new System.Drawing.Size(255, 20);
-            this.txt_user.TabIndex = 2;
+            this.txtEmail.Location = new System.Drawing.Point(12, 71);
+            this.txtEmail.Margin = new System.Windows.Forms.Padding(2);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(255, 20);
+            this.txtEmail.TabIndex = 2;
+            this.txtEmail.TextChanged += new System.EventHandler(this.txtEmail_TextChanged);
             // 
-            // txt_contraseña
+            // txtContrasenia
             // 
-            this.txt_contraseña.Location = new System.Drawing.Point(11, 126);
-            this.txt_contraseña.Margin = new System.Windows.Forms.Padding(2);
-            this.txt_contraseña.Name = "txt_contraseña";
-            this.txt_contraseña.Size = new System.Drawing.Size(255, 20);
-            this.txt_contraseña.TabIndex = 4;
+            this.txtContrasenia.Location = new System.Drawing.Point(11, 126);
+            this.txtContrasenia.Margin = new System.Windows.Forms.Padding(2);
+            this.txtContrasenia.Name = "txtContrasenia";
+            this.txtContrasenia.Size = new System.Drawing.Size(255, 20);
+            this.txtContrasenia.TabIndex = 4;
             // 
             // label3
             // 
@@ -147,15 +148,15 @@
             this.Controls.Add(this.btn_salir);
             this.Controls.Add(this.btn_ingresar);
             this.Controls.Add(this.Lnk_Recuperar_Password);
-            this.Controls.Add(this.txt_contraseña);
+            this.Controls.Add(this.txtContrasenia);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.txt_user);
+            this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Login";
-            this.Text = "SysAnalizer - Acceso ";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Text = "Sistema TIS - Acceso ";
+            this.Load += new System.EventHandler(this.Login_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -165,8 +166,8 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txt_user;
-        private System.Windows.Forms.TextBox txt_contraseña;
+        private System.Windows.Forms.TextBox txtEmail;
+        private System.Windows.Forms.TextBox txtContrasenia;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.LinkLabel Lnk_Recuperar_Password;
         private System.Windows.Forms.Button btn_ingresar;

@@ -9,7 +9,7 @@ namespace DAL.Repositorios
     using System.Text;
     using System.Threading.Tasks;
 
-    public class RepositorioProvincia : IRepository<Provincia>
+    public class RepositorioProvincia : IRepository<Provincia>, IRepositorioProvincia
     {
         public IDao<Provincia> ProvinciaDao { get; }
 
@@ -41,6 +41,11 @@ namespace DAL.Repositorios
         public bool Update(Provincia ObjUpd)
         {
             return ProvinciaDao.Update(ObjUpd);
+        }
+
+        public Provincia GetProvinciaByLocalidadId(Guid idLocalidad)
+        {
+            throw new NotImplementedException();
         }
     }
 }

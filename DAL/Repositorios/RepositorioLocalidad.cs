@@ -9,13 +9,15 @@ namespace DAL.Repositorios
     using System.Text;
     using System.Threading.Tasks;
 
-    public class RepositorioLocalidad : IRepository<Localidad>
+    public class RepositorioLocalidad : IRepository<Localidad>, IRepositorioLocalidad
     {
-        public IDao<Localidad> LocalidadDao { get; }
+        public IDao<Localidad> LocalidadDao;
+        public ILocalidadDao LocalidadDaoImplementor;
 
-        public RepositorioLocalidad(IDao<Localidad> localidadDao)
+        public RepositorioLocalidad(IDao<Localidad> localidadDao, ILocalidadDao localidadDaoImplementor)
         {
             this.LocalidadDao = localidadDao ?? throw new ArgumentNullException(nameof(localidadDao));
+            this.LocalidadDaoImplementor = localidadDaoImplementor;
         }
 
         public bool Create(Localidad ObjAlta)
@@ -41,6 +43,11 @@ namespace DAL.Repositorios
         public bool Update(Localidad ObjUpd)
         {
             throw new NotImplementedException();
+        }
+
+        public List<Localidad> GetLocalidadesByProvinciaId(Guid provinciaId)
+        {
+            return LocalidadDaoImplementor.GetLocalidadesByProvinciaId(provinciaId);
         }
     }
 }

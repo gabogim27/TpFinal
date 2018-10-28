@@ -1,4 +1,5 @@
 ﻿using BLL.Interfaces;
+using DAL.Interfaces;
 
 namespace BLL
 {
@@ -6,13 +7,15 @@ namespace BLL
     using System.Collections.Generic;
     using BE;
 
-    public class ServicioLocalidad : IServicio<Localidad>
+    public class ServicioLocalidad : IServicio<Localidad>, IServicioLocalidad
     {
         public IRepository<Localidad> RepositorioLocalidad { get; }
+        public IRepositorioLocalidad RepositorioLocalidadImplementor;
 
-        public ServicioLocalidad(IRepository<Localidad> repositorioLocalidad)
+        public ServicioLocalidad(IRepository<Localidad> repositorioLocalidad, IRepositorioLocalidad repositorioLocalidadImplementor)
         {
             this.RepositorioLocalidad = repositorioLocalidad ?? throw new ArgumentNullException(nameof(repositorioLocalidad));
+            this.RepositorioLocalidadImplementor = repositorioLocalidadImplementor;
         }
 
         public bool Create(BE.Localidad ObjAlta)
@@ -38,6 +41,11 @@ namespace BLL
         public BE.Localidad GetById(Guid id)
         {
             return RepositorioLocalidad.GetById(id);
+        }
+
+        public List<Localidad> GetLocalidadesByProvinciaId(Guid provinciaId)
+        {
+            return RepositorioLocalidadImplementor.GetLocalidadesByProvinciaId(provinciaId);
         }
     }
 }

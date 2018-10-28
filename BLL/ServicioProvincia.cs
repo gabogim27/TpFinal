@@ -6,7 +6,7 @@ namespace BLL
     using System.Collections.Generic;
     using BE;
 
-    public class ServicioProvincia : IServicio<Provincia>
+    public class ServicioProvincia : IServicio<Provincia>, IServicioProvincia
     {
 
         public IRepository<Provincia> RepositorioProvincia;
@@ -39,6 +39,11 @@ namespace BLL
         public BE.Provincia GetById(Guid id)
         {
             throw new System.NotImplementedException();
+        }
+
+        public Provincia GetProvinciaByLocalidadId(Guid idLocalidad)
+        {
+            throw new NotImplementedException();
         }
     }
 }

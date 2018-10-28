@@ -43,12 +43,12 @@
             this.Button4 = new System.Windows.Forms.Button();
             this.GroupBox3 = new System.Windows.Forms.GroupBox();
             this.Button8 = new System.Windows.Forms.Button();
-            this.Button1 = new System.Windows.Forms.Button();
+            this.btnEditarUsuario = new System.Windows.Forms.Button();
             this.GroupBox4 = new System.Windows.Forms.GroupBox();
-            this.DataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvUsuarios = new System.Windows.Forms.DataGridView();
             this.GroupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtCp = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.cboLocalidad = new System.Windows.Forms.ComboBox();
             this.cboProvincia = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -64,21 +64,21 @@
             this.Label1 = new System.Windows.Forms.Label();
             this.GroupBox3.SuspendLayout();
             this.GroupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
             this.GroupBox2.SuspendLayout();
             this.GroupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtCelular
             // 
-            this.txtCelular.Location = new System.Drawing.Point(121, 153);
+            this.txtCelular.Location = new System.Drawing.Point(124, 170);
             this.txtCelular.Name = "txtCelular";
             this.txtCelular.Size = new System.Drawing.Size(100, 20);
             this.txtCelular.TabIndex = 18;
             // 
             // txtTelFijo
             // 
-            this.txtTelFijo.Location = new System.Drawing.Point(121, 121);
+            this.txtTelFijo.Location = new System.Drawing.Point(124, 142);
             this.txtTelFijo.Name = "txtTelFijo";
             this.txtTelFijo.Size = new System.Drawing.Size(100, 20);
             this.txtTelFijo.TabIndex = 17;
@@ -93,7 +93,7 @@
             // Label11
             // 
             this.Label11.AutoSize = true;
-            this.Label11.Location = new System.Drawing.Point(7, 96);
+            this.Label11.Location = new System.Drawing.Point(6, 113);
             this.Label11.Name = "Label11";
             this.Label11.Size = new System.Drawing.Size(56, 13);
             this.Label11.TabIndex = 15;
@@ -102,16 +102,17 @@
             // Label9
             // 
             this.Label9.AutoSize = true;
-            this.Label9.Location = new System.Drawing.Point(6, 130);
+            this.Label9.Location = new System.Drawing.Point(2, 149);
             this.Label9.Name = "Label9";
             this.Label9.Size = new System.Drawing.Size(71, 13);
             this.Label9.TabIndex = 13;
             this.Label9.Text = "Telefono Fijo:";
+            this.Label9.Click += new System.EventHandler(this.Label9_Click);
             // 
             // Label8
             // 
             this.Label8.AutoSize = true;
-            this.Label8.Location = new System.Drawing.Point(7, 156);
+            this.Label8.Location = new System.Drawing.Point(12, 177);
             this.Label8.Name = "Label8";
             this.Label8.Size = new System.Drawing.Size(42, 13);
             this.Label8.TabIndex = 12;
@@ -187,7 +188,7 @@
             // 
             this.GroupBox3.Controls.Add(this.Button8);
             this.GroupBox3.Controls.Add(this.btnCrearUsuario);
-            this.GroupBox3.Controls.Add(this.Button1);
+            this.GroupBox3.Controls.Add(this.btnEditarUsuario);
             this.GroupBox3.Controls.Add(this.Button6);
             this.GroupBox3.Controls.Add(this.Button3);
             this.GroupBox3.Controls.Add(this.Button5);
@@ -209,18 +210,19 @@
             this.Button8.Text = "Blanqueo de contraseña";
             this.Button8.UseVisualStyleBackColor = true;
             // 
-            // Button1
+            // btnEditarUsuario
             // 
-            this.Button1.Location = new System.Drawing.Point(9, 84);
-            this.Button1.Name = "Button1";
-            this.Button1.Size = new System.Drawing.Size(144, 30);
-            this.Button1.TabIndex = 4;
-            this.Button1.Text = "Editar Usuario";
-            this.Button1.UseVisualStyleBackColor = true;
+            this.btnEditarUsuario.Location = new System.Drawing.Point(9, 84);
+            this.btnEditarUsuario.Name = "btnEditarUsuario";
+            this.btnEditarUsuario.Size = new System.Drawing.Size(144, 30);
+            this.btnEditarUsuario.TabIndex = 4;
+            this.btnEditarUsuario.Text = "Editar Usuario";
+            this.btnEditarUsuario.UseVisualStyleBackColor = true;
+            this.btnEditarUsuario.Click += new System.EventHandler(this.btnEditarUsuario_Click);
             // 
             // GroupBox4
             // 
-            this.GroupBox4.Controls.Add(this.DataGridView1);
+            this.GroupBox4.Controls.Add(this.dgvUsuarios);
             this.GroupBox4.Location = new System.Drawing.Point(12, 12);
             this.GroupBox4.Name = "GroupBox4";
             this.GroupBox4.Size = new System.Drawing.Size(407, 187);
@@ -228,29 +230,22 @@
             this.GroupBox4.TabStop = false;
             this.GroupBox4.Text = "Usuario";
             // 
-            // DataGridView1
+            // dgvUsuarios
             // 
-            this.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Nombre,
-            this.Column1});
-            this.DataGridView1.Location = new System.Drawing.Point(3, 19);
-            this.DataGridView1.Name = "DataGridView1";
-            this.DataGridView1.Size = new System.Drawing.Size(385, 156);
-            this.DataGridView1.TabIndex = 0;
-            // 
-            // Nombre
-            // 
-            this.Nombre.HeaderText = "Nombre";
-            this.Nombre.Name = "Nombre";
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Apellido";
-            this.Column1.Name = "Column1";
+            this.dgvUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUsuarios.Location = new System.Drawing.Point(3, 19);
+            this.dgvUsuarios.Name = "dgvUsuarios";
+            this.dgvUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvUsuarios.Size = new System.Drawing.Size(385, 156);
+            this.dgvUsuarios.StandardTab = true;
+            this.dgvUsuarios.TabIndex = 0;
+            this.dgvUsuarios.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsuarios_CellClick);
+            this.dgvUsuarios.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsuarios_RowEnter);
             // 
             // GroupBox2
             // 
+            this.GroupBox2.Controls.Add(this.txtCp);
+            this.GroupBox2.Controls.Add(this.label3);
             this.GroupBox2.Controls.Add(this.cboLocalidad);
             this.GroupBox2.Controls.Add(this.cboProvincia);
             this.GroupBox2.Controls.Add(this.label13);
@@ -268,10 +263,26 @@
             this.GroupBox2.TabStop = false;
             this.GroupBox2.Text = "Otros datos";
             // 
+            // txtCp
+            // 
+            this.txtCp.Location = new System.Drawing.Point(121, 51);
+            this.txtCp.Name = "txtCp";
+            this.txtCp.Size = new System.Drawing.Size(100, 20);
+            this.txtCp.TabIndex = 23;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 56);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(75, 13);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "Código Postal:";
+            // 
             // cboLocalidad
             // 
             this.cboLocalidad.FormattingEnabled = true;
-            this.cboLocalidad.Location = new System.Drawing.Point(121, 93);
+            this.cboLocalidad.Location = new System.Drawing.Point(121, 105);
             this.cboLocalidad.Name = "cboLocalidad";
             this.cboLocalidad.Size = new System.Drawing.Size(121, 21);
             this.cboLocalidad.TabIndex = 21;
@@ -279,15 +290,16 @@
             // cboProvincia
             // 
             this.cboProvincia.FormattingEnabled = true;
-            this.cboProvincia.Location = new System.Drawing.Point(121, 57);
+            this.cboProvincia.Location = new System.Drawing.Point(121, 78);
             this.cboProvincia.Name = "cboProvincia";
             this.cboProvincia.Size = new System.Drawing.Size(121, 21);
             this.cboProvincia.TabIndex = 20;
+            this.cboProvincia.SelectionChangeCommitted += new System.EventHandler(this.cboProvincia_SelectionChangeCommitted);
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 60);
+            this.label13.Location = new System.Drawing.Point(8, 86);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(54, 13);
             this.label13.TabIndex = 19;
@@ -404,7 +416,7 @@
             this.Load += new System.EventHandler(this.ABMUsuarios_Load);
             this.GroupBox3.ResumeLayout(false);
             this.GroupBox4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).EndInit();
             this.GroupBox2.ResumeLayout(false);
             this.GroupBox2.PerformLayout();
             this.GroupBox1.ResumeLayout(false);
@@ -429,11 +441,9 @@
         internal System.Windows.Forms.Button Button4;
         internal System.Windows.Forms.GroupBox GroupBox3;
         internal System.Windows.Forms.Button Button8;
-        internal System.Windows.Forms.Button Button1;
+        internal System.Windows.Forms.Button btnEditarUsuario;
         internal System.Windows.Forms.GroupBox GroupBox4;
-        internal System.Windows.Forms.DataGridView DataGridView1;
-        internal System.Windows.Forms.DataGridViewTextBoxColumn Nombre;
-        internal System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        internal System.Windows.Forms.DataGridView dgvUsuarios;
         internal System.Windows.Forms.GroupBox GroupBox2;
         internal System.Windows.Forms.GroupBox GroupBox1;
         internal System.Windows.Forms.TextBox txtEmail;
@@ -448,5 +458,7 @@
         internal System.Windows.Forms.ComboBox cboProvincia;
         internal System.Windows.Forms.Label label13;
         internal System.Windows.Forms.ComboBox cboLocalidad;
+        internal System.Windows.Forms.TextBox txtCp;
+        private System.Windows.Forms.Label label3;
     }
 }

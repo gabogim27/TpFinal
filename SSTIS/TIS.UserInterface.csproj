@@ -165,7 +165,9 @@
       <DependentUpon>FamiliaPatente.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IABMUsuarios.cs" />
+    <Compile Include="Interfaces\ILogin.cs" />
     <Compile Include="Interfaces\INuevoUsuario.cs" />
+    <Compile Include="Interfaces\IPrincipal.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -205,6 +207,8 @@
       <DependentUpon>RealizarCopiaSeguridad.cs</DependentUpon>
     </Compile>
     <Compile Include="SimpleConfigInjector.cs" />
+    <Compile Include="Utils\ControlsUtils.cs" />
+    <Compile Include="Utils\LoginInfo.cs" />
     <EmbeddedResource Include="ABMClientes.resx">
       <DependentUpon>ABMClientes.cs</DependentUpon>
     </EmbeddedResource>

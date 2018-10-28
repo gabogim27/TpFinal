@@ -7,7 +7,5 @@ namespace BE
         public Guid IdLocalidad { get; set; }
 
         public string Descripcion { get; set; }
-
-        public Provincia _Provincia { get; set; }
     }
 }

@@ -49,6 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IServicioBitacora.cs" />
+    <Compile Include="Interfaces\IServicioLocalidad.cs" />
+    <Compile Include="Interfaces\IServicioProvincia.cs" />
+    <Compile Include="Interfaces\IServicioUsuario.cs" />
+    <Compile Include="ServicioBitacora.cs" />
     <Compile Include="ServicioContacto.cs" />
     <Compile Include="ServicioDomicilio.cs" />
     <Compile Include="FamiliaBLL.cs" />

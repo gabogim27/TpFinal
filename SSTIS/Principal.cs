@@ -7,14 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SSTIS.Interfaces;
 
-namespace SysAnalizer
+namespace SSTIS
 {
-    public partial class Principal : Form
+    public partial class Principal : Form, IPrincipal
     {
         public Principal()
         {
             InitializeComponent();
+        }
+
+        private void LoginToolStripMenuItem_Click(object sender, EventArgs e)
+        {
         }
     }
 }

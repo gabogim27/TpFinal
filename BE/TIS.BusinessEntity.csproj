@@ -46,13 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bitacora.cs" />
+    <Compile Include="BitacoraFiltros.cs" />
     <Compile Include="Cliente.cs" />
     <Compile Include="Contacto.cs" />
     <Compile Include="DigitoVerificador.cs" />
     <Compile Include="Domicilio.cs" />
     <Compile Include="Familia.cs" />
     <Compile Include="FamiliaPatente.cs" />
-    <Compile Include="ICRUD.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Localidad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

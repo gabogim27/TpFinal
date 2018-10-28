@@ -1,4 +1,7 @@
-﻿namespace DAL.Impl
+﻿using log4net;
+using log4net.Repository.Hierarchy;
+
+namespace DAL.Impl
 {
     using System;
     using System.Collections.Generic;
@@ -14,14 +17,16 @@
     using DAL.Utils;
     using DAL.Interfaces;
 
-    public class UsuarioDao : IDao<Usuario>
+    public class UsuarioDao : IDao<Usuario>, IUsuarioDao
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(UsuarioDao));
+
         public bool Create(Usuario ObjAlta)
-        {           
+        {
             var queryString = string.Format("INSERT INTO dbo.Usuario(IdUsuario, Nombre, Apellido, Password, Email, " +
-                "CantLoginsFallidos, Estado, IdDomicilio, IdContacto, IdIdioma, PrimerLogin) values " +
-                "('{0}','{1}','{2}','{3}','{4}',{5},{6},'{7}','{8}','{9}',{10})",
-                ObjAlta.Id = Guid.NewGuid(),
+                "CantLoginsFallidos, Estado, IdDomicilio, IdContacto, IdIdioma, PrimerLogin, Sexo) values " +
+                "('{0}','{1}','{2}','{3}','{4}',{5},{6},'{7}','{8}','{9}',{10}, '{11}')",
+                ObjAlta.IdUsuario = Guid.NewGuid(),
                 ObjAlta.Nombre,
                 ObjAlta.Apellido,
                 ObjAlta.ContraseñaEncriptada,
@@ -29,25 +34,22 @@
                 ObjAlta.CantIngresosFallidos = 0,
                 Convert.ToByte(ObjAlta.Estado = true),
                 ObjAlta.Domicilio.IdDomicilio,
-                ObjAlta.Contacto.Id,
+                ObjAlta.Contacto.IdContacto,
                 ObjAlta.IdIdioma = new Guid("632302C5-266A-440D-9F39-6DC6DDEBAACF"),//cambiar el id este, hacerlo bien                
-                Convert.ToByte(ObjAlta.PrimerLogin)
+                Convert.ToByte(ObjAlta.PrimerLogin),
+                ObjAlta.Sexo
                 );
-
             var returnValue = false;
 
-            using (IDbConnection connection = SqlUtils.Connection())
+            try
             {
-                try
-                {
-                    connection.Execute(queryString);
-                   
-                    return !returnValue;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+                SqlUtils.Exec(queryString);
+                log.InfoFormat("Usuario con ID: {0} persistido correctamenete", ObjAlta.IdUsuario);
+                return !returnValue;
+            }
+            catch (Exception ex)
+            {
+                log.ErrorFormat("Ocurrio un error al persistir el usuario: {0}", ex.Message);
             }
 
             return returnValue;
@@ -55,33 +57,41 @@
 
         public List<Usuario> Retrive()
         {
-            var usuario = new BE.Usuario();
-            var queryString = "SELECT * FROM dbo.Usuario;";
-            var comm = new SqlCommand();
-
-            using (IDbConnection connection = SqlUtils.Connection())
+            var queryString = @"SELECT us.*, con.*, dom.*, loc.* , prov.*
+            FROM dbo.Usuario us
+            inner join dbo.contacto con on us.IdContacto = con.IdContacto
+            inner join dbo.DOMICILIO dom on dom.IdDomicilio = us.IdDomicilio
+            inner join dbo.LOCALIDAD loc on loc.IdLocalidad = dom.IdLocalidad
+            inner join dbo.Provincia prov on prov.IdProvincia = dom.IdProvincia";
+            try
             {
-                try
-                {
+                log.Info("Buscando todos los usuario en la BD");
 
-                    return (List<Usuario>)connection.Query<Usuario>(queryString);
-                }
-                catch (Exception)
+                using (IDbConnection connection = SqlUtils.Connection())
                 {
-
-                    throw;
+                    connection.Open();
+                    var usuarios = connection.Query<Usuario, Contacto, Domicilio, Localidad, Provincia, Usuario>(
+                            queryString,
+                            (usuario, contacto, domicilio, localidad, provincia) =>
+                            {
+                                usuario.Contacto = contacto;
+                                usuario.Domicilio = domicilio;
+                                usuario.Domicilio.Localidad = localidad;
+                                usuario.Domicilio.Provincia = provincia;
+                                return usuario;
+                            },
+                            splitOn: "IdUsuario, IdContacto, IdDomicilio, IdLocalidad, IdProvincia")
+                        .Distinct()
+                        .ToList();
+                    return usuarios;
                 }
+
             }
-        }
-
-        public bool Delete(object ObjDel)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Update(object ObjUpd)
-        {
-            throw new NotImplementedException();
+            catch (Exception ex)
+            {
+                log.ErrorFormat("Hubo un error al traer la lista de usuarios: {0}", ex.Message);
+            }
+            return new List<Usuario>();
         }
 
         public bool Delete(BE.Usuario ObjDel)
@@ -91,34 +101,76 @@
 
         public bool Update(BE.Usuario ObjUpd)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var queryString = string.Format("Update dbo.Usuario set " +
+                                                "Nombre = '{0}', Apellido = '{1}', Email = '{2}', " +
+                                                "Sexo = '{3}' where IdUsuario = '{4}'",
+                    ObjUpd.Nombre,
+                    ObjUpd.Apellido,
+                    ObjUpd.Email,
+                    ObjUpd.Sexo,
+                    ObjUpd.IdUsuario
+                );
+
+                return SqlUtils.Exec(queryString);
+            }
+            catch (Exception e)
+            {
+                log.ErrorFormat("Ocurrio un error al intentar actualizar el usuario con Id: {0}. Error: {1}", ObjUpd.IdUsuario, e.Message);
+                return false;
+            }
         }
 
         public bool LogIn(string email, string contraseña)
         {
-            BE.Usuario usu = ObtenerUsuarioConEmail(email);
-            if (!usu.PrimerLogin)
+            var usuario = ObtenerUsuarioConEmail(email);
+            if (!usuario.PrimerLogin)
             {
-                var cIngresoInc = usu.CantIngresosFallidos;
+                var cingresoInc = usuario.CantIngresosFallidos;
 
-                if (cIngresoInc < 3)
+                if (cingresoInc < 3)
                 {
-                    //string contEncriptada = Encriptar(contraseña);
-                    //bool ingresa = ValidarContraseña(usu, contEncriptada);
-                    //if (!ingresa)
-                    //{
-                    //    cIngresoInc++;
-                    //    //AumentarIngresos();
-                    //}
+                    var contEncriptada = MD5.ComputeMD5Hash(contraseña);
+                    var ingresa = ValidarContraseña(usuario.Password, contEncriptada);
+                    if (!ingresa)
+                    {
+                        cingresoInc++;
+
+                        AumentarIngresos(usuario, cingresoInc);
+
+                        return false;
+                    }
+
+                    return true;
                 }
+
                 return false;
             }
+
             return true;
         }
 
-        private bool ValidarContraseña(BE.Usuario usuario, string contEncriptada)
+        private void AumentarIngresos(Usuario usuario, int ingresos)
         {
-            if (usuario.Password == contEncriptada)
+            var queryString = string.Format("UPDATE Usuario SET CantLoginsFallidos = {1} WHERE IdUsuario = {0}", usuario.IdUsuario, ingresos);
+
+            SqlUtils.Exec(queryString);
+        }
+
+        public bool CambiarPassword(Usuario usuario, string nuevaContraseña, bool primerLogin)
+        {
+            throw new NotImplementedException();
+        }
+
+        Usuario IUsuarioDao.ObtenerUsuarioConEmail(string email)
+        {
+            return ObtenerUsuarioConEmail(email);
+        }
+
+        private bool ValidarContraseña(string password, string contEncriptada)
+        {
+            if (password == contEncriptada)
             {
                 return true;
             }
@@ -128,44 +180,59 @@
 
         private BE.Usuario ObtenerUsuarioConEmail(string email)
         {
-            var usuario = new BE.Usuario();
-            var queryString = string.Format("SELECT * FROM dbo.UsuarioDAL WHERE Email = '{0}'", email);
-            var comm = new SqlCommand();
-
-            using (SqlConnection connection = SqlUtils.Connection())
+            try
             {
-                comm.CommandText = queryString;
-                comm.Connection = connection;
-                comm.CommandType = CommandType.Text;
-
-                var Da = new SqlDataAdapter();
-                Da.SelectCommand = comm;
-
-                DataTable Dt = new DataTable();
-
-                Da.Fill(Dt);
-
-                foreach (DataRow dr in Dt.Rows)
-                {
-                    usuario.Nombre = Convert.ToString(dr["Nombre"]);
-                    usuario.Apellido = Convert.ToString(dr["Apellido"]);
-                    usuario.Password = Convert.ToString(dr["Password"]);
-                    usuario.Email = Convert.ToString(dr["Email"]);
-                    usuario.Contacto.Id = Guid.Parse(dr["IdContacto"].ToString());
-                    usuario.CantIngresosFallidos = Convert.ToInt32(dr["CantIngresosFallidos"]);
-                    usuario.Estado = Convert.ToBoolean(dr["Estado"]);
-                    usuario.PrimerLogin = Convert.ToBoolean(dr["PrimerLogin"]);
-                    usuario.IdIdioma = Guid.Parse(dr["IdIdioma"].ToString());
-                    usuario.Domicilio.IdDomicilio = Guid.Parse(dr["IdDomicilio"].ToString());
-                }
-                return usuario;
+                var usuario = new BE.Usuario();
+                var queryString = string.Format("SELECT * FROM dbo.Usuario WHERE Email = '{0}'", email);
+                return SqlUtils.Exec<Usuario>(queryString).FirstOrDefault();
             }
+            catch (Exception ex)
+            {
+                log.ErrorFormat("No es posible encontrar el usuario con E-mail: {0}", email);
+            }
+
+            return null;
         }
 
-        public BE.Usuario GetById(Guid id)
+        public Usuario GetById(Guid id)
         {
-            throw new NotImplementedException();
-        }       
+            try
+            {
+                var queryString = @"SELECT us.*, con.*, dom.*, loc.* , prov.*
+                                    FROM dbo.Usuario us
+                                    inner join dbo.contacto con on us.IdContacto = con.IdContacto
+                                    inner join dbo.DOMICILIO dom on dom.IdDomicilio = us.IdDomicilio
+                                    inner join dbo.LOCALIDAD loc on loc.IdLocalidad = dom.IdLocalidad
+                                    inner join dbo.Provincia prov on prov.IdProvincia = dom.IdProvincia
+                                    where IdUsuario = " + "'" + id + "'";
+                log.Info("Buscando todos los usuario en la BD");
+
+                using (IDbConnection connection = SqlUtils.Connection())
+                {
+                    connection.Open();
+                    var user = connection.Query<Usuario, Contacto, Domicilio, Localidad, Provincia, Usuario>(
+                            queryString,
+                            (usuario, contacto, domicilio, localidad, provincia) =>
+                            {
+                                usuario.Contacto = contacto;
+                                usuario.Domicilio = domicilio;
+                                usuario.Domicilio.Localidad = localidad;
+                                usuario.Domicilio.Provincia = provincia;
+                                return usuario;
+                            },
+                            splitOn: "IdUsuario, IdContacto, IdDomicilio, IdLocalidad, IdProvincia")
+                        .Distinct()
+                        .FirstOrDefault();
+                    return user;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.ErrorFormat("No es posible encontrar el usuario con Id: {0}. Error: {1}", id, ex.Message);
+            }
+
+            return null;
+        }
         //public string Encriptar(string contraseña)
         //{
         //    MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();

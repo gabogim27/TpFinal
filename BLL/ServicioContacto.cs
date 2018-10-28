@@ -40,7 +40,7 @@ namespace BLL
 
         public bool Update(Contacto ObjUpd)
         {
-            throw new NotImplementedException();
+            return RepositorioContacto.Update(ObjUpd);
         }       
     }
 }

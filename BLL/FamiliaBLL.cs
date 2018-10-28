@@ -7,20 +7,9 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class FamiliaBLL : ICRUD<BE.Familia>
+    public class FamiliaBLL
     {
         private FamiliaBLL() {}
-
-        private static FamiliaBLL instancia;
-
-        public static FamiliaBLL Getinstancia()
-        {
-            if (instancia == null)
-            {
-                instancia = new FamiliaBLL();
-            }
-            return instancia;
-        }
 
         public bool Create(BE.Familia ObjAlta)
         {

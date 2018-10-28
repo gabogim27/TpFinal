@@ -20,14 +20,19 @@ namespace SSTIS
         public IServicio<Usuario> ServicioUsuario { get; set; }
         public IServicio<Localidad> ServicioLocalidad;
         public IServicio<Provincia> ServicioProvincia { get; set; }
+        public IServicioUsuario ServicioUsuarioImplementor;
+        public IServicioLocalidad ServicioLocalidadImplementor;
 
         public NuevoUsuario(IServicio<Usuario> servicioUsuario, IServicio<Localidad> servicioLocalidad,
-            IServicio<Provincia> servicioProvincia)
+            IServicio<Provincia> servicioProvincia, IServicioUsuario servicioUsuarioImplementor,
+            IServicioLocalidad servicioLocalidadImplementor)
         {
-            InitializeComponent();
             this.ServicioUsuario = servicioUsuario;
             this.ServicioLocalidad = servicioLocalidad;
             this.ServicioProvincia = servicioProvincia;
+            this.ServicioUsuarioImplementor = servicioUsuarioImplementor;
+            this.ServicioLocalidadImplementor = servicioLocalidadImplementor;
+            InitializeComponent();
         }
        
         private void Button1_Click(object sender, EventArgs e)
@@ -36,7 +41,7 @@ namespace SSTIS
             {
                 if (!string.IsNullOrEmpty(txtEmail.Text.Trim()))
                 {
-                    var mailValido = Utils.ValidarEmail(txtEmail.Text);
+                    var mailValido = ServicioUsuarioImplementor.ValidarEmail(txtEmail.Text.Trim());
                     if (!mailValido)
                     {
                         MessageBox.Show("El e-mail ingresado esta en formato incorrecto. Por favor corrijalo!!!");
@@ -67,41 +72,53 @@ namespace SSTIS
                     nuevoUsuario.Email = txtEmail.Text;
                     nuevoUsuario.Domicilio = new BE.Domicilio();
                     nuevoUsuario.Domicilio.Direccion = txtDomicilio.Text;
+                    nuevoUsuario.Domicilio.CodPostal = txtCp.Text.Trim();
                     nuevoUsuario.Contacto = new BE.Contacto();
                     nuevoUsuario.Contacto.Celular = txtCelular.Text;
                     nuevoUsuario.Contacto.Telefono = txtTelFijo.Text;
                     nuevoUsuario.Sexo = sexo;
                     nuevoUsuario.Domicilio.Localidad = new BE.Localidad();
                     nuevoUsuario.Domicilio.Localidad.IdLocalidad = Guid.Parse(cboLocalidad.SelectedValue.ToString());
-                    nuevoUsuario.Domicilio.Localidad._Provincia = new Provincia();
-                    nuevoUsuario.Domicilio.Localidad._Provincia.IdProvincia = Guid.Parse(cboProvincia.SelectedValue.ToString());
+                    nuevoUsuario.Domicilio.Provincia = new Provincia();
+                    nuevoUsuario.Domicilio.Provincia.IdProvincia = Guid.Parse(cboProvincia.SelectedValue.ToString());
                     this.ServicioUsuario.Create(nuevoUsuario);
                 }
             }
             catch (Exception ex)
             {
-
-                throw new Exception(ex.Message);
+                MessageBox.Show("Por favor verifique los datos ingresados.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void CargarCombos()
+        private void CargarComboProvincia()
         {
             //Retrieve provincias
             var provincias = ServicioProvincia.Retrive();
             cboProvincia.DataSource = provincias;
             cboProvincia.DisplayMember = "Descripcion";
             cboProvincia.ValueMember = "IdProvincia";
-            //Retrieve Localidades
-            var localidades = ServicioLocalidad.Retrive();
-            cboLocalidad.DataSource = localidades;
-            cboLocalidad.DisplayMember = "Descripcion";
-            cboLocalidad.ValueMember = "IdLocalidad";
         }
 
         private void NuevoUsuario_Load(object sender, EventArgs e)
         {
-            CargarCombos();
+            cboLocalidad.Enabled = false;
+            CargarComboProvincia();
+            cboProvincia.SelectedIndex = -1;
+        }
+
+        private void cboProvincia_SelectedIndexChanged(object sender, EventArgs e)
+        {            
+        }
+
+        private void cboProvincia_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            cboLocalidad.Enabled = true;
+            var selectedProvincia = Guid.Parse(cboProvincia.SelectedValue.ToString());
+            var localidadesByProvinciaId = ServicioLocalidadImplementor.GetLocalidadesByProvinciaId(selectedProvincia);
+            cboLocalidad.DataSource = localidadesByProvinciaId;
+            cboLocalidad.DisplayMember = "Descripcion";
+            cboLocalidad.ValueMember = "IdLocalidad";
+            cboLocalidad.SelectedIndex = -1;
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 
 namespace DAL.Impl
 {
-    public class DigitoVerificadorDAL : IDigitoVerificador
+    public class DigitoVerificadorDao : IDigitoVerificador
     {
         public static SqlConnection Connection()
         {
@@ -17,7 +17,7 @@ namespace DAL.Impl
             return conn;
         }
 
-        public int CalcularDVHorizontal(string entidad, List<string> columnasString, List<int> columnasInt)
+        public int CalcularDVHorizontal(string entidad, List<string> columnasString)
         {
             var colLenght = new List<int>();
             var digito = 0;

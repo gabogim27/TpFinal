@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BE;
 
 namespace DAL.Interfaces
 {
-    public interface IDigitoVerificador
+    public interface ILocalidadDao
     {
-        int CalcularDVHorizontal(string entidad, List<string> columnasString);
+        List<Localidad> GetLocalidadesByProvinciaId(Guid provinciaId);
     }
 }
