@@ -4,6 +4,7 @@ using DAL.Utils;
 using Microsoft.SqlServer.Management.Common;
 using Microsoft.SqlServer.Management.Smo;
 using System.Windows.Forms;
+using Microsoft.SqlServer.Management.Smo.Agent;
 using SSTIS.Interfaces;
 
 namespace SSTIS
@@ -26,22 +27,29 @@ namespace SSTIS
             var cantVolumenes = Convert.ToInt32(cboVolumen.SelectedItem);
             try
             {
-                var dbServer = new Server(new ServerConnection(SqlUtils.Connection()));
-                var dbBackUp = new Backup() { Action = BackupActionType.Database, Database = "SistemaTIS"};
-                //dbBackUp.Devices.AddDevice(@"C:\Data\SistemaTIS.bak", DeviceType.File);
-                for (int i = 0; i < cantVolumenes; i++)
+                if (txtUbicacion.Text.Trim() != String.Empty && txtDescripcion.Text.Trim() != String.Empty)
                 {
-                    dbBackUp.Devices.AddDevice(txtUbicacion.Text.Trim() + "\\" + descrBackup.Text.Trim() + i + ".bak", DeviceType.File);
+                    var dbServer = new Server(new ServerConnection(SqlUtils.Connection()));
+                    var dbBackUp = new Backup() { Action = BackupActionType.Database, Database = "TallerPosta" };
+                    //dbBackUp.Devices.AddDevice(@"C:\Data\SistemaTIS.bak", DeviceType.File);
+                    for (int i = 0; i < cantVolumenes; i++)
+                    {
+                        dbBackUp.Devices.AddDevice(txtUbicacion.Text.Trim() + "\\" + txtDescripcion.Text.Trim() + i + ".bak", DeviceType.File);
+                    }
+                    //dbBackUp.Incremental = true;
+                    dbBackUp.Initialize = true;
+                    dbBackUp.PercentComplete += DbPercentComplete;
+                    dbBackUp.Complete += DbBackUp_Complete;
+                    dbBackUp.SqlBackupAsync(dbServer);
                 }
-                //dbBackUp.Incremental = true;
-                dbBackUp.Initialize = true;
-                dbBackUp.PercentComplete += DbPercentComplete;
-                dbBackUp.Complete += DbBackUp_Complete;
-                dbBackUp.SqlBackupAsync(dbServer);
+                else
+                {
+                    MessageBoxHelper.Alert.ShowSimpleAlert("Debe seleccionar un path para la ubicacion del archivo backup y setear una descripción");
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Hubo un error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBoxHelper.Alert.ShowAlterWithButtonAndIcon(ex.Message, "Hubo un error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -76,7 +84,7 @@ namespace SSTIS
             if (explorerDialog.ShowDialog() == DialogResult.OK)
             {
                 txtUbicacion.Text = explorerDialog.SelectedPath;
-                Environment.SpecialFolder root = explorerDialog.RootFolder;
+ 
             }
         }
 

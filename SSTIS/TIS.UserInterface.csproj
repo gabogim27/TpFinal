@@ -127,6 +127,7 @@
       <DependentUpon>Clientes.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IRestaurarCopiaDeSeguridad.cs" />
+    <Compile Include="MessageBoxHelper\Alert.cs" />
     <Compile Include="RestaurarCopiaDeSeguridad.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -298,6 +299,9 @@
       <DependentUpon>RealizarCopiaSeguridad.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
+    <Content Include="Ayuda\Manual de Usuario.chm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

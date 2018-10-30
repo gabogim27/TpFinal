@@ -32,7 +32,7 @@
             this.btnCancelar = new System.Windows.Forms.Button();
             this.Label1 = new System.Windows.Forms.Label();
             this.btnExaminar = new System.Windows.Forms.Button();
-            this.txtPath = new System.Windows.Forms.TextBox();
+            this.txtBackFiles = new System.Windows.Forms.TextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblProgreso = new System.Windows.Forms.Label();
@@ -41,7 +41,7 @@
             // 
             // btnRestaurar
             // 
-            this.btnRestaurar.Location = new System.Drawing.Point(404, 90);
+            this.btnRestaurar.Location = new System.Drawing.Point(404, 32);
             this.btnRestaurar.Name = "btnRestaurar";
             this.btnRestaurar.Size = new System.Drawing.Size(116, 37);
             this.btnRestaurar.TabIndex = 7;
@@ -51,7 +51,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(404, 144);
+            this.btnCancelar.Location = new System.Drawing.Point(404, 103);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(116, 36);
             this.btnCancelar.TabIndex = 6;
@@ -61,7 +61,7 @@
             // Label1
             // 
             this.Label1.AutoSize = true;
-            this.Label1.Location = new System.Drawing.Point(31, 38);
+            this.Label1.Location = new System.Drawing.Point(9, 19);
             this.Label1.Name = "Label1";
             this.Label1.Size = new System.Drawing.Size(153, 13);
             this.Label1.TabIndex = 4;
@@ -69,7 +69,7 @@
             // 
             // btnExaminar
             // 
-            this.btnExaminar.Location = new System.Drawing.Point(215, 79);
+            this.btnExaminar.Location = new System.Drawing.Point(12, 50);
             this.btnExaminar.Name = "btnExaminar";
             this.btnExaminar.Size = new System.Drawing.Size(116, 37);
             this.btnExaminar.TabIndex = 8;
@@ -77,17 +77,18 @@
             this.btnExaminar.UseVisualStyleBackColor = true;
             this.btnExaminar.Click += new System.EventHandler(this.btnExaminar_Click);
             // 
-            // txtPath
+            // txtBackFiles
             // 
-            this.txtPath.Location = new System.Drawing.Point(34, 79);
-            this.txtPath.Multiline = true;
-            this.txtPath.Name = "txtPath";
-            this.txtPath.Size = new System.Drawing.Size(150, 36);
-            this.txtPath.TabIndex = 9;
+            this.txtBackFiles.Location = new System.Drawing.Point(168, 32);
+            this.txtBackFiles.Multiline = true;
+            this.txtBackFiles.Name = "txtBackFiles";
+            this.txtBackFiles.Size = new System.Drawing.Size(216, 95);
+            this.txtBackFiles.TabIndex = 9;
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Multiselect = true;
             // 
             // lblStatus
             // 
@@ -123,7 +124,7 @@
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.lblProgreso);
             this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.txtPath);
+            this.Controls.Add(this.txtBackFiles);
             this.Controls.Add(this.btnExaminar);
             this.Controls.Add(this.btnRestaurar);
             this.Controls.Add(this.btnCancelar);
@@ -141,7 +142,7 @@
         internal System.Windows.Forms.Button btnCancelar;
         internal System.Windows.Forms.Label Label1;
         internal System.Windows.Forms.Button btnExaminar;
-        private System.Windows.Forms.TextBox txtPath;
+        private System.Windows.Forms.TextBox txtBackFiles;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Label lblProgreso;

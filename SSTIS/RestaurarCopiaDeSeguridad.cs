@@ -12,6 +12,7 @@ using DAL.Utils;
 using Microsoft.SqlServer.Management.Common;
 using Microsoft.SqlServer.Management.Smo;
 using SSTIS.Interfaces;
+using SSTIS.MessageBoxHelper;
 
 namespace SSTIS
 {
@@ -28,16 +29,23 @@ namespace SSTIS
 
             try
             {
+                string[] backupFiles = txtBackFiles.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
                 var dbServer = new Server(new ServerConnection(SqlUtils.Connection()));
                 var restore = new Restore()
                 {
-                    Database = "SistemaTIS", Action = RestoreActionType.Database, ReplaceDatabase = true,
+                    Database = "TallerPosta", Action = RestoreActionType.Database, ReplaceDatabase = true,
                     NoRecovery = false
                 };
-                restore.Devices.AddDevice(txtPath.Text.Trim(), DeviceType.File);
+                for (int i = 0; i < backupFiles.Length; i++)
+                {
+                    restore.Devices.AddDevice(backupFiles[i], DeviceType.File);
+                }
+               
                 restore.PercentComplete += DbPercentComplete;
                 restore.Complete += DbRestore_Complete;
-                restore.SqlRestoreAsync(dbServer);
+                restore.SqlRestore(dbServer);
+                
+                Alert.ShowAlterWithButtonAndIcon("Restore completado exitosamente.", "Restore Completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -73,14 +81,18 @@ namespace SSTIS
 
         private void btnExaminar_Click(object sender, EventArgs e)
         {
-            int size = -1;
-            DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
-            if (result == DialogResult.OK) // Test result.
+            openFileDialog1.Filter = "Backup files(*.bak) |*.bak";
+            openFileDialog1.Title = "Por favor seleccione un archivo backup";
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string file = openFileDialog1.FileName;
                 try
                 {
-                    txtPath.Text = file;
+                    for (int i = 0; i < openFileDialog1.FileNames.Length; i++)
+                    {
+                        txtBackFiles.AppendText(openFileDialog1.FileNames[i] + Environment.NewLine);
+                    }
                 }
                 catch (IOException)
                 {

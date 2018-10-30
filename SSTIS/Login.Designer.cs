@@ -38,6 +38,8 @@
             this.btn_salir = new System.Windows.Forms.Button();
             this.cbo_idioma = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.helpProvider1 = new System.Windows.Forms.HelpProvider();
+            this.helpProvider2 = new System.Windows.Forms.HelpProvider();
             this.SuspendLayout();
             // 
             // label1
@@ -138,6 +140,10 @@
             this.label4.TabIndex = 9;
             this.label4.Text = "Seleccionar Idioma";
             // 
+            // helpProvider2
+            // 
+            this.helpProvider2.HelpNamespace = "C:\\Users\\gabriel.gimenez\\Documents\\campo\\campo TP Gabi\\Manual de Usuario.chm";
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -174,6 +180,8 @@
         private System.Windows.Forms.Button btn_salir;
         private System.Windows.Forms.ComboBox cbo_idioma;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.HelpProvider helpProvider1;
+        private System.Windows.Forms.HelpProvider helpProvider2;
     }
 }
 

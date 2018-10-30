@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.descrBackup = new System.Windows.Forms.TextBox();
+            this.txtDescripcion = new System.Windows.Forms.TextBox();
             this.Label2 = new System.Windows.Forms.Label();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.btnExaminar = new System.Windows.Forms.Button();
@@ -43,13 +43,13 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
-            // descrBackup
+            // txtDescripcion
             // 
-            this.descrBackup.Location = new System.Drawing.Point(12, 166);
-            this.descrBackup.Name = "descrBackup";
-            this.descrBackup.Size = new System.Drawing.Size(150, 20);
-            this.descrBackup.TabIndex = 15;
-            this.descrBackup.TextChanged += new System.EventHandler(this.descrBackup_TextChanged);
+            this.txtDescripcion.Location = new System.Drawing.Point(12, 166);
+            this.txtDescripcion.Name = "txtDescripcion";
+            this.txtDescripcion.Size = new System.Drawing.Size(150, 20);
+            this.txtDescripcion.TabIndex = 15;
+            this.txtDescripcion.TextChanged += new System.EventHandler(this.descrBackup_TextChanged);
             // 
             // Label2
             // 
@@ -174,7 +174,7 @@
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cboVolumen);
-            this.Controls.Add(this.descrBackup);
+            this.Controls.Add(this.txtDescripcion);
             this.Controls.Add(this.Label2);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.btnExaminar);
@@ -190,7 +190,7 @@
 
         #endregion
 
-        internal System.Windows.Forms.TextBox descrBackup;
+        internal System.Windows.Forms.TextBox txtDescripcion;
         internal System.Windows.Forms.Label Label2;
         internal System.Windows.Forms.Button btnAceptar;
         internal System.Windows.Forms.Button btnExaminar;

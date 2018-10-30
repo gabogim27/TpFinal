@@ -70,7 +70,7 @@ namespace SysAnalizer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(container
-                .GetInstance<ABMUsuarios>()); //    new ABMUsuarios(new Repository<Usuario>(new UsuarioDao())));
+                .GetInstance<RestaurarCopiaDeSeguridad>()); //    new ABMUsuarios(new Repository<Usuario>(new UsuarioDao())));
         }
     }
 }

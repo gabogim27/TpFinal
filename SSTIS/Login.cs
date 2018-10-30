@@ -32,6 +32,16 @@ namespace SSTIS
         {
         }
 
+        protected override bool ProcessCmdKey(ref Message mensaje, Keys KeyData)
+        {
+            if (KeyData == Keys.F1)
+            {
+                Help.ShowHelp(this, "C:\\TPFinalDiploma\\TpFinal\\SSTIS\\Ayuda\\Manual de Usuario.chm");
+            }
+
+            return true;
+        }
+
         private void btn_ingresar_Click(object sender, EventArgs e)
         {
             string email = txtEmail.Text;
