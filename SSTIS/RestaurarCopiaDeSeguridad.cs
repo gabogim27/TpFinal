@@ -16,9 +16,9 @@ using SSTIS.MessageBoxHelper;
 
 namespace SSTIS
 {
-    public partial class RestaurarCopiaDeSeguridad : Form, IRestaurarCopiaDeSeguridad
+    public partial class frmRestaurarCopiaDeSeguridad : Form, IRestaurarCopiaDeSeguridad
     {
-        public RestaurarCopiaDeSeguridad()
+        public frmRestaurarCopiaDeSeguridad()
         {
             InitializeComponent();
         }

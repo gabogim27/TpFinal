@@ -1,6 +1,6 @@
 ﻿namespace SSTIS
 {
-    partial class Principal
+    partial class frmPrincipal
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Principal));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPrincipal));
             this.MenuStrip1 = new System.Windows.Forms.MenuStrip();
             this.EdicionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LoginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,7 +83,7 @@
             // LoginToolStripMenuItem
             // 
             this.LoginToolStripMenuItem.Name = "LoginToolStripMenuItem";
-            this.LoginToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.LoginToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.LoginToolStripMenuItem.Text = "Login ";
             this.LoginToolStripMenuItem.Click += new System.EventHandler(this.LoginToolStripMenuItem_Click);
             // 
@@ -244,15 +244,16 @@
             this.CerrarSesiónToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
             this.CerrarSesiónToolStripMenuItem.Text = "Cerrar Sesión";
             // 
-            // Principal
+            // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(955, 567);
             this.Controls.Add(this.MenuStrip1);
-            this.Name = "Principal";
+            this.Name = "frmPrincipal";
             this.Text = "Principal";
+            this.Load += new System.EventHandler(this.frmPrincipal_Load);
             this.MenuStrip1.ResumeLayout(false);
             this.MenuStrip1.PerformLayout();
             this.ResumeLayout(false);

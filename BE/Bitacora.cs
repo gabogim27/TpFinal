@@ -9,7 +9,7 @@
 
     public class Bitacora
     {
-        public Guid IdLog { get; set; }
+        public Guid IdBitacora { get; set; }
 
         public SqlDateTime Fecha { get; set; }
 
@@ -19,7 +19,7 @@
 
         public string InformacionAsociada { get; set; }
 
-        public int IdUsuario { get; set; }
+        public Guid IdUsuario { get; set; }
 
         public int DVH { get; set; }
     }

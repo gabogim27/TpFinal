@@ -1,4 +1,9 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections;
+using System.Resources;
+using System.Windows.Forms;
+using log4net;
+using SSTIS.Providers;
+using SSTIS.Utils;
 
 namespace SSTIS.MessageBoxHelper
 {
@@ -10,14 +15,47 @@ namespace SSTIS.MessageBoxHelper
 
     public static class Alert
     {
-        public static void ShowSimpleAlert(string msj)
+        private static readonly ILog log = LogManager.GetLogger(typeof(Alert));
+
+        public static void ShowSimpleAlert(string msj, string messageNumber = null)
         {
-            MessageBox.Show(msj);
+            var mensaje = ProcessMessage(messageNumber);
+            MessageBox.Show(mensaje);
         }
 
-        public static void ShowAlterWithButtonAndIcon(string msj, string title, MessageBoxButtons buttons, MessageBoxIcon icon)
+        public static void ShowAlterWithButtonAndIcon(string msj, string title, MessageBoxButtons buttons, MessageBoxIcon icon, string messageNumber = null)
         {
-            MessageBox.Show(msj, title, buttons, icon);
+            var mensaje = ProcessMessage(messageNumber);
+            MessageBox.Show(mensaje, title, buttons, icon);
+        }
+
+        public static DialogResult ConfirmationMessage(string messageCode, string title, MessageBoxButtons buttons)
+        {
+            var mensaje = ProcessMessage(messageCode);
+            return MessageBox.Show(mensaje, "Salir del sistema", MessageBoxButtons.YesNo);
+        }
+
+        private static string ProcessMessage(string messageNumber)
+        {
+            try
+            {
+                using (ResXResourceSet resxSet = new ResXResourceSet(LoginInfo.ResourcesFilePath))
+                {
+                    foreach (DictionaryEntry item in resxSet)
+                    {
+                        if (item.Key != null && (string)item.Key == messageNumber)
+                        {
+                            return item.Value.ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.ErrorFormat("Ocurrio un error al leer el idioma del archivo de recursos. Error: {0}", ex.Message);
+            }
+
+            return null;
         }
     }
 }

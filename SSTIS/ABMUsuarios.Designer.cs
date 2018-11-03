@@ -1,6 +1,6 @@
 ﻿namespace SSTIS
 {
-    partial class ABMUsuarios
+    partial class frmABMUsuarios
     {
         /// <summary>
         /// Required designer variable.
@@ -403,7 +403,7 @@
             this.Label1.TabIndex = 0;
             this.Label1.Text = "Nombre:";
             // 
-            // ABMUsuarios
+            // frmABMUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -412,7 +412,7 @@
             this.Controls.Add(this.GroupBox4);
             this.Controls.Add(this.GroupBox2);
             this.Controls.Add(this.GroupBox1);
-            this.Name = "ABMUsuarios";
+            this.Name = "frmABMUsuarios";
             this.Text = "ABMUsuarios";
             this.Load += new System.EventHandler(this.ABMUsuarios_Load);
             this.GroupBox3.ResumeLayout(false);

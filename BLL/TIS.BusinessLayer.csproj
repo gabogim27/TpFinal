@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IServicioBitacora.cs" />
+    <Compile Include="Interfaces\IServicioIdioma.cs" />
     <Compile Include="Interfaces\IServicioLocalidad.cs" />
     <Compile Include="Interfaces\IServicioProvincia.cs" />
     <Compile Include="Interfaces\IServicioUsuario.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="ServicioDomicilio.cs" />
     <Compile Include="FamiliaBLL.cs" />
     <Compile Include="Interfaces\IServicio.cs" />
+    <Compile Include="ServicioIdioma.cs" />
     <Compile Include="ServicioLocalidad.cs" />
     <Compile Include="ServicioProvincia.cs" />
     <Compile Include="ServicioUsuario.cs" />

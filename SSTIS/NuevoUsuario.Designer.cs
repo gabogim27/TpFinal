@@ -1,6 +1,6 @@
 ﻿namespace SSTIS
 {
-    partial class NuevoUsuario
+    partial class frmNuevoUsuario
     {
         /// <summary>
         /// Required designer variable.
@@ -44,6 +44,8 @@
             this.Label6 = new System.Windows.Forms.Label();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.GroupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtCp = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.cboProvincia = new System.Windows.Forms.ComboBox();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.txtApellido = new System.Windows.Forms.TextBox();
@@ -55,8 +57,6 @@
             this.Label2 = new System.Windows.Forms.Label();
             this.Label1 = new System.Windows.Forms.Label();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtCp = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.GroupBox3.SuspendLayout();
             this.GroupBox2.SuspendLayout();
             this.GroupBox1.SuspendLayout();
@@ -213,6 +213,22 @@
             this.GroupBox2.TabStop = false;
             this.GroupBox2.Text = "Otros datos";
             // 
+            // txtCp
+            // 
+            this.txtCp.Location = new System.Drawing.Point(122, 104);
+            this.txtCp.Name = "txtCp";
+            this.txtCp.Size = new System.Drawing.Size(100, 20);
+            this.txtCp.TabIndex = 23;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 107);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(75, 13);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "Código Postal:";
+            // 
             // cboProvincia
             // 
             this.cboProvincia.FormattingEnabled = true;
@@ -320,23 +336,7 @@
             this.GroupBox1.TabStop = false;
             this.GroupBox1.Text = "Datos";
             // 
-            // txtCp
-            // 
-            this.txtCp.Location = new System.Drawing.Point(122, 104);
-            this.txtCp.Name = "txtCp";
-            this.txtCp.Size = new System.Drawing.Size(100, 20);
-            this.txtCp.TabIndex = 23;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 107);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(75, 13);
-            this.label3.TabIndex = 22;
-            this.label3.Text = "Código Postal:";
-            // 
-            // NuevoUsuario
+            // frmNuevoUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -347,7 +347,7 @@
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.GroupBox2);
             this.Controls.Add(this.GroupBox1);
-            this.Name = "NuevoUsuario";
+            this.Name = "frmNuevoUsuario";
             this.Text = "NuevoUsuario";
             this.Load += new System.EventHandler(this.NuevoUsuario_Load);
             this.GroupBox3.ResumeLayout(false);

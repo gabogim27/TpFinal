@@ -54,10 +54,13 @@
     <Compile Include="Domicilio.cs" />
     <Compile Include="Familia.cs" />
     <Compile Include="FamiliaPatente.cs" />
+    <Compile Include="Formulario.cs" />
+    <Compile Include="IdiomaUsuario.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Localidad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provincia.cs" />
+    <Compile Include="TraduccionControles.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="UsuarioFamilia.cs" />
     <Compile Include="UsuarioPatente.cs" />

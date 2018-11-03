@@ -59,18 +59,23 @@ namespace SysAnalizer
             container.Register<IRepositorioBitacora, RepositorioBitacora>(Lifestyle.Singleton);
             container.Register<IBitacoraDao, BitacoraDao>(Lifestyle.Singleton);
             container.Register<IDigitoVerificador, DigitoVerificadorDao>(Lifestyle.Singleton);
+            //Idioma
+            container.Register<IServicioIdioma, ServicioIdioma>(Lifestyle.Singleton);
+            container.Register<IRepositorioIdioma, RepositorioIdioma>(Lifestyle.Singleton);
+            container.Register<IIdiomaDao, IdiomaDao>(Lifestyle.Singleton);
             //Formularios
-            container.Register<INuevoUsuario, NuevoUsuario>(Lifestyle.Transient);
-            container.Register<IABMUsuarios, ABMUsuarios>(Lifestyle.Transient);
-            container.Register<ILogin, Login>(Lifestyle.Transient);
-            container.Register<IPrincipal, Principal>(Lifestyle.Transient);
-            container.Register<IRealizarCopiaSeguridad, RealizarCopiaSeguridad>(Lifestyle.Transient);
-            container.Register<IRestaurarCopiaDeSeguridad, RestaurarCopiaDeSeguridad>(Lifestyle.Transient);
+            container.Register<INuevoUsuario, frmNuevoUsuario>(Lifestyle.Transient);
+            container.Register<IABMUsuarios, frmABMUsuarios>(Lifestyle.Transient);
+            container.Register<ILogin, frmLogin>(Lifestyle.Transient);
+            container.Register<IPrincipal, frmPrincipal>(Lifestyle.Transient);
+            container.Register<IRealizarCopiaSeguridad, frmRealizarCopiaSeguridad>(Lifestyle.Transient);
+            container.Register<IRestaurarCopiaDeSeguridad, frmRestaurarCopiaDeSeguridad>(Lifestyle.Transient);
+            container.Register<IBitacora, SSTIS.frmBitacora>();
             log4net.Config.XmlConfigurator.Configure();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(container
-                .GetInstance<RestaurarCopiaDeSeguridad>()); //    new ABMUsuarios(new Repository<Usuario>(new UsuarioDao())));
+                .GetInstance<SSTIS.frmLogin>()); //    new ABMUsuarios(new Repository<Usuario>(new UsuarioDao())));
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace SSTIS
 {
-    partial class Bitacora
+    partial class frmBitacora
     {
         /// <summary>
         /// Required designer variable.
@@ -32,23 +32,18 @@
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvBitacora = new System.Windows.Forms.DataGridView();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Button1 = new System.Windows.Forms.Button();
+            this.btnBuscar = new System.Windows.Forms.Button();
             this.Label4 = new System.Windows.Forms.Label();
             this.Label3 = new System.Windows.Forms.Label();
-            this.CheckBox5 = new System.Windows.Forms.CheckBox();
-            this.CheckBox4 = new System.Windows.Forms.CheckBox();
-            this.CheckBox3 = new System.Windows.Forms.CheckBox();
-            this.CheckBox2 = new System.Windows.Forms.CheckBox();
-            this.CheckBox1 = new System.Windows.Forms.CheckBox();
-            this.TextBox2 = new System.Windows.Forms.TextBox();
-            this.TextBox1 = new System.Windows.Forms.TextBox();
-            this.DateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.DateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dtpHasta = new System.Windows.Forms.DateTimePicker();
+            this.dtpDesde = new System.Windows.Forms.DateTimePicker();
             this.Label2 = new System.Windows.Forms.Label();
             this.Label1 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
+            this.chklCriticidad = new System.Windows.Forms.CheckedListBox();
+            this.chklUsuario = new System.Windows.Forms.CheckedListBox();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBitacora)).BeginInit();
             this.SuspendLayout();
             // 
             // Column5
@@ -71,33 +66,34 @@
             this.Column1.HeaderText = "Fecha";
             this.Column1.Name = "Column1";
             // 
-            // DataGridView1
+            // dgvBitacora
             // 
-            this.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvBitacora.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvBitacora.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
             this.Column3,
             this.Column4,
             this.Column5});
-            this.DataGridView1.Location = new System.Drawing.Point(238, 254);
-            this.DataGridView1.Name = "DataGridView1";
-            this.DataGridView1.Size = new System.Drawing.Size(544, 150);
-            this.DataGridView1.TabIndex = 29;
+            this.dgvBitacora.Location = new System.Drawing.Point(27, 227);
+            this.dgvBitacora.Name = "dgvBitacora";
+            this.dgvBitacora.Size = new System.Drawing.Size(705, 150);
+            this.dgvBitacora.TabIndex = 29;
             // 
             // Column4
             // 
             this.Column4.HeaderText = "Descripcion";
             this.Column4.Name = "Column4";
             // 
-            // Button1
+            // btnBuscar
             // 
-            this.Button1.Location = new System.Drawing.Point(612, 186);
-            this.Button1.Name = "Button1";
-            this.Button1.Size = new System.Drawing.Size(90, 27);
-            this.Button1.TabIndex = 28;
-            this.Button1.Text = "Buscar";
-            this.Button1.UseVisualStyleBackColor = true;
+            this.btnBuscar.Location = new System.Drawing.Point(612, 163);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(90, 27);
+            this.btnBuscar.TabIndex = 28;
+            this.btnBuscar.Text = "Buscar";
+            this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // Label4
             // 
@@ -117,85 +113,19 @@
             this.Label3.TabIndex = 26;
             this.Label3.Text = "Usuario";
             // 
-            // CheckBox5
+            // dtpHasta
             // 
-            this.CheckBox5.AutoSize = true;
-            this.CheckBox5.Location = new System.Drawing.Point(612, 58);
-            this.CheckBox5.Name = "CheckBox5";
-            this.CheckBox5.Size = new System.Drawing.Size(44, 17);
-            this.CheckBox5.TabIndex = 25;
-            this.CheckBox5.Text = "Alto";
-            this.CheckBox5.UseVisualStyleBackColor = true;
+            this.dtpHasta.Location = new System.Drawing.Point(109, 74);
+            this.dtpHasta.Name = "dtpHasta";
+            this.dtpHasta.Size = new System.Drawing.Size(200, 20);
+            this.dtpHasta.TabIndex = 18;
             // 
-            // CheckBox4
+            // dtpDesde
             // 
-            this.CheckBox4.AutoSize = true;
-            this.CheckBox4.Location = new System.Drawing.Point(612, 81);
-            this.CheckBox4.Name = "CheckBox4";
-            this.CheckBox4.Size = new System.Drawing.Size(55, 17);
-            this.CheckBox4.TabIndex = 24;
-            this.CheckBox4.Text = "Medio";
-            this.CheckBox4.UseVisualStyleBackColor = true;
-            // 
-            // CheckBox3
-            // 
-            this.CheckBox3.AutoSize = true;
-            this.CheckBox3.Location = new System.Drawing.Point(612, 104);
-            this.CheckBox3.Name = "CheckBox3";
-            this.CheckBox3.Size = new System.Drawing.Size(47, 17);
-            this.CheckBox3.TabIndex = 23;
-            this.CheckBox3.Text = "Bajo";
-            this.CheckBox3.UseVisualStyleBackColor = true;
-            // 
-            // CheckBox2
-            // 
-            this.CheckBox2.AutoSize = true;
-            this.CheckBox2.Location = new System.Drawing.Point(409, 104);
-            this.CheckBox2.Name = "CheckBox2";
-            this.CheckBox2.Size = new System.Drawing.Size(68, 17);
-            this.CheckBox2.TabIndex = 22;
-            this.CheckBox2.Text = "Usuario2";
-            this.CheckBox2.UseVisualStyleBackColor = true;
-            // 
-            // CheckBox1
-            // 
-            this.CheckBox1.AutoSize = true;
-            this.CheckBox1.Location = new System.Drawing.Point(409, 70);
-            this.CheckBox1.Name = "CheckBox1";
-            this.CheckBox1.Size = new System.Drawing.Size(68, 17);
-            this.CheckBox1.TabIndex = 21;
-            this.CheckBox1.Text = "Usuario1";
-            this.CheckBox1.UseVisualStyleBackColor = true;
-            // 
-            // TextBox2
-            // 
-            this.TextBox2.Location = new System.Drawing.Point(612, 56);
-            this.TextBox2.Multiline = true;
-            this.TextBox2.Name = "TextBox2";
-            this.TextBox2.Size = new System.Drawing.Size(134, 115);
-            this.TextBox2.TabIndex = 20;
-            // 
-            // TextBox1
-            // 
-            this.TextBox1.Location = new System.Drawing.Point(399, 56);
-            this.TextBox1.Multiline = true;
-            this.TextBox1.Name = "TextBox1";
-            this.TextBox1.Size = new System.Drawing.Size(134, 115);
-            this.TextBox1.TabIndex = 19;
-            // 
-            // DateTimePicker2
-            // 
-            this.DateTimePicker2.Location = new System.Drawing.Point(109, 74);
-            this.DateTimePicker2.Name = "DateTimePicker2";
-            this.DateTimePicker2.Size = new System.Drawing.Size(200, 20);
-            this.DateTimePicker2.TabIndex = 18;
-            // 
-            // DateTimePicker1
-            // 
-            this.DateTimePicker1.Location = new System.Drawing.Point(109, 36);
-            this.DateTimePicker1.Name = "DateTimePicker1";
-            this.DateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.DateTimePicker1.TabIndex = 17;
+            this.dtpDesde.Location = new System.Drawing.Point(109, 36);
+            this.dtpDesde.Name = "dtpDesde";
+            this.dtpDesde.Size = new System.Drawing.Size(200, 20);
+            this.dtpDesde.TabIndex = 17;
             // 
             // Label2
             // 
@@ -215,29 +145,41 @@
             this.Label1.TabIndex = 15;
             this.Label1.Text = "Desde";
             // 
-            // Bitacora
+            // chklCriticidad
+            // 
+            this.chklCriticidad.FormattingEnabled = true;
+            this.chklCriticidad.Location = new System.Drawing.Point(612, 52);
+            this.chklCriticidad.Name = "chklCriticidad";
+            this.chklCriticidad.Size = new System.Drawing.Size(182, 94);
+            this.chklCriticidad.TabIndex = 30;
+            // 
+            // chklUsuario
+            // 
+            this.chklUsuario.FormattingEnabled = true;
+            this.chklUsuario.Location = new System.Drawing.Point(399, 52);
+            this.chklUsuario.Name = "chklUsuario";
+            this.chklUsuario.Size = new System.Drawing.Size(187, 94);
+            this.chklUsuario.TabIndex = 31;
+            // 
+            // frmBitacora
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(870, 443);
-            this.Controls.Add(this.DataGridView1);
-            this.Controls.Add(this.Button1);
+            this.ClientSize = new System.Drawing.Size(836, 431);
+            this.Controls.Add(this.chklUsuario);
+            this.Controls.Add(this.chklCriticidad);
+            this.Controls.Add(this.dgvBitacora);
+            this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.Label4);
             this.Controls.Add(this.Label3);
-            this.Controls.Add(this.CheckBox5);
-            this.Controls.Add(this.CheckBox4);
-            this.Controls.Add(this.CheckBox3);
-            this.Controls.Add(this.CheckBox2);
-            this.Controls.Add(this.CheckBox1);
-            this.Controls.Add(this.TextBox2);
-            this.Controls.Add(this.TextBox1);
-            this.Controls.Add(this.DateTimePicker2);
-            this.Controls.Add(this.DateTimePicker1);
+            this.Controls.Add(this.dtpHasta);
+            this.Controls.Add(this.dtpDesde);
             this.Controls.Add(this.Label2);
             this.Controls.Add(this.Label1);
-            this.Name = "Bitacora";
+            this.Name = "frmBitacora";
             this.Text = "Bitacora";
-            ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).EndInit();
+            this.Load += new System.EventHandler(this.Bitacora_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBitacora)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -249,21 +191,16 @@
         internal System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         internal System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         internal System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        internal System.Windows.Forms.DataGridView DataGridView1;
+        internal System.Windows.Forms.DataGridView dgvBitacora;
         internal System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        internal System.Windows.Forms.Button Button1;
+        internal System.Windows.Forms.Button btnBuscar;
         internal System.Windows.Forms.Label Label4;
         internal System.Windows.Forms.Label Label3;
-        internal System.Windows.Forms.CheckBox CheckBox5;
-        internal System.Windows.Forms.CheckBox CheckBox4;
-        internal System.Windows.Forms.CheckBox CheckBox3;
-        internal System.Windows.Forms.CheckBox CheckBox2;
-        internal System.Windows.Forms.CheckBox CheckBox1;
-        internal System.Windows.Forms.TextBox TextBox2;
-        internal System.Windows.Forms.TextBox TextBox1;
-        internal System.Windows.Forms.DateTimePicker DateTimePicker2;
-        internal System.Windows.Forms.DateTimePicker DateTimePicker1;
+        internal System.Windows.Forms.DateTimePicker dtpHasta;
+        internal System.Windows.Forms.DateTimePicker dtpDesde;
         internal System.Windows.Forms.Label Label2;
         internal System.Windows.Forms.Label Label1;
+        private System.Windows.Forms.CheckedListBox chklCriticidad;
+        private System.Windows.Forms.CheckedListBox chklUsuario;
     }
 }

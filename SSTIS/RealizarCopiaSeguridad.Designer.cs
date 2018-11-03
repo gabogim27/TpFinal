@@ -1,6 +1,6 @@
 ﻿namespace SSTIS
 {
-    partial class RealizarCopiaSeguridad
+    partial class frmRealizarCopiaSeguridad
     {
         /// <summary>
         /// Required designer variable.
@@ -163,7 +163,7 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // RealizarCopiaSeguridad
+            // frmRealizarCopiaSeguridad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -180,7 +180,7 @@
             this.Controls.Add(this.btnExaminar);
             this.Controls.Add(this.txtUbicacion);
             this.Controls.Add(this.Label1);
-            this.Name = "RealizarCopiaSeguridad";
+            this.Name = "frmRealizarCopiaSeguridad";
             this.Text = "RealizarCopiaSeguridad";
             this.Load += new System.EventHandler(this.RealizarCopiaSeguridad_Load);
             this.ResumeLayout(false);

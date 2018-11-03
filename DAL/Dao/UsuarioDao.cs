@@ -192,11 +192,10 @@ namespace DAL.Impl
             return false;
         }
 
-        private BE.Usuario ObtenerUsuarioConEmail(string email)
+        private Usuario ObtenerUsuarioConEmail(string email)
         {
             try
             {
-                var usuario = new BE.Usuario();
                 var queryString = string.Format("SELECT * FROM dbo.Usuario WHERE Email = '{0}'", email);
                 return SqlUtils.Exec<Usuario>(queryString).FirstOrDefault();
             }

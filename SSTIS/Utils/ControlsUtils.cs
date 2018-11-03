@@ -1,4 +1,6 @@
-﻿namespace SSTIS.Utils
+﻿using System.Net.Mail;
+
+namespace SSTIS.Utils
 {
     using System;
     using System.Collections.Generic;
@@ -15,6 +17,19 @@
                 !string.IsNullOrEmpty(celular.Trim()) && !string.IsNullOrEmpty(telFijo.Trim()))
                 return true;
             return false;
+        }
+
+        public static bool ValidarEmail(string email)
+        {
+            try
+            {
+                MailAddress m = new MailAddress(email);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
         }
     }
 }

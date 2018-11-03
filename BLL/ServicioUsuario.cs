@@ -132,7 +132,7 @@ namespace BLL
 
         public Usuario ObtenerUsuarioConEmail(string email)
         {
-            throw new NotImplementedException();
+            return RepositorioUsuarioImplementor.ObtenerUsuarioConEmail(email);
         }
 
         public bool ValidarEmail(string email)

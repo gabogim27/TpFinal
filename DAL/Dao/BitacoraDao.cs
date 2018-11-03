@@ -3,6 +3,7 @@ using BE;
 using Dapper;
 using DAL.Interfaces;
 using DAL.Utils;
+using log4net;
 
 namespace DAL.Dao
 {
@@ -14,6 +15,8 @@ namespace DAL.Dao
 
     public class BitacoraDao : IBitacoraDao
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(Bitacora));
+
         private readonly IDigitoVerificador digitoVerificador;
 
         public void FiltrarBitacora(BitacoraFiltros filtros)
@@ -99,6 +102,41 @@ namespace DAL.Dao
 
                 return Guid.Empty;
             }
+        }
+
+        public List<Bitacora> LeerBitacoraPorUsuarioCriticidadYFecha(List<Guid> idUsuarios, List<string> criticidades, DateTime desde, DateTime hasta)
+        {
+            try
+            {
+                var idsUsuParameters = string.Empty;
+                var criticidadesParameters = string.Empty;
+                var coma = string.Empty;
+                //Prepare usuariosIds parameters
+                for (int i = 0; i < idUsuarios.Count; i++)
+                {
+                    if (i != 0)                     
+                        coma = ",";
+
+                    idsUsuParameters += coma + "'" + idUsuarios[i] + "'";
+                }
+                ////Prepare criticidadesIDs parameters
+                for (int i = 0; i < criticidades.Count; i++)
+                {
+                    if (i != 0)
+                        coma = ",";
+
+                    criticidadesParameters += coma + "'" + criticidades[i] + "'";
+                }
+                var query = string.Format("Select * from Bitacora where IdUsuario IN ({0}) and " +
+                                          "Criticidad IN ({1}) and Fecha between '{2}' and '{3}'", idsUsuParameters, criticidadesParameters, desde, hasta);                          
+                return SqlUtils.Exec<Bitacora>(query);
+            }
+            catch (Exception ex)
+            {
+                log.ErrorFormat("Ocurrio un error al buscar informacion en la bitacora. Error: {0}", ex.Message);
+            }
+
+            return null;
         }
 
         public int GenerarDVH(Usuario usu)

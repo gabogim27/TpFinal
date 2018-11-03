@@ -59,15 +59,18 @@
     <Compile Include="Dao\DigitoVerificadorDao.cs" />
     <Compile Include="Dao\DomicilioDao.cs" />
     <Compile Include="Dao\FamiliaDAL.cs" />
+    <Compile Include="Dao\IdiomaDao.cs" />
     <Compile Include="Dao\LocalidadDao.cs" />
     <Compile Include="Dao\ProvinciaDao.cs" />
     <Compile Include="Dao\UsuarioDao.cs" />
     <Compile Include="Interfaces\IBitacoraDao.cs" />
     <Compile Include="Interfaces\IDao.cs" />
     <Compile Include="Interfaces\IDigitoVerificador.cs" />
+    <Compile Include="Interfaces\IIdiomaDao.cs" />
     <Compile Include="Interfaces\ILocalidadDao.cs" />
     <Compile Include="Interfaces\IProvinciaDao.cs" />
     <Compile Include="Interfaces\IRepositorioBitacora.cs" />
+    <Compile Include="Interfaces\IRepositorioIdioma.cs" />
     <Compile Include="Interfaces\IRepositorioLocalidad.cs" />
     <Compile Include="Interfaces\IRepositorioProvincia.cs" />
     <Compile Include="Interfaces\IRepositorioUsuario.cs" />
@@ -76,6 +79,7 @@
     <Compile Include="Repositorios\RepositorioBitacora.cs" />
     <Compile Include="Repositorios\RepositorioContacto.cs" />
     <Compile Include="Repositorios\RepositorioDomicilio.cs" />
+    <Compile Include="Repositorios\RepositorioIdioma.cs" />
     <Compile Include="Repositorios\RepositorioLocalidad.cs" />
     <Compile Include="Repositorios\RepositorioProvincia.cs" />
     <Compile Include="Repositorios\RepositorioUsuario.cs" />

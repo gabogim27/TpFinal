@@ -1,6 +1,6 @@
 ﻿namespace SSTIS
 {
-    partial class RestaurarCopiaDeSeguridad
+    partial class frmRestaurarCopiaDeSeguridad
     {
         /// <summary>
         /// Required designer variable.
@@ -116,7 +116,7 @@
             this.progressBar1.Size = new System.Drawing.Size(297, 26);
             this.progressBar1.TabIndex = 47;
             // 
-            // RestaurarCopiaDeSeguridad
+            // frmRestaurarCopiaDeSeguridad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -129,7 +129,7 @@
             this.Controls.Add(this.btnRestaurar);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.Label1);
-            this.Name = "RestaurarCopiaDeSeguridad";
+            this.Name = "frmRestaurarCopiaDeSeguridad";
             this.Text = "CopiaDeSeguridad";
             this.ResumeLayout(false);
             this.PerformLayout();

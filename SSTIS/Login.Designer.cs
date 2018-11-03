@@ -1,6 +1,6 @@
 ﻿namespace SSTIS
 {
-    partial class Login
+    partial class frmLogin
     {
         /// <summary>
         /// Variable del diseñador requerida.
@@ -28,39 +28,39 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblTitulo = new System.Windows.Forms.Label();
+            this.lblEmail = new System.Windows.Forms.Label();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.txtContrasenia = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.Lnk_Recuperar_Password = new System.Windows.Forms.LinkLabel();
-            this.btn_ingresar = new System.Windows.Forms.Button();
-            this.btn_salir = new System.Windows.Forms.Button();
-            this.cbo_idioma = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblContraseña = new System.Windows.Forms.Label();
+            this.lblRecuperarPassword = new System.Windows.Forms.LinkLabel();
+            this.btnIngresar = new System.Windows.Forms.Button();
+            this.btnSalir = new System.Windows.Forms.Button();
+            this.cboIdioma = new System.Windows.Forms.ComboBox();
+            this.lblSeleccionarIdioma = new System.Windows.Forms.Label();
             this.helpProvider1 = new System.Windows.Forms.HelpProvider();
             this.helpProvider2 = new System.Windows.Forms.HelpProvider();
             this.SuspendLayout();
             // 
-            // label1
+            // lblTitulo
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 15);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(252, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Por favor ingrese usuario y contraseña para ingresar";
+            this.lblTitulo.AutoSize = true;
+            this.lblTitulo.Location = new System.Drawing.Point(9, 15);
+            this.lblTitulo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTitulo.Name = "lblTitulo";
+            this.lblTitulo.Size = new System.Drawing.Size(252, 13);
+            this.lblTitulo.TabIndex = 0;
+            this.lblTitulo.Text = "Por favor ingrese usuario y contraseña para ingresar";
             // 
-            // label2
+            // lblEmail
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 54);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "E-mail:";
+            this.lblEmail.AutoSize = true;
+            this.lblEmail.Location = new System.Drawing.Point(10, 54);
+            this.lblEmail.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblEmail.Name = "lblEmail";
+            this.lblEmail.Size = new System.Drawing.Size(38, 13);
+            this.lblEmail.TabIndex = 1;
+            this.lblEmail.Text = "E-mail:";
             // 
             // txtEmail
             // 
@@ -79,89 +79,92 @@
             this.txtContrasenia.Size = new System.Drawing.Size(255, 20);
             this.txtContrasenia.TabIndex = 4;
             // 
-            // label3
+            // lblContraseña
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 110);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(64, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Contraseña:";
+            this.lblContraseña.AutoSize = true;
+            this.lblContraseña.Location = new System.Drawing.Point(9, 110);
+            this.lblContraseña.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblContraseña.Name = "lblContraseña";
+            this.lblContraseña.Size = new System.Drawing.Size(64, 13);
+            this.lblContraseña.TabIndex = 3;
+            this.lblContraseña.Text = "Contraseña:";
             // 
-            // Lnk_Recuperar_Password
+            // lblRecuperarPassword
             // 
-            this.Lnk_Recuperar_Password.AutoSize = true;
-            this.Lnk_Recuperar_Password.Location = new System.Drawing.Point(10, 154);
-            this.Lnk_Recuperar_Password.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.Lnk_Recuperar_Password.Name = "Lnk_Recuperar_Password";
-            this.Lnk_Recuperar_Password.Size = new System.Drawing.Size(114, 13);
-            this.Lnk_Recuperar_Password.TabIndex = 5;
-            this.Lnk_Recuperar_Password.TabStop = true;
-            this.Lnk_Recuperar_Password.Text = "Recuperar Contraseña";
+            this.lblRecuperarPassword.AutoSize = true;
+            this.lblRecuperarPassword.Location = new System.Drawing.Point(10, 154);
+            this.lblRecuperarPassword.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblRecuperarPassword.Name = "lblRecuperarPassword";
+            this.lblRecuperarPassword.Size = new System.Drawing.Size(114, 13);
+            this.lblRecuperarPassword.TabIndex = 5;
+            this.lblRecuperarPassword.TabStop = true;
+            this.lblRecuperarPassword.Text = "Recuperar Contraseña";
             // 
-            // btn_ingresar
+            // btnIngresar
             // 
-            this.btn_ingresar.Location = new System.Drawing.Point(20, 266);
-            this.btn_ingresar.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_ingresar.Name = "btn_ingresar";
-            this.btn_ingresar.Size = new System.Drawing.Size(112, 31);
-            this.btn_ingresar.TabIndex = 6;
-            this.btn_ingresar.Text = "Ingresar";
-            this.btn_ingresar.UseVisualStyleBackColor = true;
-            this.btn_ingresar.Click += new System.EventHandler(this.btn_ingresar_Click);
+            this.btnIngresar.Location = new System.Drawing.Point(20, 266);
+            this.btnIngresar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnIngresar.Name = "btnIngresar";
+            this.btnIngresar.Size = new System.Drawing.Size(112, 31);
+            this.btnIngresar.TabIndex = 6;
+            this.btnIngresar.Text = "Ingresar";
+            this.btnIngresar.UseVisualStyleBackColor = true;
+            this.btnIngresar.Click += new System.EventHandler(this.btn_ingresar_Click);
             // 
-            // btn_salir
+            // btnSalir
             // 
-            this.btn_salir.Location = new System.Drawing.Point(157, 266);
-            this.btn_salir.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_salir.Name = "btn_salir";
-            this.btn_salir.Size = new System.Drawing.Size(92, 31);
-            this.btn_salir.TabIndex = 7;
-            this.btn_salir.Text = "Salir";
-            this.btn_salir.UseVisualStyleBackColor = true;
+            this.btnSalir.Location = new System.Drawing.Point(157, 266);
+            this.btnSalir.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSalir.Name = "btnSalir";
+            this.btnSalir.Size = new System.Drawing.Size(92, 31);
+            this.btnSalir.TabIndex = 7;
+            this.btnSalir.Text = "Salir";
+            this.btnSalir.UseVisualStyleBackColor = true;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
-            // cbo_idioma
+            // cboIdioma
             // 
-            this.cbo_idioma.FormattingEnabled = true;
-            this.cbo_idioma.Location = new System.Drawing.Point(158, 204);
-            this.cbo_idioma.Margin = new System.Windows.Forms.Padding(2);
-            this.cbo_idioma.Name = "cbo_idioma";
-            this.cbo_idioma.Size = new System.Drawing.Size(92, 21);
-            this.cbo_idioma.TabIndex = 8;
+            this.cboIdioma.FormattingEnabled = true;
+            this.cboIdioma.Location = new System.Drawing.Point(158, 204);
+            this.cboIdioma.Margin = new System.Windows.Forms.Padding(2);
+            this.cboIdioma.Name = "cboIdioma";
+            this.cboIdioma.Size = new System.Drawing.Size(92, 21);
+            this.cboIdioma.TabIndex = 8;
+            this.cboIdioma.SelectionChangeCommitted += new System.EventHandler(this.cboIdioma_SelectionChangeCommitted);
             // 
-            // label4
+            // lblSeleccionarIdioma
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 204);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(97, 13);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "Seleccionar Idioma";
+            this.lblSeleccionarIdioma.AutoSize = true;
+            this.lblSeleccionarIdioma.Location = new System.Drawing.Point(10, 204);
+            this.lblSeleccionarIdioma.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblSeleccionarIdioma.Name = "lblSeleccionarIdioma";
+            this.lblSeleccionarIdioma.Size = new System.Drawing.Size(97, 13);
+            this.lblSeleccionarIdioma.TabIndex = 9;
+            this.lblSeleccionarIdioma.Text = "Seleccionar Idioma";
             // 
             // helpProvider2
             // 
             this.helpProvider2.HelpNamespace = "C:\\Users\\gabriel.gimenez\\Documents\\campo\\campo TP Gabi\\Manual de Usuario.chm";
             // 
-            // Login
+            // frmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(275, 318);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.cbo_idioma);
-            this.Controls.Add(this.btn_salir);
-            this.Controls.Add(this.btn_ingresar);
-            this.Controls.Add(this.Lnk_Recuperar_Password);
+            this.Controls.Add(this.lblSeleccionarIdioma);
+            this.Controls.Add(this.cboIdioma);
+            this.Controls.Add(this.btnSalir);
+            this.Controls.Add(this.btnIngresar);
+            this.Controls.Add(this.lblRecuperarPassword);
             this.Controls.Add(this.txtContrasenia);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblContraseña);
             this.Controls.Add(this.txtEmail);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblEmail);
+            this.Controls.Add(this.lblTitulo);
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "Login";
+            this.Name = "frmLogin";
             this.Text = "Sistema TIS - Acceso ";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmLogin_FormClosing);
             this.Load += new System.EventHandler(this.Login_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -170,16 +173,16 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblTitulo;
+        private System.Windows.Forms.Label lblEmail;
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.TextBox txtContrasenia;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.LinkLabel Lnk_Recuperar_Password;
-        private System.Windows.Forms.Button btn_ingresar;
-        private System.Windows.Forms.Button btn_salir;
-        private System.Windows.Forms.ComboBox cbo_idioma;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblContraseña;
+        private System.Windows.Forms.LinkLabel lblRecuperarPassword;
+        private System.Windows.Forms.Button btnIngresar;
+        private System.Windows.Forms.Button btnSalir;
+        private System.Windows.Forms.ComboBox cboIdioma;
+        private System.Windows.Forms.Label lblSeleccionarIdioma;
         private System.Windows.Forms.HelpProvider helpProvider1;
         private System.Windows.Forms.HelpProvider helpProvider2;
     }

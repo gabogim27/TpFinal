@@ -50,5 +50,10 @@ namespace DAL.Repositorios
         {
             return BitacoraDao.ObtenerUltimoIdBitacora();
         }
+
+        public List<Bitacora> LeerBitacoraPorUsuarioCriticidadYFecha(List<Guid> idUsuarios, List<string> criticidades, DateTime desde, DateTime hasta)
+        {
+            return BitacoraDao.LeerBitacoraPorUsuarioCriticidadYFecha(idUsuarios, criticidades, desde, hasta);
+        }
     }
 }

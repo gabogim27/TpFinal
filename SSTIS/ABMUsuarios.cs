@@ -18,9 +18,9 @@ using SSTIS.Utils;
 
 namespace SSTIS
 {
-    public partial class ABMUsuarios : Form, IABMUsuarios
+    public partial class frmABMUsuarios : Form, IABMUsuarios
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(ABMUsuarios));
+        private static readonly ILog log = LogManager.GetLogger(typeof(frmABMUsuarios));
 
         public IServicio<Usuario> ServicioUsuario { get; set; }
         public IServicio<Localidad> ServicioLocalidad { get; set; }
@@ -30,7 +30,7 @@ namespace SSTIS
         public INuevoUsuario nuevoUsuario { get; set; }
         private static Usuario usuario { get; set; }
 
-        public ABMUsuarios(IServicio<Usuario> servicioUsuario, INuevoUsuario nuevoUsuario,
+        public frmABMUsuarios(IServicio<Usuario> servicioUsuario, INuevoUsuario nuevoUsuario,
             IServicio<Localidad> servicioLocalidad, IServicio<Provincia> servicioProvincia,
             IServicioLocalidad servicioLocalidadImplementor)
         {

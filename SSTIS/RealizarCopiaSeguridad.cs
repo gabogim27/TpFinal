@@ -9,9 +9,9 @@ using SSTIS.Interfaces;
 
 namespace SSTIS
 {
-    public partial class RealizarCopiaSeguridad : Form, IRealizarCopiaSeguridad
+    public partial class frmRealizarCopiaSeguridad : Form, IRealizarCopiaSeguridad
     {
-        public RealizarCopiaSeguridad()
+        public frmRealizarCopiaSeguridad()
         {
             InitializeComponent();
         }

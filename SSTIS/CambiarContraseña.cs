@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace SSTIS
 {
-    public partial class CambiarContraseña : Form
+    public partial class frmCambiarContraseña : Form
     {
-        public CambiarContraseña()
+        public frmCambiarContraseña()
         {
             InitializeComponent();
         }

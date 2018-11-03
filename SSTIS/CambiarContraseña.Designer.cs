@@ -1,6 +1,6 @@
 ﻿namespace SSTIS
 {
-    partial class CambiarContraseña
+    partial class frmCambiarContraseña
     {
         /// <summary>
         /// Required designer variable.
@@ -80,7 +80,7 @@
             this.TextBox2.TabIndex = 6;
             this.TextBox2.Text = "nuevo password";
             // 
-            // CambiarContraseña
+            // frmCambiarContraseña
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -90,7 +90,7 @@
             this.Controls.Add(this.Button1);
             this.Controls.Add(this.TextBox1);
             this.Controls.Add(this.TextBox2);
-            this.Name = "CambiarContraseña";
+            this.Name = "frmCambiarContraseña";
             this.Text = "CambiarContraseña";
             this.ResumeLayout(false);
             this.PerformLayout();

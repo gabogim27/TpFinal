@@ -10,6 +10,9 @@ namespace SSTIS.Utils
 
     public static class LoginInfo
     {
-        public static Usuario Usuario { get; set; }
+        public static Usuario Usuario = new Usuario();
+        public static IdiomaUsuario LenguajeSeleccionado = new IdiomaUsuario();
+        public static IDictionary<string, string> Traducciones = new Dictionary<string, string>();
+        public static readonly string ResourcesFilePath = "C:\\\\TPFinalDiploma\\\\TpFinal\\\\SSTIS\\\\\\Resources\\\\SpanishResources.resx";
     }
 }

@@ -11,15 +11,20 @@ using SSTIS.Interfaces;
 
 namespace SSTIS
 {
-    public partial class Principal : Form, IPrincipal
+    public partial class frmPrincipal : Form, IPrincipal
     {
-        public Principal()
+        public frmPrincipal()
         {
             InitializeComponent();
         }
 
         private void LoginToolStripMenuItem_Click(object sender, EventArgs e)
         {
+        }
+
+        private void frmPrincipal_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

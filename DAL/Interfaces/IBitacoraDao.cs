@@ -17,5 +17,7 @@ namespace DAL.Interfaces
         int GenerarDVH(Usuario usu);
 
         int ObtenerUltimoIdBitacora();
+
+        List<Bitacora> LeerBitacoraPorUsuarioCriticidadYFecha(List<Guid> idUsuarios, List<string> criticidades, DateTime desde, DateTime hasta);
     }
 }

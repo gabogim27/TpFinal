@@ -15,7 +15,7 @@ using SSTIS.Interfaces;
 
 namespace SSTIS
 {
-    public partial class NuevoUsuario : Form, INuevoUsuario
+    public partial class frmNuevoUsuario : Form, INuevoUsuario
     {
         public IServicio<Usuario> ServicioUsuario { get; set; }
         public IServicio<Localidad> ServicioLocalidad;
@@ -23,7 +23,7 @@ namespace SSTIS
         public IServicioUsuario ServicioUsuarioImplementor;
         public IServicioLocalidad ServicioLocalidadImplementor;
 
-        public NuevoUsuario(IServicio<Usuario> servicioUsuario, IServicio<Localidad> servicioLocalidad,
+        public frmNuevoUsuario(IServicio<Usuario> servicioUsuario, IServicio<Localidad> servicioLocalidad,
             IServicio<Provincia> servicioProvincia, IServicioUsuario servicioUsuarioImplementor,
             IServicioLocalidad servicioLocalidadImplementor)
         {
