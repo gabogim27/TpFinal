@@ -1,4 +1,5 @@
-﻿using System.Resources;
+﻿using System.Data;
+using System.Resources;
 using System.Windows.Forms;
 using BE;
 using BLL.Interfaces;
@@ -17,7 +18,7 @@ namespace SSTIS.Providers
     public static class IdiomaProvider
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(IdiomaProvider));
-        
+        public static DataSet ListadoBitacora = new DataSet();
         private static readonly string ResourcesFilePath = "C:\\\\TPFinalDiploma\\\\TpFinal\\\\SSTIS\\\\\\Resources\\\\SpanishResources.resx";
 
         public static void FillResources(IDictionary<string, string> traducciones, Guid idiomaSeleccionado, string nombreFormulario)

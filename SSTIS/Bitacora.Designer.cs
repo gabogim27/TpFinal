@@ -28,12 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvBitacora = new System.Windows.Forms.DataGridView();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.components = new System.ComponentModel.Container();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
             this.btnBuscar = new System.Windows.Forms.Button();
             this.Label4 = new System.Windows.Forms.Label();
             this.Label3 = new System.Windows.Forms.Label();
@@ -43,53 +39,20 @@
             this.Label1 = new System.Windows.Forms.Label();
             this.chklCriticidad = new System.Windows.Forms.CheckedListBox();
             this.chklUsuario = new System.Windows.Forms.CheckedListBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvBitacora)).BeginInit();
+            this.rpvBitacora = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.BitacoraViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.bitacoraViewModelBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
+            this.bitacoraViewModelBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.BitacoraViewModelBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bitacoraViewModelBindingSource2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bitacoraViewModelBindingSource1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "Criticidad";
-            this.Column5.Name = "Column5";
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Funcionalidad";
-            this.Column3.Name = "Column3";
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Usuario";
-            this.Column2.Name = "Column2";
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Fecha";
-            this.Column1.Name = "Column1";
-            // 
-            // dgvBitacora
-            // 
-            this.dgvBitacora.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvBitacora.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2,
-            this.Column3,
-            this.Column4,
-            this.Column5});
-            this.dgvBitacora.Location = new System.Drawing.Point(27, 227);
-            this.dgvBitacora.Name = "dgvBitacora";
-            this.dgvBitacora.Size = new System.Drawing.Size(705, 150);
-            this.dgvBitacora.TabIndex = 29;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Descripcion";
-            this.Column4.Name = "Column4";
             // 
             // btnBuscar
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(612, 163);
+            this.btnBuscar.Location = new System.Drawing.Point(562, 140);
             this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(90, 27);
+            this.btnBuscar.Size = new System.Drawing.Size(143, 32);
             this.btnBuscar.TabIndex = 28;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = true;
@@ -115,14 +78,14 @@
             // 
             // dtpHasta
             // 
-            this.dtpHasta.Location = new System.Drawing.Point(109, 74);
+            this.dtpHasta.Location = new System.Drawing.Point(100, 67);
             this.dtpHasta.Name = "dtpHasta";
             this.dtpHasta.Size = new System.Drawing.Size(200, 20);
             this.dtpHasta.TabIndex = 18;
             // 
             // dtpDesde
             // 
-            this.dtpDesde.Location = new System.Drawing.Point(109, 36);
+            this.dtpDesde.Location = new System.Drawing.Point(100, 29);
             this.dtpDesde.Name = "dtpDesde";
             this.dtpDesde.Size = new System.Drawing.Size(200, 20);
             this.dtpDesde.TabIndex = 17;
@@ -130,7 +93,7 @@
             // Label2
             // 
             this.Label2.AutoSize = true;
-            this.Label2.Location = new System.Drawing.Point(21, 74);
+            this.Label2.Location = new System.Drawing.Point(12, 67);
             this.Label2.Name = "Label2";
             this.Label2.Size = new System.Drawing.Size(35, 13);
             this.Label2.TabIndex = 16;
@@ -139,7 +102,7 @@
             // Label1
             // 
             this.Label1.AutoSize = true;
-            this.Label1.Location = new System.Drawing.Point(21, 43);
+            this.Label1.Location = new System.Drawing.Point(12, 36);
             this.Label1.Name = "Label1";
             this.Label1.Size = new System.Drawing.Size(38, 13);
             this.Label1.TabIndex = 15;
@@ -148,7 +111,7 @@
             // chklCriticidad
             // 
             this.chklCriticidad.FormattingEnabled = true;
-            this.chklCriticidad.Location = new System.Drawing.Point(612, 52);
+            this.chklCriticidad.Location = new System.Drawing.Point(562, 29);
             this.chklCriticidad.Name = "chklCriticidad";
             this.chklCriticidad.Size = new System.Drawing.Size(182, 94);
             this.chklCriticidad.TabIndex = 30;
@@ -156,19 +119,44 @@
             // chklUsuario
             // 
             this.chklUsuario.FormattingEnabled = true;
-            this.chklUsuario.Location = new System.Drawing.Point(399, 52);
+            this.chklUsuario.Location = new System.Drawing.Point(349, 29);
             this.chklUsuario.Name = "chklUsuario";
             this.chklUsuario.Size = new System.Drawing.Size(187, 94);
             this.chklUsuario.TabIndex = 31;
+            // 
+            // rpvBitacora
+            // 
+            reportDataSource1.Name = "DS_Bitacora";
+            reportDataSource1.Value = this.BitacoraViewModelBindingSource;
+            this.rpvBitacora.LocalReport.DataSources.Add(reportDataSource1);
+            this.rpvBitacora.LocalReport.DisplayName = "Sistema TIS";
+            this.rpvBitacora.LocalReport.ReportEmbeddedResource = "SSTIS.Reportes.Bitacora.Report1.rdlc";
+            this.rpvBitacora.Location = new System.Drawing.Point(15, 189);
+            this.rpvBitacora.Name = "rpvBitacora";
+            this.rpvBitacora.ServerReport.BearerToken = null;
+            this.rpvBitacora.Size = new System.Drawing.Size(781, 320);
+            this.rpvBitacora.TabIndex = 33;
+            // 
+            // BitacoraViewModelBindingSource
+            // 
+            this.BitacoraViewModelBindingSource.DataSource = typeof(SSTIS.BitacoraViewModel);
+            // 
+            // bitacoraViewModelBindingSource2
+            // 
+            this.bitacoraViewModelBindingSource2.DataSource = typeof(SSTIS.BitacoraViewModel);
+            // 
+            // bitacoraViewModelBindingSource1
+            // 
+            this.bitacoraViewModelBindingSource1.DataSource = typeof(SSTIS.BitacoraViewModel);
             // 
             // frmBitacora
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(836, 431);
+            this.ClientSize = new System.Drawing.Size(836, 521);
+            this.Controls.Add(this.rpvBitacora);
             this.Controls.Add(this.chklUsuario);
             this.Controls.Add(this.chklCriticidad);
-            this.Controls.Add(this.dgvBitacora);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.Label4);
             this.Controls.Add(this.Label3);
@@ -179,20 +167,15 @@
             this.Name = "frmBitacora";
             this.Text = "Bitacora";
             this.Load += new System.EventHandler(this.Bitacora_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvBitacora)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BitacoraViewModelBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bitacoraViewModelBindingSource2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bitacoraViewModelBindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        internal System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        internal System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        internal System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        internal System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        internal System.Windows.Forms.DataGridView dgvBitacora;
-        internal System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         internal System.Windows.Forms.Button btnBuscar;
         internal System.Windows.Forms.Label Label4;
         internal System.Windows.Forms.Label Label3;
@@ -202,5 +185,9 @@
         internal System.Windows.Forms.Label Label1;
         private System.Windows.Forms.CheckedListBox chklCriticidad;
         private System.Windows.Forms.CheckedListBox chklUsuario;
+        private System.Windows.Forms.BindingSource BitacoraViewModelBindingSource;
+        private System.Windows.Forms.BindingSource bitacoraViewModelBindingSource1;
+        private System.Windows.Forms.BindingSource bitacoraViewModelBindingSource2;
+        private Microsoft.Reporting.WinForms.ReportViewer rpvBitacora;
     }
 }

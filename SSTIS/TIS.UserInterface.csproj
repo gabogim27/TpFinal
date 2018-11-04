@@ -68,6 +68,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -149,6 +150,13 @@
     <Compile Include="Interfaces\IRestaurarCopiaDeSeguridad.cs" />
     <Compile Include="MessageBoxHelper\Alert.cs" />
     <Compile Include="Providers\IdiomaProvider.cs" />
+    <Compile Include="ReporteBitacora.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReporteBitacora.Designer.cs">
+      <DependentUpon>ReporteBitacora.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BitacoraViewModel.cs" />
     <Compile Include="Resources\SpanishResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -289,6 +297,10 @@
     <EmbeddedResource Include="Clientes.resx">
       <DependentUpon>Clientes.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ReporteBitacora.resx">
+      <DependentUpon>ReporteBitacora.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Bitacora\Report1.rdlc" />
     <EmbeddedResource Include="Resources\SpanishResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SpanishResources.Designer.cs</LastGenOutput>
@@ -347,6 +359,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\BitacoraViewModel.datasource" />
+    <None Include="Properties\DataSources\BitacoraViewModel1.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -370,6 +384,9 @@
       <Project>{E65D285D-3D62-4FF6-BE74-844E358A140D}</Project>
       <Name>TIS.DataAccessLayer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

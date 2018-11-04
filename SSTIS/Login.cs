@@ -61,15 +61,15 @@ namespace SSTIS
             cboIdioma.DisplayMember = "Descripcion";
         }
 
-        //protected override bool ProcessCmdKey(ref Message mensaje, Keys KeyData)
-        //{
-        //    if (KeyData == Keys.F1)
-        //    {
-        //        Help.ShowHelp(this, "C:\\TPFinalDiploma\\TpFinal\\SSTIS\\Ayuda\\Manual de Usuario.chm");
-        //    }
+        protected override bool ProcessCmdKey(ref Message mensaje, Keys KeyData)
+        {
+            if (KeyData == Keys.F1)
+            {
+                Help.ShowHelp(this, "C:\\TPFinalDiploma\\TpFinal\\SSTIS\\Ayuda\\Manual de Usuario.chm");
+            }
 
-        //    return true;
-        //}
+            return false;
+        }
 
         private void btn_ingresar_Click(object sender, EventArgs e)
         {

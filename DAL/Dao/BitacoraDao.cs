@@ -128,7 +128,7 @@ namespace DAL.Dao
                     criticidadesParameters += coma + "'" + criticidades[i] + "'";
                 }
                 var query = string.Format("Select * from Bitacora where IdUsuario IN ({0}) and " +
-                                          "Criticidad IN ({1}) and Fecha between '{2}' and '{3}'", idsUsuParameters, criticidadesParameters, desde, hasta);                          
+                                          "Criticidad IN ({1}) and Fecha between '{2}' and '{3}'", idsUsuParameters, criticidadesParameters, desde.ToShortDateString(), hasta.ToShortDateString());                          
                 return SqlUtils.Exec<Bitacora>(query);
             }
             catch (Exception ex)
