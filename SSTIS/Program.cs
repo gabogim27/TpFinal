@@ -54,6 +54,10 @@ namespace SysAnalizer
             container.Register<IServicio<Contacto>, ServicioContacto>(Lifestyle.Singleton);
             container.Register<IRepository<Contacto>, RepositorioContacto>(Lifestyle.Singleton);
             container.Register<IDao<Contacto>, ContactoDao>(Lifestyle.Singleton);
+            //Contacto
+            container.Register<IServicio<Familia>, ServicioFamilia>(Lifestyle.Singleton);
+            container.Register<IRepository<Familia>, RepositorioFamilia>(Lifestyle.Singleton);
+            container.Register<IDao<Familia>, FamiliaDao>(Lifestyle.Singleton);
             //Bitacora
             container.Register<IServicioBitacora, ServicioBitacora>(Lifestyle.Singleton);
             container.Register<IRepositorioBitacora, RepositorioBitacora>(Lifestyle.Singleton);
@@ -75,7 +79,7 @@ namespace SysAnalizer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(container
-                .GetInstance<SSTIS.frmBitacora>()); //    new ABMUsuarios(new Repository<Usuario>(new UsuarioDao())));
+                .GetInstance<SSTIS.frmLogin>()); //    new ABMUsuarios(new Repository<Usuario>(new UsuarioDao())));
         }
     }
 }

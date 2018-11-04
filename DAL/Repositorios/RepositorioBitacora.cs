@@ -13,6 +13,8 @@ namespace DAL.Repositorios
 
     public class RepositorioBitacora : IRepositorioBitacora
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(RepositorioBitacora));
+
         public IBitacoraDao BitacoraDao { get; set; }
 
         public RepositorioBitacora(IBitacoraDao bitacoraDao)
@@ -20,15 +22,15 @@ namespace DAL.Repositorios
             this.BitacoraDao = bitacoraDao;
         }
 
-        public void RegistrarEnBitacora(Usuario usuario)
+        public void RegistrarEnBitacora(string criticidad, string mensaje, Usuario usuario)
         {
             GlobalContext.Properties["IdUsuario"] = usuario.IdUsuario;
-
             var digitoVH = BitacoraDao.GenerarDVH(usuario);
-
-            GlobalContext.Properties["RequestGuid"] = Guid.NewGuid();
-
+            GlobalContext.Properties["logLevel"] = criticidad;
             GlobalContext.Properties["dvh"] = digitoVH;
+
+            log.InfoFormat(mensaje);
+            
         }
 
         public void FiltrarBitacora(BitacoraFiltros filtros)

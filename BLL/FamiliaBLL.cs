@@ -13,7 +13,7 @@
 
         public bool Create(BE.Familia ObjAlta)
         {
-            return DAL.Impl.FamiliaDAL.Getinstancia().Create(ObjAlta);
+            throw new NotImplementedException();
         }
 
         public bool Delete(BE.Familia ObjDel)

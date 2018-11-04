@@ -5,6 +5,7 @@ using BLL.Interfaces;
 using DAL;
 using DAL.Interfaces;
 using log4net;
+using BLL.Utils;
 using TimeSpan = System.TimeSpan;
 
 namespace BLL
@@ -104,11 +105,13 @@ namespace BLL
             {
                 var ingresa = RepositorioUsuarioImplementor.LogIn(email, contraseña);
                 usuario = RepositorioUsuarioImplementor.ObtenerUsuarioConEmail(email);
-                RepositorioBitacora.RegistrarEnBitacora(usuario);
+                
 
                 if (ingresa)
                 {
-                    log.Info("Usuario logueado correctamente");
+                    var mensaje = string.Format("Usuario: {0} logueado correctamente.", usuario.Email);
+                    RepositorioBitacora.RegistrarEnBitacora(Convert.ToString(Utils.Utils.LogLevel.Alta), mensaje, usuario);
+                    //log.Info("Usuario logueado correctamente");
                     return ingresa;
                 }
 
@@ -137,7 +140,7 @@ namespace BLL
 
         public bool ValidarEmail(string email)
         {
-            return Utils.ValidarEmail(email);
+            return Utils.Utils.ValidarEmail(email);
         }
     }
 }

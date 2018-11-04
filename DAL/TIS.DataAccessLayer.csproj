@@ -53,12 +53,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Dao\BitacoraDao.cs" />
     <Compile Include="Dao\ContactoDao.cs" />
     <Compile Include="Dao\DigitoVerificadorDao.cs" />
     <Compile Include="Dao\DomicilioDao.cs" />
-    <Compile Include="Dao\FamiliaDAL.cs" />
+    <Compile Include="Dao\FamiliaDao.cs" />
     <Compile Include="Dao\IdiomaDao.cs" />
     <Compile Include="Dao\LocalidadDao.cs" />
     <Compile Include="Dao\ProvinciaDao.cs" />
@@ -79,11 +78,13 @@
     <Compile Include="Repositorios\RepositorioBitacora.cs" />
     <Compile Include="Repositorios\RepositorioContacto.cs" />
     <Compile Include="Repositorios\RepositorioDomicilio.cs" />
+    <Compile Include="Repositorios\RepositorioFamilia.cs" />
     <Compile Include="Repositorios\RepositorioIdioma.cs" />
     <Compile Include="Repositorios\RepositorioLocalidad.cs" />
     <Compile Include="Repositorios\RepositorioProvincia.cs" />
     <Compile Include="Repositorios\RepositorioUsuario.cs" />
     <Compile Include="Repositorios\Repository.cs" />
+    <Compile Include="Utils\DalLogLevel.cs" />
     <Compile Include="Utils\SqlUtils.cs" />
   </ItemGroup>
   <ItemGroup>

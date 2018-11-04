@@ -10,7 +10,7 @@ namespace DAL.Interfaces
 
     public interface IRepositorioBitacora
     {
-        void RegistrarEnBitacora(Usuario usuario);
+        void RegistrarEnBitacora(string criticidad, string mensaje, Usuario usuario = null);
 
         void FiltrarBitacora(BitacoraFiltros filtros);
 

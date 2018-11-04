@@ -108,27 +108,36 @@ namespace DAL.Dao
         {
             try
             {
+                var queryImpl = "Select * from Bitacora where ";
                 var idsUsuParameters = string.Empty;
                 var criticidadesParameters = string.Empty;
                 var coma = string.Empty;
                 //Prepare usuariosIds parameters
-                for (int i = 0; i < idUsuarios.Count; i++)
+                if (idUsuarios.Count != 0)
                 {
-                    if (i != 0)                     
-                        coma = ",";
+                    for (int i = 0; i < idUsuarios.Count; i++)
+                    {
+                        if (i != 0)
+                            coma = ",";
 
-                    idsUsuParameters += coma + "'" + idUsuarios[i] + "'";
+                        idsUsuParameters += coma + "'" + idUsuarios[i] + "'";
+                    }
+                    queryImpl += String.Format("IdUsuario IN ({0}) and  ", idsUsuParameters);
                 }
                 ////Prepare criticidadesIDs parameters
-                for (int i = 0; i < criticidades.Count; i++)
+                if (criticidades.Count != 0)
                 {
-                    if (i != 0)
-                        coma = ",";
+                    for (int i = 0; i < criticidades.Count; i++)
+                    {
+                        if (i != 0)
+                            coma = ",";
 
-                    criticidadesParameters += coma + "'" + criticidades[i] + "'";
+                        criticidadesParameters += coma + "'" + criticidades[i] + "'";
+                    }
+                    queryImpl += String.Format("Criticidad IN ({0}) and  ", criticidadesParameters);
                 }
-                var query = string.Format("Select * from Bitacora where IdUsuario IN ({0}) and " +
-                                          "Criticidad IN ({1}) and Fecha between '{2}' and '{3}'", idsUsuParameters, criticidadesParameters, desde.ToShortDateString(), hasta.ToShortDateString());                          
+                
+                var query = string.Format(queryImpl + " Fecha between '{0}' and '{1}'", desde.ToShortDateString(), hasta);                          
                 return SqlUtils.Exec<Bitacora>(query);
             }
             catch (Exception ex)

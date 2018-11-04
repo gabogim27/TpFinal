@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Mail;
 
-namespace BLL
+namespace BLL.Utils
 {
     public static class Utils
     {
@@ -16,6 +16,13 @@ namespace BLL
             {
                 return false;
             }
+        }
+
+        public enum LogLevel
+        {
+            Alta,
+            Media,
+            Baja
         }
     }
 }

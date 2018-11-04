@@ -20,9 +20,9 @@ namespace BLL
             this.RepositorioBitacora = repositorioBitacora;
         }
 
-        public void RegistrarEnBitacora(Usuario usuario)
+        public void RegistrarEnBitacora(string criticidad, string mensaje, Usuario usuario)
         {
-            throw new NotImplementedException();
+            RepositorioBitacora.RegistrarEnBitacora(criticidad, mensaje, usuario);
         }
 
         public void FiltrarBitacora(BitacoraFiltros filtros)

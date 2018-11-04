@@ -9,7 +9,7 @@ namespace BLL.Interfaces
 {
     public interface IServicioBitacora
     {
-        void RegistrarEnBitacora(Usuario usuario);
+        void RegistrarEnBitacora(string criticidad, string mensaje, Usuario usuario);
 
         void FiltrarBitacora(BitacoraFiltros filtros);
 

@@ -18,6 +18,6 @@ namespace DAL.Interfaces
 
         int ObtenerUltimoIdBitacora();
 
-        List<Bitacora> LeerBitacoraPorUsuarioCriticidadYFecha(List<Guid> idUsuarios, List<string> criticidades, DateTime desde, DateTime hasta);
+        List<Bitacora> LeerBitacoraPorUsuarioCriticidadYFecha(List<Guid> dUsuarios, List<string> criticidades, DateTime desde, DateTime hasta);
     }
 }

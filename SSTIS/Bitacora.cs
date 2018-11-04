@@ -35,7 +35,7 @@ namespace SSTIS
         private IList<Usuario> UsuariosEnBitacora { get; set; }
         public IServicioIdioma ServicioIdioma;
 
-        public frmBitacora(IServicio<Usuario> servicioUsuario, IUsuarioDao servicioUsuarioImplementor, 
+        public frmBitacora(IServicio<Usuario> servicioUsuario, IUsuarioDao servicioUsuarioImplementor,
             IServicioBitacora servicioBitacoraImplementor, IServicioIdioma servicioIdioma)
         {
             InitializeComponent();
@@ -72,7 +72,7 @@ namespace SSTIS
                 emails.ForEach(e => chklUsuario.Items.Add(e));
             }
             catch (Exception e)
-            {       
+            {
                 log.ErrorFormat("Error inesperado: {0}", e.Message);
                 Alert.ShowAlterWithButtonAndIcon("Ocurrio un error al agregar los usuarios a la lista", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -84,8 +84,9 @@ namespace SSTIS
             var fechaDesde = dtpDesde.Value;
             var fechaHasta = dtpHasta.Value;
             var usuariosSeleccionados = new List<Usuario>();
-            var prueba = new List<string>();
-            
+            var criticidadesSeleccionadas = new List<string>();
+            //var prueba = new List<string>();
+
             //Obtenemos los usuarios seleccionados
             for (int i = 0; i < chklUsuario.CheckedItems.Count; i++)
             {
@@ -95,16 +96,16 @@ namespace SSTIS
             //Obtenemos las criticidades seleccionadas
             for (int i = 0; i < chklCriticidad.CheckedItems.Count; i++)
             {
-                prueba.Add("INFO");
-                //criticidadesSeleccionadas[i] = (string) chklCriticidad.CheckedItems[i];
+                //prueba.Add("INFO");
+                criticidadesSeleccionadas.Add((string)chklCriticidad.CheckedItems[i]);
             }
 
             var idUsuarios = usuariosSeleccionados.Select(u => u.IdUsuario).ToList();
             //Buscamos los usuarios con parametros de fecha y criticidad en la bitacora
-            var listaBitacora = ListarBitacora(idUsuarios, prueba, fechaDesde, fechaHasta);
-            BitacoraViewModel.ListadoBitacora = CreateDataTable(listaBitacora);
-            if (BitacoraViewModel.ListadoBitacora.Tables.Count != 0)
+            var listaBitacora = ListarBitacora(idUsuarios, criticidadesSeleccionadas, fechaDesde, fechaHasta);
+            if (listaBitacora.Any())
             {
+                BitacoraViewModel.ListadoBitacora = CreateDataTable(listaBitacora);
                 //Cargamos info en el reporte
                 rpvBitacora.LocalReport.DataSources.Clear();
                 rpvBitacora.LocalReport.DataSources.Add(new ReportDataSource("DS_Bitacora", BitacoraViewModel.ListadoBitacora.Tables[0]));
@@ -113,9 +114,15 @@ namespace SSTIS
             }
             else
             {
-               Alert.ShowAlterWithButtonAndIcon("MSJ004", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);     
+                //VER PORQUE NO LO LIMPIA CUANDO NO HAY DATOS
+                //lo de abajo es temporal hasta encontrar una mejor solucion
+                BitacoraViewModel.ListadoBitacora.Clear();
+                rpvBitacora.LocalReport.DataSources.Clear();
+                rpvBitacora.LocalReport.DataSources.Add(new ReportDataSource("DS_Bitacora", BitacoraViewModel.ListadoBitacora.Tables[0]));
+                rpvBitacora.LocalReport.Refresh();
+                rpvBitacora.RefreshReport();
+                Alert.ShowAlterWithButtonAndIcon("MSJ004", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
         }
 
         public DataSet CreateDataTable(List<Bitacora> listaBitacora)
