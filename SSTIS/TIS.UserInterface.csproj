@@ -147,6 +147,7 @@
       <DependentUpon>Clientes.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IBitacora.cs" />
+    <Compile Include="Interfaces\INuevaFamilia.cs" />
     <Compile Include="Interfaces\IRestaurarCopiaDeSeguridad.cs" />
     <Compile Include="MessageBoxHelper\Alert.cs" />
     <Compile Include="Providers\IdiomaProvider.cs" />

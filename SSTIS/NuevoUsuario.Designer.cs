@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.btnCancelar = new System.Windows.Forms.Button();
-            this.ComboBox4 = new System.Windows.Forms.ComboBox();
-            this.Label14 = new System.Windows.Forms.Label();
             this.GroupBox3 = new System.Windows.Forms.GroupBox();
             this.Label13 = new System.Windows.Forms.Label();
             this.cboLocalidad = new System.Windows.Forms.ComboBox();
@@ -57,44 +55,30 @@
             this.Label2 = new System.Windows.Forms.Label();
             this.Label1 = new System.Windows.Forms.Label();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
+            this.chklFamilia = new System.Windows.Forms.CheckedListBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.chklPatente = new System.Windows.Forms.CheckedListBox();
             this.GroupBox3.SuspendLayout();
             this.GroupBox2.SuspendLayout();
             this.GroupBox1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(633, 319);
+            this.btnCancelar.Location = new System.Drawing.Point(628, 388);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(104, 39);
             this.btnCancelar.TabIndex = 12;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             // 
-            // ComboBox4
-            // 
-            this.ComboBox4.FormattingEnabled = true;
-            this.ComboBox4.Location = new System.Drawing.Point(97, 41);
-            this.ComboBox4.Name = "ComboBox4";
-            this.ComboBox4.Size = new System.Drawing.Size(121, 21);
-            this.ComboBox4.TabIndex = 14;
-            // 
-            // Label14
-            // 
-            this.Label14.AutoSize = true;
-            this.Label14.Location = new System.Drawing.Point(6, 44);
-            this.Label14.Name = "Label14";
-            this.Label14.Size = new System.Drawing.Size(42, 13);
-            this.Label14.TabIndex = 13;
-            this.Label14.Text = "Familia:";
-            // 
             // GroupBox3
             // 
-            this.GroupBox3.Controls.Add(this.ComboBox4);
-            this.GroupBox3.Controls.Add(this.Label14);
+            this.GroupBox3.Controls.Add(this.chklFamilia);
             this.GroupBox3.Location = new System.Drawing.Point(487, 52);
             this.GroupBox3.Name = "GroupBox3";
-            this.GroupBox3.Size = new System.Drawing.Size(250, 116);
+            this.GroupBox3.Size = new System.Drawing.Size(216, 142);
             this.GroupBox3.TabIndex = 10;
             this.GroupBox3.TabStop = false;
             this.GroupBox3.Text = "Familia";
@@ -184,7 +168,7 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(470, 319);
+            this.btnAceptar.Location = new System.Drawing.Point(475, 388);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(104, 39);
             this.btnAceptar.TabIndex = 11;
@@ -336,11 +320,38 @@
             this.GroupBox1.TabStop = false;
             this.GroupBox1.Text = "Datos";
             // 
+            // chklFamilia
+            // 
+            this.chklFamilia.FormattingEnabled = true;
+            this.chklFamilia.Location = new System.Drawing.Point(43, 19);
+            this.chklFamilia.Name = "chklFamilia";
+            this.chklFamilia.Size = new System.Drawing.Size(120, 94);
+            this.chklFamilia.TabIndex = 0;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.chklPatente);
+            this.groupBox4.Location = new System.Drawing.Point(487, 219);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(216, 141);
+            this.groupBox4.TabIndex = 13;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Patente";
+            // 
+            // chklPatente
+            // 
+            this.chklPatente.FormattingEnabled = true;
+            this.chklPatente.Location = new System.Drawing.Point(43, 17);
+            this.chklPatente.Name = "chklPatente";
+            this.chklPatente.Size = new System.Drawing.Size(120, 94);
+            this.chklPatente.TabIndex = 1;
+            // 
             // frmNuevoUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.GroupBox3);
             this.Controls.Add(this.Label13);
@@ -351,11 +362,11 @@
             this.Text = "NuevoUsuario";
             this.Load += new System.EventHandler(this.NuevoUsuario_Load);
             this.GroupBox3.ResumeLayout(false);
-            this.GroupBox3.PerformLayout();
             this.GroupBox2.ResumeLayout(false);
             this.GroupBox2.PerformLayout();
             this.GroupBox1.ResumeLayout(false);
             this.GroupBox1.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -364,8 +375,6 @@
         #endregion
 
         internal System.Windows.Forms.Button btnCancelar;
-        internal System.Windows.Forms.ComboBox ComboBox4;
-        internal System.Windows.Forms.Label Label14;
         internal System.Windows.Forms.GroupBox GroupBox3;
         internal System.Windows.Forms.Label Label13;
         internal System.Windows.Forms.ComboBox cboLocalidad;
@@ -392,5 +401,8 @@
         internal System.Windows.Forms.ComboBox cboProvincia;
         internal System.Windows.Forms.TextBox txtCp;
         internal System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckedListBox chklFamilia;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.CheckedListBox chklPatente;
     }
 }

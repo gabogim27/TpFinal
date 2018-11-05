@@ -12,7 +12,7 @@ namespace DAL.Impl
     using System.Text;
     using System.Threading.Tasks;
 
-    public class FamiliaDao : IDao<Familia>
+    public class FamiliaDao : IDao<Familia>, IFamiliaDao
     {
         public IRepositorioBitacora RepositorioBitacora;
 
@@ -86,6 +86,29 @@ namespace DAL.Impl
             {
                 RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(), 
                     string.Format("Ocurrio un error al actualizar la familia: {0}. Error: {1}", entity.Descripcion, ex.Message));
+            }
+
+            return false;
+        }
+
+        public bool GuardarFamiliaUsuario(List<Guid> familiaIds, Guid usuarioId)
+        {
+            try
+            {
+                //TODO: Implementar mas adelante
+                foreach (var idFamilia in familiaIds)
+                {
+                    string processQuery = string.Format("INSERT INTO FamiliaUsuario (IdFamilia, IdUsuario) VALUES ('{0}', '{1}')", idFamilia, usuarioId);
+                    SqlUtils.Connection().Execute(processQuery);
+                }
+                                                
+                return true;
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
+                    string.Format("Ocurrio un error al guardar en FamiliaUsuario idUsuario: {0}. Error: {1}",
+                        usuarioId, ex.Message));
             }
 
             return false;

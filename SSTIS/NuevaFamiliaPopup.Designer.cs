@@ -1,6 +1,6 @@
 ﻿namespace SSTIS
 {
-    partial class NuevaFamiliaPopup
+    partial class frmNuevaFamilia
     {
         /// <summary>
         /// Required designer variable.
@@ -39,7 +39,7 @@
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(131, 37);
             this.btnAceptar.TabIndex = 5;
-            this.btnAceptar.Text = "Acpetar";
+            this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
@@ -59,7 +59,7 @@
             this.Label1.TabIndex = 3;
             this.Label1.Text = "Descripción";
             // 
-            // NuevaFamiliaPopup
+            // frmNuevaFamilia
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -67,7 +67,7 @@
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.txtFamilia);
             this.Controls.Add(this.Label1);
-            this.Name = "NuevaFamiliaPopup";
+            this.Name = "frmNuevaFamilia";
             this.Text = "NuevaFamiliaPopup";
             this.ResumeLayout(false);
             this.PerformLayout();

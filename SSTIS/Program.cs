@@ -54,10 +54,13 @@ namespace SysAnalizer
             container.Register<IServicio<Contacto>, ServicioContacto>(Lifestyle.Singleton);
             container.Register<IRepository<Contacto>, RepositorioContacto>(Lifestyle.Singleton);
             container.Register<IDao<Contacto>, ContactoDao>(Lifestyle.Singleton);
-            //Contacto
+            //Familia
             container.Register<IServicio<Familia>, ServicioFamilia>(Lifestyle.Singleton);
             container.Register<IRepository<Familia>, RepositorioFamilia>(Lifestyle.Singleton);
             container.Register<IDao<Familia>, FamiliaDao>(Lifestyle.Singleton);
+            container.Register<IFamiliaDao, FamiliaDao>(Lifestyle.Singleton);
+            container.Register<IServicioFamilia, ServicioFamilia>(Lifestyle.Singleton);
+            container.Register<IRepositorioFamilia, RepositorioFamilia>(Lifestyle.Singleton);
             //Bitacora
             container.Register<IServicioBitacora, ServicioBitacora>(Lifestyle.Singleton);
             container.Register<IRepositorioBitacora, RepositorioBitacora>(Lifestyle.Singleton);
@@ -67,6 +70,10 @@ namespace SysAnalizer
             container.Register<IServicioIdioma, ServicioIdioma>(Lifestyle.Singleton);
             container.Register<IRepositorioIdioma, RepositorioIdioma>(Lifestyle.Singleton);
             container.Register<IIdiomaDao, IdiomaDao>(Lifestyle.Singleton);
+            //Patente
+            container.Register<IServicioPatente, ServicioPatente>(Lifestyle.Singleton);
+            container.Register<IRepositorioPatente, RepositorioPatente>(Lifestyle.Singleton);
+            container.Register<IPatenteDao, PatenteDao>(Lifestyle.Singleton);
             //Formularios
             container.Register<INuevoUsuario, frmNuevoUsuario>(Lifestyle.Transient);
             container.Register<IABMUsuarios, frmABMUsuarios>(Lifestyle.Transient);
@@ -75,11 +82,12 @@ namespace SysAnalizer
             container.Register<IRealizarCopiaSeguridad, frmRealizarCopiaSeguridad>(Lifestyle.Transient);
             container.Register<IRestaurarCopiaDeSeguridad, frmRestaurarCopiaDeSeguridad>(Lifestyle.Transient);
             container.Register<IBitacora, SSTIS.frmBitacora>();
+            container.Register<INuevaFamilia, frmNuevaFamilia>();
             log4net.Config.XmlConfigurator.Configure();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(container
-                .GetInstance<SSTIS.frmLogin>()); //    new ABMUsuarios(new Repository<Usuario>(new UsuarioDao())));
+                .GetInstance<SSTIS.frmBitacora>()); //    new ABMUsuarios(new Repository<Usuario>(new UsuarioDao())));
         }
     }
 }

@@ -9,13 +9,15 @@ namespace DAL.Repositorios
     using System.Text;
     using System.Threading.Tasks;
 
-    public class RepositorioFamilia : IRepository<Familia>
+    public class RepositorioFamilia : IRepository<Familia>, IRepositorioFamilia
     {
         public IDao<Familia> FamiliaDao;
+        public IFamiliaDao FamiliaDaoImplementor;
 
-        public RepositorioFamilia(IDao<Familia> familiaDao)
+        public RepositorioFamilia(IDao<Familia> familiaDao, IFamiliaDao familiaDaoImplementor)
         {
             this.FamiliaDao = familiaDao;
+            this.FamiliaDaoImplementor = familiaDaoImplementor;
         }
         public bool Create(Familia ObjAlta)
         {
@@ -40,6 +42,11 @@ namespace DAL.Repositorios
         public bool Update(Familia ObjUpd)
         {
             return FamiliaDao.Update(ObjUpd);
+        }
+
+        public bool GuardarFamiliaUsuario(List<Guid> familiaIds, Guid usuarioId)
+        {
+            return FamiliaDaoImplementor.GuardarFamiliaUsuario(familiaIds, usuarioId);
         }
     }
 }

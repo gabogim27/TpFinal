@@ -7,13 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BE;
+using BLL;
+using BLL.Interfaces;
+using SSTIS.Interfaces;
+using SSTIS.MessageBoxHelper;
 
 namespace SSTIS
 {
-    public partial class NuevaFamiliaPopup : Form
+    public partial class frmNuevaFamilia : Form, INuevaFamilia
     {
-        public NuevaFamiliaPopup()
+        public IServicio<Familia> ServicioFamilia;
+
+        public frmNuevaFamilia(IServicio<Familia> servicioFamilia)
         {
+            ServicioFamilia = servicioFamilia;
             InitializeComponent();
         }
 
@@ -27,16 +35,15 @@ namespace SSTIS
                 {
                     objFamilia.IdFamilia = Guid.NewGuid();
                     objFamilia.Descripcion = txtFamilia.Text.Trim();
-                    //BLL.FamiliaBLL.Getinstancia().Create(objFamilia);
+                    ServicioFamilia.Create(objFamilia);
                 }
                 else
                 {
-                    MessageBox.Show("Por favor ingrese una familia valida!!!");
+                    Alert.ShowSimpleAlert("Por favor ingrese una familia.");
                 }                
             }
             catch (Exception ex)
             {
-
                 throw new Exception(ex.Message);
             }
         }

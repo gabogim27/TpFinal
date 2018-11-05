@@ -52,8 +52,10 @@
     <Compile Include="Interfaces\IServicioBitacora.cs" />
     <Compile Include="Interfaces\IServicioIdioma.cs" />
     <Compile Include="Interfaces\IServicioLocalidad.cs" />
+    <Compile Include="Interfaces\IServicioPatente.cs" />
     <Compile Include="Interfaces\IServicioProvincia.cs" />
     <Compile Include="Interfaces\IServicioUsuario.cs" />
+    <Compile Include="IServicioFamilia.cs" />
     <Compile Include="ServicioBitacora.cs" />
     <Compile Include="ServicioContacto.cs" />
     <Compile Include="ServicioDomicilio.cs" />
@@ -62,6 +64,7 @@
     <Compile Include="ServicioFamilia.cs" />
     <Compile Include="ServicioIdioma.cs" />
     <Compile Include="ServicioLocalidad.cs" />
+    <Compile Include="ServicioPatente.cs" />
     <Compile Include="ServicioProvincia.cs" />
     <Compile Include="ServicioUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
