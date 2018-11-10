@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SSTIS.Interfaces;
 
 namespace SSTIS
 {
-    public partial class ReporteBitacora : Form
+    public partial class frmAdminPatenteFamilia : Form, IAdmPatenteFamilia
     {
-        public ReporteBitacora()
+        public frmAdminPatenteFamilia()
         {
             InitializeComponent();
         }

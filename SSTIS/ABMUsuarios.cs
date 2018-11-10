@@ -1,23 +1,13 @@
-﻿using BE;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using BLL;
-using BLL.Interfaces;
-using DAL.Interfaces;
-using log4net;
-using SSTIS.Interfaces;
-using SSTIS.Utils;
-
-namespace SSTIS
+﻿namespace SSTIS
 {
+    using BE;
+    using BLL.Interfaces;
+    using log4net;
+    using Interfaces;
+    using Utils;
+    using System;
+    using System.Windows.Forms;
+
     public partial class frmABMUsuarios : Form, IABMUsuarios
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(frmABMUsuarios));
@@ -30,16 +20,19 @@ namespace SSTIS
         public INuevoUsuario nuevoUsuario { get; set; }
         private static Usuario usuario { get; set; }
 
-        public frmABMUsuarios(IServicio<Usuario> servicioUsuario, INuevoUsuario nuevoUsuario,
-            IServicio<Localidad> servicioLocalidad, IServicio<Provincia> servicioProvincia,
-            IServicioLocalidad servicioLocalidadImplementor)
+        public frmABMUsuarios(
+            IServicio<Usuario> ServicioUsuario,
+            INuevoUsuario nuevoUsuario,
+            IServicio<Localidad> ServicioLocalidad,
+            IServicio<Provincia> ServicioProvincia,
+            IServicioLocalidad ServicioLocalidadImplementor)
         {
             InitializeComponent();
-            this.ServicioUsuario = servicioUsuario;
+            this.ServicioUsuario = ServicioUsuario;
             this.nuevoUsuario = nuevoUsuario;
-            this.ServicioLocalidad = servicioLocalidad;
-            this.ServicioProvincia = servicioProvincia;
-            this.ServicioLocalidadImplementor = servicioLocalidadImplementor;
+            this.ServicioLocalidad = ServicioLocalidad;
+            this.ServicioProvincia = ServicioProvincia;
+            this.ServicioLocalidadImplementor = ServicioLocalidadImplementor;
         }
 
         //public ABMUsuarios(IRepository<Usuario> repository)
@@ -80,7 +73,12 @@ namespace SSTIS
 
         private void btnCrearUsuario_Click(object sender, EventArgs e)
         {
-            nuevoUsuario.Show();
+            if (nuevoUsuario.ShowDialog() == DialogResult.OK)
+            {
+                CargarGrilla();
+            }
+            //nuevoUsuario.Show();
+
         }
 
         private void ABMUsuarios_Load(object sender, EventArgs e)
@@ -134,6 +132,8 @@ namespace SSTIS
         private void CargarGrilla()
         {
             var usuarios = ServicioUsuario.Retrive();
+            dgvUsuarios.Rows.Clear();
+
             for (int i = 0; i < usuarios.Count; i++)
             {
                 dgvUsuarios.Rows.Add(new string[]
@@ -171,6 +171,7 @@ namespace SSTIS
                         if (ServicioUsuario.Update(usuarioToUpdate))
                         {
                             MessageBox.Show("Usuario actualizado correctamente");
+                            CargarGrilla();
                             RestablecerControles();
                             return;
                         }
@@ -189,7 +190,7 @@ namespace SSTIS
             catch (Exception ex)
             {
                 log.ErrorFormat("Ocurrio un error al actualizar el usuario: {0}", ex.Message);
-            }            
+            }
         }
 
         private Usuario ConvertToUsuario()
@@ -206,6 +207,7 @@ namespace SSTIS
                     usuario.Nombre = txtNombre.Text.Trim();
                     usuario.Apellido = txtApellido.Text.Trim();
                     usuario.Email = txtEmail.Text;
+
                     if (rdbSexo.Checked)
                     {
                         usuario.Sexo = "Hombre";
@@ -216,7 +218,7 @@ namespace SSTIS
                     }
 
                     usuario.Domicilio.Direccion = txtDomicilio.Text;
-                    usuario.Domicilio.CodPostal = txtCp.Text;                    
+                    usuario.Domicilio.CodPostal = txtCp.Text;
                     var localidad = (Localidad)cboLocalidad.SelectedItem;
                     usuario.Domicilio.Localidad.Descripcion = localidad.Descripcion;
                     var provincia = (Provincia)cboProvincia.SelectedItem;
@@ -234,9 +236,6 @@ namespace SSTIS
                 log.ErrorFormat("Ocurrio un error al mapear el objeto. Error: {0}", ex.Message);
                 return null;
             }
-            
-
-            
         }
 
         private Usuario GetUsuarioById(Guid idUsuarioSeleccionado)
@@ -246,7 +245,7 @@ namespace SSTIS
         }
 
         private void dgvUsuarios_RowEnter(object sender, DataGridViewCellEventArgs e)
-        {          
+        {
         }
 
         private void Label9_Click(object sender, EventArgs e)
@@ -264,6 +263,7 @@ namespace SSTIS
                 txtNombre.Text = dgvUsuarios.SelectedRows[0].Cells[3].Value.ToString();
                 txtApellido.Text = dgvUsuarios.SelectedRows[0].Cells[4].Value.ToString();
                 txtEmail.Text = dgvUsuarios.SelectedRows[0].Cells[5].Value.ToString();
+
                 if (dgvUsuarios.SelectedRows[0].Cells[6].Value.ToString() == "Hombre")
                 {
                     rdbSexo.Checked = true;
@@ -291,9 +291,10 @@ namespace SSTIS
 
         private void cboProvincia_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            cboLocalidad.Enabled = true;
             var selectedProvincia = Guid.Parse(cboProvincia.SelectedValue.ToString());
             var localidadesByProvinciaId = ServicioLocalidadImplementor.GetLocalidadesByProvinciaId(selectedProvincia);
+
+            cboLocalidad.Enabled = true;
             cboLocalidad.DataSource = localidadesByProvinciaId;
             cboLocalidad.DisplayMember = "Descripcion";
             cboLocalidad.ValueMember = "IdLocalidad";
@@ -303,6 +304,7 @@ namespace SSTIS
         private void LlenarComboLocalidadesPorProvinciaId(Guid provinciaId)
         {
             var localidadesByProvinciaId = ServicioLocalidadImplementor.GetLocalidadesByProvinciaId(provinciaId);
+
             cboLocalidad.DataSource = localidadesByProvinciaId;
             cboLocalidad.DisplayMember = "Descripcion";
             cboLocalidad.ValueMember = "IdLocalidad";
@@ -310,7 +312,7 @@ namespace SSTIS
 
         private void btnEliminarUsuario_Click(object sender, EventArgs e)
         {
-            if (dgvUsuarios.Rows.Count != 0)
+            if (dgvUsuarios.SelectedRows.Count != 0)
             {
                 var confirmResult = MessageBox.Show("Estas seguro de querer eliminar el usuario: " +
                                                     dgvUsuarios.SelectedRows[0].Cells[5].Value.ToString(),
@@ -319,16 +321,23 @@ namespace SSTIS
                 if (confirmResult == DialogResult.Yes)
                 {
                     if (ServicioUsuario.Delete(usuario))
+                    {
+                        CargarGrilla();
                         MessageBox.Show("Baja dada exitosamente");
-                    MessageBox.Show("Ocurrio un error al dar de baja el usuario, por favor contacte " +
-                                    "al administrador.");
-                }              
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ocurrio un error al dar de baja el usuario, por favor contacte " +
+                                        "al administrador.");
+
+                    }
+                }
             }
             else
             {
                 MessageBox.Show("Debe seleccionar un usuario de la grilla para proceder con la baja.");
             }
-           
+
         }
     }
 }

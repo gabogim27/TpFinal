@@ -30,12 +30,12 @@ namespace DAL.Utils
             }
         }
 
-        public static List<T> Exec<T>(string query)
+        public static List<T> Exec<T>(string query, object param = null)
         {
             using (IDbConnection connection = SqlUtils.Connection())
             {
                 connection.Open();
-                var result = (List<T>)connection.Query<T>(query);
+                var result = param == null ? (List<T>)connection.Query<T>(query) : (List<T>)connection.Query<T>(query, param);
 
                 return result;
             }

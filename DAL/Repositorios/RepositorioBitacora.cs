@@ -22,9 +22,9 @@ namespace DAL.Repositorios
             this.BitacoraDao = bitacoraDao;
         }
 
-        public void RegistrarEnBitacora(string criticidad, string mensaje, Usuario usuario)
+        public void RegistrarEnBitacora(string criticidad, string mensaje, Usuario usuario = null)
         {
-            GlobalContext.Properties["IdUsuario"] = usuario.IdUsuario;
+            GlobalContext.Properties["IdUsuario"] = usuario != null ? usuario.IdUsuario : (object) null;
             var digitoVH = BitacoraDao.GenerarDVH(usuario);
             GlobalContext.Properties["logLevel"] = criticidad;
             GlobalContext.Properties["dvh"] = digitoVH;

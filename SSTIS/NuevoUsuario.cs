@@ -13,6 +13,8 @@ using BLL;
 using BLL.Interfaces;
 using DAL.Repositorios;
 using SSTIS.Interfaces;
+using SSTIS.MessageBoxHelper;
+using SysAnalizer;
 
 namespace SSTIS
 {
@@ -26,13 +28,16 @@ namespace SSTIS
         public IServicio<Familia> ServicioFamilia;
         public IServicioPatente ServicioPatente;
         public IServicioFamilia ServicioFamiliaImplementor;
-
-        private static readonly List<Familia> listaFamilas = new List<Familia>(); 
+        public IServicioBitacora ServicioBitacoraImplementor;
+        
+        private static readonly List<Familia> listaFamilas = new List<Familia>();
+        private static readonly List<Patente> listaPatentes = new List<Patente>();
 
         public frmNuevoUsuario(IServicio<Usuario> servicioUsuario, IServicio<Localidad> servicioLocalidad,
             IServicio<Provincia> servicioProvincia, IServicioUsuario servicioUsuarioImplementor,
             IServicioLocalidad servicioLocalidadImplementor, IServicio<Familia> servicioFamilia,
-            IServicioPatente servicioPatente, IServicioFamilia servicioFamiliaImplementor)
+            IServicioPatente servicioPatente, IServicioFamilia servicioFamiliaImplementor,
+            IServicioBitacora servicioBitacoraImplementor)
         {
             this.ServicioUsuario = servicioUsuario;
             this.ServicioLocalidad = servicioLocalidad;
@@ -42,60 +47,32 @@ namespace SSTIS
             this.ServicioFamilia = servicioFamilia;
             this.ServicioPatente = servicioPatente;
             this.ServicioFamiliaImplementor = servicioFamiliaImplementor;
+            this.ServicioBitacoraImplementor = servicioBitacoraImplementor;
             InitializeComponent();
         }
-       
+
         private void Button1_Click(object sender, EventArgs e)
         {
             try
-            {
-                if (!string.IsNullOrEmpty(txtEmail.Text.Trim()))
+            {               
+                if (ValidarDatosIngresados())
                 {
-                    var mailValido = ServicioUsuarioImplementor.ValidarEmail(txtEmail.Text.Trim());
-                    if (!mailValido)
-                    {
-                        MessageBox.Show("El e-mail ingresado esta en formato incorrecto. Por favor corrijalo!!!");
-                        return;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Por favor ingrese un E-mail");
-                    return;
-                }
-
-                if (!string.IsNullOrEmpty(txtNombre.Text.Trim()) && !string.IsNullOrEmpty(txtApellido.Text.Trim()) &&
-                    !string.IsNullOrEmpty(txtDomicilio.Text.Trim()) && !string.IsNullOrEmpty(txtCelular.Text.Trim()) &&
-                    !string.IsNullOrEmpty(txtTelFijo.Text.Trim()) && cboLocalidad.SelectedIndex != -1 &&
-                    cboProvincia.SelectedIndex != -1)
-                {
-                    var nuevoUsuario = new BE.Usuario();
-
-                    var sexo = "";
-                    var isChecked = rdbSexo.Checked;
-                    if (isChecked)
-                        sexo = rdbSexo.Text;
-                    else
-                        sexo = rdbSexo2.Text;
-                    nuevoUsuario.Nombre = txtNombre.Text;
-                    nuevoUsuario.Apellido = txtApellido.Text;
-                    nuevoUsuario.Email = txtEmail.Text;
-                    nuevoUsuario.Domicilio = new BE.Domicilio();
-                    nuevoUsuario.Domicilio.Direccion = txtDomicilio.Text;
-                    nuevoUsuario.Domicilio.CodPostal = txtCp.Text.Trim();
-                    nuevoUsuario.Contacto = new BE.Contacto();
-                    nuevoUsuario.Contacto.Celular = txtCelular.Text;
-                    nuevoUsuario.Contacto.Telefono = txtTelFijo.Text;
-                    nuevoUsuario.Sexo = sexo;
-                    nuevoUsuario.Domicilio.Localidad = new BE.Localidad();
-                    nuevoUsuario.Domicilio.Localidad.IdLocalidad = Guid.Parse(cboLocalidad.SelectedValue.ToString());
-                    nuevoUsuario.Domicilio.Provincia = new Provincia();
-                    nuevoUsuario.Domicilio.Provincia.IdProvincia = Guid.Parse(cboProvincia.SelectedValue.ToString());
+                    var nuevoUsuario = NuevoUsuario();
                     var creado = this.ServicioUsuario.Create(nuevoUsuario);
                     if (creado)
                     {
                         var familiasSeleccionadas = GetSelectedFamilies();
                         ServicioFamiliaImplementor.GuardarFamiliaUsuario(familiasSeleccionadas, nuevoUsuario.IdUsuario);
+                        ServicioPatente.GuardarPatentesUsuario(GetSelectedPatentes(), nuevoUsuario.IdUsuario);
+                        ServicioBitacoraImplementor.RegistrarEnBitacora(Log.Level.Alta.ToString(), 
+                            string.Format("Usuario con id: {0} creado correctamente.", nuevoUsuario.IdUsuario), nuevoUsuario);
+                        Alert.ShowSimpleAlert("Usuario creado correctamente");
+                    }
+                    else
+                    {
+                        ServicioBitacoraImplementor.RegistrarEnBitacora(Log.Level.Alta.ToString(), 
+                            String.Format("Hubo un error al crear el usuario: {0}", nuevoUsuario.Email), nuevoUsuario);
+                        Alert.ShowSimpleAlert("El alta de nuevo usuario ha fallado");
                     }
                 }
             }
@@ -103,6 +80,78 @@ namespace SSTIS
             {
                 MessageBox.Show("Por favor verifique los datos ingresados.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private Usuario NuevoUsuario()
+        {
+            var nuevoUsuario = new BE.Usuario();
+
+            var sexo = "";
+            var isChecked = rdbSexo.Checked;
+            if (isChecked)
+                sexo = rdbSexo.Text;
+            else
+                sexo = rdbSexo2.Text;
+            nuevoUsuario.Nombre = txtNombre.Text;
+            nuevoUsuario.Apellido = txtApellido.Text;
+            nuevoUsuario.Email = txtEmail.Text;
+            nuevoUsuario.Domicilio = new BE.Domicilio();
+            nuevoUsuario.Domicilio.Direccion = txtDomicilio.Text;
+            nuevoUsuario.Domicilio.CodPostal = txtCp.Text.Trim();
+            nuevoUsuario.Contacto = new BE.Contacto();
+            nuevoUsuario.Contacto.Celular = txtCelular.Text;
+            nuevoUsuario.Contacto.Telefono = txtTelFijo.Text;
+            nuevoUsuario.Sexo = sexo;
+            nuevoUsuario.Domicilio.Localidad = new BE.Localidad();
+            nuevoUsuario.Domicilio.Localidad.IdLocalidad = Guid.Parse(cboLocalidad.SelectedValue.ToString());
+            nuevoUsuario.Domicilio.Provincia = new Provincia();
+            nuevoUsuario.Domicilio.Provincia.IdProvincia = Guid.Parse(cboProvincia.SelectedValue.ToString());
+            return nuevoUsuario;
+        }
+
+        private bool ValidarDatosIngresados()
+        {
+            var returnValue = true;
+            //Verificamos todos los controles de tipo textbox
+            foreach (TextBox tb in Controls.OfType<TextBox>())
+            {
+                if (string.IsNullOrEmpty(tb.Text.Trim()))
+                {
+                    MessageBox.Show("Todos los datos deben estar completos");
+                    returnValue = false;
+                    break;
+                }
+            }
+            //Verificamois todos los controles de tipo combo
+            foreach (ComboBox tb in Controls.OfType<ComboBox>())
+            {
+                if (tb.SelectedIndex < -1)
+                {
+                    MessageBox.Show("Por favor elija una Provincia y Localidad");
+                    returnValue = false;
+                    break;
+                }
+            }
+            //Verificamos que se haya ingresado un mail valido
+            if (!ServicioUsuarioImplementor.ValidarEmail(txtEmail.Text.Trim()))
+            {
+                MessageBox.Show("El e-mail ingresado esta en formato incorrecto. Por favor corrijalo!!!");
+                returnValue = false;
+            }
+            //Verificamos que se haya seleccionado alguna familia
+            if (chklFamilia.CheckedItems.Count == 0)
+            {
+                MessageBox.Show("Debe seleccionar al menos una familia");
+                returnValue = false;
+            }
+            //Verificamos que se haya seleccionado alguna patente
+            if (chklPatente.CheckedItems.Count == 0)
+            {
+                MessageBox.Show("Debe seleccionar al menos una patente");
+                returnValue = false;
+            }
+
+            return returnValue;
         }
 
         private List<Guid> GetSelectedFamilies()
@@ -116,6 +165,17 @@ namespace SSTIS
             return listaFamilia;
         }
 
+        private List<Guid> GetSelectedPatentes()
+        {
+            var patentes = new List<Guid>();
+            for (int i = 0; i < chklPatente.CheckedItems.Count; i++)
+            {
+                patentes.Add(listaPatentes.FirstOrDefault(p => p.Descripcion == chklPatente.CheckedItems[i].ToString()).IdPatente);
+            }
+
+            return patentes;
+        }
+
         private void CargarComboProvincia()
         {
             //Retrieve provincias
@@ -123,7 +183,7 @@ namespace SSTIS
             cboProvincia.DataSource = provincias;
             cboProvincia.DisplayMember = "Descripcion";
             cboProvincia.ValueMember = "IdProvincia";
-            
+
         }
 
         private void NuevoUsuario_Load(object sender, EventArgs e)
@@ -146,14 +206,13 @@ namespace SSTIS
 
         private void CargarCheckListPatente()
         {
-            var patentes = ServicioPatente.RetrievePatentes();
-            var patentesDescripcion = patentes.Select(x => x.Descripcion).ToList();
-            //Add emails to checkbox list
+            listaPatentes.AddRange(ServicioPatente.RetrievePatentes());
+            var patentesDescripcion = listaPatentes.Select(x => x.Descripcion).ToList();
             patentesDescripcion.ForEach(e => chklPatente.Items.Add(e));
         }
 
         private void cboProvincia_SelectedIndexChanged(object sender, EventArgs e)
-        {            
+        {
         }
 
         private void cboProvincia_SelectionChangeCommitted(object sender, EventArgs e)

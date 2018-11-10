@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BE
 {
@@ -17,5 +18,9 @@ namespace BE
         public Domicilio Domicilio { get; set; }
         public Contacto Contacto { get; set; }
         public string ContraseñaEncriptada { get; set; }
+
+        public List<Familia> Familia { get; set; }
+
+        public List<Patente> Patentes { get; set; }
     }
 }

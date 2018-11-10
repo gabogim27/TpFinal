@@ -48,5 +48,30 @@ namespace DAL.Repositorios
         {
             return FamiliaDaoImplementor.GuardarFamiliaUsuario(familiaIds, usuarioId);
         }
+
+        public List<Patente> ObtenerPatentesFamilia(List<Guid> familiaIds)
+        {
+            return FamiliaDaoImplementor.ObtenerPatentesFamilia(familiaIds);
+        }
+
+        public Guid ObtenerIdFamiliaPorDescripcion(string descripcion)
+        {
+            return FamiliaDaoImplementor.ObtenerIdFamiliaPorDescripcion(descripcion);
+        }
+
+        public Guid ObtenerIdFamiliaPorUsuario(Guid usuarioId)
+        {
+            return FamiliaDaoImplementor.ObtenerIdFamiliaPorUsuario(usuarioId);
+        }
+
+        public string ObtenerDescripcionFamiliaPorId(Guid familiaId)
+        {
+            return FamiliaDaoImplementor.ObtenerDescripcionFamiliaPorId(familiaId);
+        }
+
+        public bool ComprobarUsoFamilia(Guid familiaId)
+        {
+            return FamiliaDaoImplementor.ComprobarUsoFamilia(familiaId);
+        }
     }
 }

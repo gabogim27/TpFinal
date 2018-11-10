@@ -24,7 +24,7 @@ namespace DAL.Impl
         {
             try
             {
-                var sqlQuery = string.Format("@INSERT INTO dbo.Familia (idFamilia, Descripcion) values ('{0}', {1})", ObjAlta.IdFamilia.ToString(), ObjAlta.Descripcion);
+                var sqlQuery = string.Format("INSERT INTO dbo.Familia (idFamilia, Descripcion) values ('{0}', '{1}')", ObjAlta.IdFamilia.ToString(), ObjAlta.Descripcion);
                 return SqlUtils.Exec(sqlQuery);
             }
             catch (Exception ex)
@@ -61,7 +61,7 @@ namespace DAL.Impl
         {
             try
             {
-                var query = string.Format("Delete Familia where IdFamilia = {0}", entity.IdFamilia);
+                var query = string.Format("Delete Familia where IdFamilia = '{0}'", entity.IdFamilia);
                 return SqlUtils.Exec(query);
             }
             catch (Exception ex)
@@ -78,7 +78,7 @@ namespace DAL.Impl
         {
             try
             {
-                var query = string.Format("Update Familia set Descripcion = {0} where IdFamilia = {1}",
+                var query = string.Format("Update Familia set Descripcion = '{0}' where IdFamilia = '{1}'",
                     entity.Descripcion, entity.IdFamilia);
                 return SqlUtils.Exec(query);
             }
@@ -112,6 +112,98 @@ namespace DAL.Impl
             }
 
             return false;
+        }
+
+        public List<Patente> ObtenerPatentesFamilia(List<Guid> familiaIds)
+        {
+            var patentes = new List<Patente>();
+
+            try
+            {
+                foreach (var id in familiaIds)
+                {
+                    var queryString = $"SELECT IdPatente FROM FamiliaPatente WHERE FamiliaId = '{id}'";
+                    patentes.AddRange(SqlUtils.Exec<Patente>(queryString));
+                }               
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(), string.Format("Ocurrio une error al obtener las patentes por el familias. " +
+                                                                                                             "Error: {0}", ex.Message));
+            }
+            return patentes;
+        }
+
+        public Guid ObtenerIdFamiliaPorDescripcion(string descripcion)
+        {
+            try
+            {
+                var queryString = $"SELECT FamiliaId FROM Familia WHERE Descripcion = '{descripcion}'";
+                return SqlUtils.Exec<Guid>(queryString)[0];
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(), string.Format("Ocurrio une error al obtener el I de la familia por la descripcion: " +
+                                                                                                             "'{0}'. Error: {1}", descripcion, ex.Message));
+            }
+
+            return Guid.Empty;
+        }
+
+        public Guid ObtenerIdFamiliaPorUsuario(Guid usuarioId)
+        {
+            try
+            {
+                var query = string.Format("select IdFamilia from FamiliaUsuario where IdUsuario = '{0}'", usuarioId);
+                return SqlUtils.Exec<Guid>(query)[0];
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(), string.Format("Ocurrio une error al obtener el Id de la familia por el id del usuario: " +
+                                                                                                            "'{0}'. Error: {1}", usuarioId, ex.Message));
+            }
+
+            return Guid.Empty;
+        }
+
+        public string ObtenerDescripcionFamiliaPorId(Guid familiaId)
+        {
+            try
+            {
+                var query = string.Format("select Descripcion from Familia where IdFamilia = '{0}'");
+                return SqlUtils.Exec<string>(query)[0];
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(), string.Format("Ocurrio une error al buscar la descripcion de la familia: " +
+                                                                                                             "'{0}'. Error: {1}", familiaId, ex.Message));
+            }
+
+            return null;
+        }
+
+        public bool ComprobarUsoFamilia(Guid familiaId)
+        {
+            var result = new List<int>();
+            try
+            {
+                var query = string.Format("Select IdFamilia from FamiliaUsuario where IdFamilia = '{0}'", familiaId);
+                result = SqlUtils.Exec<int>(query);
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(), String.Format("Ocurrio un error al comprobar el uso de familia." +
+                                                                                                             "FamiliaId: '{0}'. Error: {1}", familiaId, ex.Message));
+            }
+
+            if (result.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

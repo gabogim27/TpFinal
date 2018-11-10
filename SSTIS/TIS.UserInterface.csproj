@@ -92,6 +92,12 @@
     <Compile Include="ABMCoberturas.Designer.cs">
       <DependentUpon>ABMCoberturas.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABMFamilia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABMFamilia.Designer.cs">
+      <DependentUpon>ABMFamilia.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABMUsuarios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,16 +152,19 @@
     <Compile Include="Clientes.Designer.cs">
       <DependentUpon>Clientes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IABMFamilia.cs" />
+    <Compile Include="Interfaces\IAdmPatenteFamilia.cs" />
     <Compile Include="Interfaces\IBitacora.cs" />
+    <Compile Include="Interfaces\IModificarFamilia.cs" />
     <Compile Include="Interfaces\INuevaFamilia.cs" />
     <Compile Include="Interfaces\IRestaurarCopiaDeSeguridad.cs" />
     <Compile Include="MessageBoxHelper\Alert.cs" />
     <Compile Include="Providers\IdiomaProvider.cs" />
-    <Compile Include="ReporteBitacora.cs">
+    <Compile Include="AdmPatenteFamilia.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ReporteBitacora.Designer.cs">
-      <DependentUpon>ReporteBitacora.cs</DependentUpon>
+    <Compile Include="AdmPatenteFamilia.Designer.cs">
+      <DependentUpon>AdmPatenteFamilia.cs</DependentUpon>
     </Compile>
     <Compile Include="BitacoraViewModel.cs" />
     <Compile Include="Resources\SpanishResources.Designer.cs">
@@ -251,6 +260,7 @@
     <Compile Include="SimpleConfigInjector.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Utils\ControlsUtils.cs" />
+    <Compile Include="Utils\FamiliaInfo.cs" />
     <Compile Include="Utils\LoginInfo.cs" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
@@ -270,6 +280,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABMCoberturas.resx">
       <DependentUpon>ABMCoberturas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABMFamilia.resx">
+      <DependentUpon>ABMFamilia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABMUsuarios.resx">
       <DependentUpon>ABMUsuarios.cs</DependentUpon>
@@ -298,8 +311,8 @@
     <EmbeddedResource Include="Clientes.resx">
       <DependentUpon>Clientes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ReporteBitacora.resx">
-      <DependentUpon>ReporteBitacora.cs</DependentUpon>
+    <EmbeddedResource Include="AdmPatenteFamilia.resx">
+      <DependentUpon>AdmPatenteFamilia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Bitacora\Report1.rdlc" />
     <EmbeddedResource Include="Resources\SpanishResources.resx">

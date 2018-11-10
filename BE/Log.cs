@@ -6,10 +6,13 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class UsuarioPatente
+    public static class Log
     {
-        public Guid IdPatente { get; set; }
-        public Guid IdUsuario { get; set; }
-        //Agregar campo para Digito verificador
+        public enum Level
+        {
+            Alta,
+            Media,
+            Baja
+        }
     }
 }

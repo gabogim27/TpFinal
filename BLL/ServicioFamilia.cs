@@ -37,7 +37,9 @@ namespace BLL
 
         public bool Delete(Familia entity)
         {
-            return RepositorioFamilia.Delete(entity);
+            if(!ComprobarUsoFamilia(entity.IdFamilia))
+                return RepositorioFamilia.Delete(entity);
+            return false;
         }
 
         public bool Update(Familia entity)
@@ -48,6 +50,31 @@ namespace BLL
         public bool GuardarFamiliaUsuario(List<Guid> familiaId, Guid usuarioId)
         {
             return RepositorioFamiliaImplementor.GuardarFamiliaUsuario(familiaId, usuarioId);
+        }
+
+        public List<Patente> ObtenerPatentesFamilia(List<Guid> familiaIds)
+        {
+            return RepositorioFamiliaImplementor.ObtenerPatentesFamilia(familiaIds);
+        }
+
+        public Guid ObtenerIdFamiliaPorDescripcion(string descripcion)
+        {
+            return RepositorioFamiliaImplementor.ObtenerIdFamiliaPorDescripcion(descripcion);
+        }
+
+        public Guid ObtenerIdFamiliaPorUsuario(Guid usuarioId)
+        {
+            return RepositorioFamiliaImplementor.ObtenerIdFamiliaPorUsuario(usuarioId);
+        }
+
+        public string ObtenerDescripcionFamiliaPorId(Guid familiaId)
+        {
+            return RepositorioFamiliaImplementor.ObtenerDescripcionFamiliaPorId(familiaId);
+        }
+
+        public bool ComprobarUsoFamilia(Guid familiaId)
+        {
+            return RepositorioFamiliaImplementor.ComprobarUsoFamilia(familiaId);
         }
     }
 }

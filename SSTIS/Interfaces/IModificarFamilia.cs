@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace SSTIS.Interfaces
 {
-    public interface INuevaFamilia
+    public interface IModificarFamilia
     {
         void Show();
         DialogResult ShowDialog();

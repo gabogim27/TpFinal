@@ -81,13 +81,16 @@ namespace SysAnalizer
             container.Register<IPrincipal, frmPrincipal>(Lifestyle.Transient);
             container.Register<IRealizarCopiaSeguridad, frmRealizarCopiaSeguridad>(Lifestyle.Transient);
             container.Register<IRestaurarCopiaDeSeguridad, frmRestaurarCopiaDeSeguridad>(Lifestyle.Transient);
-            container.Register<IBitacora, SSTIS.frmBitacora>();
-            container.Register<INuevaFamilia, frmNuevaFamilia>();
+            container.Register<IBitacora, SSTIS.frmBitacora>(Lifestyle.Transient);
+            container.Register<INuevaFamilia, frmNuevaFamilia>(Lifestyle.Transient);
+            container.Register<IABMFamilia, frmABMFamilia>(Lifestyle.Transient);
+            container.Register<IAdmPatenteFamilia, frmAdminPatenteFamilia>(Lifestyle.Transient);
+            container.Register<IModificarFamilia, frmModificarFamiliaPopup>(Lifestyle.Transient);
             log4net.Config.XmlConfigurator.Configure();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(container
-                .GetInstance<SSTIS.frmBitacora>()); //    new ABMUsuarios(new Repository<Usuario>(new UsuarioDao())));
+                .GetInstance<SSTIS.frmABMFamilia>()); //    new ABMUsuarios(new Repository<Usuario>(new UsuarioDao())));
         }
     }
 }

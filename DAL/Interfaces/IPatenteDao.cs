@@ -11,5 +11,21 @@ namespace DAL.Interfaces
     public interface IPatenteDao
     {
         List<Patente> RetrievePatentes();
+
+        bool GuardarPatentesUsuario(List<Guid> patentesUsuario, Guid idUsuario);
+
+        void NegarPatenteUsuario(List<Guid> patentesId, Guid usuarioId);
+
+        List<Patente> Cargar();//ver si esta no es la misma que retrievePatentes
+
+        Guid ObtenerIdPatentePorDescripcion(string descripcion);
+
+        bool BorrarPatente(Guid familiaId, Guid patenteId);
+
+        bool AsignarPatente(Guid familiaId, Guid patenteId);
+
+        bool ComprobarPatentesUsuario(Guid usuarioId);
+
+        List<FamiliaPatente> ConsultarPatenteFamilia(Guid familiaId);
     }
 }
