@@ -10,6 +10,13 @@ namespace SSTIS.Interfaces
     public interface IAdmPatenteFamilia
     {
         void Show();
+
         DialogResult ShowDialog();
+
+        bool FamiliaNueva { get; set; }
+
+        void AsignarPatente(Guid familiaId, Guid patenteId);
+
+        void BorrarPatente(Guid familiaId, Guid patenteId);
     }
 }

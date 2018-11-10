@@ -18,11 +18,13 @@ namespace SSTIS
 {
     public partial class frmNuevaFamilia : Form, INuevaFamilia
     {
-        public IServicio<Familia> ServicioFamilia;       
-    
-        public frmNuevaFamilia(IServicio<Familia> servicioFamilia)
+        public IServicio<Familia> ServicioFamilia;
+        public IAdmPatenteFamilia AdminPatFamilia;
+
+        public frmNuevaFamilia(IServicio<Familia> servicioFamilia, IAdmPatenteFamilia AdminPatFamilia)
         {
             ServicioFamilia = servicioFamilia;
+            this.AdminPatFamilia = AdminPatFamilia;
             InitializeComponent();
         }
 
@@ -42,7 +44,7 @@ namespace SSTIS
                         FamiliaInfo.NuevaFamilia.Descripcion = txtFamilia.Text.Trim();
                         //Limpiamos el textbox
                         txtFamilia.Text = String.Empty;
-                        this.Hide();
+
                     }
                     else
                     {
@@ -52,7 +54,14 @@ namespace SSTIS
                 else
                 {
                     Alert.ShowSimpleAlert("Por favor ingrese una familia.");
-                }                
+                }
+
+                //var res = AdminPatFamilia.ShowDialog();
+                //if (res == DialogResult.OK)
+                //{
+                //    MessageBox.Show("Familia y Patentes registradas");
+                //}
+                Hide(); 
             }
             catch (Exception ex)
             {

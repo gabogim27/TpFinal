@@ -21,29 +21,51 @@ namespace SSTIS
         public INuevaFamilia NuevaFamilia;
         public IModificarFamilia ModificarFamilia;
         public IServicioFamilia ServicioFamiliaImplementor;
+        public IAdmPatenteFamilia AdminPatFamilia;
         public IServicio<Familia> ServicioFamilia;
+        public Familia familiaSeleccionada = null;
 
         public frmABMFamilia(INuevaFamilia NuevaFamilia, IServicioFamilia ServicioFamiliaImplementor,
-            IServicio<Familia> ServicioFamilia, IModificarFamilia ModificarFamilia)
+            IServicio<Familia> ServicioFamilia, IModificarFamilia ModificarFamilia, IAdmPatenteFamilia AdminPatFamilia)
         {
             this.NuevaFamilia = NuevaFamilia;
             this.ModificarFamilia = ModificarFamilia;
             this.ServicioFamiliaImplementor = ServicioFamiliaImplementor;
             this.ServicioFamilia = ServicioFamilia;
+            this.AdminPatFamilia = AdminPatFamilia;
             InitializeComponent();
         }
 
         private void btnNueva_Click(object sender, EventArgs e)
         {
-            NuevaFamilia.ShowDialog();
+            NuevaFamilia.Show();
+
             if (FamiliaInfo.NuevaFamilia != null)
             {
                 var created = ServicioFamilia.Create(FamiliaInfo.NuevaFamilia);
+                familiaSeleccionada = new Familia
+                {
+                    IdFamilia = FamiliaInfo.NuevaFamilia.IdFamilia,
+                    Descripcion = FamiliaInfo.NuevaFamilia.Descripcion
+                };
+
+                if (created)
+                {
+                    MessageBox.Show("Familia creada correctamente");
+                    AdminPatFamilia.FamiliaNueva = true;
+                }
+
+                var res = AdminPatFamilia.ShowDialog();
+                if (res == DialogResult.OK)
+                {
+                    MessageBox.Show("kndaklbajkbcawibcawjk");
+                }
+
                 CargarFamiliaCheckedList();
                 chklFamilias.Refresh();
                 //Reseteamos el objeto por cada familia nueva creada
                 FamiliaInfo.NuevaFamilia = null;
-                Alert.ShowSimpleAlert("Familia creada correctamente");
+                AdminPatFamilia.FamiliaNueva = false;
             }
 
         }
@@ -59,6 +81,11 @@ namespace SSTIS
             chklFamilias.DataSource = FamiliaInfo.ListaFamilias;
             chklFamilias.DisplayMember = "Descripcion";
             chklFamilias.ValueMember = "IdFamilia";
+        }
+
+        public Familia ObtenerFamiliaSeleccionada()
+        {
+            return familiaSeleccionada;
         }
 
         private void btnBaja_Click(object sender, EventArgs e)
@@ -114,6 +141,7 @@ namespace SSTIS
                 if (FamiliaInfo.NuevaFamilia != null)
                 {
                     var modified = ServicioFamilia.Update(FamiliaInfo.NuevaFamilia);
+                    familiaSeleccionada = FamiliaInfo.NuevaFamilia;
                     CargarFamiliaCheckedList();
                     chklFamilias.Refresh();
                     //Reseteamos el objeto por cada familia nueva creada

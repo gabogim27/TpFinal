@@ -152,6 +152,7 @@
     <Compile Include="Clientes.Designer.cs">
       <DependentUpon>Clientes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Container\ContainerConfig.cs" />
     <Compile Include="Interfaces\IABMFamilia.cs" />
     <Compile Include="Interfaces\IAdmPatenteFamilia.cs" />
     <Compile Include="Interfaces\IBitacora.cs" />

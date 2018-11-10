@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using BE;
 
 namespace SSTIS.Interfaces
 {
@@ -12,5 +13,6 @@ namespace SSTIS.Interfaces
     {
         void Show();
         DialogResult ShowDialog();
+        Familia ObtenerFamiliaSeleccionada();
     }
 }

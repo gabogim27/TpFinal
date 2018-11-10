@@ -109,8 +109,8 @@ namespace DAL.Dao
             try
             {             
                 //TODO: hacer el DVH mañana
-                var digitoVerificadorHorizontal =
-                    0; //digitoVerificador.CalcularDVHorizontal(new List<string>(), new List<int>() { familiaId, patenteId });
+                var digitoVerificadorHorizontal = 0;
+                //digitoVerificador.CalcularDVHorizontal(new List<string>(), new List<int>() { familiaId, patenteId });
                 asignado = SqlUtils.Exec($"INSERT INTO FamiliaPatente (IdFamilia, IdPatente, DVH) VALUES ('{familiaId}', '{patenteId}', {digitoVerificadorHorizontal})");
 
             }
@@ -132,13 +132,13 @@ namespace DAL.Dao
         {
             try
             {
-                var queryString = string.Format("SELECT FamiliaId, IdPatente FROM FamiliaPatente WHERE FamiliaId = '{0}'", familiaId);
+                var queryString = string.Format("SELECT IdFamilia, IdPatente FROM FamiliaPatente WHERE IdFamilia = '{0}'", familiaId);
                 return SqlUtils.Exec<FamiliaPatente>(queryString);
             }
             catch (Exception ex)
             {
                 RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
-                    string.Format("Ocurrio un error al consultar la tabla PatenteFamilia con familiaId: '{0}' .Error: " +
+                    string.Format("Ocurrio un error al consultar la tabla PatenteFamilia con IdFamilia: '{0}' .Error: " +
                                   "{1}", familiaId, ex.Message));
             }
 

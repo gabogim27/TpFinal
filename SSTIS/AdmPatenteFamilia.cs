@@ -11,7 +11,7 @@ using SSTIS.Interfaces;
 
 namespace SSTIS
 {
-    public partial class frmAdminPatenteFamilia : Form, IAdmPatenteFamilia
+    public partial class frmAdminPatenteFamilia : Form
     {
         public frmAdminPatenteFamilia()
         {

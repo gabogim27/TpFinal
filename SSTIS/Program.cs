@@ -13,6 +13,7 @@ using DAL.Impl;
 using DAL.Interfaces;
 using DAL.Repositorios;
 using SimpleInjector;
+using SSTIS.Container;
 using SSTIS.Interfaces;
 using Bitacora = BE.Bitacora;
 
@@ -20,76 +21,77 @@ namespace SysAnalizer
 {
     static class Program
     {
-
+        public static Container simpleInyectorContainer;
         /// <summary>
         /// Punto de entrada principal para la aplicación.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            var container = new Container();
+            simpleInyectorContainer = new Container();
             //Usuario
-            container.Register<IServicio<Usuario>, ServicioUsuario>(Lifestyle.Singleton);
-            container.Register<IRepository<Usuario>, RepositorioUsuario>(Lifestyle.Singleton);
-            container.Register<IDao<Usuario>, UsuarioDao>(Lifestyle.Singleton);
-            container.Register<IUsuarioDao, UsuarioDao>(Lifestyle.Singleton);
-            container.Register<IRepositorioUsuario, RepositorioUsuario>(Lifestyle.Singleton);
-            container.Register<IServicioUsuario, ServicioUsuario>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IServicio<Usuario>, ServicioUsuario>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IRepository<Usuario>, RepositorioUsuario>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IDao<Usuario>, UsuarioDao>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IUsuarioDao, UsuarioDao>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IRepositorioUsuario, RepositorioUsuario>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IServicioUsuario, ServicioUsuario>(Lifestyle.Singleton);
             //Localidad
-            container.Register<IServicio<Localidad>, ServicioLocalidad>(Lifestyle.Singleton);
-            container.Register<IRepository<Localidad>, RepositorioLocalidad>(Lifestyle.Singleton);
-            container.Register<IDao<Localidad>, LocalidadDao>(Lifestyle.Singleton);
-            container.Register<ILocalidadDao, LocalidadDao>(Lifestyle.Singleton);
-            container.Register<IRepositorioLocalidad, RepositorioLocalidad>(Lifestyle.Singleton);
-            container.Register<IServicioLocalidad, ServicioLocalidad>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IServicio<Localidad>, ServicioLocalidad>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IRepository<Localidad>, RepositorioLocalidad>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IDao<Localidad>, LocalidadDao>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<ILocalidadDao, LocalidadDao>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IRepositorioLocalidad, RepositorioLocalidad>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IServicioLocalidad, ServicioLocalidad>(Lifestyle.Singleton);
             //Provincia
-            container.Register<IServicio<Provincia>, ServicioProvincia>(Lifestyle.Singleton);
-            container.Register<IRepository<Provincia>, RepositorioProvincia>(Lifestyle.Singleton);
-            container.Register<IDao<Provincia>, ProvinciaDao>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IServicio<Provincia>, ServicioProvincia>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IRepository<Provincia>, RepositorioProvincia>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IDao<Provincia>, ProvinciaDao>(Lifestyle.Singleton);
             //Domicilio
-            container.Register<IServicio<Domicilio>, ServicioDomicilio>(Lifestyle.Singleton);
-            container.Register<IRepository<Domicilio>, RepositorioDomicilio>(Lifestyle.Singleton);
-            container.Register<IDao<Domicilio>, DomicilioDao>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IServicio<Domicilio>, ServicioDomicilio>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IRepository<Domicilio>, RepositorioDomicilio>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IDao<Domicilio>, DomicilioDao>(Lifestyle.Singleton);
             //Contacto
-            container.Register<IServicio<Contacto>, ServicioContacto>(Lifestyle.Singleton);
-            container.Register<IRepository<Contacto>, RepositorioContacto>(Lifestyle.Singleton);
-            container.Register<IDao<Contacto>, ContactoDao>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IServicio<Contacto>, ServicioContacto>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IRepository<Contacto>, RepositorioContacto>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IDao<Contacto>, ContactoDao>(Lifestyle.Singleton);
             //Familia
-            container.Register<IServicio<Familia>, ServicioFamilia>(Lifestyle.Singleton);
-            container.Register<IRepository<Familia>, RepositorioFamilia>(Lifestyle.Singleton);
-            container.Register<IDao<Familia>, FamiliaDao>(Lifestyle.Singleton);
-            container.Register<IFamiliaDao, FamiliaDao>(Lifestyle.Singleton);
-            container.Register<IServicioFamilia, ServicioFamilia>(Lifestyle.Singleton);
-            container.Register<IRepositorioFamilia, RepositorioFamilia>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IServicio<Familia>, ServicioFamilia>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IRepository<Familia>, RepositorioFamilia>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IDao<Familia>, FamiliaDao>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IFamiliaDao, FamiliaDao>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IServicioFamilia, ServicioFamilia>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IRepositorioFamilia, RepositorioFamilia>(Lifestyle.Singleton);
             //Bitacora
-            container.Register<IServicioBitacora, ServicioBitacora>(Lifestyle.Singleton);
-            container.Register<IRepositorioBitacora, RepositorioBitacora>(Lifestyle.Singleton);
-            container.Register<IBitacoraDao, BitacoraDao>(Lifestyle.Singleton);
-            container.Register<IDigitoVerificador, DigitoVerificadorDao>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IServicioBitacora, ServicioBitacora>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IRepositorioBitacora, RepositorioBitacora>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IBitacoraDao, BitacoraDao>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IDigitoVerificador, DigitoVerificadorDao>(Lifestyle.Singleton);
             //Idioma
-            container.Register<IServicioIdioma, ServicioIdioma>(Lifestyle.Singleton);
-            container.Register<IRepositorioIdioma, RepositorioIdioma>(Lifestyle.Singleton);
-            container.Register<IIdiomaDao, IdiomaDao>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IServicioIdioma, ServicioIdioma>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IRepositorioIdioma, RepositorioIdioma>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IIdiomaDao, IdiomaDao>(Lifestyle.Singleton);
             //Patente
-            container.Register<IServicioPatente, ServicioPatente>(Lifestyle.Singleton);
-            container.Register<IRepositorioPatente, RepositorioPatente>(Lifestyle.Singleton);
-            container.Register<IPatenteDao, PatenteDao>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IServicioPatente, ServicioPatente>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IRepositorioPatente, RepositorioPatente>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IPatenteDao, PatenteDao>(Lifestyle.Singleton);
             //Formularios
-            container.Register<INuevoUsuario, frmNuevoUsuario>(Lifestyle.Transient);
-            container.Register<IABMUsuarios, frmABMUsuarios>(Lifestyle.Transient);
-            container.Register<ILogin, frmLogin>(Lifestyle.Transient);
-            container.Register<IPrincipal, frmPrincipal>(Lifestyle.Transient);
-            container.Register<IRealizarCopiaSeguridad, frmRealizarCopiaSeguridad>(Lifestyle.Transient);
-            container.Register<IRestaurarCopiaDeSeguridad, frmRestaurarCopiaDeSeguridad>(Lifestyle.Transient);
-            container.Register<IBitacora, SSTIS.frmBitacora>(Lifestyle.Transient);
-            container.Register<INuevaFamilia, frmNuevaFamilia>(Lifestyle.Transient);
-            container.Register<IABMFamilia, frmABMFamilia>(Lifestyle.Transient);
-            container.Register<IAdmPatenteFamilia, frmAdminPatenteFamilia>(Lifestyle.Transient);
-            container.Register<IModificarFamilia, frmModificarFamiliaPopup>(Lifestyle.Transient);
+            simpleInyectorContainer.Register<INuevoUsuario, frmNuevoUsuario>(Lifestyle.Transient);
+            simpleInyectorContainer.Register<IABMUsuarios, frmABMUsuarios>(Lifestyle.Transient);
+            simpleInyectorContainer.Register<ILogin, frmLogin>(Lifestyle.Transient);
+            simpleInyectorContainer.Register<IPrincipal, frmPrincipal>(Lifestyle.Transient);
+            simpleInyectorContainer.Register<IRealizarCopiaSeguridad, frmRealizarCopiaSeguridad>(Lifestyle.Transient);
+            simpleInyectorContainer.Register<IRestaurarCopiaDeSeguridad, frmRestaurarCopiaDeSeguridad>(Lifestyle.Transient);
+            simpleInyectorContainer.Register<IBitacora, SSTIS.frmBitacora>(Lifestyle.Transient);
+            simpleInyectorContainer.Register<INuevaFamilia, frmNuevaFamilia>(Lifestyle.Transient);
+            simpleInyectorContainer.Register<IABMFamilia, frmABMFamilia>(Lifestyle.Transient);
+            simpleInyectorContainer.Register<IAdmPatenteFamilia, frmAdmFamiliaPatente>(Lifestyle.Transient);
+            simpleInyectorContainer.Register<IModificarFamilia, frmModificarFamiliaPopup>(Lifestyle.Transient);
+            //ContainerConfig.Bootstrap();
             log4net.Config.XmlConfigurator.Configure();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(container
+            Application.Run(simpleInyectorContainer
                 .GetInstance<SSTIS.frmABMFamilia>()); //    new ABMUsuarios(new Repository<Usuario>(new UsuarioDao())));
         }
     }
