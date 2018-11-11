@@ -13,8 +13,10 @@ namespace SSTIS
 {
     public partial class frmPrincipal : Form, IPrincipal
     {
-        public frmPrincipal()
+        private readonly IABMUsuarios abmUsuarios;
+        public frmPrincipal(IABMUsuarios abmUsuarios)
         {
+            this.abmUsuarios = abmUsuarios;
             InitializeComponent();
         }
 
@@ -25,6 +27,11 @@ namespace SSTIS
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void Usuarios_Click(object sender, EventArgs e)
+        {
+            abmUsuarios.Show();
         }
     }
 }

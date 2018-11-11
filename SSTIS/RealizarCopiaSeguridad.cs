@@ -30,7 +30,7 @@ namespace SSTIS
                 if (txtUbicacion.Text.Trim() != String.Empty && txtDescripcion.Text.Trim() != String.Empty)
                 {
                     var dbServer = new Server(new ServerConnection(SqlUtils.Connection()));
-                    var dbBackUp = new Backup() { Action = BackupActionType.Database, Database = "TallerPosta" };
+                    var dbBackUp = new Backup() { Action = BackupActionType.Database, Database = "SistemaTIS" };
                     //dbBackUp.Devices.AddDevice(@"C:\Data\SistemaTIS.bak", DeviceType.File);
                     for (int i = 0; i < cantVolumenes; i++)
                     {

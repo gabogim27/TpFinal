@@ -1,6 +1,6 @@
 ﻿namespace SSTIS
 {
-    partial class AdminFamiliaUsuario
+    partial class frmAdminFamiliaUsuario
     {
         /// <summary>
         /// Required designer variable.
@@ -29,13 +29,11 @@
         private void InitializeComponent()
         {
             this.Label1 = new System.Windows.Forms.Label();
-            this.ComboBox1 = new System.Windows.Forms.ComboBox();
-            this.DataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvFamiliaUsuario = new System.Windows.Forms.DataGridView();
+            this.lblUsuario = new System.Windows.Forms.Label();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFamiliaUsuario)).BeginInit();
             this.SuspendLayout();
             // 
             // Label1
@@ -47,58 +45,54 @@
             this.Label1.TabIndex = 11;
             this.Label1.Text = "USUARIO:";
             // 
-            // ComboBox1
+            // dgvFamiliaUsuario
             // 
-            this.ComboBox1.FormattingEnabled = true;
-            this.ComboBox1.Location = new System.Drawing.Point(121, 44);
-            this.ComboBox1.Name = "ComboBox1";
-            this.ComboBox1.Size = new System.Drawing.Size(121, 21);
-            this.ComboBox1.TabIndex = 10;
-            // 
-            // DataGridView1
-            // 
-            this.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvFamiliaUsuario.AllowUserToAddRows = false;
+            this.dgvFamiliaUsuario.AllowUserToDeleteRows = false;
+            this.dgvFamiliaUsuario.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvFamiliaUsuario.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
-            this.Column2,
-            this.Column3,
-            this.Column4});
-            this.DataGridView1.Location = new System.Drawing.Point(34, 82);
-            this.DataGridView1.Name = "DataGridView1";
-            this.DataGridView1.Size = new System.Drawing.Size(441, 205);
-            this.DataGridView1.TabIndex = 9;
+            this.Column3});
+            this.dgvFamiliaUsuario.Location = new System.Drawing.Point(34, 82);
+            this.dgvFamiliaUsuario.Name = "dgvFamiliaUsuario";
+            this.dgvFamiliaUsuario.Size = new System.Drawing.Size(390, 171);
+            this.dgvFamiliaUsuario.TabIndex = 9;
+            this.dgvFamiliaUsuario.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFamiliaUsuario_CellContentClick);
+            // 
+            // lblUsuario
+            // 
+            this.lblUsuario.AutoSize = true;
+            this.lblUsuario.Location = new System.Drawing.Point(126, 44);
+            this.lblUsuario.Name = "lblUsuario";
+            this.lblUsuario.Size = new System.Drawing.Size(56, 13);
+            this.lblUsuario.TabIndex = 12;
+            this.lblUsuario.Text = "USUARIO";
             // 
             // Column1
             // 
             this.Column1.HeaderText = "Familia";
             this.Column1.Name = "Column1";
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Usuario";
-            this.Column2.Name = "Column2";
+            this.Column1.ReadOnly = true;
             // 
             // Column3
             // 
             this.Column3.HeaderText = "Otorgada";
             this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
             // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Negada";
-            this.Column4.Name = "Column4";
-            // 
-            // AdminFamiliaUsuario
+            // frmAdminFamiliaUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(589, 340);
+            this.ClientSize = new System.Drawing.Size(512, 298);
+            this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.Label1);
-            this.Controls.Add(this.ComboBox1);
-            this.Controls.Add(this.DataGridView1);
-            this.Name = "AdminFamiliaUsuario";
+            this.Controls.Add(this.dgvFamiliaUsuario);
+            this.Name = "frmAdminFamiliaUsuario";
             this.Text = "AdminFamiliaUsuario";
-            ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).EndInit();
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmAdminFamiliaUsuario_FormClosing);
+            this.Load += new System.EventHandler(this.frmAdminFamiliaUsuario_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFamiliaUsuario)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -107,11 +101,9 @@
         #endregion
 
         internal System.Windows.Forms.Label Label1;
-        internal System.Windows.Forms.ComboBox ComboBox1;
-        internal System.Windows.Forms.DataGridView DataGridView1;
-        internal System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        internal System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        internal System.Windows.Forms.DataGridViewCheckBoxColumn Column3;
-        internal System.Windows.Forms.DataGridViewCheckBoxColumn Column4;
+        internal System.Windows.Forms.DataGridView dgvFamiliaUsuario;
+        internal System.Windows.Forms.Label lblUsuario;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Column3;
     }
 }

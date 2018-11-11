@@ -52,6 +52,16 @@ namespace BLL
             return RepositorioFamiliaImplementor.GuardarFamiliaUsuario(familiaId, usuarioId);
         }
 
+        public bool GuardarFamiliasUsuario(Guid familiaId, Guid usuarioId)
+        {
+            return RepositorioFamiliaImplementor.GuardarFamiliasUsuario(familiaId, usuarioId);
+        }
+
+        public bool BorrarFamiliaUsuario(Guid familiaId, Guid usuarioId)
+        {
+            return RepositorioFamiliaImplementor.BorrarFamiliaUsuario(familiaId, usuarioId);
+        }
+
         public List<Patente> ObtenerPatentesFamilia(List<Guid> familiaIds)
         {
             return RepositorioFamiliaImplementor.ObtenerPatentesFamilia(familiaIds);
@@ -75,6 +85,11 @@ namespace BLL
         public bool ComprobarUsoFamilia(Guid familiaId)
         {
             return RepositorioFamiliaImplementor.ComprobarUsoFamilia(familiaId);
+        }
+
+        public List<string> TraerFamiliaUsuarioDescripcion(Guid IdUsuario)
+        {
+            return RepositorioFamiliaImplementor.TraerFamiliaUsuarioDescripcion(IdUsuario);
         }
     }
 }

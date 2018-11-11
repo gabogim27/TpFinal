@@ -38,7 +38,7 @@ namespace SSTIS
 
         private void btnNueva_Click(object sender, EventArgs e)
         {
-            NuevaFamilia.Show();
+            NuevaFamilia.ShowDialog();
 
             if (FamiliaInfo.NuevaFamilia != null)
             {

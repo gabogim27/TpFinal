@@ -40,7 +40,7 @@
             this.Button3 = new System.Windows.Forms.Button();
             this.Button5 = new System.Windows.Forms.Button();
             this.btnEliminarUsuario = new System.Windows.Forms.Button();
-            this.Button4 = new System.Windows.Forms.Button();
+            this.btnAdmiFamilia = new System.Windows.Forms.Button();
             this.GroupBox3 = new System.Windows.Forms.GroupBox();
             this.Button8 = new System.Windows.Forms.Button();
             this.btnEditarUsuario = new System.Windows.Forms.Button();
@@ -176,14 +176,15 @@
             this.btnEliminarUsuario.UseVisualStyleBackColor = true;
             this.btnEliminarUsuario.Click += new System.EventHandler(this.btnEliminarUsuario_Click);
             // 
-            // Button4
+            // btnAdmiFamilia
             // 
-            this.Button4.Location = new System.Drawing.Point(6, 340);
-            this.Button4.Name = "Button4";
-            this.Button4.Size = new System.Drawing.Size(144, 30);
-            this.Button4.TabIndex = 7;
-            this.Button4.Text = "Administrar Familias";
-            this.Button4.UseVisualStyleBackColor = true;
+            this.btnAdmiFamilia.Location = new System.Drawing.Point(6, 340);
+            this.btnAdmiFamilia.Name = "btnAdmiFamilia";
+            this.btnAdmiFamilia.Size = new System.Drawing.Size(144, 30);
+            this.btnAdmiFamilia.TabIndex = 7;
+            this.btnAdmiFamilia.Text = "Administrar Familias";
+            this.btnAdmiFamilia.UseVisualStyleBackColor = true;
+            this.btnAdmiFamilia.Click += new System.EventHandler(this.btnAdmiFamilia_Click);
             // 
             // GroupBox3
             // 
@@ -194,7 +195,7 @@
             this.GroupBox3.Controls.Add(this.Button3);
             this.GroupBox3.Controls.Add(this.Button5);
             this.GroupBox3.Controls.Add(this.btnEliminarUsuario);
-            this.GroupBox3.Controls.Add(this.Button4);
+            this.GroupBox3.Controls.Add(this.btnAdmiFamilia);
             this.GroupBox3.Location = new System.Drawing.Point(438, 12);
             this.GroupBox3.Name = "GroupBox3";
             this.GroupBox3.Size = new System.Drawing.Size(160, 422);
@@ -442,7 +443,7 @@
         internal System.Windows.Forms.Button Button3;
         internal System.Windows.Forms.Button Button5;
         internal System.Windows.Forms.Button btnEliminarUsuario;
-        internal System.Windows.Forms.Button Button4;
+        internal System.Windows.Forms.Button btnAdmiFamilia;
         internal System.Windows.Forms.GroupBox GroupBox3;
         internal System.Windows.Forms.Button Button8;
         internal System.Windows.Forms.Button btnEditarUsuario;

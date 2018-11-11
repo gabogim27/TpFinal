@@ -43,7 +43,7 @@
             this.GestionVehiculosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.VerVehiculoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AyudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.CambiarIdiomaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Usuarios = new System.Windows.Forms.ToolStripMenuItem();
             this.AdministrarPatenteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AdministrarFamiliaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.GestionIdiomasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -164,7 +164,7 @@
             // AyudaToolStripMenuItem
             // 
             this.AyudaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CambiarIdiomaToolStripMenuItem,
+            this.Usuarios,
             this.AdministrarPatenteToolStripMenuItem,
             this.AdministrarFamiliaToolStripMenuItem,
             this.GestionIdiomasToolStripMenuItem});
@@ -172,11 +172,12 @@
             this.AyudaToolStripMenuItem.Size = new System.Drawing.Size(100, 20);
             this.AyudaToolStripMenuItem.Text = "Administración";
             // 
-            // CambiarIdiomaToolStripMenuItem
+            // Usuarios
             // 
-            this.CambiarIdiomaToolStripMenuItem.Name = "CambiarIdiomaToolStripMenuItem";
-            this.CambiarIdiomaToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.CambiarIdiomaToolStripMenuItem.Text = "Administrar Usuario";
+            this.Usuarios.Name = "Usuarios";
+            this.Usuarios.Size = new System.Drawing.Size(181, 22);
+            this.Usuarios.Text = "Administrar Usuario";
+            this.Usuarios.Click += new System.EventHandler(this.Usuarios_Click);
             // 
             // AdministrarPatenteToolStripMenuItem
             // 
@@ -251,6 +252,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(955, 567);
             this.Controls.Add(this.MenuStrip1);
+            this.IsMdiContainer = true;
             this.Name = "frmPrincipal";
             this.Text = "Principal";
             this.Load += new System.EventHandler(this.frmPrincipal_Load);
@@ -277,7 +279,7 @@
         internal System.Windows.Forms.ToolStripMenuItem GestionVehiculosToolStripMenuItem;
         internal System.Windows.Forms.ToolStripMenuItem VerVehiculoToolStripMenuItem;
         internal System.Windows.Forms.ToolStripMenuItem AyudaToolStripMenuItem;
-        internal System.Windows.Forms.ToolStripMenuItem CambiarIdiomaToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem Usuarios;
         internal System.Windows.Forms.ToolStripMenuItem AdministrarPatenteToolStripMenuItem;
         internal System.Windows.Forms.ToolStripMenuItem AdministrarFamiliaToolStripMenuItem;
         internal System.Windows.Forms.ToolStripMenuItem GestionIdiomasToolStripMenuItem;

@@ -16,16 +16,17 @@
         public IServicio<Localidad> ServicioLocalidad { get; set; }
         public IServicio<Provincia> ServicioProvincia { get; set; }
         public IServicioLocalidad ServicioLocalidadImplementor;
+        public IAdminFamiliaUsuario AdminFamiliaUsuario;
 
         public INuevoUsuario nuevoUsuario { get; set; }
-        private static Usuario usuario { get; set; }
+        public static Usuario usuario { get; set; }
 
         public frmABMUsuarios(
             IServicio<Usuario> ServicioUsuario,
             INuevoUsuario nuevoUsuario,
             IServicio<Localidad> ServicioLocalidad,
             IServicio<Provincia> ServicioProvincia,
-            IServicioLocalidad ServicioLocalidadImplementor)
+            IServicioLocalidad ServicioLocalidadImplementor, IAdminFamiliaUsuario AdminFamiliaUsuario)
         {
             InitializeComponent();
             this.ServicioUsuario = ServicioUsuario;
@@ -33,8 +34,13 @@
             this.ServicioLocalidad = ServicioLocalidad;
             this.ServicioProvincia = ServicioProvincia;
             this.ServicioLocalidadImplementor = ServicioLocalidadImplementor;
+            this.AdminFamiliaUsuario = AdminFamiliaUsuario;
         }
 
+        public Usuario usuarioSeleccionado()
+        {
+            return usuario;
+        }
         //public ABMUsuarios(IRepository<Usuario> repository)
         //{
         //    InitializeComponent();
@@ -338,6 +344,11 @@
                 MessageBox.Show("Debe seleccionar un usuario de la grilla para proceder con la baja.");
             }
 
+        }
+
+        private void btnAdmiFamilia_Click(object sender, EventArgs e)
+        {
+            AdminFamiliaUsuario.ShowDialog();
         }
     }
 }

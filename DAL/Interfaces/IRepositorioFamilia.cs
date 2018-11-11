@@ -12,7 +12,11 @@ namespace DAL.Interfaces
     {
         bool GuardarFamiliaUsuario(List<Guid> familiaIds, Guid usuarioId);
 
-        List<Patente> ObtenerPatentesFamilia(List<Guid> familiaIds);
+        bool GuardarFamiliasUsuario(Guid familiaId, Guid usuarioId);
+
+        bool BorrarFamiliaUsuario(Guid familiaId, Guid usuarioId);
+
+        List<Patente> ObtenerPatentesFamilia(List<Guid> familiaId);
 
         Guid ObtenerIdFamiliaPorDescripcion(string descripcion);
 
@@ -21,5 +25,7 @@ namespace DAL.Interfaces
         string ObtenerDescripcionFamiliaPorId(Guid familiaId);
 
         bool ComprobarUsoFamilia(Guid familiaId);
+
+        List<string> TraerFamiliaUsuarioDescripcion(Guid IdUsuario);
     }
 }

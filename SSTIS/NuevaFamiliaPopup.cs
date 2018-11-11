@@ -44,6 +44,18 @@ namespace SSTIS
                         FamiliaInfo.NuevaFamilia.Descripcion = txtFamilia.Text.Trim();
                         //Limpiamos el textbox
                         txtFamilia.Text = String.Empty;
+                        var created = ServicioFamilia.Create(FamiliaInfo.NuevaFamilia);
+                        //familiaSeleccionada = new Familia
+                        //{
+                        //    IdFamilia = FamiliaInfo.NuevaFamilia.IdFamilia,
+                        //    Descripcion = FamiliaInfo.NuevaFamilia.Descripcion
+                        //};
+
+                        if (created)
+                        {
+                            MessageBox.Show("Familia creada correctamente");
+                            AdminPatFamilia.FamiliaNueva = true;
+                        }
 
                     }
                     else
@@ -56,12 +68,8 @@ namespace SSTIS
                     Alert.ShowSimpleAlert("Por favor ingrese una familia.");
                 }
 
-                //var res = AdminPatFamilia.ShowDialog();
-                //if (res == DialogResult.OK)
-                //{
-                //    MessageBox.Show("Familia y Patentes registradas");
-                //}
-                Hide(); 
+                DialogResult = DialogResult.OK;
+                
             }
             catch (Exception ex)
             {

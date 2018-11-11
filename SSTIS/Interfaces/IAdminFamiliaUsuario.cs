@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BE;
+using System.Windows.Forms;
 
 namespace SSTIS.Interfaces
 {
-    public interface IABMUsuarios
+    public interface IAdminFamiliaUsuario
     {
         void Show();
-        Usuario usuarioSeleccionado();
+
+        DialogResult ShowDialog();
     }
 }

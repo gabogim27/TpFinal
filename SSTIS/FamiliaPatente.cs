@@ -105,12 +105,13 @@ namespace SSTIS
                     }
                     //
                 }
+                DialogResult = DialogResult.None;
             }
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-           DialogResult = DialogResult.Cancel;           
+           DialogResult = DialogResult.OK;           
         }
     }
 }

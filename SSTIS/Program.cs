@@ -17,18 +17,18 @@ using SSTIS.Container;
 using SSTIS.Interfaces;
 using Bitacora = BE.Bitacora;
 
-namespace SysAnalizer
+namespace SSTIS
 {
     static class Program
     {
-        public static Container simpleInyectorContainer;
+        public static SimpleInjector.Container simpleInyectorContainer;
         /// <summary>
         /// Punto de entrada principal para la aplicación.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            simpleInyectorContainer = new Container();
+            simpleInyectorContainer = new SimpleInjector.Container();
             //Usuario
             simpleInyectorContainer.Register<IServicio<Usuario>, ServicioUsuario>(Lifestyle.Singleton);
             simpleInyectorContainer.Register<IRepository<Usuario>, RepositorioUsuario>(Lifestyle.Singleton);
@@ -87,12 +87,13 @@ namespace SysAnalizer
             simpleInyectorContainer.Register<IABMFamilia, frmABMFamilia>(Lifestyle.Transient);
             simpleInyectorContainer.Register<IAdmPatenteFamilia, frmAdmFamiliaPatente>(Lifestyle.Transient);
             simpleInyectorContainer.Register<IModificarFamilia, frmModificarFamiliaPopup>(Lifestyle.Transient);
+            simpleInyectorContainer.Register<IAdminFamiliaUsuario, frmAdminFamiliaUsuario>(Lifestyle.Transient);
             //ContainerConfig.Bootstrap();
             log4net.Config.XmlConfigurator.Configure();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(simpleInyectorContainer
-                .GetInstance<SSTIS.frmABMFamilia>()); //    new ABMUsuarios(new Repository<Usuario>(new UsuarioDao())));
+                .GetInstance<SSTIS.frmLogin>()); //    new ABMUsuarios(new Repository<Usuario>(new UsuarioDao())));
         }
     }
 }

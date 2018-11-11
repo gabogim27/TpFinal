@@ -29,7 +29,7 @@ namespace DAL.Impl
             }
             catch (Exception ex)
             {
-                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(), 
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
                     String.Format("Ocurrio un error al tratar de crear la familia: {0}. Error: {1}", ObjAlta.Descripcion, ex.Message));
             }
 
@@ -50,7 +50,7 @@ namespace DAL.Impl
             }
             catch (Exception ex)
             {
-                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(), 
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
                     string.Format("Ocurrio un error al traer todas las familias de la base de datos. Error: {0}", ex.Message));
             }
 
@@ -66,8 +66,8 @@ namespace DAL.Impl
             }
             catch (Exception ex)
             {
-                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(), 
-                    string.Format("Ocurrio un error al eliminar la familia: {0}. Error: {1}", 
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
+                    string.Format("Ocurrio un error al eliminar la familia: {0}. Error: {1}",
                         entity.Descripcion, ex.Message));
             }
 
@@ -84,7 +84,7 @@ namespace DAL.Impl
             }
             catch (Exception ex)
             {
-                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(), 
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
                     string.Format("Ocurrio un error al actualizar la familia: {0}. Error: {1}", entity.Descripcion, ex.Message));
             }
 
@@ -101,13 +101,53 @@ namespace DAL.Impl
                     string processQuery = string.Format("INSERT INTO FamiliaUsuario (IdFamilia, IdUsuario) VALUES ('{0}', '{1}')", idFamilia, usuarioId);
                     SqlUtils.Connection().Execute(processQuery);
                 }
-                                                
+
                 return true;
             }
             catch (Exception ex)
             {
                 RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
                     string.Format("Ocurrio un error al guardar en FamiliaUsuario idUsuario: {0}. Error: {1}",
+                        usuarioId, ex.Message));
+            }
+
+            return false;
+        }
+
+        public bool GuardarFamiliasUsuario(Guid familiaId, Guid usuarioId)
+        {
+            try
+            {
+
+                string processQuery = string.Format("INSERT INTO FamiliaUsuario (IdFamilia, IdUsuario) VALUES ('{0}', '{1}')", familiaId, usuarioId);
+                SqlUtils.Connection().Execute(processQuery);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
+                    string.Format("Ocurrio un error al guardar en FamiliaUsuario idUsuario: {0}. Error: {1}",
+                        usuarioId, ex.Message));
+            }
+
+            return false;
+        }
+
+        public bool BorrarFamiliaUsuario(Guid familiaId, Guid usuarioId)
+        {
+            try
+            {
+
+                string processQuery = string.Format("Delete FamiliaUsuario where IdFamilia = '{0}' and IdUsuario = '{1}'", familiaId, usuarioId);
+                SqlUtils.Connection().Execute(processQuery);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
+                    string.Format("Ocurrio un error al borrar en FamiliaUsuario idUsuario: {0}. Error: {1}",
                         usuarioId, ex.Message));
             }
 
@@ -124,7 +164,7 @@ namespace DAL.Impl
                 {
                     var queryString = $"SELECT IdPatente FROM FamiliaPatente WHERE FamiliaId = '{id}'";
                     patentes.AddRange(SqlUtils.Exec<Patente>(queryString));
-                }               
+                }
             }
             catch (Exception ex)
             {
@@ -177,6 +217,25 @@ namespace DAL.Impl
             {
                 RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(), string.Format("Ocurrio une error al buscar la descripcion de la familia: " +
                                                                                                              "'{0}'. Error: {1}", familiaId, ex.Message));
+            }
+
+            return null;
+        }
+
+        public List<string> TraerFamiliaUsuarioDescripcion(Guid IdUsuario)
+        {
+            try
+            {
+                var query = String.Format("select fam.Descripcion from FamiliaUsuario famusu" +
+                                          " join USUARIO usu on famusu.IdUsuario = usu.IdUsuariojoin Familia fam on " +
+                                          " fam.IdFamilia = famusu.IdFamilia  where " +
+                                          "IdUsuario = '{0}'", IdUsuario);
+                return SqlUtils.Exec<string>(query);
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(), string.Format("Ocurrio une error al buscar la descripcion de las familia para el usuario: " +
+                                                                                                             "'{0}'. Error: {1}", IdUsuario, ex.Message));
             }
 
             return null;
