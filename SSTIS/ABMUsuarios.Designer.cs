@@ -156,6 +156,7 @@
             this.Button3.TabIndex = 6;
             this.Button3.Text = "Administrar Patentes";
             this.Button3.UseVisualStyleBackColor = true;
+            this.Button3.Click += new System.EventHandler(this.Button3_Click);
             // 
             // Button5
             // 

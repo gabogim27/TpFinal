@@ -1,6 +1,6 @@
 ﻿namespace SSTIS
 {
-    partial class AdministracionPatenteUsuario
+    partial class frmAdministracionPatenteUsuario
     {
         /// <summary>
         /// Required designer variable.
@@ -29,13 +29,12 @@
         private void InitializeComponent()
         {
             this.Label1 = new System.Windows.Forms.Label();
-            this.ComboBox1 = new System.Windows.Forms.ComboBox();
-            this.DataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvAdminPatenteUsuario = new System.Windows.Forms.DataGridView();
+            this.lblUsuario = new System.Windows.Forms.Label();
+            this.Patente = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAdminPatenteUsuario)).BeginInit();
             this.SuspendLayout();
             // 
             // Label1
@@ -47,36 +46,35 @@
             this.Label1.TabIndex = 8;
             this.Label1.Text = "USUARIO:";
             // 
-            // ComboBox1
+            // dgvAdminPatenteUsuario
             // 
-            this.ComboBox1.FormattingEnabled = true;
-            this.ComboBox1.Location = new System.Drawing.Point(141, 64);
-            this.ComboBox1.Name = "ComboBox1";
-            this.ComboBox1.Size = new System.Drawing.Size(121, 21);
-            this.ComboBox1.TabIndex = 7;
-            // 
-            // DataGridView1
-            // 
-            this.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2,
+            this.dgvAdminPatenteUsuario.AllowUserToAddRows = false;
+            this.dgvAdminPatenteUsuario.AllowUserToDeleteRows = false;
+            this.dgvAdminPatenteUsuario.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAdminPatenteUsuario.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Patente,
             this.Column3,
             this.Column4});
-            this.DataGridView1.Location = new System.Drawing.Point(54, 102);
-            this.DataGridView1.Name = "DataGridView1";
-            this.DataGridView1.Size = new System.Drawing.Size(441, 205);
-            this.DataGridView1.TabIndex = 6;
+            this.dgvAdminPatenteUsuario.Location = new System.Drawing.Point(54, 102);
+            this.dgvAdminPatenteUsuario.Name = "dgvAdminPatenteUsuario";
+            this.dgvAdminPatenteUsuario.Size = new System.Drawing.Size(441, 205);
+            this.dgvAdminPatenteUsuario.TabIndex = 6;
+            this.dgvAdminPatenteUsuario.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAdminPatenteUsuario_CellContentClick);
             // 
-            // Column1
+            // lblUsuario
             // 
-            this.Column1.HeaderText = "Patente";
-            this.Column1.Name = "Column1";
+            this.lblUsuario.AutoSize = true;
+            this.lblUsuario.Location = new System.Drawing.Point(163, 64);
+            this.lblUsuario.Name = "lblUsuario";
+            this.lblUsuario.Size = new System.Drawing.Size(56, 13);
+            this.lblUsuario.TabIndex = 9;
+            this.lblUsuario.Text = "USUARIO";
             // 
-            // Column2
+            // Patente
             // 
-            this.Column2.HeaderText = "Usuario";
-            this.Column2.Name = "Column2";
+            this.Patente.HeaderText = "Patente";
+            this.Patente.Name = "Patente";
+            this.Patente.ReadOnly = true;
             // 
             // Column3
             // 
@@ -88,17 +86,18 @@
             this.Column4.HeaderText = "Negada";
             this.Column4.Name = "Column4";
             // 
-            // AdministracionPatenteUsuario
+            // frmAdministracionPatenteUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(631, 369);
+            this.ClientSize = new System.Drawing.Size(617, 363);
+            this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.Label1);
-            this.Controls.Add(this.ComboBox1);
-            this.Controls.Add(this.DataGridView1);
-            this.Name = "AdministracionPatenteUsuario";
+            this.Controls.Add(this.dgvAdminPatenteUsuario);
+            this.Name = "frmAdministracionPatenteUsuario";
             this.Text = "AdministracionPatenteUsuario";
-            ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).EndInit();
+            this.Load += new System.EventHandler(this.frmAdministracionPatenteUsuario_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAdminPatenteUsuario)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -107,11 +106,10 @@
         #endregion
 
         internal System.Windows.Forms.Label Label1;
-        internal System.Windows.Forms.ComboBox ComboBox1;
-        internal System.Windows.Forms.DataGridView DataGridView1;
-        internal System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        internal System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        internal System.Windows.Forms.DataGridViewCheckBoxColumn Column3;
-        internal System.Windows.Forms.DataGridViewCheckBoxColumn Column4;
+        internal System.Windows.Forms.DataGridView dgvAdminPatenteUsuario;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Patente;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Column4;
+        internal System.Windows.Forms.Label lblUsuario;
     }
 }

@@ -10,6 +10,7 @@
     {
         public Guid IdPatente { get; set; }
         public Guid IdUsuario { get; set; }
+        public bool Negada { get; set; }
         //Agregar campo para Digito verificador
     }
 }

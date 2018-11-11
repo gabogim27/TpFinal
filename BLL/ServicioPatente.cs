@@ -35,7 +35,7 @@ namespace BLL
 
         public List<Patente> Cargar()
         {
-            throw new NotImplementedException();
+            return RepositorioPatente.Cargar();
         }
 
         public Guid ObtenerIdPatentePorDescripcion(string descripcion)
@@ -61,6 +61,16 @@ namespace BLL
         public List<FamiliaPatente> ConsultarPatenteFamilia(Guid familiaId)
         {
             return RepositorioPatente.ConsultarPatenteFamilia(familiaId);
+        }
+
+        public List<UsuarioPatente> TraerPatenteDescrUsuario(Guid idUsuario)
+        {
+            return RepositorioPatente.TraerPatenteDescrUsuario(idUsuario);
+        }
+
+        public bool GuardarPatenteUsuario(Guid patenteId, Guid usuarioId)
+        {
+            return RepositorioPatente.GuardarPatenteUsuario(patenteId, usuarioId);
         }
     }
 }

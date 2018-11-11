@@ -88,6 +88,7 @@ namespace SSTIS
             simpleInyectorContainer.Register<IAdmPatenteFamilia, frmAdmFamiliaPatente>(Lifestyle.Transient);
             simpleInyectorContainer.Register<IModificarFamilia, frmModificarFamiliaPopup>(Lifestyle.Transient);
             simpleInyectorContainer.Register<IAdminFamiliaUsuario, frmAdminFamiliaUsuario>(Lifestyle.Transient);
+            simpleInyectorContainer.Register<IAdminPatenteUsuario, frmAdministracionPatenteUsuario>(Lifestyle.Transient);
             //ContainerConfig.Bootstrap();
             log4net.Config.XmlConfigurator.Configure();
             Application.EnableVisualStyles();

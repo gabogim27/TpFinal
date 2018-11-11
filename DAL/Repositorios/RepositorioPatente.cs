@@ -35,7 +35,7 @@ namespace DAL.Repositorios
 
         public List<Patente> Cargar()
         {
-            throw new NotImplementedException();
+            return PatenteDao.Cargar();
         }
 
         public Guid ObtenerIdPatentePorDescripcion(string descripcion)
@@ -61,6 +61,16 @@ namespace DAL.Repositorios
         public List<FamiliaPatente> ConsultarPatenteFamilia(Guid familiaId)
         {
             return PatenteDao.ConsultarPatenteFamilia(familiaId);
+        }
+
+        public List<UsuarioPatente> TraerPatenteDescrUsuario(Guid idUsuario)
+        {
+            return PatenteDao.TraerPatenteDescrUsuario(idUsuario);
+        }
+
+        public bool GuardarPatenteUsuario(Guid patenteId, Guid usuarioId)
+        {
+            return PatenteDao.GuardarPatenteUsuario(patenteId, usuarioId);
         }
     }
 }

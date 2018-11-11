@@ -139,6 +139,9 @@ namespace DAL.Impl
         public bool LogIn(string email, string contraseña)
         {
             var usuario = ObtenerUsuarioConEmail(email);
+
+            if (usuario == null) return false;
+
             if (!usuario.PrimerLogin)
             {
                 var cingresoInc = usuario.CantIngresosFallidos;

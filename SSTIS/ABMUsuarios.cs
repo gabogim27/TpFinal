@@ -17,6 +17,7 @@
         public IServicio<Provincia> ServicioProvincia { get; set; }
         public IServicioLocalidad ServicioLocalidadImplementor;
         public IAdminFamiliaUsuario AdminFamiliaUsuario;
+        public IAdminPatenteUsuario AdminPatenteUsuario;
 
         public INuevoUsuario nuevoUsuario { get; set; }
         public static Usuario usuario { get; set; }
@@ -26,7 +27,8 @@
             INuevoUsuario nuevoUsuario,
             IServicio<Localidad> ServicioLocalidad,
             IServicio<Provincia> ServicioProvincia,
-            IServicioLocalidad ServicioLocalidadImplementor, IAdminFamiliaUsuario AdminFamiliaUsuario)
+            IServicioLocalidad ServicioLocalidadImplementor, IAdminFamiliaUsuario AdminFamiliaUsuario,
+            IAdminPatenteUsuario AdminPatenteUsuario)
         {
             InitializeComponent();
             this.ServicioUsuario = ServicioUsuario;
@@ -35,6 +37,7 @@
             this.ServicioProvincia = ServicioProvincia;
             this.ServicioLocalidadImplementor = ServicioLocalidadImplementor;
             this.AdminFamiliaUsuario = AdminFamiliaUsuario;
+            this.AdminPatenteUsuario = AdminPatenteUsuario;
         }
 
         public Usuario usuarioSeleccionado()
@@ -349,6 +352,11 @@
         private void btnAdmiFamilia_Click(object sender, EventArgs e)
         {
             AdminFamiliaUsuario.ShowDialog();
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            AdminPatenteUsuario.ShowDialog();
         }
     }
 }

@@ -27,5 +27,9 @@ namespace DAL.Interfaces
         bool ComprobarPatentesUsuario(Guid usuarioId);
 
         List<FamiliaPatente> ConsultarPatenteFamilia(Guid familiaId);
+
+        List<UsuarioPatente> TraerPatenteDescrUsuario(Guid idUsuario);
+
+        bool GuardarPatenteUsuario(Guid patenteId, Guid usuarioId);
     }
 }

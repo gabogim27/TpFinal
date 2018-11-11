@@ -155,6 +155,7 @@
     <Compile Include="Container\ContainerConfig.cs" />
     <Compile Include="Interfaces\IABMFamilia.cs" />
     <Compile Include="Interfaces\IAdminFamiliaUsuario.cs" />
+    <Compile Include="Interfaces\IAdminPatenteUsuario.cs" />
     <Compile Include="Interfaces\IAdmPatenteFamilia.cs" />
     <Compile Include="Interfaces\IBitacora.cs" />
     <Compile Include="Interfaces\IModificarFamilia.cs" />

@@ -29,8 +29,28 @@ namespace DAL.Dao
             }
             catch (Exception ex)
             {
-                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(), 
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
                     string.Format("Ocurrio un error al traer las patentes de la BD. Error: " +
+                                  "{0}", ex.Message));
+            }
+
+            return null;
+        }
+
+        public List<UsuarioPatente> TraerPatenteDescrUsuario(Guid idUsuario)
+        {
+            try
+            {
+                var query = string.Format("select pat.IdPatente, usupat.Negada, usupat.IdUsuario from " +
+                                          " UsuarioPatente usupat join USUARIO usu on usupat.IdUsuario " +
+                                          " = usu.IdUsuario join Patente pat on usupat.IdPatente = " +
+                                          " pat.IdPatente where usu.IdUsuario = '{0}'", idUsuario);
+                return SqlUtils.Exec<UsuarioPatente>(query);
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
+                    string.Format("Ocurrio un error al traer las descripciones de patentes de la BD. Error: " +
                                   "{0}", ex.Message));
             }
 
@@ -60,6 +80,26 @@ namespace DAL.Dao
             return false;
         }
 
+        public bool GuardarPatenteUsuario(Guid patenteId, Guid usuarioId)
+        {
+            try
+            {
+                //var digitoVH =
+                //digitoVerificador.CalcularDVHorizontal(new List<string> { }, new List<int> {patenteId, usuarioId});
+                var queryString =
+                    $"INSERT INTO UsuarioPatente(IdPatente, IdUsuario, Negada, DVH) VALUES ({patenteId},{usuarioId}, 0, 0)";
+                return SqlUtils.Exec(queryString);
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
+                    string.Format("Ocurrio un error al guardar patenteUsuario: '{0}'. Error: " +
+                                  "{1}", patenteId, ex.Message));
+            }
+
+            return false;
+        }
+
         public void NegarPatenteUsuario(List<Guid> patentesId, Guid usuarioId)
         {
             throw new NotImplementedException();
@@ -81,7 +121,7 @@ namespace DAL.Dao
             {
                 RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
                     string.Format("Ocurrio un error al obtener el Id de la patente: '{0}'. Error: " +
-                                  "{2}", descripcion, ex.Message));
+                                  "{1}", descripcion, ex.Message));
             }
             return Guid.Empty;
         }
@@ -97,7 +137,7 @@ namespace DAL.Dao
             {
                 RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
                     string.Format("Ocurrio un error al borrar la patente: '{0}' y familia: '{1}'. Error: " +
-                                  "{2}", familiaId, patenteId,ex.Message));
+                                  "{2}", familiaId, patenteId, ex.Message));
             }
 
             return borrada;
@@ -107,7 +147,7 @@ namespace DAL.Dao
         {
             var asignado = false;
             try
-            {             
+            {
                 //TODO: hacer el DVH mañana
                 var digitoVerificadorHorizontal = 0;
                 //digitoVerificador.CalcularDVHorizontal(new List<string>(), new List<int>() { familiaId, patenteId });
