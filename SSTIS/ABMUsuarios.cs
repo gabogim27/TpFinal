@@ -1,4 +1,6 @@
-﻿namespace SSTIS
+﻿using BLL;
+
+namespace SSTIS
 {
     using BE;
     using BLL.Interfaces;
@@ -18,6 +20,7 @@
         public IServicioLocalidad ServicioLocalidadImplementor;
         public IAdminFamiliaUsuario AdminFamiliaUsuario;
         public IAdminPatenteUsuario AdminPatenteUsuario;
+        public IServicioPatente ServicioPatente;
 
         public INuevoUsuario nuevoUsuario { get; set; }
         public static Usuario usuario { get; set; }
@@ -28,7 +31,7 @@
             IServicio<Localidad> ServicioLocalidad,
             IServicio<Provincia> ServicioProvincia,
             IServicioLocalidad ServicioLocalidadImplementor, IAdminFamiliaUsuario AdminFamiliaUsuario,
-            IAdminPatenteUsuario AdminPatenteUsuario)
+            IAdminPatenteUsuario AdminPatenteUsuario, IServicioPatente ServicioPatente)
         {
             InitializeComponent();
             this.ServicioUsuario = ServicioUsuario;
@@ -38,6 +41,7 @@
             this.ServicioLocalidadImplementor = ServicioLocalidadImplementor;
             this.AdminFamiliaUsuario = AdminFamiliaUsuario;
             this.AdminPatenteUsuario = AdminPatenteUsuario;
+            this.ServicioPatente = ServicioPatente;
         }
 
         public Usuario usuarioSeleccionado()
@@ -323,6 +327,12 @@
         {
             if (dgvUsuarios.SelectedRows.Count != 0)
             {
+                if (ServicioPatente.ComprobarPatentesUsuario(usuario.IdUsuario))
+                {
+                    MessageBox.Show("Primero debe eliminar las patentes asignadas al usuario para poder darlo de baja");
+                    return;
+                }
+
                 var confirmResult = MessageBox.Show("Estas seguro de querer eliminar el usuario: " +
                                                     dgvUsuarios.SelectedRows[0].Cells[5].Value.ToString(),
                     "Confirme baja de usuario",
@@ -351,12 +361,26 @@
 
         private void btnAdmiFamilia_Click(object sender, EventArgs e)
         {
-            AdminFamiliaUsuario.ShowDialog();
+            if (dgvUsuarios.SelectedRows.Count > 0)
+            {
+                AdminFamiliaUsuario.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar un usuario de la grilla para poder administrar las Familias");
+            }
         }
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            AdminPatenteUsuario.ShowDialog();
+            if (dgvUsuarios.SelectedRows.Count > 0)
+            {
+                AdminPatenteUsuario.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar un usuario de la grilla para poder administrar las Patentes");
+            }
         }
     }
 }

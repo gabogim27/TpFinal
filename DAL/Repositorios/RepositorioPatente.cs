@@ -72,5 +72,20 @@ namespace DAL.Repositorios
         {
             return PatenteDao.GuardarPatenteUsuario(patenteId, usuarioId);
         }
+
+        public bool BorrarPatenteUsuario(Guid patenteId, Guid usuarioId)
+        {
+            return PatenteDao.BorrarPatenteUsuario(patenteId, usuarioId);
+        }
+
+        public bool NegarPatenteUsuario(Guid patenteId, Guid usuarioId)
+        {
+            return PatenteDao.NegarPatenteUsuario(patenteId, usuarioId);
+        }
+
+        public bool HabilitarPatenteUsuario(Guid patenteId, Guid usuarioId)
+        {
+            return PatenteDao.HabilitarPatenteUsuario(patenteId, usuarioId);
+        }
     }
 }

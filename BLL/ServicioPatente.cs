@@ -28,11 +28,6 @@ namespace BLL
             return RepositorioPatente.GuardarPatentesUsuario(patentesUsuario, idUsuario);
         }
 
-        public void NegarPatenteUsuario(List<Guid> patentesId, Guid usuarioId)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<Patente> Cargar()
         {
             return RepositorioPatente.Cargar();
@@ -55,7 +50,7 @@ namespace BLL
 
         public bool ComprobarPatentesUsuario(Guid usuarioId)
         {
-            throw new NotImplementedException();
+            return RepositorioPatente.ComprobarPatentesUsuario(usuarioId);
         }
 
         public List<FamiliaPatente> ConsultarPatenteFamilia(Guid familiaId)
@@ -71,6 +66,21 @@ namespace BLL
         public bool GuardarPatenteUsuario(Guid patenteId, Guid usuarioId)
         {
             return RepositorioPatente.GuardarPatenteUsuario(patenteId, usuarioId);
+        }
+
+        public bool BorrarPatenteUsuario(Guid patenteId, Guid usuarioId)
+        {
+            return RepositorioPatente.BorrarPatenteUsuario(patenteId, usuarioId);
+        }
+
+        public bool NegarPatenteUsuario(Guid patenteId, Guid usuarioId)
+        {
+            return RepositorioPatente.NegarPatenteUsuario(patenteId, usuarioId);
+        }
+
+        public bool HabilitarPatenteUsuario(Guid patenteId, Guid usuarioId)
+        {
+            return RepositorioPatente.HabilitarPatenteUsuario(patenteId, usuarioId);
         }
     }
 }

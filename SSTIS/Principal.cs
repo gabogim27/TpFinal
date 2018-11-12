@@ -31,6 +31,7 @@ namespace SSTIS
 
         private void Usuarios_Click(object sender, EventArgs e)
         {
+
             abmUsuarios.Show();
         }
     }

@@ -227,9 +227,9 @@ namespace DAL.Impl
             try
             {
                 var query = String.Format("select fam.Descripcion from FamiliaUsuario famusu" +
-                                          " join USUARIO usu on famusu.IdUsuario = usu.IdUsuariojoin Familia fam on " +
+                                          " join USUARIO usu on famusu.IdUsuario = usu.IdUsuario join Familia fam on " +
                                           " fam.IdFamilia = famusu.IdFamilia  where " +
-                                          "IdUsuario = '{0}'", IdUsuario);
+                                          "usu.IdUsuario = '{0}'", IdUsuario);
                 return SqlUtils.Exec<string>(query);
             }
             catch (Exception ex)

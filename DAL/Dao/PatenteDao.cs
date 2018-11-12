@@ -37,6 +37,26 @@ namespace DAL.Dao
             return null;
         }
 
+        public bool ComprobarPatentesUsuario(Guid idUsuario)
+        {
+            try
+            {
+                string query = string.Format("Select IdUsuario from UsuarioPatente where " +
+                                             " IdUsuario = '{0}'", idUsuario);
+                var retorno = SqlUtils.Exec<Guid>(query);
+                if (retorno != null)
+                    return true;
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
+                    string.Format("Ocurrio un error al comprobar las patentes del usuario: {0} de la BD. Error: " +
+                                  "{1}",idUsuario, ex.Message));
+            }
+
+            return false;
+        }
+
         public List<UsuarioPatente> TraerPatenteDescrUsuario(Guid idUsuario)
         {
             try
@@ -87,7 +107,7 @@ namespace DAL.Dao
                 //var digitoVH =
                 //digitoVerificador.CalcularDVHorizontal(new List<string> { }, new List<int> {patenteId, usuarioId});
                 var queryString =
-                    $"INSERT INTO UsuarioPatente(IdPatente, IdUsuario, Negada, DVH) VALUES ({patenteId},{usuarioId}, 0, 0)";
+                    $"INSERT INTO UsuarioPatente(IdPatente, IdUsuario, Negada, DVH) VALUES ('{patenteId}', '{usuarioId}', 0, 0)";
                 return SqlUtils.Exec(queryString);
             }
             catch (Exception ex)
@@ -100,9 +120,58 @@ namespace DAL.Dao
             return false;
         }
 
-        public void NegarPatenteUsuario(List<Guid> patentesId, Guid usuarioId)
+        public bool BorrarPatenteUsuario(Guid patenteId, Guid usuarioId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                //var digitoVH =
+                //digitoVerificador.CalcularDVHorizontal(new List<string> { }, new List<int> {patenteId, usuarioId});
+                var queryString =
+                    $"Delete UsuarioPatente where IdPatente = '{patenteId}' and IdUsuario = '{usuarioId}'";
+                return SqlUtils.Exec(queryString);
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
+                    string.Format("Ocurrio un error al borrar patenteUsuario: '{0}'. Error: " +
+                                  "{1}", patenteId, ex.Message));
+            }
+
+            return false;
+        }
+
+        public bool NegarPatenteUsuario(Guid patenteId, Guid usuarioId)
+        {
+            try
+            {
+                var queryString = $"UPDATE UsuarioPatente SET Negada = 1 WHERE IdUsuario = '{usuarioId}' AND IdPatente = '{patenteId}'";
+                return SqlUtils.Exec(queryString);
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
+                    string.Format("Ocurrio un error al negar la patente: '{0}' al usuario: {1}. Error: " +
+                                  "{2}", patenteId, usuarioId, ex.Message));
+            }
+
+            return false;
+        }
+
+        public bool HabilitarPatenteUsuario(Guid patenteId, Guid usuarioId)
+        {
+            try
+            {
+                var queryString = $"UPDATE UsuarioPatente SET Negada = 0 WHERE IdUsuario = '{usuarioId}' AND IdPatente = '{patenteId}'";
+                return SqlUtils.Exec(queryString);
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
+                    string.Format("Ocurrio un error al habilitar la patente: '{0}' al usuario: {1}. Error: " +
+                                  "{2}", patenteId, usuarioId, ex.Message));
+            }
+
+            return false;
         }
 
         public List<Patente> Cargar()
@@ -161,11 +230,6 @@ namespace DAL.Dao
                                   "{2}", patenteId, familiaId, ex.Message));
             }
             return asignado;
-        }
-
-        public bool ComprobarPatentesUsuario(Guid usuarioId)
-        {
-            throw new NotImplementedException();
         }
 
         public List<FamiliaPatente> ConsultarPatenteFamilia(Guid familiaId)

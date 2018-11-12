@@ -31,5 +31,11 @@ namespace DAL.Interfaces
         List<UsuarioPatente> TraerPatenteDescrUsuario(Guid idUsuario);
 
         bool GuardarPatenteUsuario(Guid patenteId, Guid usuarioId);
+
+        bool BorrarPatenteUsuario(Guid patenteId, Guid usuarioId);
+
+        bool NegarPatenteUsuario(Guid patenteId, Guid usuarioId);
+
+        bool HabilitarPatenteUsuario(Guid patenteId, Guid usuarioId);
     }
 }

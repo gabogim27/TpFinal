@@ -14,8 +14,6 @@ namespace DAL.Interfaces
 
         bool GuardarPatentesUsuario(List<Guid> patentesUsuario, Guid idUsuario);
 
-        void NegarPatenteUsuario(List<Guid> patentesId, Guid usuarioId);
-
         List<Patente> Cargar();//ver si esta no es la misma que retrievePatentes
 
         Guid ObtenerIdPatentePorDescripcion(string descripcion);
@@ -31,5 +29,11 @@ namespace DAL.Interfaces
         List<UsuarioPatente> TraerPatenteDescrUsuario(Guid idUsuario);
 
         bool GuardarPatenteUsuario(Guid patenteId, Guid usuarioId);
+
+        bool BorrarPatenteUsuario(Guid patenteId, Guid usuarioId);
+
+        bool NegarPatenteUsuario(Guid patenteId, Guid usuarioId);
+
+        bool HabilitarPatenteUsuario(Guid patenteId, Guid usuarioId);
     }
 }

@@ -104,8 +104,11 @@ namespace BLL
             try
             {
                 var ingresa = RepositorioUsuarioImplementor.LogIn(email, contraseña);
-                usuario = RepositorioUsuarioImplementor.ObtenerUsuarioConEmail(email);
                 
+                usuario = RepositorioUsuarioImplementor.ObtenerUsuarioConEmail(email);
+
+                if (usuario == null)
+                    return false;
 
                 if (ingresa)
                 {

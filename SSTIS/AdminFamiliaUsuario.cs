@@ -33,6 +33,8 @@ namespace SSTIS
         {
             UsuarioSeleccionado = Program.simpleInyectorContainer.GetInstance<IABMUsuarios>().usuarioSeleccionado();
             lblUsuario.Text = UsuarioSeleccionado.Email;
+            dgvFamiliaUsuario.Rows.Clear();
+            dgvFamiliaUsuario.Refresh();
             CargarGrilla();
             dgvFamiliaUsuario.Columns[1].ReadOnly = false;
         }
@@ -71,6 +73,7 @@ namespace SSTIS
                         ServicioFamiliaImplementor.BorrarFamiliaUsuario(idFamilia, UsuarioSeleccionado.IdUsuario);
                     }
 
+                    dgvFamiliaUsuario.EndEdit();
                 }
                 DialogResult = DialogResult.None;
             }

@@ -30,6 +30,7 @@ namespace SSTIS
         {
             UsuarioSeleccionado = Program.simpleInyectorContainer.GetInstance<IABMUsuarios>().usuarioSeleccionado();
             lblUsuario.Text = UsuarioSeleccionado.Email;
+            dgvAdminPatenteUsuario.Rows.Clear();
             CargarGrilla();
             dgvAdminPatenteUsuario.Columns[1].ReadOnly = false;
             dgvAdminPatenteUsuario.Columns[2].ReadOnly = false;
@@ -41,11 +42,13 @@ namespace SSTIS
                 ServicioPatente.TraerPatenteDescrUsuario(UsuarioSeleccionado.IdUsuario);
             Patentes = ServicioPatente.RetrievePatentes();
 
+            
             for (int i = 0; i < Patentes.Count; i++)
             {
                 dgvAdminPatenteUsuario.Rows.Add(Patentes[i].Descripcion,
-                    Patentes?.Any(p => patentesUsuario.Any(x => x.IdPatente == p.IdPatente)),
-                    patentesUsuario?.FirstOrDefault(p => Patentes.All(x => x.IdPatente == p.IdPatente))?.Negada == true);
+                    patentesUsuario.Any(p => p.IdPatente == Patentes[i].IdPatente),
+                    //Patentes?.Any(p => patentesUsuario.Any(x => x.IdPatente == p.IdPatente)),
+                    patentesUsuario.Any(p => p.IdPatente == Patentes[i].IdPatente && p.Negada));
             }
         }
 
@@ -67,9 +70,28 @@ namespace SSTIS
                     }
                     else if (checkbox.ColumnIndex == 1 && !isChecked)
                     {
-                        //ServicioFamiliaImplementor.BorrarFamiliaUsuario(idFamilia, UsuarioSeleccionado.IdUsuario);
+                        ServicioPatente.BorrarPatenteUsuario(idPatente, UsuarioSeleccionado.IdUsuario);
                     }
-
+                    else if (checkbox.ColumnIndex == 2 && isChecked)
+                    {
+                        var patentesUsuario =
+                            ServicioPatente.TraerPatenteDescrUsuario(UsuarioSeleccionado.IdUsuario);
+                        if (patentesUsuario.Any(x =>
+                            x.IdPatente == idPatente && x.IdUsuario == UsuarioSeleccionado.IdUsuario))
+                        {
+                            ServicioPatente.NegarPatenteUsuario(idPatente, UsuarioSeleccionado.IdUsuario);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Primero debe otorgarle la patente al usuario y luego negarsela.");
+                            dgvAdminPatenteUsuario.EndEdit();
+                            checkbox.Value = checkbox.FalseValue;
+                        }
+                    }
+                    else if (checkbox.ColumnIndex == 2 && !isChecked)
+                    {
+                        ServicioPatente.HabilitarPatenteUsuario(idPatente, UsuarioSeleccionado.IdUsuario);
+                    }
                 }
                 DialogResult = DialogResult.None;
             }
