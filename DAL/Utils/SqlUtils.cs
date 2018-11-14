@@ -20,12 +20,20 @@ namespace DAL.Utils
             return conn;
         }
 
-        public static bool Exec(string query)
+        public static bool Exec(string query, object param = null)
         {
-            using (IDbConnection connection = SqlUtils.Connection())
+            using (var connection = SqlUtils.Connection())
             {
                 connection.Open();
-                connection.Execute(query);
+                if (param == null)
+                {
+                    connection.Execute(query);
+                }
+                else
+                {
+                    connection.Execute(query, param);
+                }
+
                 return true;
             }
         }

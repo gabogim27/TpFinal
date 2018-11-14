@@ -26,5 +26,7 @@ namespace DAL.Interfaces
         bool ComprobarUsoFamilia(Guid familiaId);
 
         List<string> TraerFamiliaUsuarioDescripcion(Guid IdUsuario);
+
+        List<Guid> ObtenerIdsFamiliasPorUsuario(Guid usuarioId);
     }
 }

@@ -15,5 +15,13 @@ namespace DAL.Interfaces
         bool CambiarPassword(Usuario usuario, string nuevaContraseña, bool primerLogin);
 
         Usuario ObtenerUsuarioConEmail(string email);
+
+        bool CambiarContraseña(Usuario usuario, string nuevaContraseña, bool primerLogin = false);
+
+        bool ActualizarContIngresosIncorrectos(Guid usuarioId, int cantIngresosIncorrectos);
+
+        bool BloquearUsuario(Guid idUsuario);
+
+        bool DesBloquearUsuario(Guid idUsuario);
     }
 }

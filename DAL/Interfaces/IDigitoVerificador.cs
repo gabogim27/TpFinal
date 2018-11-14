@@ -8,6 +8,6 @@ namespace DAL.Interfaces
 {
     public interface IDigitoVerificador
     {
-        int CalcularDVHorizontal(string entidad, List<string> columnasString);
+        int CalcularDVHorizontal(List<string> columnasString, List<int> columnasInt);
     }
 }

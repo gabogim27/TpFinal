@@ -264,5 +264,25 @@ namespace DAL.Impl
                 return false;
             }
         }
+
+        public List<Guid> ObtenerIdsFamiliasPorUsuario(Guid usuarioId)
+        {
+            var famIds = new List<Guid>();
+            try
+            {
+                var queryString = $"SELECT IdFamilia FROM FamiliaUsuario WHERE IdUsuario = {usuarioId}";
+
+                famIds = SqlUtils.Exec<Guid>(queryString);
+                return famIds;
+
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(), String.Format("Ocurrio un error al buscar los id de familia en la tabla FamiliaUsuario para el usuario: {0}" +
+                                                                                                             " Error: {1}", usuarioId, ex.Message));
+            }
+
+            return famIds;
+        }
     }
 }

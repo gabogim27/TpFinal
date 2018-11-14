@@ -17,22 +17,20 @@ namespace DAL.Impl
             return conn;
         }
 
-        public int CalcularDVHorizontal(string entidad, List<string> columnasString)
+        public int CalcularDVHorizontal(List<string> columnasString, List<int> columnasInt)
         {
             var colLenght = new List<int>();
             var digito = 0;
+            colLenght = columnasInt;
 
             foreach (var col in columnasString)
             {
                 colLenght.Add(col.Length);
+            }
 
-                if (columnasString[columnasString.Count - 1] == col)
-                {
-                    foreach (var colL in colLenght)
-                    {
-                        digito += colL * colLenght.FindIndex(x => x == colL);
-                    }
-                }
+            foreach (var colL in colLenght)
+            {
+                digito += colL * colLenght.FindIndex(x => x == colL);
             }
 
             return digito;

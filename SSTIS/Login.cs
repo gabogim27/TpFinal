@@ -14,6 +14,7 @@ using BE;
 using BLL.Interfaces;
 using DAL.Utils;
 using log4net;
+using Microsoft.VisualBasic;
 using SSTIS.Interfaces;
 using SSTIS.MessageBoxHelper;
 using SSTIS.Properties;
@@ -31,14 +32,17 @@ namespace SSTIS
         public IServicioUsuario ServicioUsuarioImplementor { get; set; }
         public IPrincipal Principal;
         public IServicioIdioma ServicioIdioma;
+        public ISessionInfo SesionInfo;
         private static readonly string ResourcesFilePath = "C:\\\\TPFinalDiploma\\\\TpFinal\\\\SSTIS\\\\\\Resources\\\\SpanishResources.resx";
         
-        public frmLogin(IServicio<Usuario> servicioUsuario, IServicioUsuario servicioUsuarioImplementor, IPrincipal principal, IServicioIdioma servicioIdioma)
+        public frmLogin(IServicio<Usuario> servicioUsuario, IServicioUsuario servicioUsuarioImplementor, 
+            IPrincipal principal, IServicioIdioma servicioIdioma, ISessionInfo SesionInfo)
         {
             this.ServicioUsuario = servicioUsuario;
             this.ServicioUsuarioImplementor = servicioUsuarioImplementor;
             this.Principal = principal;
             this.ServicioIdioma = servicioIdioma;
+            this.SesionInfo = SesionInfo;
             InitializeComponent();
         }
 
@@ -86,7 +90,10 @@ namespace SSTIS
                 {
                     LoginInfo.Usuario = usuarioActivo;
                     LoginInfo.LenguajeSeleccionado = lenguajeSeleccionado;
+                    SesionInfo.GuardarDatosSesionUsuario(LoginInfo.Usuario);
+                    ComprobarSiEsPrimerLogin();
                     this.Hide();
+                   
                     Principal.Show();
                 }
                 else
@@ -99,6 +106,26 @@ namespace SSTIS
                 Alert.ShowAlterWithButtonAndIcon("", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, "MSJ002");
             }
             
+        }
+
+        public void ComprobarSiEsPrimerLogin()
+        {
+            var usu = LoginInfo.Usuario;
+            if (usu.PrimerLogin)
+            {
+                var nuevaContraseña = Interaction.InputBox("Ingrese su nueva contraseña", "Nuevo contraseña", "");
+                var cambioExitoso = ServicioUsuarioImplementor.CambiarContraseña(usu, nuevaContraseña, true);
+                if (cambioExitoso)
+                {
+                    //Log.Info("Password Actualizado");
+                    MessageBox.Show("Su contraseña fue actualizada");
+                }
+                else
+                {
+                    //Log.Info("Fallo la actualizacion del password");
+                    MessageBox.Show("Error contraseña no actualizada");
+                }
+            }
         }
 
         private void txtEmail_TextChanged(object sender, EventArgs e)
@@ -149,6 +176,16 @@ namespace SSTIS
             {
                 this.Close();
             }
+        }
+
+        private void txtEmail_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = (e.KeyChar == (char)Keys.Space);
+        }
+
+        private void txtContrasenia_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = (e.KeyChar == (char)Keys.Space);
         }
     }
 }

@@ -18,6 +18,7 @@ namespace BE
         public Domicilio Domicilio { get; set; }
         public Contacto Contacto { get; set; }
         public string ContraseñaEncriptada { get; set; }
+        public int Dvh { get; set; }
 
         public List<Familia> Familia { get; set; }
 

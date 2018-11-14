@@ -225,5 +225,10 @@ namespace SSTIS
             cboLocalidad.ValueMember = "IdLocalidad";
             cboLocalidad.SelectedIndex = -1;
         }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            Hide();
+        }
     }
 }

@@ -75,6 +75,7 @@
             this.txtCelular.Name = "txtCelular";
             this.txtCelular.Size = new System.Drawing.Size(100, 20);
             this.txtCelular.TabIndex = 18;
+            this.txtCelular.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCelular_KeyPress);
             // 
             // txtTelFijo
             // 
@@ -82,6 +83,7 @@
             this.txtTelFijo.Name = "txtTelFijo";
             this.txtTelFijo.Size = new System.Drawing.Size(100, 20);
             this.txtTelFijo.TabIndex = 17;
+            this.txtTelFijo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTelFijo_KeyPress);
             // 
             // txtDomicilio
             // 
@@ -141,7 +143,7 @@
             // 
             // Button6
             // 
-            this.Button6.Location = new System.Drawing.Point(6, 391);
+            this.Button6.Location = new System.Drawing.Point(6, 363);
             this.Button6.Name = "Button6";
             this.Button6.Size = new System.Drawing.Size(144, 30);
             this.Button6.TabIndex = 9;
@@ -169,7 +171,7 @@
             // 
             // btnEliminarUsuario
             // 
-            this.btnEliminarUsuario.Location = new System.Drawing.Point(6, 298);
+            this.btnEliminarUsuario.Location = new System.Drawing.Point(6, 270);
             this.btnEliminarUsuario.Name = "btnEliminarUsuario";
             this.btnEliminarUsuario.Size = new System.Drawing.Size(144, 30);
             this.btnEliminarUsuario.TabIndex = 5;
@@ -179,7 +181,7 @@
             // 
             // btnAdmiFamilia
             // 
-            this.btnAdmiFamilia.Location = new System.Drawing.Point(6, 340);
+            this.btnAdmiFamilia.Location = new System.Drawing.Point(6, 312);
             this.btnAdmiFamilia.Name = "btnAdmiFamilia";
             this.btnAdmiFamilia.Size = new System.Drawing.Size(144, 30);
             this.btnAdmiFamilia.TabIndex = 7;
@@ -276,6 +278,7 @@
             this.txtCp.Name = "txtCp";
             this.txtCp.Size = new System.Drawing.Size(100, 20);
             this.txtCp.TabIndex = 23;
+            this.txtCp.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCp_KeyPress);
             // 
             // label3
             // 
@@ -343,6 +346,7 @@
             this.txtApellido.Name = "txtApellido";
             this.txtApellido.Size = new System.Drawing.Size(100, 20);
             this.txtApellido.TabIndex = 10;
+            this.txtApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtApellido_KeyPress);
             // 
             // txtNombre
             // 
@@ -350,6 +354,7 @@
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(100, 20);
             this.txtNombre.TabIndex = 9;
+            this.txtNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNombre_KeyPress);
             // 
             // rdbSexo2
             // 

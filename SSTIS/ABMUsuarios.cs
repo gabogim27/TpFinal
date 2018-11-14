@@ -382,5 +382,30 @@ namespace SSTIS
                 MessageBox.Show("Debe seleccionar un usuario de la grilla para poder administrar las Patentes");
             }
         }
+
+        private void txtNombre_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+        }
+
+        private void txtApellido_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+        }
+
+        private void txtCp_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void txtTelFijo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void txtCelular_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
     }
 }

@@ -30,6 +30,7 @@
         {
             this.btnCancelar = new System.Windows.Forms.Button();
             this.GroupBox3 = new System.Windows.Forms.GroupBox();
+            this.chklFamilia = new System.Windows.Forms.CheckedListBox();
             this.Label13 = new System.Windows.Forms.Label();
             this.cboLocalidad = new System.Windows.Forms.ComboBox();
             this.txtCelular = new System.Windows.Forms.TextBox();
@@ -55,7 +56,6 @@
             this.Label2 = new System.Windows.Forms.Label();
             this.Label1 = new System.Windows.Forms.Label();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
-            this.chklFamilia = new System.Windows.Forms.CheckedListBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.chklPatente = new System.Windows.Forms.CheckedListBox();
             this.GroupBox3.SuspendLayout();
@@ -72,6 +72,7 @@
             this.btnCancelar.TabIndex = 12;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // GroupBox3
             // 
@@ -82,6 +83,14 @@
             this.GroupBox3.TabIndex = 10;
             this.GroupBox3.TabStop = false;
             this.GroupBox3.Text = "Familia";
+            // 
+            // chklFamilia
+            // 
+            this.chklFamilia.FormattingEnabled = true;
+            this.chklFamilia.Location = new System.Drawing.Point(43, 19);
+            this.chklFamilia.Name = "chklFamilia";
+            this.chklFamilia.Size = new System.Drawing.Size(120, 94);
+            this.chklFamilia.TabIndex = 0;
             // 
             // Label13
             // 
@@ -319,14 +328,6 @@
             this.GroupBox1.TabIndex = 7;
             this.GroupBox1.TabStop = false;
             this.GroupBox1.Text = "Datos";
-            // 
-            // chklFamilia
-            // 
-            this.chklFamilia.FormattingEnabled = true;
-            this.chklFamilia.Location = new System.Drawing.Point(43, 19);
-            this.chklFamilia.Name = "chklFamilia";
-            this.chklFamilia.Size = new System.Drawing.Size(120, 94);
-            this.chklFamilia.TabIndex = 0;
             // 
             // groupBox4
             // 

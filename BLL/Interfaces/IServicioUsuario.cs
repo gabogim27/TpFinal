@@ -13,5 +13,6 @@ namespace BLL.Interfaces
         bool LogIn(string email, string contraseña);
         Usuario ObtenerUsuarioConEmail(string email);
         bool ValidarEmail(string email);
+        bool CambiarContraseña(Usuario usuario, string nuevaContraseña, bool primerLogin = false);
     }
 }

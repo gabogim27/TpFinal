@@ -15,6 +15,7 @@ using DAL.Repositorios;
 using SimpleInjector;
 using SSTIS.Container;
 using SSTIS.Interfaces;
+using SSTIS.Utils;
 using Bitacora = BE.Bitacora;
 
 namespace SSTIS
@@ -89,6 +90,7 @@ namespace SSTIS
             simpleInyectorContainer.Register<IModificarFamilia, frmModificarFamiliaPopup>(Lifestyle.Transient);
             simpleInyectorContainer.Register<IAdminFamiliaUsuario, frmAdminFamiliaUsuario>(Lifestyle.Transient);
             simpleInyectorContainer.Register<IAdminPatenteUsuario, frmAdministracionPatenteUsuario>(Lifestyle.Transient);
+            simpleInyectorContainer.Register<ISessionInfo, SessionInfo>(Lifestyle.Singleton);
             //ContainerConfig.Bootstrap();
             log4net.Config.XmlConfigurator.Configure();
             Application.EnableVisualStyles();

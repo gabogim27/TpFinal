@@ -20,12 +20,18 @@ namespace DAL.Impl
     public class UsuarioDao : IDao<Usuario>, IUsuarioDao
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(UsuarioDao));
+        public IRepositorioBitacora RepositorioBitacora;
+
+        public UsuarioDao(IRepositorioBitacora RepositorioBitacora)
+        {
+            this.RepositorioBitacora = RepositorioBitacora;
+        }
 
         public bool Create(Usuario ObjAlta)
         {
             var queryString = string.Format("INSERT INTO dbo.Usuario(IdUsuario, Nombre, Apellido, Password, Email, " +
-                "CantLoginsFallidos, Estado, IdDomicilio, IdContacto, IdIdioma, PrimerLogin, Sexo) values " +
-                "('{0}','{1}','{2}','{3}','{4}',{5},{6},'{7}','{8}','{9}',{10}, '{11}')",
+                "CantLoginsFallidos, Estado, IdDomicilio, IdContacto, IdIdioma, PrimerLogin, Sexo, Dvh) values " +
+                "('{0}','{1}','{2}','{3}','{4}',{5},{6},'{7}','{8}','{9}',{10}, '{11}', {12})",
                 ObjAlta.IdUsuario = Guid.NewGuid(),
                 ObjAlta.Nombre,
                 ObjAlta.Apellido,
@@ -37,7 +43,8 @@ namespace DAL.Impl
                 ObjAlta.Contacto.IdContacto,
                 ObjAlta.IdIdioma = new Guid("632302C5-266A-440D-9F39-6DC6DDEBAACF"),//cambiar el id este, hacerlo bien                
                 Convert.ToByte(ObjAlta.PrimerLogin),
-                ObjAlta.Sexo
+                ObjAlta.Sexo,
+                ObjAlta.Dvh
                 );
             var returnValue = false;
 
@@ -154,7 +161,7 @@ namespace DAL.Impl
                     {
                         cingresoInc++;
 
-                        AumentarIngresos(usuario, cingresoInc);
+                        ActualizarContIngresosIncorrectos(usuario.IdUsuario, cingresoInc);
 
                         return false;
                     }
@@ -249,17 +256,101 @@ namespace DAL.Impl
 
             return null;
         }
-        //public string Encriptar(string contraseña)
-        //{
-        //    MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-        //    md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(contraseña));
-        //    byte[] encriptado = md5.Hash;
-        //    StringBuilder str = new StringBuilder();
-        //    for (int i = 1; i < encriptado.Length; i++)
-        //    {
-        //        str.Append(encriptado[i].ToString("x2"));
-        //    }
-        //    return str.ToString();
-        //}
+
+        public bool CambiarContraseña(Usuario usuario, string nuevaContraseña, bool primerLogin = false)
+        {
+            try
+            {
+                var contEncript = MD5.ComputeMD5Hash(nuevaContraseña);
+                var queryString = string.Empty;
+                if (primerLogin == true)
+                {
+                    queryString = "UPDATE Usuario SET Password = @contraseña, PrimerLogin = 0 WHERE IdUsuario = @usuarioId";
+                }
+                else
+                {
+                    queryString = "UPDATE Usuario SET Password = @contraseña WHERE IdUsuario = @usuarioId";
+                }
+
+                return SqlUtils.Exec(queryString, new { @usuarioId = usuario.IdUsuario, @contraseña = contEncript });
+
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(),
+                    String.Format("Ocurrio un error al cambiar la contraseña del usuario: '{0}'. Error: {1}",
+                        usuario.IdUsuario, ex.Message));
+            }
+
+            return false;
+        }
+
+        public bool ActualizarContIngresosIncorrectos(Guid usuarioId, int cantIngresosIncorrectos)
+        {
+            try
+            {
+                var query = string.Format("Update Usuario set CantLoginsFallidos = {0} where IdUsuario = " +
+                                          "'{1}'", cantIngresosIncorrectos, usuarioId);
+                return SqlUtils.Exec(query);
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(),
+                    String.Format("Ocurrio un error al actualizar la cantidad de logins fallidos del usuario: '{0}'. Error: {1}",
+                        usuarioId, ex.Message));
+            }
+
+            return false;
+        }
+
+        public bool BloquearUsuario(Guid idUsuario)
+        {
+            try
+            {
+                var query = string.Format("Update Usuario set Estado = 0 where IdUsuario = '{0}'", idUsuario);
+                var result = SqlUtils.Exec(query);
+                if (result)
+                {
+                    RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
+                        String.Format("Se ha bloqueado con exito al usuario: '{0}'.",
+                            idUsuario));
+                    return result;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(),
+                    String.Format("Ocurrio un error al intentar bloquear el usuario: '{0}'. Error: {1}",
+                        idUsuario, ex.Message));
+            }
+
+            return false;
+        }
+
+        public bool DesBloquearUsuario(Guid idUsuario)
+        {
+            try
+            {
+                var query = string.Format("Update Usuario set Estado = 1 and PrimerLogin = 1 where IdUsuario = '{0}'", idUsuario);
+                var result = SqlUtils.Exec(query);
+                if (result)
+                {
+                    RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
+                        String.Format("Se ha desbloqueado con exito al usuario: '{0}'.",
+                            idUsuario));
+                    return result;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(),
+                    String.Format("Ocurrio un error al intentar desbloquear el usuario: '{0}'. Error: {1}",
+                        idUsuario, ex.Message));
+            }
+
+            return false;
+        }
     }
 }

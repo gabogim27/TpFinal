@@ -91,5 +91,10 @@ namespace BLL
         {
             return RepositorioFamiliaImplementor.TraerFamiliaUsuarioDescripcion(IdUsuario);
         }
+
+        public List<Guid> ObtenerIdsFamiliasPorUsuario(Guid usuarioId)
+        {
+            return RepositorioFamiliaImplementor.ObtenerIdsFamiliasPorUsuario(usuarioId);
+        }
     }
 }

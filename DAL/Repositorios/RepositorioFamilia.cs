@@ -88,5 +88,10 @@ namespace DAL.Repositorios
         {
             return FamiliaDaoImplementor.TraerFamiliaUsuarioDescripcion(IdUsuario);
         }
+
+        public List<Guid> ObtenerIdsFamiliasPorUsuario(Guid usuarioId)
+        {
+            return FamiliaDaoImplementor.ObtenerIdsFamiliasPorUsuario(usuarioId);
+        }
     }
 }

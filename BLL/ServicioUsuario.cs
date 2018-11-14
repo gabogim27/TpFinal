@@ -106,25 +106,34 @@ namespace BLL
                 var ingresa = RepositorioUsuarioImplementor.LogIn(email, contraseña);
                 
                 usuario = RepositorioUsuarioImplementor.ObtenerUsuarioConEmail(email);
-
                 if (usuario == null)
                     return false;
+
+                var contIngresos = usuario.CantIngresosFallidos;
 
                 if (ingresa)
                 {
                     var mensaje = string.Format("Usuario: {0} logueado correctamente.", usuario.Email);
                     RepositorioBitacora.RegistrarEnBitacora(Convert.ToString(Utils.Utils.LogLevel.Alta), mensaje, usuario);
-                    //log.Info("Usuario logueado correctamente");
                     return ingresa;
                 }
 
+                //if (!ingresa)
+                //{
+                //    //Actualizar el contador de ingresos fallidos
+                //    contIngresos++;
+                //    RepositorioUsuarioImplementor.ActualizarContIngresosIncorrectos(usuario.IdUsuario, contIngresos);
+                //}
+
                 if (usuario.CantIngresosFallidos < 3)
                 {
-                    log.Info("Login Incorrecto");
+                    RepositorioBitacora.RegistrarEnBitacora(Utils.Utils.LogLevel.Alta.ToString(), 
+                        string.Format("Login Fallido para el usuario: " + "'{0}'", usuario.Email), usuario);
                 }
                 else
                 {
-                    log.Info("Login Incorrecto, Cuenta bloqueada");
+                    RepositorioBitacora.RegistrarEnBitacora(Utils.Utils.LogLevel.Alta.ToString(), string.Format("La cuenta del usuario" +
+                                                                                                                "'{0}' ha sido bloqueada tras 3 intento de login fallido.", usuario.Email), usuario);
                 }
 
                 return ingresa;
@@ -144,6 +153,11 @@ namespace BLL
         public bool ValidarEmail(string email)
         {
             return Utils.Utils.ValidarEmail(email);
+        }
+
+        public bool CambiarContraseña(Usuario usuario, string nuevaContraseña, bool primerLogin = false)
+        {
+            return RepositorioUsuarioImplementor.CambiarContraseña(usuario, nuevaContraseña, primerLogin);
         }
     }
 }
