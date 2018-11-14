@@ -7,23 +7,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SSTIS.Interfaces;
 
 namespace SSTIS
 {
-    public partial class frmCambiarIdioma : Form, ICambiarIdioma
+    public partial class PolizaWizard : Form
     {
-        public frmCambiarIdioma()
+        public PolizaWizard()
         {
             InitializeComponent();
         }
 
-        private void Button1_Click(object sender, EventArgs e)
+        private void advancedWizardPage1_Paint(object sender, PaintEventArgs e)
         {
 
         }
 
-        private void frmCambiarIdioma_FormClosing(object sender, FormClosingEventArgs e)
+        private void stwControl_SelectedPageChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PolizaWizard_FormClosing(object sender, FormClosingEventArgs e)
         {
             Hide();
             e.Cancel = true;

@@ -61,5 +61,11 @@ namespace SSTIS
                 txtFamilia.Text = FamiliaInfo.NuevaFamilia.Descripcion;
             }
         }
+
+        private void frmModificarFamiliaPopup_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Hide();
+            e.Cancel = true;
+        }
     }
 }

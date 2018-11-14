@@ -182,6 +182,7 @@
             this.Controls.Add(this.Label1);
             this.Name = "frmRealizarCopiaSeguridad";
             this.Text = "RealizarCopiaSeguridad";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRealizarCopiaSeguridad_FormClosing);
             this.Load += new System.EventHandler(this.RealizarCopiaSeguridad_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -81,6 +81,8 @@ namespace SSTIS
 
         private void frmAdminFamiliaUsuario_FormClosing(object sender, FormClosingEventArgs e)
         {
+            Hide();
+            e.Cancel = true;
         }
     }
 }

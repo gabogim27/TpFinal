@@ -425,6 +425,7 @@
             this.Controls.Add(this.GroupBox1);
             this.Name = "frmABMUsuarios";
             this.Text = "ABMUsuarios";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmABMUsuarios_FormClosing);
             this.Load += new System.EventHandler(this.ABMUsuarios_Load);
             this.GroupBox3.ResumeLayout(false);
             this.GroupBox4.ResumeLayout(false);

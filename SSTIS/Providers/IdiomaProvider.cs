@@ -5,6 +5,7 @@ using BE;
 using BLL.Interfaces;
 using log4net;
 using SSTIS.MessageBoxHelper;
+using SSTIS.Utils;
 
 namespace SSTIS.Providers
 {
@@ -19,13 +20,13 @@ namespace SSTIS.Providers
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(IdiomaProvider));
         public static DataSet ListadoBitacora = new DataSet();
-        private static readonly string ResourcesFilePath = "C:\\\\TPFinalDiploma\\\\TpFinal\\\\SSTIS\\\\\\Resources\\\\SpanishResources.resx";
+        //private static readonly string ResourcesFilePath = "C:\\\\TPFinalDiploma\\\\TpFinal\\\\SSTIS\\\\\\Resources\\\\SpanishResources.resx";
 
         public static void FillResources(IDictionary<string, string> traducciones, Guid idiomaSeleccionado, string nombreFormulario)
         {
             try
             {
-                using (ResXResourceWriter resxWriter = new ResXResourceWriter(ResourcesFilePath))
+                using (ResXResourceWriter resxWriter = new ResXResourceWriter(LoginInfo.ResourcesFilePath))
                 {
                     if (traducciones.Any())
                     {
@@ -47,11 +48,14 @@ namespace SSTIS.Providers
         {
             try
             {
-                using (ResXResourceSet resxSet = new ResXResourceSet(ResourcesFilePath))
+                using (ResXResourceSet resxSet = new ResXResourceSet(LoginInfo.ResourcesFilePath))
                 {
                     foreach (DictionaryEntry item in resxSet)
                     {
-                        controls[item.Key.ToString()].Text = item.Value.ToString();
+                        if (controls.ContainsKey(item.Key.ToString()))
+                        {
+                            controls[item.Key.ToString()].Text = item.Value.ToString();
+                        }
                     }
                 }
             }

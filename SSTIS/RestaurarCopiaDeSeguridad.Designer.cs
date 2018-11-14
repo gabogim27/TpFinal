@@ -131,6 +131,8 @@
             this.Controls.Add(this.Label1);
             this.Name = "frmRestaurarCopiaDeSeguridad";
             this.Text = "CopiaDeSeguridad";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRestaurarCopiaDeSeguridad_FormClosing);
+            this.Load += new System.EventHandler(this.frmRestaurarCopiaDeSeguridad_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

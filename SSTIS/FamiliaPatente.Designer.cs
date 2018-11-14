@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.dgvAdminFamiliaPatente = new System.Windows.Forms.DataGridView();
+            this.Descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Otorgada = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.lblFamilia = new System.Windows.Forms.Label();
             this.lblFamiliaText = new System.Windows.Forms.Label();
             this.btnVolver = new System.Windows.Forms.Button();
-            this.Descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Otorgada = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdminFamiliaPatente)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,6 +50,18 @@
             this.dgvAdminFamiliaPatente.Size = new System.Drawing.Size(330, 166);
             this.dgvAdminFamiliaPatente.TabIndex = 3;
             this.dgvAdminFamiliaPatente.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAdminFamiliaPatente_CellContentClick);
+            // 
+            // Descripcion
+            // 
+            this.Descripcion.DataPropertyName = "Descripcion";
+            this.Descripcion.HeaderText = "Patente";
+            this.Descripcion.Name = "Descripcion";
+            this.Descripcion.ReadOnly = true;
+            // 
+            // Otorgada
+            // 
+            this.Otorgada.HeaderText = "Otorgada";
+            this.Otorgada.Name = "Otorgada";
             // 
             // lblFamilia
             // 
@@ -79,18 +91,6 @@
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
-            // Descripcion
-            // 
-            this.Descripcion.DataPropertyName = "Descripcion";
-            this.Descripcion.HeaderText = "Patente";
-            this.Descripcion.Name = "Descripcion";
-            this.Descripcion.ReadOnly = true;
-            // 
-            // Otorgada
-            // 
-            this.Otorgada.HeaderText = "Otorgada";
-            this.Otorgada.Name = "Otorgada";
-            // 
             // frmAdmFamiliaPatente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -102,6 +102,7 @@
             this.Controls.Add(this.lblFamilia);
             this.Name = "frmAdmFamiliaPatente";
             this.Text = "FamiliaPatente";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmAdmFamiliaPatente_FormClosing);
             this.Load += new System.EventHandler(this.frmAdmFamiliaPatente_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdminFamiliaPatente)).EndInit();
             this.ResumeLayout(false);

@@ -92,5 +92,11 @@ namespace SSTIS
         {
 
         }
+
+        private void frmRealizarCopiaSeguridad_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Hide();
+            e.Cancel = true;
+        }
     }
 }

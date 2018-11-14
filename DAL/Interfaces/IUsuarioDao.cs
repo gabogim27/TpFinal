@@ -23,5 +23,7 @@ namespace DAL.Interfaces
         bool BloquearUsuario(Guid idUsuario);
 
         bool DesBloquearUsuario(Guid idUsuario);
+
+        List<Patente> ObtenerPatentesDeUsuario(Guid usuarioId);
     }
 }

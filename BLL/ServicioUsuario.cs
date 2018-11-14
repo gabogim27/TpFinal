@@ -159,5 +159,10 @@ namespace BLL
         {
             return RepositorioUsuarioImplementor.CambiarContraseña(usuario, nuevaContraseña, primerLogin);
         }
+
+        public List<Patente> ObtenerPatentesDeUsuario(Guid usuarioId)
+        {
+            return RepositorioUsuarioImplementor.ObtenerPatentesDeUsuario(usuarioId);
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace SSTIS
                 var dbServer = new Server(new ServerConnection(SqlUtils.Connection()));
                 var restore = new Restore()
                 {
-                    Database = "TallerPosta", Action = RestoreActionType.Database, ReplaceDatabase = true,
+                    Database = "SistemaTIS", Action = RestoreActionType.Database, ReplaceDatabase = true,
                     NoRecovery = false
                 };
                 for (int i = 0; i < backupFiles.Length; i++)
@@ -99,6 +99,17 @@ namespace SSTIS
                     MessageBox.Show("Ocurrio un error al examinar el path.");
                 }
             }
+        }
+
+        private void frmRestaurarCopiaDeSeguridad_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void frmRestaurarCopiaDeSeguridad_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Hide();
+            e.Cancel = true;
         }
     }
 }

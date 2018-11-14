@@ -125,6 +125,7 @@ namespace DAL.Dao
                     queryImpl += String.Format("IdUsuario IN ({0}) and  ", idsUsuParameters);
                 }
                 ////Prepare criticidadesIDs parameters
+                coma = String.Empty;
                 if (criticidades.Count != 0)
                 {
                     for (int i = 0; i < criticidades.Count; i++)

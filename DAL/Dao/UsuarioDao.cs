@@ -352,5 +352,24 @@ namespace DAL.Impl
 
             return false;
         }
+
+        public List<Patente> ObtenerPatentesDeUsuario(Guid usuarioId)
+        {
+            try
+            {
+                var queryString = $"SELECT IdPatente FROM UsuarioPatente WHERE IdUsuario = '{usuarioId}'";
+
+                return SqlUtils.Exec<Patente>(queryString);
+
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(),
+                    String.Format("Ocurrio un error al obtener las patentes del usuario: '{0}'. Error: {1}",
+                        usuarioId, ex.Message));
+            }
+
+            return null;
+        }
     }
 }

@@ -230,5 +230,11 @@ namespace SSTIS
         {
             Hide();
         }
+
+        private void frmNuevoUsuario_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Hide();
+            e.Cancel = true;
+        }
     }
 }

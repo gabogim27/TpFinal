@@ -37,5 +37,9 @@ namespace DAL.Interfaces
         bool NegarPatenteUsuario(Guid patenteId, Guid usuarioId);
 
         bool HabilitarPatenteUsuario(Guid patenteId, Guid usuarioId);
+
+        List<Patente> ObtenerPermisosFormulario(Guid formId);
+
+        List<Patente> ObtenerPermisosFormularios();
     }
 }

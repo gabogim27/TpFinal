@@ -82,5 +82,10 @@ namespace DAL.Repositorios
         {
             return UsuarioDaoImplementor.DesBloquearUsuario(idUsuario);
         }
+
+        public List<Patente> ObtenerPatentesDeUsuario(Guid usuarioId)
+        {
+            return UsuarioDaoImplementor.ObtenerPatentesDeUsuario(usuarioId);
+        }
     }
 }

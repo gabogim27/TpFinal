@@ -96,5 +96,11 @@ namespace SSTIS
                 DialogResult = DialogResult.None;
             }
         }
+
+        private void frmAdministracionPatenteUsuario_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Hide();
+            e.Cancel = true;
+        }
     }
 }

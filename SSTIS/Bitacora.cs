@@ -103,7 +103,7 @@ namespace SSTIS
             var idUsuarios = usuariosSeleccionados.Select(u => u.IdUsuario).ToList();
             //Buscamos los usuarios con parametros de fecha y criticidad en la bitacora
             var listaBitacora = ListarBitacora(idUsuarios, criticidadesSeleccionadas, fechaDesde, fechaHasta);
-            if (listaBitacora.Any())
+            if (listaBitacora != null)
             {
                 BitacoraViewModel.ListadoBitacora = CreateDataTable(listaBitacora);
                 //Cargamos info en el reporte
@@ -135,7 +135,7 @@ namespace SSTIS
             table.Columns.Add("Descripcion");
             table.Columns.Add("Criticidad");
 
-            if (listaBitacora.Any())
+            if (listaBitacora != null)
             {
                 foreach (var item in listaBitacora)
                 {
@@ -202,6 +202,12 @@ namespace SSTIS
             //var reportPath = currentPath + "\\Reportes\\Bitacora\\Report1.rdlc";
             //rwBitacora.ProcessingMode = ProcessingMode.Local;
             //this.rwBitacora.LocalReport.ReportPath = reportPath;
+        }
+
+        private void frmBitacora_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Hide();
+            e.Cancel = true;
         }
     }
 }

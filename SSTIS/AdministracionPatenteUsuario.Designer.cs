@@ -30,10 +30,10 @@
         {
             this.Label1 = new System.Windows.Forms.Label();
             this.dgvAdminPatenteUsuario = new System.Windows.Forms.DataGridView();
-            this.lblUsuario = new System.Windows.Forms.Label();
             this.Patente = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.lblUsuario = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdminPatenteUsuario)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,15 +61,6 @@
             this.dgvAdminPatenteUsuario.TabIndex = 6;
             this.dgvAdminPatenteUsuario.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAdminPatenteUsuario_CellContentClick);
             // 
-            // lblUsuario
-            // 
-            this.lblUsuario.AutoSize = true;
-            this.lblUsuario.Location = new System.Drawing.Point(163, 64);
-            this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(56, 13);
-            this.lblUsuario.TabIndex = 9;
-            this.lblUsuario.Text = "USUARIO";
-            // 
             // Patente
             // 
             this.Patente.HeaderText = "Patente";
@@ -86,6 +77,15 @@
             this.Column4.HeaderText = "Negada";
             this.Column4.Name = "Column4";
             // 
+            // lblUsuario
+            // 
+            this.lblUsuario.AutoSize = true;
+            this.lblUsuario.Location = new System.Drawing.Point(163, 64);
+            this.lblUsuario.Name = "lblUsuario";
+            this.lblUsuario.Size = new System.Drawing.Size(56, 13);
+            this.lblUsuario.TabIndex = 9;
+            this.lblUsuario.Text = "USUARIO";
+            // 
             // frmAdministracionPatenteUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -96,6 +96,7 @@
             this.Controls.Add(this.dgvAdminPatenteUsuario);
             this.Name = "frmAdministracionPatenteUsuario";
             this.Text = "AdministracionPatenteUsuario";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmAdministracionPatenteUsuario_FormClosing);
             this.Load += new System.EventHandler(this.frmAdministracionPatenteUsuario_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdminPatenteUsuario)).EndInit();
             this.ResumeLayout(false);

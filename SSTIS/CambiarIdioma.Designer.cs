@@ -1,6 +1,6 @@
 ﻿namespace SSTIS
 {
-    partial class CambiarIdioma
+    partial class frmCambiarIdioma
     {
         /// <summary>
         /// Required designer variable.
@@ -43,6 +43,7 @@
             this.Button1.TabIndex = 2;
             this.Button1.Text = "Aceptar";
             this.Button1.UseVisualStyleBackColor = true;
+            this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // ComboBox1
             // 
@@ -73,14 +74,15 @@
             this.Label1.TabIndex = 3;
             this.Label1.Text = "Idioma:";
             // 
-            // CambiarIdioma
+            // frmCambiarIdioma
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(375, 271);
             this.Controls.Add(this.GroupBox1);
-            this.Name = "CambiarIdioma";
+            this.Name = "frmCambiarIdioma";
             this.Text = "CambiarIdioma";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmCambiarIdioma_FormClosing);
             this.GroupBox1.ResumeLayout(false);
             this.GroupBox1.PerformLayout();
             this.ResumeLayout(false);

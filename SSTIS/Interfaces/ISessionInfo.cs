@@ -10,5 +10,11 @@ namespace SSTIS.Interfaces
     public interface ISessionInfo
     {
         void GuardarDatosSesionUsuario(Usuario usuario);
+
+        Usuario ObtenerPermisosUsuario();
+
+        List<Patente> ObtenerPermisosFormularios();
+
+        List<Patente> ObtenerPermisosFormulario(Guid formId);
     }
 }

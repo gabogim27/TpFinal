@@ -53,6 +53,7 @@ namespace SSTIS
             CargarCombo();
             this.AcceptButton = btnIngresar;
             cboIdioma.SelectedIndex = 1;//por default le dejamos español
+            LimpiarRecursos();
             LoginInfo.LenguajeSeleccionado = (IdiomaUsuario)cboIdioma.SelectedItem;
             GetTraducciones();
             AplicarTraducciones();
@@ -98,7 +99,7 @@ namespace SSTIS
                 }
                 else
                 {
-                    Alert.ShowSimpleAlert("MSJ003");
+                    Alert.ShowSimpleAlert("Login Fallido.");
                 }
             }
             else
@@ -163,6 +164,11 @@ namespace SSTIS
         }
 
         private void frmLogin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            LimpiarRecursos();
+        }
+
+        private void LimpiarRecursos()
         {
             using (ResXResourceWriter resxWriter = new ResXResourceWriter(ResourcesFilePath))
             {

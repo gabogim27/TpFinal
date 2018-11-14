@@ -76,5 +76,16 @@ namespace SSTIS
                 throw new Exception(ex.Message);
             }
         }
+
+        private void frmNuevaFamilia_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Hide();
+            e.Cancel = true;
+        }
+
+        private void frmNuevaFamilia_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

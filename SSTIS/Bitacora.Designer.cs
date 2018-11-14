@@ -41,11 +41,7 @@
             this.chklUsuario = new System.Windows.Forms.CheckedListBox();
             this.rpvBitacora = new Microsoft.Reporting.WinForms.ReportViewer();
             this.BitacoraViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.bitacoraViewModelBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
-            this.bitacoraViewModelBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.BitacoraViewModelBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bitacoraViewModelBindingSource2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bitacoraViewModelBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnBuscar
@@ -141,14 +137,6 @@
             // 
             this.BitacoraViewModelBindingSource.DataSource = typeof(SSTIS.BitacoraViewModel);
             // 
-            // bitacoraViewModelBindingSource2
-            // 
-            this.bitacoraViewModelBindingSource2.DataSource = typeof(SSTIS.BitacoraViewModel);
-            // 
-            // bitacoraViewModelBindingSource1
-            // 
-            this.bitacoraViewModelBindingSource1.DataSource = typeof(SSTIS.BitacoraViewModel);
-            // 
             // frmBitacora
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -166,10 +154,9 @@
             this.Controls.Add(this.Label1);
             this.Name = "frmBitacora";
             this.Text = "Bitacora";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmBitacora_FormClosing);
             this.Load += new System.EventHandler(this.Bitacora_Load);
             ((System.ComponentModel.ISupportInitialize)(this.BitacoraViewModelBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bitacoraViewModelBindingSource2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bitacoraViewModelBindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -186,8 +173,6 @@
         private System.Windows.Forms.CheckedListBox chklCriticidad;
         private System.Windows.Forms.CheckedListBox chklUsuario;
         private System.Windows.Forms.BindingSource BitacoraViewModelBindingSource;
-        private System.Windows.Forms.BindingSource bitacoraViewModelBindingSource1;
-        private System.Windows.Forms.BindingSource bitacoraViewModelBindingSource2;
         private Microsoft.Reporting.WinForms.ReportViewer rpvBitacora;
     }
 }

@@ -51,7 +51,7 @@ namespace DAL.Dao
             {
                 RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
                     string.Format("Ocurrio un error al comprobar las patentes del usuario: {0} de la BD. Error: " +
-                                  "{1}",idUsuario, ex.Message));
+                                  "{1}", idUsuario, ex.Message));
             }
 
             return false;
@@ -244,6 +244,44 @@ namespace DAL.Dao
                 RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
                     string.Format("Ocurrio un error al consultar la tabla PatenteFamilia con IdFamilia: '{0}' .Error: " +
                                   "{1}", familiaId, ex.Message));
+            }
+
+            return null;
+        }
+
+        public List<Patente> ObtenerPermisosFormulario(Guid formId)
+        {
+            try
+            {
+                var query = "SELECT IdPatente FROM FormularioPatente WHERE IdFormularioPatente = @formId";
+
+                return SqlUtils.Exec<Patente>(query, new { @formId = formId });
+
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
+                    string.Format("Ocurrio un error al obtener los permisos del formulario. Error: " +
+                                  "{0}", ex.Message));
+            }
+
+            return null;
+        }
+
+        public List<Patente> ObtenerPermisosFormularios()
+        {
+            try
+            {
+                var query = "SELECT IdPatente FROM FormularioPatente";
+
+                return SqlUtils.Exec<Patente>(query);
+
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
+                    string.Format("Ocurrio un error al obtener los permisos del formulario. Error: " +
+                                  "{0}", ex.Message));
             }
 
             return null;

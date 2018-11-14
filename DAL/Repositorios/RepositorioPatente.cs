@@ -87,5 +87,15 @@ namespace DAL.Repositorios
         {
             return PatenteDao.HabilitarPatenteUsuario(patenteId, usuarioId);
         }
+
+        public List<Patente> ObtenerPermisosFormulario(Guid formId)
+        {
+            return PatenteDao.ObtenerPermisosFormulario(formId);
+        }
+
+        public List<Patente> ObtenerPermisosFormularios()
+        {
+            return PatenteDao.ObtenerPermisosFormularios();
+        }
     }
 }

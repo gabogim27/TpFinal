@@ -166,5 +166,11 @@ namespace SSTIS
                 FamiliaInfo.NuevaFamilia = (Familia)chklFamilias.CheckedItems[0];
             }
         }
+
+        private void frmABMFamilia_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Hide();
+            e.Cancel = true;
+        }
     }
 }

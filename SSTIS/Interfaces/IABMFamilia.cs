@@ -14,5 +14,6 @@ namespace SSTIS.Interfaces
         void Show();
         DialogResult ShowDialog();
         Familia ObtenerFamiliaSeleccionada();
+        Form MdiParent { get; set; }
     }
 }

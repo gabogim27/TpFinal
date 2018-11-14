@@ -113,5 +113,11 @@ namespace SSTIS
         {
            DialogResult = DialogResult.OK;           
         }
+
+        private void frmAdmFamiliaPatente_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Hide();
+            e.Cancel = true;
+        }
     }
 }

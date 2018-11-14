@@ -69,6 +69,8 @@
             this.Controls.Add(this.Label1);
             this.Name = "frmNuevaFamilia";
             this.Text = "NuevaFamiliaPopup";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmNuevaFamilia_FormClosing);
+            this.Load += new System.EventHandler(this.frmNuevaFamilia_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

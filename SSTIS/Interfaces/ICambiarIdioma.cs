@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BE;
 
 namespace SSTIS.Interfaces
 {
-    public interface IRealizarCopiaSeguridad
+    public interface ICambiarIdioma
     {
-        Form MdiParent { get; set; }
         void Show();
+        DialogResult ShowDialog();
+        Form MdiParent { get; set; }
     }
 }

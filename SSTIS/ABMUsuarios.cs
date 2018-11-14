@@ -407,5 +407,11 @@ namespace SSTIS
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
+
+        private void frmABMUsuarios_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Hide();
+            e.Cancel = true;
+        }
     }
 }
