@@ -138,11 +138,12 @@ namespace DAL.Impl
         {
             try
             {
-
+                var result = 0;
                 string processQuery = string.Format("Delete FamiliaUsuario where IdFamilia = '{0}' and IdUsuario = '{1}'", familiaId, usuarioId);
-                SqlUtils.Connection().Execute(processQuery);
+                result = SqlUtils.Connection().Execute(processQuery);
 
-                return true;
+                if (result > 0)
+                    return true;
             }
             catch (Exception ex)
             {

@@ -21,9 +21,12 @@ namespace SSTIS
         public IServicioFamilia ServicioFamiliaImplementor;
         private Usuario UsuarioSeleccionado = new Usuario();
         private List<Familia> Familias = new List<Familia>();
+        private IServicioBitacora ServicioBitacora;
 
-        public frmAdminFamiliaUsuario(IServicio<Familia> ServicioFamilia, IServicioFamilia ServicioFamiliaImplementor)
+        public frmAdminFamiliaUsuario(IServicio<Familia> ServicioFamilia, IServicioFamilia ServicioFamiliaImplementor,
+            IServicioBitacora ServicioBitacora)
         {
+            this.ServicioBitacora = ServicioBitacora;
             this.ServicioFamilia = ServicioFamilia;
             this.ServicioFamiliaImplementor = ServicioFamiliaImplementor;
             InitializeComponent();
@@ -48,7 +51,7 @@ namespace SSTIS
             for (int i = 0; i < Familias.Count; i++)
             {
                 dgvFamiliaUsuario.Rows.Add(Familias[i].Descripcion.ToString(),
-                     familiasUsuario?.Any(x => x.Contains(Familias[i].Descripcion)) ?? false);
+                     familiasUsuario?.Any(x => x == Familias[i].Descripcion) ?? false);
             }
         }
 
@@ -70,13 +73,23 @@ namespace SSTIS
                     }
                     else
                     {
-                        ServicioFamiliaImplementor.BorrarFamiliaUsuario(idFamilia, UsuarioSeleccionado.IdUsuario);
+                        var result = ServicioFamiliaImplementor.BorrarFamiliaUsuario(idFamilia, UsuarioSeleccionado.IdUsuario);
+                        if (!result)
+                        {
+                            ServicioBitacora.RegistrarEnBitacora(Log.Level.Alta.ToString(), 
+                                string.Format("Ocurrio un error al eliminar un registro de la relacion FamiliaUsuario. Familia: " +
+                                              "{0}, usuario: {1}", idFamilia, UsuarioSeleccionado.IdUsuario), UsuarioSeleccionado);
+                            MessageBox.Show("No se ha podido eliminar la relacion FamiliaUsuario. " +
+                                            "Por favor contacte al Administrador.");
+                        }
                     }
 
                     dgvFamiliaUsuario.EndEdit();
                 }
                 DialogResult = DialogResult.None;
             }
+
+            CargarGrilla();
         }
 
         private void frmAdminFamiliaUsuario_FormClosing(object sender, FormClosingEventArgs e)

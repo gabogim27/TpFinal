@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            this.BitacoraViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnBuscar = new System.Windows.Forms.Button();
             this.Label4 = new System.Windows.Forms.Label();
             this.Label3 = new System.Windows.Forms.Label();
@@ -40,9 +41,12 @@
             this.chklCriticidad = new System.Windows.Forms.CheckedListBox();
             this.chklUsuario = new System.Windows.Forms.CheckedListBox();
             this.rpvBitacora = new Microsoft.Reporting.WinForms.ReportViewer();
-            this.BitacoraViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.BitacoraViewModelBindingSource)).BeginInit();
             this.SuspendLayout();
+            // 
+            // BitacoraViewModelBindingSource
+            // 
+            this.BitacoraViewModelBindingSource.DataSource = typeof(SSTIS.BitacoraViewModel);
             // 
             // btnBuscar
             // 
@@ -132,10 +136,6 @@
             this.rpvBitacora.ServerReport.BearerToken = null;
             this.rpvBitacora.Size = new System.Drawing.Size(781, 320);
             this.rpvBitacora.TabIndex = 33;
-            // 
-            // BitacoraViewModelBindingSource
-            // 
-            this.BitacoraViewModelBindingSource.DataSource = typeof(SSTIS.BitacoraViewModel);
             // 
             // frmBitacora
             // 

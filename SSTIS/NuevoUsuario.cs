@@ -14,6 +14,7 @@ using BLL.Interfaces;
 using DAL.Repositorios;
 using SSTIS.Interfaces;
 using SSTIS.MessageBoxHelper;
+using SSTIS.Utils;
 using SysAnalizer;
 
 namespace SSTIS
@@ -57,7 +58,23 @@ namespace SSTIS
             {               
                 if (ValidarDatosIngresados())
                 {
+                    if (ServicioUsuarioImplementor.ObtenerUsuarioConEmail(txtEmail.Text.Trim()) != null)
+                    {
+                        //Registramos el intento fallido de nuevo usuario.
+                        ServicioBitacoraImplementor.RegistrarEnBitacora(Log.Level.Baja.ToString(),
+                            string.Format("Creacion de usuario fallida. Usuario con E-mail: {0} existente en BD.", txtEmail.Text.Trim()));
+                        MessageBox.Show("El usuario ingresado ya existe.", "Usuario existente", MessageBoxButtons.OK);
+                        lblUsuarioExistente.Visible = true;
+                        lblUsuarioExistente.Text = "Usuario Existente";
+                        lblUsuarioExistente.BackColor = Color.Red;
+                        return;
+                    }
+
+                    //Sino existe, creamos uno nuevo
                     var nuevoUsuario = NuevoUsuario();
+
+                    lblUsuarioExistente.Visible = false;
+
                     var creado = this.ServicioUsuario.Create(nuevoUsuario);
                     if (creado)
                     {
@@ -106,6 +123,7 @@ namespace SSTIS
             nuevoUsuario.Domicilio.Localidad.IdLocalidad = Guid.Parse(cboLocalidad.SelectedValue.ToString());
             nuevoUsuario.Domicilio.Provincia = new Provincia();
             nuevoUsuario.Domicilio.Provincia.IdProvincia = Guid.Parse(cboProvincia.SelectedValue.ToString());
+            nuevoUsuario.IdIdioma = LoginInfo.LenguajeSeleccionado.IdIdioma;
             return nuevoUsuario;
         }
 
@@ -228,13 +246,30 @@ namespace SSTIS
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
+            RestablecerControles();
             Hide();
         }
 
         private void frmNuevoUsuario_FormClosing(object sender, FormClosingEventArgs e)
         {
+            RestablecerControles();
             Hide();
             e.Cancel = true;
+        }
+
+        private void RestablecerControles()
+        {
+            txtNombre.Text = string.Empty;
+            txtApellido.Text = string.Empty;
+            txtCelular.Text = string.Empty;
+            txtCp.Text = string.Empty;
+            txtDomicilio.Text = string.Empty;
+            txtEmail.Text = string.Empty;
+            txtTelFijo.Text = string.Empty;
+            cboProvincia.SelectedIndex = -1;
+            cboLocalidad.SelectedIndex = -1;
+            cboLocalidad.Enabled = false;
+            //CargarGrilla();
         }
     }
 }

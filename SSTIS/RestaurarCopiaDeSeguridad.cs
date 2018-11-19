@@ -29,23 +29,32 @@ namespace SSTIS
 
             try
             {
+                if (!string.IsNullOrEmpty(txtBackFiles.Text))
+                {
                 string[] backupFiles = txtBackFiles.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
                 var dbServer = new Server(new ServerConnection(SqlUtils.Connection()));
                 var restore = new Restore()
                 {
-                    Database = "SistemaTIS", Action = RestoreActionType.Database, ReplaceDatabase = true,
+                    Database = "TallerPosta", Action = RestoreActionType.Database, ReplaceDatabase = true,
                     NoRecovery = false
                 };
                 for (int i = 0; i < backupFiles.Length; i++)
                 {
                     restore.Devices.AddDevice(backupFiles[i], DeviceType.File);
                 }
-               
+
+                restore.ReplaceDatabase = true;
                 restore.PercentComplete += DbPercentComplete;
                 restore.Complete += DbRestore_Complete;
                 restore.SqlRestore(dbServer);
                 
                 Alert.ShowAlterWithButtonAndIcon("Restore completado exitosamente.", "Restore Completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Por favor seleccione los archivos .BAK.");
+                }
+
             }
             catch (Exception ex)
             {
@@ -83,7 +92,8 @@ namespace SSTIS
         {
             openFileDialog1.Filter = "Backup files(*.bak) |*.bak";
             openFileDialog1.Title = "Por favor seleccione un archivo backup";
-
+            txtBackFiles.Text = String.Empty;
+            
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string file = openFileDialog1.FileName;
@@ -103,13 +113,18 @@ namespace SSTIS
 
         private void frmRestaurarCopiaDeSeguridad_Load(object sender, EventArgs e)
         {
-
+            txtBackFiles.Enabled = false;
         }
 
         private void frmRestaurarCopiaDeSeguridad_FormClosing(object sender, FormClosingEventArgs e)
         {
             Hide();
             e.Cancel = true;
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            Hide();
         }
     }
 }

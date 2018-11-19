@@ -28,7 +28,7 @@ namespace DAL.Repositorios
             int dvh = DigitoVerificador.CalcularDVHorizontal(new List<string>()
             {
                 ObjAlta.IdUsuario.ToString(), ObjAlta.Email, ObjAlta.Domicilio.IdDomicilio.ToString(),
-                ObjAlta.Contacto.IdContacto.ToString() }, new List<int>() {Convert.ToInt32(ObjAlta.Estado)});
+                ObjAlta.Contacto.IdContacto.ToString() }, new List<int>() { Convert.ToInt32(ObjAlta.Estado) });
             ObjAlta.Dvh = dvh;
             return UsuarioDao.Create(ObjAlta);
         }

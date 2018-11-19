@@ -41,13 +41,12 @@ namespace SSTIS
             var patentesUsuario =
                 ServicioPatente.TraerPatenteDescrUsuario(UsuarioSeleccionado.IdUsuario);
             Patentes = ServicioPatente.RetrievePatentes();
-
+            dgvAdminPatenteUsuario.Rows.Clear();
             
             for (int i = 0; i < Patentes.Count; i++)
             {
                 dgvAdminPatenteUsuario.Rows.Add(Patentes[i].Descripcion,
                     patentesUsuario.Any(p => p.IdPatente == Patentes[i].IdPatente),
-                    //Patentes?.Any(p => patentesUsuario.Any(x => x.IdPatente == p.IdPatente)),
                     patentesUsuario.Any(p => p.IdPatente == Patentes[i].IdPatente && p.Negada));
             }
         }
@@ -74,24 +73,29 @@ namespace SSTIS
                     }
                     else if (checkbox.ColumnIndex == 2 && isChecked)
                     {
-                        var patentesUsuario =
-                            ServicioPatente.TraerPatenteDescrUsuario(UsuarioSeleccionado.IdUsuario);
-                        if (patentesUsuario.Any(x =>
-                            x.IdPatente == idPatente && x.IdUsuario == UsuarioSeleccionado.IdUsuario))
+                        var existePatenteUsuario = ServicioPatente.ConsultarUsuarioPatente(
+                            UsuarioSeleccionado.IdUsuario,
+                            idPatente);
+                        //var patentesUsuario =
+                        //    ServicioPatente.TraerPatenteDescrUsuario(UsuarioSeleccionado.IdUsuario);
+                        if (existePatenteUsuario.Count > 0)
                         {
                             ServicioPatente.NegarPatenteUsuario(idPatente, UsuarioSeleccionado.IdUsuario);
                         }
                         else
                         {
-                            MessageBox.Show("Primero debe otorgarle la patente al usuario y luego negarsela.");
-                            dgvAdminPatenteUsuario.EndEdit();
-                            checkbox.Value = checkbox.FalseValue;
+                            //Primerio guardamos la patente y luego la negamos
+                            ServicioPatente.GuardarPatenteUsuario(idPatente, UsuarioSeleccionado.IdUsuario);
+                            ServicioPatente.NegarPatenteUsuario(idPatente, UsuarioSeleccionado.IdUsuario);
+                            //dgvAdminPatenteUsuario.EndEdit();
+                            //checkbox.Value = checkbox.FalseValue;
                         }
                     }
                     else if (checkbox.ColumnIndex == 2 && !isChecked)
                     {
                         ServicioPatente.HabilitarPatenteUsuario(idPatente, UsuarioSeleccionado.IdUsuario);
                     }
+                    CargarGrilla();
                 }
                 DialogResult = DialogResult.None;
             }

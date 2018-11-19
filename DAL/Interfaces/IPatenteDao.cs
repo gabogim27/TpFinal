@@ -39,5 +39,7 @@ namespace DAL.Interfaces
         List<Patente> ObtenerPermisosFormulario(Guid formId);
 
         List<Patente> ObtenerPermisosFormularios();
+
+        List<UsuarioPatente> ConsultarUsuarioPatente(Guid usuarioId, Guid patenteId);
     }
 }

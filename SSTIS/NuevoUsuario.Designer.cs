@@ -56,6 +56,7 @@
             this.Label2 = new System.Windows.Forms.Label();
             this.Label1 = new System.Windows.Forms.Label();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblUsuarioExistente = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.chklPatente = new System.Windows.Forms.CheckedListBox();
             this.GroupBox3.SuspendLayout();
@@ -103,6 +104,7 @@
             // 
             // cboLocalidad
             // 
+            this.cboLocalidad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboLocalidad.FormattingEnabled = true;
             this.cboLocalidad.Location = new System.Drawing.Point(122, 77);
             this.cboLocalidad.Name = "cboLocalidad";
@@ -224,6 +226,7 @@
             // 
             // cboProvincia
             // 
+            this.cboProvincia.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboProvincia.FormattingEnabled = true;
             this.cboProvincia.Location = new System.Drawing.Point(121, 48);
             this.cboProvincia.Name = "cboProvincia";
@@ -313,6 +316,7 @@
             // 
             // GroupBox1
             // 
+            this.GroupBox1.Controls.Add(this.lblUsuarioExistente);
             this.GroupBox1.Controls.Add(this.txtEmail);
             this.GroupBox1.Controls.Add(this.txtApellido);
             this.GroupBox1.Controls.Add(this.txtNombre);
@@ -328,6 +332,15 @@
             this.GroupBox1.TabIndex = 7;
             this.GroupBox1.TabStop = false;
             this.GroupBox1.Text = "Datos";
+            // 
+            // lblUsuarioExistente
+            // 
+            this.lblUsuarioExistente.AutoSize = true;
+            this.lblUsuarioExistente.Location = new System.Drawing.Point(252, 106);
+            this.lblUsuarioExistente.Name = "lblUsuarioExistente";
+            this.lblUsuarioExistente.Size = new System.Drawing.Size(0, 13);
+            this.lblUsuarioExistente.TabIndex = 16;
+            this.lblUsuarioExistente.Visible = false;
             // 
             // groupBox4
             // 
@@ -406,5 +419,6 @@
         private System.Windows.Forms.CheckedListBox chklFamilia;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.CheckedListBox chklPatente;
+        private System.Windows.Forms.Label lblUsuarioExistente;
     }
 }

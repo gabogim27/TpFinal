@@ -30,7 +30,7 @@ namespace SSTIS
                 if (txtUbicacion.Text.Trim() != String.Empty && txtDescripcion.Text.Trim() != String.Empty)
                 {
                     var dbServer = new Server(new ServerConnection(SqlUtils.Connection()));
-                    var dbBackUp = new Backup() { Action = BackupActionType.Database, Database = "SistemaTIS" };
+                    var dbBackUp = new Backup() { Action = BackupActionType.Database, Database = "TallerPosta" };
                     //dbBackUp.Devices.AddDevice(@"C:\Data\SistemaTIS.bak", DeviceType.File);
                     for (int i = 0; i < cantVolumenes; i++)
                     {
@@ -80,6 +80,7 @@ namespace SSTIS
 
         private void btnExaminar_Click(object sender, EventArgs e)
         {
+            txtUbicacion.Text = string.Empty;
             FolderBrowserDialog explorerDialog = new System.Windows.Forms.FolderBrowserDialog();
             if (explorerDialog.ShowDialog() == DialogResult.OK)
             {
@@ -90,7 +91,7 @@ namespace SSTIS
 
         private void descrBackup_TextChanged(object sender, EventArgs e)
         {
-
+            txtUbicacion.Enabled = false;
         }
 
         private void frmRealizarCopiaSeguridad_FormClosing(object sender, FormClosingEventArgs e)

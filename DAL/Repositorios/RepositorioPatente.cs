@@ -97,5 +97,10 @@ namespace DAL.Repositorios
         {
             return PatenteDao.ObtenerPermisosFormularios();
         }
+
+        public List<UsuarioPatente> ConsultarUsuarioPatente(Guid usuarioId, Guid patenteId)
+        {
+            return PatenteDao.ConsultarUsuarioPatente(usuarioId, patenteId);
+        }
     }
 }

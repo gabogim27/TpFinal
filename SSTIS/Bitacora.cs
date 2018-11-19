@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -141,7 +142,7 @@ namespace SSTIS
                 {
                     var email = UsuariosEnBitacora.FirstOrDefault(_ => _.IdUsuario == item.IdUsuario)?.Email;
                     DataRow row = table.NewRow();
-                    row["Fecha"] = item.Fecha.Value.ToShortDateString();
+                    row["Fecha"] = item.Fecha.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
                     row["Usuario"] = email;
                     row["Funcionalidad"] = item.Actividad;
                     row["Descripcion"] = item.InformacionAsociada;

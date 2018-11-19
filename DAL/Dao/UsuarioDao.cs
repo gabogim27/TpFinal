@@ -41,8 +41,8 @@ namespace DAL.Impl
                 Convert.ToByte(ObjAlta.Estado = true),
                 ObjAlta.Domicilio.IdDomicilio,
                 ObjAlta.Contacto.IdContacto,
-                ObjAlta.IdIdioma = new Guid("632302C5-266A-440D-9F39-6DC6DDEBAACF"),//cambiar el id este, hacerlo bien                
-                Convert.ToByte(ObjAlta.PrimerLogin),
+                ObjAlta.IdIdioma,
+                Convert.ToByte(ObjAlta.PrimerLogin = true),
                 ObjAlta.Sexo,
                 ObjAlta.Dvh
                 );

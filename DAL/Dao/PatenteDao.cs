@@ -44,7 +44,7 @@ namespace DAL.Dao
                 string query = string.Format("Select IdUsuario from UsuarioPatente where " +
                                              " IdUsuario = '{0}'", idUsuario);
                 var retorno = SqlUtils.Exec<Guid>(query);
-                if (retorno != null)
+                if (retorno.Count > 0)
                     return true;
             }
             catch (Exception ex)
@@ -244,6 +244,25 @@ namespace DAL.Dao
                 RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
                     string.Format("Ocurrio un error al consultar la tabla PatenteFamilia con IdFamilia: '{0}' .Error: " +
                                   "{1}", familiaId, ex.Message));
+            }
+
+            return null;
+        }
+
+        public List<UsuarioPatente> ConsultarUsuarioPatente(Guid usuarioId, Guid patenteId)
+        {
+            try
+            {
+                var queryString = string.Format("SELECT IdUsuario, IdPatente FROM UsuarioPatente WHERE IdUsuario = '{0}' and IdPatente " +
+                                                " = '{1}'", usuarioId, patenteId);
+                return SqlUtils.Exec<UsuarioPatente>(queryString);
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(),
+                    string.Format("Ocurrio un error al consultar la tabla UsuarioPatente con IdUsuario: '{0}' y " +
+                                  " IdPatente: {1}. Error: " +
+                                  "{2}", usuarioId, patenteId, ex.Message));
             }
 
             return null;

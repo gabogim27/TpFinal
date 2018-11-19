@@ -28,72 +28,72 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Button1 = new System.Windows.Forms.Button();
-            this.ComboBox1 = new System.Windows.Forms.ComboBox();
-            this.GroupBox1 = new System.Windows.Forms.GroupBox();
-            this.Label1 = new System.Windows.Forms.Label();
-            this.GroupBox1.SuspendLayout();
+            this.btnAceptar = new System.Windows.Forms.Button();
+            this.cboIdioma = new System.Windows.Forms.ComboBox();
+            this.grpIdioma = new System.Windows.Forms.GroupBox();
+            this.lblIdioma = new System.Windows.Forms.Label();
+            this.grpIdioma.SuspendLayout();
             this.SuspendLayout();
             // 
-            // Button1
+            // btnAceptar
             // 
-            this.Button1.Location = new System.Drawing.Point(95, 93);
-            this.Button1.Name = "Button1";
-            this.Button1.Size = new System.Drawing.Size(139, 31);
-            this.Button1.TabIndex = 2;
-            this.Button1.Text = "Aceptar";
-            this.Button1.UseVisualStyleBackColor = true;
-            this.Button1.Click += new System.EventHandler(this.Button1_Click);
+            this.btnAceptar.Location = new System.Drawing.Point(95, 93);
+            this.btnAceptar.Name = "btnAceptar";
+            this.btnAceptar.Size = new System.Drawing.Size(139, 31);
+            this.btnAceptar.TabIndex = 2;
+            this.btnAceptar.Text = "Aceptar";
+            this.btnAceptar.UseVisualStyleBackColor = true;
+            this.btnAceptar.Click += new System.EventHandler(this.Button1_Click);
             // 
-            // ComboBox1
+            // cboIdioma
             // 
-            this.ComboBox1.FormattingEnabled = true;
-            this.ComboBox1.Location = new System.Drawing.Point(95, 41);
-            this.ComboBox1.Name = "ComboBox1";
-            this.ComboBox1.Size = new System.Drawing.Size(139, 21);
-            this.ComboBox1.TabIndex = 1;
+            this.cboIdioma.FormattingEnabled = true;
+            this.cboIdioma.Location = new System.Drawing.Point(95, 41);
+            this.cboIdioma.Name = "cboIdioma";
+            this.cboIdioma.Size = new System.Drawing.Size(139, 21);
+            this.cboIdioma.TabIndex = 1;
             // 
-            // GroupBox1
+            // grpIdioma
             // 
-            this.GroupBox1.Controls.Add(this.Label1);
-            this.GroupBox1.Controls.Add(this.Button1);
-            this.GroupBox1.Controls.Add(this.ComboBox1);
-            this.GroupBox1.Location = new System.Drawing.Point(41, 41);
-            this.GroupBox1.Name = "GroupBox1";
-            this.GroupBox1.Size = new System.Drawing.Size(260, 177);
-            this.GroupBox1.TabIndex = 4;
-            this.GroupBox1.TabStop = false;
-            this.GroupBox1.Text = "Cambiar Idioma";
+            this.grpIdioma.Controls.Add(this.lblIdioma);
+            this.grpIdioma.Controls.Add(this.btnAceptar);
+            this.grpIdioma.Controls.Add(this.cboIdioma);
+            this.grpIdioma.Location = new System.Drawing.Point(41, 41);
+            this.grpIdioma.Name = "grpIdioma";
+            this.grpIdioma.Size = new System.Drawing.Size(260, 177);
+            this.grpIdioma.TabIndex = 4;
+            this.grpIdioma.TabStop = false;
+            this.grpIdioma.Text = "Cambiar Idioma";
             // 
-            // Label1
+            // lblIdioma
             // 
-            this.Label1.AutoSize = true;
-            this.Label1.Location = new System.Drawing.Point(15, 49);
-            this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(41, 13);
-            this.Label1.TabIndex = 3;
-            this.Label1.Text = "Idioma:";
+            this.lblIdioma.AutoSize = true;
+            this.lblIdioma.Location = new System.Drawing.Point(15, 49);
+            this.lblIdioma.Name = "lblIdioma";
+            this.lblIdioma.Size = new System.Drawing.Size(41, 13);
+            this.lblIdioma.TabIndex = 3;
+            this.lblIdioma.Text = "Idioma:";
             // 
             // frmCambiarIdioma
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(375, 271);
-            this.Controls.Add(this.GroupBox1);
+            this.Controls.Add(this.grpIdioma);
             this.Name = "frmCambiarIdioma";
             this.Text = "CambiarIdioma";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmCambiarIdioma_FormClosing);
-            this.GroupBox1.ResumeLayout(false);
-            this.GroupBox1.PerformLayout();
+            this.grpIdioma.ResumeLayout(false);
+            this.grpIdioma.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        internal System.Windows.Forms.Button Button1;
-        internal System.Windows.Forms.ComboBox ComboBox1;
-        internal System.Windows.Forms.GroupBox GroupBox1;
-        internal System.Windows.Forms.Label Label1;
+        internal System.Windows.Forms.Button btnAceptar;
+        internal System.Windows.Forms.ComboBox cboIdioma;
+        internal System.Windows.Forms.GroupBox grpIdioma;
+        internal System.Windows.Forms.Label lblIdioma;
     }
 }

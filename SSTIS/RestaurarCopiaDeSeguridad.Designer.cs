@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.btnRestaurar = new System.Windows.Forms.Button();
-            this.btnCancelar = new System.Windows.Forms.Button();
+            this.btnVolver = new System.Windows.Forms.Button();
             this.Label1 = new System.Windows.Forms.Label();
             this.btnExaminar = new System.Windows.Forms.Button();
             this.txtBackFiles = new System.Windows.Forms.TextBox();
@@ -49,14 +49,15 @@
             this.btnRestaurar.UseVisualStyleBackColor = true;
             this.btnRestaurar.Click += new System.EventHandler(this.Button2_Click);
             // 
-            // btnCancelar
+            // btnVolver
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(404, 103);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(116, 36);
-            this.btnCancelar.TabIndex = 6;
-            this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnVolver.Location = new System.Drawing.Point(404, 103);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(116, 36);
+            this.btnVolver.TabIndex = 6;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // Label1
             // 
@@ -127,7 +128,7 @@
             this.Controls.Add(this.txtBackFiles);
             this.Controls.Add(this.btnExaminar);
             this.Controls.Add(this.btnRestaurar);
-            this.Controls.Add(this.btnCancelar);
+            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.Label1);
             this.Name = "frmRestaurarCopiaDeSeguridad";
             this.Text = "CopiaDeSeguridad";
@@ -141,7 +142,7 @@
         #endregion
 
         internal System.Windows.Forms.Button btnRestaurar;
-        internal System.Windows.Forms.Button btnCancelar;
+        internal System.Windows.Forms.Button btnVolver;
         internal System.Windows.Forms.Label Label1;
         internal System.Windows.Forms.Button btnExaminar;
         private System.Windows.Forms.TextBox txtBackFiles;

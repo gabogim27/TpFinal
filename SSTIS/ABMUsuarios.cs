@@ -1,4 +1,7 @@
-﻿using BLL;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using BLL;
 
 namespace SSTIS
 {
@@ -21,6 +24,7 @@ namespace SSTIS
         public IAdminFamiliaUsuario AdminFamiliaUsuario;
         public IAdminPatenteUsuario AdminPatenteUsuario;
         public IServicioPatente ServicioPatente;
+        public IServicioFamilia ServicioFamiliaImplementor;
 
         public INuevoUsuario nuevoUsuario { get; set; }
         public static Usuario usuario { get; set; }
@@ -31,7 +35,8 @@ namespace SSTIS
             IServicio<Localidad> ServicioLocalidad,
             IServicio<Provincia> ServicioProvincia,
             IServicioLocalidad ServicioLocalidadImplementor, IAdminFamiliaUsuario AdminFamiliaUsuario,
-            IAdminPatenteUsuario AdminPatenteUsuario, IServicioPatente ServicioPatente)
+            IAdminPatenteUsuario AdminPatenteUsuario, IServicioPatente ServicioPatente,
+            IServicioFamilia ServicioFamiliaImplementor)
         {
             InitializeComponent();
             this.ServicioUsuario = ServicioUsuario;
@@ -42,6 +47,7 @@ namespace SSTIS
             this.AdminFamiliaUsuario = AdminFamiliaUsuario;
             this.AdminPatenteUsuario = AdminPatenteUsuario;
             this.ServicioPatente = ServicioPatente;
+            this.ServicioFamiliaImplementor = ServicioFamiliaImplementor;
         }
 
         public Usuario usuarioSeleccionado()
@@ -325,32 +331,72 @@ namespace SSTIS
 
         private void btnEliminarUsuario_Click(object sender, EventArgs e)
         {
+            string mensaje = string.Empty;
+            string coma = string.Empty;
+            var idsNotDelete = new List<Guid>();
+            var idsToDelete = new List<Guid>();
+
             if (dgvUsuarios.SelectedRows.Count != 0)
             {
-                if (ServicioPatente.ComprobarPatentesUsuario(usuario.IdUsuario))
+                //var usuariosABorrar = dgvUsuarios.SelectedRows.AsParallel();
+                mensaje = "No es posible eliminar los usuarios: ";
+                for (int i = 0; i < dgvUsuarios.SelectedRows.Count; i++)
                 {
-                    MessageBox.Show("Primero debe eliminar las patentes asignadas al usuario para poder darlo de baja");
-                    return;
-                }
-
-                var confirmResult = MessageBox.Show("Estas seguro de querer eliminar el usuario: " +
-                                                    dgvUsuarios.SelectedRows[0].Cells[5].Value.ToString(),
-                    "Confirme baja de usuario",
-                    MessageBoxButtons.YesNo);
-                if (confirmResult == DialogResult.Yes)
-                {
-                    if (ServicioUsuario.Delete(usuario))
+                    var usuario = dgvUsuarios.SelectedRows[i];
+                    var idUsuario = Guid.Parse(usuario.Cells[0].Value.ToString());
+                    if (i != 0)
+                        coma = ", ";
+                    if (ServicioPatente.ComprobarPatentesUsuario(idUsuario) || ServicioFamiliaImplementor.ComprobarUsoFamilia(idUsuario))
                     {
-                        CargarGrilla();
-                        MessageBox.Show("Baja dada exitosamente");
+                        mensaje += coma + usuario.Cells[5].Value;
+                        idsNotDelete.Add(idUsuario);
                     }
                     else
                     {
-                        MessageBox.Show("Ocurrio un error al dar de baja el usuario, por favor contacte " +
-                                        "al administrador.");
-
+                        idsToDelete.Add(idUsuario);
                     }
                 }
+
+                mensaje += " ya que tienen familias/patentes asignadas. Desea eliminar los usuarios restantes?";
+                if (idsNotDelete.Any(x => x == LoginInfo.Usuario.IdUsuario))
+                {
+                    MessageBox.Show("No es posible eliminar el usuario que esta logueado.");
+                    return;
+                }
+
+                var usuariosExistentes = ServicioUsuario.Retrive().ToList();
+                if (idsNotDelete.Any())
+                {
+                    var usuariosToDelete = usuariosExistentes
+                        .Where(x => idsNotDelete.Any(y => y == x.IdUsuario));
+                    var confirmResult = MessageBox.Show(mensaje,
+                        "Confirme baja de usuario",
+                        MessageBoxButtons.YesNo);
+                    if (confirmResult == DialogResult.Yes)
+                    {
+                        foreach (var usuarioToDelete in usuariosToDelete)
+                        {
+                            ServicioUsuario.Delete(usuarioToDelete);
+                        }
+                    }
+                }
+                else
+                {
+                    var usuariosToDelete = usuariosExistentes.Where(x => idsToDelete.Any(y => y == x.IdUsuario));
+                    var confirmResult = MessageBox.Show("Esta seguro que desea eliminar los usuarios seleccionados?",
+                        "Confirme baja de usuario",
+                        MessageBoxButtons.YesNo);
+                    if (confirmResult == DialogResult.Yes)
+                    {
+                        foreach (var usuarioToDelete in usuariosToDelete)
+                        {
+                            ServicioUsuario.Delete(usuarioToDelete);
+                        }
+                    }
+                }
+                
+                CargarGrilla();
+                MessageBox.Show("Usuario/s eliminado/s correctamente.");
             }
             else
             {

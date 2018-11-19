@@ -92,5 +92,10 @@ namespace BLL
         {
             return RepositorioPatente.ObtenerPermisosFormularios();
         }
+
+        public List<UsuarioPatente> ConsultarUsuarioPatente(Guid usuarioId, Guid patenteId)
+        {
+            return RepositorioPatente.ConsultarUsuarioPatente(usuarioId, patenteId);
+        }
     }
 }
