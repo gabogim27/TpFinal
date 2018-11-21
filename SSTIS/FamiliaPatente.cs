@@ -68,8 +68,8 @@ namespace SSTIS
             dgvAdminFamiliaPatente.DataSource = patentes;
             dgvAdminFamiliaPatente.Columns[0].ReadOnly = false;
             dgvAdminFamiliaPatente.Columns[1].ReadOnly = false;
-            dgvAdminFamiliaPatente.Columns[3].ReadOnly = true;
-            dgvAdminFamiliaPatente.Columns[2].Visible = false;
+            //dgvAdminFamiliaPatente.Columns[3].ReadOnly = true;
+            dgvAdminFamiliaPatente.Columns[1].Visible = false;
         }
 
         private void dgvAdminFamiliaPatente_CellContentClick(object sender, DataGridViewCellEventArgs e)

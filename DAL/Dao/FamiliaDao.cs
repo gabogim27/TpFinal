@@ -242,18 +242,18 @@ namespace DAL.Impl
             return null;
         }
 
-        public bool ComprobarUsoFamilia(Guid familiaId)
+        public bool ComprobarUsoFamilia(Guid usuarioId)
         {
-            var result = new List<int>();
+            var result = new List<Guid>();
             try
             {
-                var query = string.Format("Select IdFamilia from FamiliaUsuario where IdFamilia = '{0}'", familiaId);
-                result = SqlUtils.Exec<int>(query);
+                var query = string.Format("Select IdUsuario from FamiliaUsuario where IdUsuario = '{0}'", usuarioId);
+                result = SqlUtils.Exec<Guid>(query);
             }
             catch (Exception ex)
             {
                 RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(), String.Format("Ocurrio un error al comprobar el uso de familia." +
-                                                                                                             "FamiliaId: '{0}'. Error: {1}", familiaId, ex.Message));
+                                                                                                             "UsuarioId: '{0}'. Error: {1}", usuarioId, ex.Message));
             }
 
             if (result.Count > 0)
@@ -284,6 +284,30 @@ namespace DAL.Impl
             }
 
             return famIds;
+        }
+
+        public List<Familia> ObtenerFamiliasPorUsuario(Guid usuarioId)
+        {
+                var allFamilies = Retrive();
+                var familiaUsuario = ObtenerIdsFamiliasPorUsuario(usuarioId);
+
+                return allFamilies.FindAll(x => familiaUsuario.Any(y => y == x.IdFamilia));
+        }
+
+        public void BorrarFamiliaDeFamiliaPatente(Guid familiaId)
+        {
+            try
+            {
+                var queryString = string.Format("DELETE FROM FamiliaPatente WHERE IdFamilia = '{0}'", familiaId);
+
+                SqlUtils.Exec(queryString);
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(), String.Format("Ocurrio un error al borrar la familiaPatente " +
+                                                                                                             " Error: {0}",  ex.Message));
+            }
+
         }
     }
 }

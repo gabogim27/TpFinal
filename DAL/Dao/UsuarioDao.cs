@@ -20,6 +20,9 @@ namespace DAL.Impl
     public class UsuarioDao : IDao<Usuario>, IUsuarioDao
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(UsuarioDao));
+        public const string Key = "bZr2URKx";
+        public const string Iv = "HNtgQw0w";
+
         public IRepositorioBitacora RepositorioBitacora;
 
         public UsuarioDao(IRepositorioBitacora RepositorioBitacora)
@@ -29,6 +32,7 @@ namespace DAL.Impl
 
         public bool Create(Usuario ObjAlta)
         {
+            var emailEncript = DES.Encrypt(ObjAlta.Email, Key, Iv);
             var queryString = string.Format("INSERT INTO dbo.Usuario(IdUsuario, Nombre, Apellido, Password, Email, " +
                 "CantLoginsFallidos, Estado, IdDomicilio, IdContacto, IdIdioma, PrimerLogin, Sexo, Dvh) values " +
                 "('{0}','{1}','{2}','{3}','{4}',{5},{6},'{7}','{8}','{9}',{10}, '{11}', {12})",
@@ -36,7 +40,7 @@ namespace DAL.Impl
                 ObjAlta.Nombre,
                 ObjAlta.Apellido,
                 ObjAlta.ContraseñaEncriptada,
-                ObjAlta.Email,
+                emailEncript,
                 ObjAlta.CantIngresosFallidos = 0,
                 Convert.ToByte(ObjAlta.Estado = true),
                 ObjAlta.Domicilio.IdDomicilio,
@@ -90,6 +94,10 @@ namespace DAL.Impl
                             splitOn: "IdUsuario, IdContacto, IdDomicilio, IdLocalidad, IdProvincia")
                         .Distinct()
                         .ToList();
+                    foreach (var user in usuarios)
+                    {
+                        user.Email = DES.Decrypt(user.Email, Key, Iv);
+                    }
                     return usuarios;
                 }
 
@@ -124,12 +132,13 @@ namespace DAL.Impl
         {
             try
             {
+                var emailEcnript = DES.Encrypt(ObjUpd.Email, Key, Iv);
                 var queryString = string.Format("Update dbo.Usuario set " +
                                                 "Nombre = '{0}', Apellido = '{1}', Email = '{2}', " +
                                                 "Sexo = '{3}' where IdUsuario = '{4}'",
                     ObjUpd.Nombre,
                     ObjUpd.Apellido,
-                    ObjUpd.Email,
+                    emailEcnript,
                     ObjUpd.Sexo,
                     ObjUpd.IdUsuario
                 );
@@ -206,8 +215,10 @@ namespace DAL.Impl
         {
             try
             {
-                var queryString = string.Format("SELECT * FROM dbo.Usuario WHERE Email = '{0}'", email);
-                return SqlUtils.Exec<Usuario>(queryString).FirstOrDefault();
+                var queryString = string.Format("SELECT * FROM dbo.Usuario WHERE Email = '{0}'", DES.Encrypt(email, Key, Iv));
+                var usuario = SqlUtils.Exec<Usuario>(queryString).FirstOrDefault();
+                usuario.Email = DES.Encrypt(usuario.Email, Key, Iv);
+                return usuario;
             }
             catch (Exception ex)
             {
@@ -246,6 +257,7 @@ namespace DAL.Impl
                             splitOn: "IdUsuario, IdContacto, IdDomicilio, IdLocalidad, IdProvincia")
                         .Distinct()
                         .FirstOrDefault();
+                    user.Email = DES.Decrypt(user.Email, Key, Iv);
                     return user;
                 }
             }

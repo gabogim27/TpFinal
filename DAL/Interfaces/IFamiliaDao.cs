@@ -23,10 +23,13 @@ namespace DAL.Interfaces
 
         string ObtenerDescripcionFamiliaPorId(Guid familiaId);
 
-        bool ComprobarUsoFamilia(Guid familiaId);
+        bool ComprobarUsoFamilia(Guid usuarioId);
 
         List<string> TraerFamiliaUsuarioDescripcion(Guid IdUsuario);
 
         List<Guid> ObtenerIdsFamiliasPorUsuario(Guid usuarioId);
+
+        void BorrarFamiliaDeFamiliaPatente(Guid familiaId);
+        List<Familia> ObtenerFamiliasPorUsuario(Guid usuarioId);
     }
 }

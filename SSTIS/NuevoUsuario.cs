@@ -83,7 +83,7 @@ namespace SSTIS
                         ServicioPatente.GuardarPatentesUsuario(GetSelectedPatentes(), nuevoUsuario.IdUsuario);
                         ServicioBitacoraImplementor.RegistrarEnBitacora(Log.Level.Alta.ToString(), 
                             string.Format("Usuario con id: {0} creado correctamente.", nuevoUsuario.IdUsuario), nuevoUsuario);
-                        Alert.ShowSimpleAlert("Usuario creado correctamente");
+                        MessageBox.Show("Usuario creado correctamente");
                     }
                     else
                     {
@@ -92,6 +92,7 @@ namespace SSTIS
                         Alert.ShowSimpleAlert("El alta de nuevo usuario ha fallado");
                     }
                 }
+                DialogResult = DialogResult.OK;
             }
             catch (Exception ex)
             {
@@ -157,17 +158,17 @@ namespace SSTIS
                 returnValue = false;
             }
             //Verificamos que se haya seleccionado alguna familia
-            if (chklFamilia.CheckedItems.Count == 0)
-            {
-                MessageBox.Show("Debe seleccionar al menos una familia");
-                returnValue = false;
-            }
-            //Verificamos que se haya seleccionado alguna patente
-            if (chklPatente.CheckedItems.Count == 0)
-            {
-                MessageBox.Show("Debe seleccionar al menos una patente");
-                returnValue = false;
-            }
+            //if (chklFamilia.CheckedItems.Count == 0)
+            //{
+            //    MessageBox.Show("Debe seleccionar al menos una familia");
+            //    returnValue = false;
+            //}
+            ////Verificamos que se haya seleccionado alguna patente
+            //if (chklPatente.CheckedItems.Count == 0)
+            //{
+            //    MessageBox.Show("Debe seleccionar al menos una patente");
+            //    returnValue = false;
+            //}
 
             return returnValue;
         }

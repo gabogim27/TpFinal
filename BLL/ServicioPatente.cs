@@ -97,5 +97,15 @@ namespace BLL
         {
             return RepositorioPatente.ConsultarUsuarioPatente(usuarioId, patenteId);
         }
+
+        public bool VerificarDatos(List<Guid> idsToDelete)
+        {
+            return RepositorioPatente.VerificarDatos(idsToDelete);
+        }
+
+        public bool CheckeoDePatentes(Usuario usuarioToDelete)
+        {
+            return RepositorioPatente.CheckeoDePatentes(usuarioToDelete);
+        }
     }
 }

@@ -48,6 +48,9 @@ namespace SSTIS
                 ServicioFamiliaImplementor.TraerFamiliaUsuarioDescripcion(UsuarioSeleccionado.IdUsuario);
             Familias = ServicioFamilia.Retrive();
 
+            dgvFamiliaUsuario.Rows.Clear();
+            dgvFamiliaUsuario.Refresh();
+
             for (int i = 0; i < Familias.Count; i++)
             {
                 dgvFamiliaUsuario.Rows.Add(Familias[i].Descripcion.ToString(),

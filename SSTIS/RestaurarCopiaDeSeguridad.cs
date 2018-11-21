@@ -29,26 +29,33 @@ namespace SSTIS
 
             try
             {
+
                 if (!string.IsNullOrEmpty(txtBackFiles.Text))
                 {
-                string[] backupFiles = txtBackFiles.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-                var dbServer = new Server(new ServerConnection(SqlUtils.Connection()));
-                var restore = new Restore()
-                {
-                    Database = "TallerPosta", Action = RestoreActionType.Database, ReplaceDatabase = true,
-                    NoRecovery = false
-                };
-                for (int i = 0; i < backupFiles.Length; i++)
-                {
-                    restore.Devices.AddDevice(backupFiles[i], DeviceType.File);
-                }
+                    string[] backupFiles = txtBackFiles.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                    var dbServer = new Server(new ServerConnection(SqlUtils.Connection()));
+                    var restore = new Restore()
+                    {
+                        Database = "SistemaTIS",
+                        Action = RestoreActionType.Database,
+                        ReplaceDatabase = true,
+                        NoRecovery = false
+                    };
+                    for (int i = 0; i < backupFiles.Length; i++)
+                    {
+                        restore.Devices.AddDevice(backupFiles[i], DeviceType.File);
+                    }
 
-                restore.ReplaceDatabase = true;
-                restore.PercentComplete += DbPercentComplete;
-                restore.Complete += DbRestore_Complete;
-                restore.SqlRestore(dbServer);
-                
-                Alert.ShowAlterWithButtonAndIcon("Restore completado exitosamente.", "Restore Completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    dbServer.KillAllProcesses(restore.Database);
+
+                    restore.PercentComplete += DbPercentComplete;
+                    restore.Complete += DbRestore_Complete;
+
+                    restore.SqlRestore(dbServer);
+
+                    log4net.Config.XmlConfigurator.Configure();
+                    
+                    Alert.ShowAlterWithButtonAndIcon("Restore completado exitosamente.", "Restore Completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -93,7 +100,7 @@ namespace SSTIS
             openFileDialog1.Filter = "Backup files(*.bak) |*.bak";
             openFileDialog1.Title = "Por favor seleccione un archivo backup";
             txtBackFiles.Text = String.Empty;
-            
+
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string file = openFileDialog1.FileName;

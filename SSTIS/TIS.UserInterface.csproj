@@ -162,6 +162,7 @@
     <Compile Include="Interfaces\IAdminPatenteUsuario.cs" />
     <Compile Include="Interfaces\IAdmPatenteFamilia.cs" />
     <Compile Include="Interfaces\IBitacora.cs" />
+    <Compile Include="Interfaces\ICambiarContraseña.cs" />
     <Compile Include="Interfaces\ICambiarIdioma.cs" />
     <Compile Include="Interfaces\IModificarFamilia.cs" />
     <Compile Include="Interfaces\INuevaFamilia.cs" />
@@ -175,7 +176,7 @@
       <DependentUpon>PolizaWizard.cs</DependentUpon>
     </Compile>
     <Compile Include="Providers\IdiomaProvider.cs" />
-    <Compile Include="BitacoraViewModel.cs" />
+    <Compile Include="ViewModels\BitacoraViewModel.cs" />
     <Compile Include="Resources\SpanishResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -410,9 +411,7 @@
       <Name>TIS.DataAccessLayer</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

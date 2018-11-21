@@ -102,5 +102,15 @@ namespace DAL.Repositorios
         {
             return PatenteDao.ConsultarUsuarioPatente(usuarioId, patenteId);
         }
+
+        public bool VerificarDatos(List<Guid> idsToDelete)
+        {
+            return PatenteDao.VerificarDatos(idsToDelete);
+        }
+
+        public bool CheckeoDePatentes(Usuario usuarioToDelete)
+        {
+            return PatenteDao.CheckeoDePatentes(usuarioToDelete);
+        }
     }
 }

@@ -6,16 +6,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using BE;
+using DAL.Utils;
 
 namespace DAL.Impl
 {
     public class DigitoVerificadorDao : IDigitoVerificador
     {
-        public static SqlConnection Connection()
+        private IRepositorioBitacora RepositorioBitacora;
+        public DigitoVerificadorDao(IRepositorioBitacora RepositorioBitacora)
         {
-            var conn = new SqlConnection(@"Data Source=EZE1-LHP-B01637;Initial Catalog=SistemaTIS;Integrated Security=True");
-            return conn;
+            this.RepositorioBitacora = RepositorioBitacora;
         }
+
+        public List<string> Entidades { get; set; }
 
         public int CalcularDVHorizontal(List<string> columnasString, List<int> columnasInt)
         {
@@ -36,39 +40,114 @@ namespace DAL.Impl
             return digito;
         }
 
-        public BE.DigitoVerificador ObtenerDigito(int id_Entidad)
+        public int CalcularDVVertical(string entidad)
         {
-            var sqlQuery = string.Format(@"SELECT valor FROM DigitoVerificadorVertical WHERE IdEntidad = {0}", id_Entidad);
-
-            var comm = new SqlCommand();
-
-            using (SqlConnection connection = Connection())
+            int result = 0;
+            try
             {
-                var digitoVerificador = new BE.DigitoVerificador();
-                try
-                {
-                    comm.CommandText = sqlQuery;
-                    comm.Connection = connection;
-                    comm.CommandType = CommandType.Text;
+                var queryString = string.Format("SELECT SUM(DVH) FROM {0}", entidad);
 
-                    var da = new SqlDataAdapter(comm);
+                result = SqlUtils.Exec<int>(queryString)[0];
 
-                    DataTable dt = new DataTable();
-
-                    da.Fill(dt);
-
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        digitoVerificador.ValorDigito = Convert.ToInt32(dr["ValorDigitoVerificador"]);
-                    }
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-
-                return digitoVerificador;
+                return result;
             }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(Log.Level.Alta.ToString(), string.Format("Error al " +
+                                                                                                 "sumar los DVH de la entidad: {0}. Error: {1}", entidad, ex.Message));
+            }
+
+            return result;
+        }
+
+        public void InsertarDVVertical(string entidad)
+        {
+            try
+            {
+                var digito = CalcularDVVertical(entidad);
+
+                var queryString = "INSERT INTO DigitoVerificadorVertical(Entidad, ValorDigitoVerificador) VALUES(@entidad, @digito)";
+
+
+                SqlUtils.Exec(queryString, new { @entidad = entidad, @digito = digito });
+
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(Log.Level.Alta.ToString(), string.Format("Error al " +
+                                                                                                 "agregar un registro en la tabla DVV. Error: {0}. ", ex.Message));
+            }
+
+        }
+
+        public void ActualizarDVVertical(string entidad)
+        {
+            try
+            {
+                var digito = CalcularDVVertical(entidad);
+
+                var queryString = "INSERT INTO DigitoVerificadorVertical(Entidad, ValorDigitoVerificador) VALUES(@entidad, @digito)";
+
+                SqlUtils.Exec(queryString, new { @entidad = entidad, @digito = digito });
+
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(Log.Level.Alta.ToString(), string.Format("Error al " +
+                                                                                                 "actualizar un registro en la tabla DVV. Error: {0}. ", ex.Message));
+            }
+
+        }
+
+        public bool ComprobarPrimerDigito(string entidad)
+        {
+            var queryString = "SELECT ValorDigitoVerificador FROM DigitoVerificadorVertical WHERE Entidad = @entidad";
+            var digito = new List<int>();
+
+            digito = SqlUtils.Exec<int>(queryString, new { @entidad = entidad });
+
+            if (digito.Count > 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public Dictionary<string, int> ConsultarDVVertical(string entidades)
+        {
+            var entidadesdic = new Dictionary<string, int>();
+
+            try
+            {
+                var queryString = string.Format("SELECT ValorDigitoVerificador FROM DigitoVerificadorVertical WHERE Entidad = '{0}'", entidades);
+
+                entidadesdic.Add(entidades, SqlUtils.Exec<int>(queryString)[0]);
+
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(Log.Level.Alta.ToString(), string.Format("Error al " +
+                                                                                                 "consultar por la entidad: {0} en la tabla DVV. Error: {1}. ", entidades, ex.Message));
+            }
+
+            return entidadesdic;
+        }
+
+        public bool ComprobarIntegridad()
+        {
+            var returnValue = true;
+
+            var ResultadoUsuario = CalcularDVVertical(Entidades.Find(x => x == "Usuario"));
+
+            var dVVerticalUsuario = ConsultarDVVertical(Entidades.Find(x => x == "Usuario"));
+
+            if (ResultadoUsuario != dVVerticalUsuario["Usuario"])
+            {
+                returnValue = false;
+            }
+
+            return returnValue;
         }
     }
 }

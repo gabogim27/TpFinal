@@ -210,5 +210,21 @@ namespace SSTIS
             Hide();
             e.Cancel = true;
         }
+
+        private void chkSelectAllUsers_CheckedChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < chklUsuario.Items.Count; i++)
+            {
+                chklUsuario.SetItemChecked(i, chkSelectAllUsers.Checked);
+            }
+        }
+
+        private void chkSelectAllLogLevel_CheckedChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < chklCriticidad.Items.Count; i++)
+            {
+                chklCriticidad.SetItemChecked(i, chkSelectAllLogLevel.Checked);
+            }
+        }
     }
 }

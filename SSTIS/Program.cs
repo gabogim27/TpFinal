@@ -92,6 +92,7 @@ namespace SSTIS
             simpleInyectorContainer.Register<IAdminPatenteUsuario, frmAdministracionPatenteUsuario>(Lifestyle.Singleton);
             simpleInyectorContainer.Register<ISessionInfo, SessionInfo>(Lifestyle.Singleton);
             simpleInyectorContainer.Register<ICambiarIdioma, frmCambiarIdioma>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<ICambiarContraseña, frmCambiarContraseña>(Lifestyle.Singleton);
             //ContainerConfig.Bootstrap();
             log4net.Config.XmlConfigurator.Configure();
             Application.EnableVisualStyles();

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using BLL;
+using EasyEncryption;
 
 namespace SSTIS
 {
@@ -28,6 +29,8 @@ namespace SSTIS
 
         public INuevoUsuario nuevoUsuario { get; set; }
         public static Usuario usuario { get; set; }
+        public const string Key = "bZr2URKx";
+        public const string Iv = "HNtgQw0w";
 
         public frmABMUsuarios(
             IServicio<Usuario> ServicioUsuario,
@@ -52,6 +55,9 @@ namespace SSTIS
 
         public Usuario usuarioSeleccionado()
         {
+            usuario.Familia = new List<Familia>();
+            usuario.Familia = ServicioFamiliaImplementor.ObtenerFamiliasPorUsuario(usuario.IdUsuario);
+ 
             return usuario;
         }
         //public ABMUsuarios(IRepository<Usuario> repository)
@@ -92,12 +98,9 @@ namespace SSTIS
 
         private void btnCrearUsuario_Click(object sender, EventArgs e)
         {
-            if (nuevoUsuario.ShowDialog() == DialogResult.OK)
-            {
-                CargarGrilla();
-            }
-            //nuevoUsuario.Show();
+            nuevoUsuario.ShowDialog();
 
+            CargarGrilla();
         }
 
         private void ABMUsuarios_Load(object sender, EventArgs e)
@@ -150,7 +153,7 @@ namespace SSTIS
 
         private void CargarGrilla()
         {
-            var usuarios = ServicioUsuario.Retrive();
+            var usuarios = ServicioUsuario.Retrive().OrderBy(x =>x.Email).ToList();
             dgvUsuarios.Rows.Clear();
 
             for (int i = 0; i < usuarios.Count; i++)
@@ -346,18 +349,21 @@ namespace SSTIS
                     var idUsuario = Guid.Parse(usuario.Cells[0].Value.ToString());
                     if (i != 0)
                         coma = ", ";
-                    if (ServicioPatente.ComprobarPatentesUsuario(idUsuario) || ServicioFamiliaImplementor.ComprobarUsoFamilia(idUsuario))
-                    {
-                        mensaje += coma + usuario.Cells[5].Value;
+                    if (idUsuario == LoginInfo.Usuario.IdUsuario)
                         idsNotDelete.Add(idUsuario);
-                    }
-                    else
-                    {
-                        idsToDelete.Add(idUsuario);
-                    }
+                    idsToDelete.Add(idUsuario);
+                    //if (ServicioPatente.ComprobarPatentesUsuario(idUsuario) || ServicioFamiliaImplementor.ComprobarUsoFamilia(idUsuario))
+                    //{
+                    //    mensaje += coma + usuario.Cells[5].Value;
+                    //    idsNotDelete.Add(idUsuario);
+                    //}
+                    //else if (!ServicioPatente.ComprobarPatentesUsuario(idUsuario) && !ServicioFamiliaImplementor.ComprobarUsoFamilia(idUsuario))
+                    //{
+                    //    idsToDelete.Add(idUsuario);
+                    //}
                 }
 
-                mensaje += " ya que tienen familias/patentes asignadas. Desea eliminar los usuarios restantes?";
+                mensaje += " ya que tienen familias/patentes asignadas.";
                 if (idsNotDelete.Any(x => x == LoginInfo.Usuario.IdUsuario))
                 {
                     MessageBox.Show("No es posible eliminar el usuario que esta logueado.");
@@ -365,11 +371,17 @@ namespace SSTIS
                 }
 
                 var usuariosExistentes = ServicioUsuario.Retrive().ToList();
-                if (idsNotDelete.Any())
+
+                var msjDeleteSome = string.Empty;
+
+                if (idsNotDelete.Any() && idsToDelete.Any())
                 {
+                    //Verificar datos
+                    var permitir = ServicioPatente.VerificarDatos(idsToDelete);
+                    msjDeleteSome += mensaje + " Desea eliminar los usuarios restantes?";
                     var usuariosToDelete = usuariosExistentes
                         .Where(x => idsNotDelete.Any(y => y == x.IdUsuario));
-                    var confirmResult = MessageBox.Show(mensaje,
+                    var confirmResult = MessageBox.Show(msjDeleteSome,
                         "Confirme baja de usuario",
                         MessageBoxButtons.YesNo);
                     if (confirmResult == DialogResult.Yes)
@@ -378,10 +390,16 @@ namespace SSTIS
                         {
                             ServicioUsuario.Delete(usuarioToDelete);
                         }
+                        MessageBox.Show("Usuario/s eliminado/s correctamente.");
                     }
+                }
+                else if (idsNotDelete.Any() && !idsToDelete.Any())
+                {
+                    MessageBox.Show(mensaje);
                 }
                 else
                 {
+                    var permitir = ServicioPatente.VerificarDatos(idsToDelete);
                     var usuariosToDelete = usuariosExistentes.Where(x => idsToDelete.Any(y => y == x.IdUsuario));
                     var confirmResult = MessageBox.Show("Esta seguro que desea eliminar los usuarios seleccionados?",
                         "Confirme baja de usuario",
@@ -390,13 +408,14 @@ namespace SSTIS
                     {
                         foreach (var usuarioToDelete in usuariosToDelete)
                         {
-                            ServicioUsuario.Delete(usuarioToDelete);
+                            if (ServicioPatente.CheckeoDePatentes(usuarioToDelete))
+                                ServicioUsuario.Delete(usuarioToDelete);
                         }
+                        MessageBox.Show("Usuario/s eliminado/s correctamente.");
                     }
                 }
-                
+
                 CargarGrilla();
-                MessageBox.Show("Usuario/s eliminado/s correctamente.");
             }
             else
             {
@@ -419,11 +438,22 @@ namespace SSTIS
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            if (dgvUsuarios.SelectedRows.Count > 0)
+            if (dgvUsuarios.SelectedRows.Count == 1)
             {
+                //El usuario logueado no puede modificar las patentes
+                if (Guid.Parse(dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString()) == LoginInfo.Usuario.IdUsuario)
+                {
+                    MessageBox.Show("No se puede modificar las patentes del usuario activo.");
+                    return;
+                }
+
                 AdminPatenteUsuario.ShowDialog();
             }
-            else
+            else if (dgvUsuarios.SelectedRows.Count > 1)
+            {
+                MessageBox.Show("La administracion de Patentes se hace de a un usuario por vez. Por favor seleccione solo uno.");
+            }
+            else if (dgvUsuarios.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Debe seleccionar un usuario de la grilla para poder administrar las Patentes");
             }

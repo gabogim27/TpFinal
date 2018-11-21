@@ -79,9 +79,9 @@ namespace DAL.Repositorios
             return FamiliaDaoImplementor.ObtenerDescripcionFamiliaPorId(familiaId);
         }
 
-        public bool ComprobarUsoFamilia(Guid familiaId)
+        public bool ComprobarUsoFamilia(Guid usuarioId)
         {
-            return FamiliaDaoImplementor.ComprobarUsoFamilia(familiaId);
+            return FamiliaDaoImplementor.ComprobarUsoFamilia(usuarioId);
         }
 
         public List<string> TraerFamiliaUsuarioDescripcion(Guid IdUsuario)
@@ -92,6 +92,16 @@ namespace DAL.Repositorios
         public List<Guid> ObtenerIdsFamiliasPorUsuario(Guid usuarioId)
         {
             return FamiliaDaoImplementor.ObtenerIdsFamiliasPorUsuario(usuarioId);
+        }
+
+        public void BorrarFamiliaDeFamiliaPatente(Guid familiaId)
+        {
+            FamiliaDaoImplementor.BorrarFamiliaDeFamiliaPatente(familiaId);
+        }
+
+        public List<Familia> ObtenerFamiliasPorUsuario(Guid usuarioId)
+        {
+            return FamiliaDaoImplementor.ObtenerFamiliasPorUsuario(usuarioId);
         }
     }
 }

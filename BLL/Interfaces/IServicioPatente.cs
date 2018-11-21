@@ -40,5 +40,9 @@ namespace BLL.Interfaces
         List<Patente> ObtenerPermisosFormularios();
 
         List<UsuarioPatente> ConsultarUsuarioPatente(Guid usuarioId, Guid patenteId);
+
+        bool VerificarDatos(List<Guid> idsToDelete);
+
+        bool CheckeoDePatentes(Usuario usuarioToDelete);
     }
 }

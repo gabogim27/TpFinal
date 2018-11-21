@@ -7,14 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SSTIS.Interfaces;
 
 namespace SSTIS
 {
-    public partial class frmCambiarContraseña : Form
+    public partial class frmCambiarContraseña : Form, ICambiarContraseña
     {
         public frmCambiarContraseña()
         {
             InitializeComponent();
+        }
+
+        private void frmCambiarContraseña_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

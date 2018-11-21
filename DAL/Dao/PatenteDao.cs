@@ -268,6 +268,23 @@ namespace DAL.Dao
             return null;
         }
 
+        public List<UsuarioPatente> ConsultarUsuarioPatente(Guid usuarioId)
+        {
+            try
+            {
+                var queryString = string.Format("SELECT IdUsuario, IdPatente, Negada FROM UsuarioPatente WHERE IdUsuario = '{0}'", usuarioId);
+                return SqlUtils.Exec<UsuarioPatente>(queryString);
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(),
+                    string.Format("Ocurrio un error al consultar la tabla UsuarioPatente con IdUsuario: '{0}' y  Error: " +
+                                  "{1}", usuarioId, ex.Message));
+            }
+
+            return null;
+        }
+
         public List<Patente> ObtenerPermisosFormulario(Guid formId)
         {
             try
@@ -304,6 +321,135 @@ namespace DAL.Dao
             }
 
             return null;
+        }
+
+        //TODO: Cambiar el nombre de ka funcion
+        public bool VerificarDatos(List<Guid> idsToDelete)
+        {
+            try
+            {
+                //Todas las patentes en patentesUsuarios
+                //var todasLaspatentes = patentesUsuarios.Select(x => x.IdPatente);
+                //Primer
+                //var listapatente = Cargar().Select(x => x.IdPatente).ToList();
+                ////patForm.Exists(item => patUsu.Patentes.Select(item2 => item2.IdPatente).Contains(item.IdPatente)
+
+                //var pete = todasLaspatentes.Intersect(listapatente);
+                //var check = pete.Count() == listapatente.Count();
+
+                var queryselect = "SELECT * FROM UsuarioPatente";
+
+                var listaUsuariosPatentes = new List<UsuarioPatente>();
+
+
+                listaUsuariosPatentes = SqlUtils.Exec<UsuarioPatente>(queryselect);
+
+                var patentesUsuarios = listaUsuariosPatentes.ToList();
+
+                //Las patentes que tiene asignada el usuario
+                var patUsu = patentesUsuarios.Where(u => idsToDelete.Select(x => x).Contains(u.IdUsuario)).Select(x => x.IdPatente).OrderBy(x => x).ToList();
+
+                //Deberiamos verificar que las patentes asignadas al usuario sigan existiendo en la tabla cruzada
+                // 1 - Borramos de la lista original el usuario seleccionado
+                patentesUsuarios.RemoveAll(u => idsToDelete.Select(x => x).Contains(u.IdUsuario));
+                // 2 - Chequear que sigan existiendo sus patentes, es decir, que sigan estando asignadas
+                return patentesUsuarios.FindAll(x => patUsu.Any(y => y == x.IdPatente)).Distinct().Count() == patUsu.Count;
+
+
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
+                    string.Format("Ocurrio un error al verificar los datos en la tabla PatenteUsuario. Error: " +
+                                  "{0}", ex.Message));
+            }
+
+            return false;
+        }
+
+        public bool CheckeoDePatentes(Usuario usuarioToDelete)
+        {
+            var returnValue = false;
+
+            var usuarioPatente = ConsultarUsuarioPatente(usuarioToDelete.IdUsuario).Select(x => x.IdPatente).ToList();
+
+            var familiasUsuario = usuarioToDelete.Familia.Select(x => x.IdFamilia).ToList();
+
+            foreach (var patente in usuarioPatente)
+            {
+                returnValue = EsPatenteEnUso(patente, usuarioToDelete.IdUsuario);
+
+                if (!returnValue)
+                    break;
+            }
+
+            foreach (var idFam in familiasUsuario)
+            {
+                returnValue = esPatenteFamiliaEnUso(idFam, usuarioToDelete.IdUsuario);
+            }
+
+            return returnValue;
+        }
+
+        private bool EsPatenteEnUso(Guid patente, Guid idUsuario)
+        {
+            var query = string.Format("Select IdUsuario from UsuarioPatente where IdPatente = '{0}'", patente);
+            var usuarios = new List<Guid>();
+            var returnValue = false;
+
+            usuarios = SqlUtils.Exec<Guid>(query);
+
+            if (usuarios.Count > 1)
+            {
+                returnValue = true;
+            }
+
+            return returnValue;
+        }
+
+        private bool esPatenteFamiliaEnUso(Guid idFam, Guid idUsuario)
+        {
+            var returnValue = false;
+            var queryPatFamilia = string.Format("SELECT IdPatente FROM FamiliaPatente WHERE IdFamilia = '{0}'", idFam);
+
+            var patentesFamilia = new List<Guid>();
+
+            
+                patentesFamilia = SqlUtils.Exec<Guid>(queryPatFamilia);
+
+            var idsPat = string.Join(",", patentesFamilia);
+            idsPat = "'" + idsPat.Replace("", "'") + "'";
+
+            ///Buscar como checkear que esa familia pertenezca a ese usuario SI otro usuario tiene la misma familia pero 
+            ///no tiene asignada la patente si la recibe por la familia puedo eliminar al usuario
+            var queryFamilias = string.Format("SELECT DISTINCT IdFamilia FROM FamiliaPatente WHERE IdPatente IN ({0})", idsPat);
+            var idDeFamilias = new List<Guid>();
+            var usuariosConFamilia = new List<Guid>();
+
+
+            
+                idDeFamilias = SqlUtils.Exec<Guid>(queryFamilias);
+
+                var idsFam = string.Join(",", idDeFamilias);
+                idsFam = "'" + idsFam.Replace("", "'") + "'";
+
+            var queryFamiliaUsuario = string.Format("SELECT DISTINCT IdUsuario FROM FamiliaUsuario WHERE IdFamilia IN ({0})", idsFam);
+
+                usuariosConFamilia =SqlUtils.Exec<Guid>(queryFamiliaUsuario);
+
+            ///si hay mas de un usuario con la familia que tiene la patente entonces si me la puedo sacar sin importar si yo soy el que tiene esa familia
+            if (usuariosConFamilia.Count > 1)
+            {
+                returnValue = true;
+            }
+            ////si otro tiene esa familia entonces yo me la puedo sacar
+            else if (usuariosConFamilia[0] != idUsuario)
+            {
+                returnValue = true;
+            }
+
+
+            return returnValue;
         }
     }
 }

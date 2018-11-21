@@ -42,23 +42,16 @@ namespace SSTIS
 
             if (FamiliaInfo.NuevaFamilia != null)
             {
-                var created = ServicioFamilia.Create(FamiliaInfo.NuevaFamilia);
+                //var created = ServicioFamilia.Create(FamiliaInfo.NuevaFamilia);
                 familiaSeleccionada = new Familia
                 {
                     IdFamilia = FamiliaInfo.NuevaFamilia.IdFamilia,
                     Descripcion = FamiliaInfo.NuevaFamilia.Descripcion
                 };
 
-                if (created)
-                {
-                    MessageBox.Show("Familia creada correctamente");
-                    AdminPatFamilia.FamiliaNueva = true;
-                }
-
                 var res = AdminPatFamilia.ShowDialog();
                 if (res == DialogResult.OK)
                 {
-                    MessageBox.Show("kndaklbajkbcawibcawjk");
                 }
 
                 CargarFamiliaCheckedList();
@@ -141,13 +134,26 @@ namespace SSTIS
                 if (FamiliaInfo.NuevaFamilia != null)
                 {
                     var modified = ServicioFamilia.Update(FamiliaInfo.NuevaFamilia);
+                    if (modified)
+                    {
+                        MessageBox.Show("Familia modificada correctamente");
+                        AdminPatFamilia.FamiliaNueva = true;
+                    }
+
+                    var res = AdminPatFamilia.ShowDialog();
+                    if (res == DialogResult.OK)
+                    {
+                        //MessageBox.Show("kndaklbajkbcawibcawjk");
+                    }
+
                     familiaSeleccionada = FamiliaInfo.NuevaFamilia;
                     CargarFamiliaCheckedList();
                     chklFamilias.Refresh();
                     //Reseteamos el objeto por cada familia nueva creada
                     FamiliaInfo.NuevaFamilia = null;
-                    Alert.ShowSimpleAlert("Familia modificada correctamente");
+                    AdminPatFamilia.FamiliaNueva = false;
                 }
+
             }
             else if (chklFamilias.CheckedItems.Count > 1)
             {

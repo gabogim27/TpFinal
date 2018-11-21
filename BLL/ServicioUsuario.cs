@@ -46,7 +46,7 @@ namespace BLL
             Random random = new Random();
             string nuevoPass = "admin123";
             entity.ContraseñaEncriptada = MD5.ComputeMD5Hash(entity.Password = nuevoPass);
-
+            
             //Damos de alta el domicilio del usuario
             var objDomicilio = new BE.Domicilio();
             objDomicilio.IdDomicilio = Guid.NewGuid();
