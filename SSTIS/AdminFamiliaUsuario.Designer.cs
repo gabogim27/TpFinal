@@ -33,6 +33,7 @@
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.lblUsuario = new System.Windows.Forms.Label();
+            this.btnVolver = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFamiliaUsuario)).BeginInit();
             this.SuspendLayout();
             // 
@@ -80,11 +81,22 @@
             this.lblUsuario.TabIndex = 12;
             this.lblUsuario.Text = "USUARIO";
             // 
+            // btnVolver
+            // 
+            this.btnVolver.Location = new System.Drawing.Point(425, 12);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(75, 23);
+            this.btnVolver.TabIndex = 38;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
+            // 
             // frmAdminFamiliaUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(512, 298);
+            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.Label1);
             this.Controls.Add(this.dgvFamiliaUsuario);
@@ -106,5 +118,6 @@
         internal System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column3;
+        private System.Windows.Forms.Button btnVolver;
     }
 }

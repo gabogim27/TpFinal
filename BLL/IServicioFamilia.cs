@@ -33,5 +33,9 @@ namespace BLL
         List<Familia> ObtenerFamiliasPorUsuario(Guid usuarioId);
 
         List<Guid> ObtenerPatentesPorFamiliaId(Guid familiaId);
+
+        List<Usuario> ObtenerUsuariosPorFamilia(Guid familiaId);
+
+        List<Familia> ObtenerFamiliasUsuario(Guid usuarioId);
     }
 }

@@ -107,5 +107,11 @@ namespace BLL
         {
             return RepositorioPatente.CheckeoDePatentes(usuarioToDelete);
         }
+
+        public bool CheckeoDePatentesParaBorrar(Usuario usuario, bool requestFamilia = false, bool requestFamiliaUsuario = false,
+            Guid? idAQuitar = null)
+        {
+            return RepositorioPatente.CheckeoDePatentesParaBorrar(usuario, requestFamilia, requestFamiliaUsuario);
+        }
     }
 }

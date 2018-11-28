@@ -35,5 +35,9 @@ namespace DAL.Interfaces
         List<Familia> ObtenerFamiliasPorUsuario(Guid usuarioId);
 
         List<Guid> ObtenerPatentesPorFamiliaId(Guid familiaId);
+
+        List<Familia> ObtenerFamiliasUsuario(Guid usuarioId);
+
+        List<Usuario> ObtenerUsuariosPorFamilia(Guid familiaId);
     }
 }

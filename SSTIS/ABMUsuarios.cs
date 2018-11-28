@@ -367,6 +367,16 @@ namespace SSTIS
             cboLocalidad.ValueMember = "IdLocalidad";
         }
 
+        public bool CheckeoPatentes(Usuario usuario, bool requestFamilia = false, bool requestFamiliaUsuario = false, Guid? idFamiliaAQuitar = null)
+        {
+            var returnValue = true;
+
+            returnValue = ServicioPatente.CheckeoDePatentesParaBorrar(usuario, requestFamilia, requestFamiliaUsuario, idFamiliaAQuitar);
+
+            return returnValue;
+
+        }
+
         private void btnEliminarUsuario_Click(object sender, EventArgs e)
         {
             string mensaje = string.Empty;
@@ -387,15 +397,6 @@ namespace SSTIS
                     if (idUsuario == LoginInfo.Usuario.IdUsuario)
                         idsNotDelete.Add(idUsuario);
                     idsToDelete.Add(idUsuario);
-                    //if (ServicioPatente.ComprobarPatentesUsuario(idUsuario) || ServicioFamiliaImplementor.ComprobarUsoFamilia(idUsuario))
-                    //{
-                    //    mensaje += coma + usuario.Cells[5].Value;
-                    //    idsNotDelete.Add(idUsuario);
-                    //}
-                    //else if (!ServicioPatente.ComprobarPatentesUsuario(idUsuario) && !ServicioFamiliaImplementor.ComprobarUsoFamilia(idUsuario))
-                    //{
-                    //    idsToDelete.Add(idUsuario);
-                    //}
                 }
 
                 mensaje += " ya que tienen familias/patentes asignadas.";
@@ -435,8 +436,23 @@ namespace SSTIS
                 else
                 {
                     var usuariosToDelete = usuariosExistentes.Where(x => idsToDelete.Any(y => y == x.IdUsuario));
+                    var listaUsuariosConfirmar = new List<Usuario>();
+                    var listaUsuaiosNOborrar = new List<Usuario>();
+                    var message = string.Empty;
                     //HACER UN CICLO PARA ITERAR POR TODOS LOS USUARIOS
-                    var permitir = ServicioPatente.CheckeoDePatentes(usuariosToDelete.First());
+                    foreach (var usuariosABorrar in usuariosToDelete)
+                    {
+                        var permitir = CheckeoPatentes(usuariosABorrar);
+                        if (permitir)
+                        {
+                            listaUsuariosConfirmar.Add(usuariosABorrar);
+                        }
+                        else
+                        {
+                            message += usuariosABorrar.Email + coma;
+                            listaUsuaiosNOborrar.Add(usuariosABorrar);
+                        }
+                    }
 
                     if (usuariosToDelete.Any(x => !x.Estado))
                     {
@@ -444,30 +460,41 @@ namespace SSTIS
                         return;
                     }
 
-                    var confirmResult = MessageBox.Show("Esta seguro que desea eliminar los usuarios seleccionados?",
-                        "Confirme baja de usuario",
-                        MessageBoxButtons.YesNo);
-                    if (confirmResult == DialogResult.Yes)
+                    if (listaUsuaiosNOborrar.Count > 0)
                     {
+                        MessageBox.Show("Los usuarios: " + message +
+                                        " no se pueden borrar ya que tienen patentes asignadas. Por favor vuelva a seleccionar.");
+                        return;
+                    }
 
-                        foreach (var usuarioToDelete in usuariosToDelete)
+                    if (listaUsuariosConfirmar.Count > 0)
+                    {
+                        var confirmResult = MessageBox.Show("Esta seguro que desea eliminar los usuarios seleccionados?",
+                            "Confirme baja de usuario",
+                            MessageBoxButtons.YesNo);
+                        if (confirmResult == DialogResult.Yes)
                         {
-                            //if (ServicioPatente.CheckeoDePatentes(usuarioToDelete))
-                            var borrado = ServicioUsuario.Delete(usuarioToDelete);
-                            if (borrado)
+
+                            foreach (var usuarioToDelete in listaUsuariosConfirmar)
                             {
-                                if (DigitoVerificador.ComprobarPrimerDigito(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper())))
+                                //if (ServicioPatente.CheckeoDePatentes(usuarioToDelete))
+                                var borrado = ServicioUsuario.Delete(usuarioToDelete);
+                                if (borrado)
                                 {
-                                    DigitoVerificador.InsertarDVVertical(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper()));
-                                }
-                                else
-                                {
-                                    DigitoVerificador.ActualizarDVVertical(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper()));
+                                    if (DigitoVerificador.ComprobarPrimerDigito(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper())))
+                                    {
+                                        DigitoVerificador.InsertarDVVertical(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper()));
+                                    }
+                                    else
+                                    {
+                                        DigitoVerificador.ActualizarDVVertical(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper()));
+                                    }
                                 }
                             }
+                            MessageBox.Show("Usuario/s eliminado/s correctamente.");
                         }
-                        MessageBox.Show("Usuario/s eliminado/s correctamente.");
                     }
+
                 }
 
                 CargarGrilla();

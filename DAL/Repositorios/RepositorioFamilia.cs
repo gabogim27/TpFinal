@@ -108,5 +108,15 @@ namespace DAL.Repositorios
         {
             return FamiliaDaoImplementor.ObtenerPatentesPorFamiliaId(familiaId);
         }
+
+        public List<Familia> ObtenerFamiliasUsuario(Guid usuarioId)
+        {
+            return FamiliaDaoImplementor.ObtenerFamiliasUsuario(usuarioId);
+        }
+
+        public List<Usuario> ObtenerUsuariosPorFamilia(Guid familiaId)
+        {
+            return FamiliaDaoImplementor.ObtenerUsuariosPorFamilia(familiaId);
+        }
     }
 }

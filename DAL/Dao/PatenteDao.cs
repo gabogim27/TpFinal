@@ -15,10 +15,17 @@ namespace DAL.Dao
     {
         public IRepositorioBitacora RepositorioBitacora;
         public IDigitoVerificador DigitoVerificador;
+        public IDao<Usuario> UsuarioDao;
+        public IUsuarioDao UsuarioDaoImplementor;
+        public IFamiliaDao FamiliaDaoImplementor;
 
-        public PatenteDao(IRepositorioBitacora repositorioBitacora, IDigitoVerificador DigitoVerificador)
+        public PatenteDao(IRepositorioBitacora repositorioBitacora, IDigitoVerificador DigitoVerificador, IUsuarioDao UsuarioDaoImplementor,
+            IDao<Usuario> UsuarioDao, IFamiliaDao FamiliaDaoImplementor)
         {
+            this.UsuarioDao = UsuarioDao;
+            this.UsuarioDaoImplementor = UsuarioDaoImplementor;
             this.DigitoVerificador = DigitoVerificador;
+            this.FamiliaDaoImplementor = FamiliaDaoImplementor;
             this.RepositorioBitacora = repositorioBitacora;
         }
 
@@ -366,6 +373,93 @@ namespace DAL.Dao
             return false;
         }
 
+        public bool CheckeoDePatentesParaBorrar(Usuario usuario, bool requestFamilia = false, bool requestFamiliaUsuario = false, Guid? idAQuitar = null)
+        {
+            var patUsuDictionary = new Dictionary<Guid, int>();
+            var returnValue = false;
+            var usuariosGlobal = UsuarioDao.Retrive().Where(x => x.Estado).ToList();
+            usuariosGlobal.RemoveAll(x => x.IdUsuario == usuario.IdUsuario);
+
+            usuario.Patentes = new List<Patente>();
+            usuario.Familia = new List<Familia>();
+            var familiaId = FamiliaDaoImplementor.ObtenerIdsFamiliasPorUsuario(usuario.IdUsuario);
+
+            if (requestFamiliaUsuario)
+            {
+                familiaId.RemoveAll(x => x != idAQuitar);
+            }
+
+            foreach (var idfam in familiaId)
+            {
+                usuario.Familia.Add(new Familia() {IdFamilia = idfam});
+            }
+
+            usuario.Patentes.AddRange(UsuarioDaoImplementor.ObtenerPatentesDeUsuario(usuario.IdUsuario));
+
+            usuario.Patentes.AddRange(FamiliaDaoImplementor.ObtenerPatentesFamilia(familiaId));
+
+            usuario.Patentes = usuario.Patentes.GroupBy(p => p.IdPatente).Select(grp => grp.First()).ToList();
+
+            foreach (var usu in usuariosGlobal)
+            {
+                var familiasId = FamiliaDaoImplementor.ObtenerIdsFamiliasPorUsuario(usu.IdUsuario);
+                usu.Familia = new List<Familia>();
+                usu.Patentes = new List<Patente>();
+
+                foreach (var idfam in familiasId)
+                {
+                    usu.Familia.Add(new Familia() {IdFamilia = idfam});
+
+                    if (requestFamilia)
+                    {
+                        if (usu.Familia.Exists(a => usuario.Familia.All(x => a.IdFamilia == x.IdFamilia)))
+                        {
+                            usu.Familia.RemoveAll(x => x.IdFamilia == idfam);
+                        }
+                        else
+                        {
+                            usu.Patentes.AddRange(FamiliaDaoImplementor.ObtenerPatentesPorFamiliaGUID(idfam));
+                        }
+                    }
+                    else
+                    {
+                        usu.Patentes.AddRange(FamiliaDaoImplementor.ObtenerPatentesPorFamiliaGUID(idfam));
+                    }
+
+                }
+
+                usu.Patentes.AddRange(UsuarioDaoImplementor.ObtenerPatentesDeUsuario(usu.IdUsuario));
+
+                usu.Patentes = usu.Patentes.GroupBy(p => p.IdPatente).Select(grp => grp.First()).ToList();
+            }
+
+            foreach (var patpepe in usuario.Patentes)
+            {
+                patUsuDictionary.Add(patpepe.IdPatente, 0);
+                var contador = 0;
+
+                foreach (var usu2 in usuariosGlobal)
+                {
+                    //returnValue = usuario.Patentes.Exists(u => usu2.Patentes.All(x => x.IdPatente == u.IdPatente));
+                    foreach (var patusu in usu2.Patentes)
+                    {
+                        if (patpepe.IdPatente == patusu.IdPatente)
+                        {
+                            contador++;
+                            patUsuDictionary[patpepe.IdPatente] = contador;
+                        }
+                    }
+                }
+            }
+
+            if (patUsuDictionary.Count > 0 && patUsuDictionary.All(x => x.Value > 0))
+            {
+                returnValue = true;
+            }
+
+            return returnValue;
+        }
+
         public bool CheckeoDePatentes(Usuario usuarioToDelete)
         {
             var returnValue = false;
@@ -405,6 +499,12 @@ namespace DAL.Dao
 
 
             return returnValue;
+        }
+
+        public bool CheckeoDePatentesParaBorrar(Usuario usuario, bool requestFamilia = false, bool requestFamiliaUsuario = false,
+            int idAQuitar = 0)
+        {
+            throw new NotImplementedException();
         }
 
         private bool EsPatenteEnUso(Guid patente, Guid idUsuario)

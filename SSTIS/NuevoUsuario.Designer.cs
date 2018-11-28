@@ -59,6 +59,7 @@
             this.lblUsuarioExistente = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.chklPatente = new System.Windows.Forms.CheckedListBox();
+            this.btnVolver = new System.Windows.Forms.Button();
             this.GroupBox3.SuspendLayout();
             this.GroupBox2.SuspendLayout();
             this.GroupBox1.SuspendLayout();
@@ -360,11 +361,22 @@
             this.chklPatente.Size = new System.Drawing.Size(120, 94);
             this.chklPatente.TabIndex = 1;
             // 
+            // btnVolver
+            // 
+            this.btnVolver.Location = new System.Drawing.Point(713, 17);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(75, 23);
+            this.btnVolver.TabIndex = 14;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
+            // 
             // frmNuevoUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.GroupBox3);
@@ -421,5 +433,6 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.CheckedListBox chklPatente;
         private System.Windows.Forms.Label lblUsuarioExistente;
+        private System.Windows.Forms.Button btnVolver;
     }
 }

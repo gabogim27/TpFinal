@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-            this.BitacoraViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnBuscar = new System.Windows.Forms.Button();
             this.dtpHasta = new System.Windows.Forms.DateTimePicker();
             this.dtpDesde = new System.Windows.Forms.DateTimePicker();
@@ -41,12 +40,10 @@
             this.rpvBitacora = new Microsoft.Reporting.WinForms.ReportViewer();
             this.chkSelectAllUsers = new System.Windows.Forms.CheckBox();
             this.chkSelectAllLogLevel = new System.Windows.Forms.CheckBox();
+            this.btnVolver = new System.Windows.Forms.Button();
+            this.BitacoraViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.BitacoraViewModelBindingSource)).BeginInit();
             this.SuspendLayout();
-            // 
-            // BitacoraViewModelBindingSource
-            // 
-            this.BitacoraViewModelBindingSource.DataSource = typeof(SSTIS.BitacoraViewModel);
             // 
             // btnBuscar
             // 
@@ -141,11 +138,26 @@
             this.chkSelectAllLogLevel.UseVisualStyleBackColor = true;
             this.chkSelectAllLogLevel.CheckedChanged += new System.EventHandler(this.chkSelectAllLogLevel_CheckedChanged);
             // 
+            // btnVolver
+            // 
+            this.btnVolver.Location = new System.Drawing.Point(749, 12);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(75, 23);
+            this.btnVolver.TabIndex = 36;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
+            // 
+            // BitacoraViewModelBindingSource
+            // 
+            this.BitacoraViewModelBindingSource.DataSource = typeof(SSTIS.BitacoraViewModel);
+            // 
             // frmBitacora
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(836, 521);
+            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.chkSelectAllLogLevel);
             this.Controls.Add(this.chkSelectAllUsers);
             this.Controls.Add(this.rpvBitacora);
@@ -160,6 +172,7 @@
             this.Text = "Bitacora";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmBitacora_FormClosing);
             this.Load += new System.EventHandler(this.Bitacora_Load);
+            this.Enter += new System.EventHandler(this.frmBitacora_Enter);
             ((System.ComponentModel.ISupportInitialize)(this.BitacoraViewModelBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -178,5 +191,6 @@
         private Microsoft.Reporting.WinForms.ReportViewer rpvBitacora;
         private System.Windows.Forms.CheckBox chkSelectAllUsers;
         private System.Windows.Forms.CheckBox chkSelectAllLogLevel;
+        private System.Windows.Forms.Button btnVolver;
     }
 }

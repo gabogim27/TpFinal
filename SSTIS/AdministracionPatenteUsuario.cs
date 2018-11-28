@@ -16,13 +16,16 @@ namespace SSTIS
 {
     public partial class frmAdministracionPatenteUsuario : Form, IAdminPatenteUsuario
     {
-        public frmAdministracionPatenteUsuario(IServicioPatente ServicioPatente)
+        public IServicioPatente ServicioPatente;
+        public IServicioFamilia ServicioFamiliaImplementor;
+
+        public frmAdministracionPatenteUsuario(IServicioPatente ServicioPatente, IServicioFamilia ServicioFamiliaImplementor)
         {
+            this.ServicioFamiliaImplementor = ServicioFamiliaImplementor;
             this.ServicioPatente = ServicioPatente;
             InitializeComponent();
         }
 
-        public IServicioPatente ServicioPatente;
         private Usuario UsuarioSeleccionado = new Usuario();
         private List<Patente> Patentes = new List<Patente>();
 
@@ -47,7 +50,7 @@ namespace SSTIS
                 ServicioPatente.TraerPatenteDescrUsuario(UsuarioSeleccionado.IdUsuario);
             Patentes = ServicioPatente.RetrievePatentes();
             dgvAdminPatenteUsuario.Rows.Clear();
-            
+
             for (int i = 0; i < Patentes.Count; i++)
             {
                 dgvAdminPatenteUsuario.Rows.Add(Patentes[i].Descripcion,
@@ -55,6 +58,17 @@ namespace SSTIS
                     patentesUsuario.Any(p => p.IdPatente == Patentes[i].IdPatente && p.Negada));
             }
         }
+
+        public bool CheckeoPatentes(Usuario usuario)
+        {
+            var returnValue = true;
+
+            returnValue = ServicioPatente.CheckeoDePatentesParaBorrar(usuario);
+
+            return returnValue;
+
+        }
+
 
         private void dgvAdminPatenteUsuario_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -74,26 +88,46 @@ namespace SSTIS
                     }
                     else if (checkbox.ColumnIndex == 1 && !isChecked)
                     {
-                        ServicioPatente.BorrarPatenteUsuario(idPatente, UsuarioSeleccionado.IdUsuario);
+                        if (CheckeoPatentes(UsuarioSeleccionado))
+                        {
+                            ServicioPatente.BorrarPatenteUsuario(idPatente, UsuarioSeleccionado.IdUsuario);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Al menos un usuario debe tener asignada esta patente.");
+                        }
                     }
                     else if (checkbox.ColumnIndex == 2 && isChecked)
                     {
                         var existePatenteUsuario = ServicioPatente.ConsultarUsuarioPatente(
                             UsuarioSeleccionado.IdUsuario,
                             idPatente);
-                        //var patentesUsuario =
-                        //    ServicioPatente.TraerPatenteDescrUsuario(UsuarioSeleccionado.IdUsuario);
+                        UsuarioSeleccionado.Familia = new List<Familia>();
+                        UsuarioSeleccionado.Familia = ServicioFamiliaImplementor.ObtenerFamiliasUsuario(UsuarioSeleccionado.IdUsuario);
+
                         if (existePatenteUsuario.Count > 0)
                         {
-                            ServicioPatente.NegarPatenteUsuario(idPatente, UsuarioSeleccionado.IdUsuario);
+                            if (CheckeoPatentes(UsuarioSeleccionado))
+                            {
+                                ServicioPatente.NegarPatenteUsuario(idPatente, UsuarioSeleccionado.IdUsuario);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Al menos un usuario debe tener asignada esta patente.");
+                            }
+
                         }
-                        else
+                        else if (CheckeoPatentes(UsuarioSeleccionado))
                         {
                             //Primerio guardamos la patente y luego la negamos
                             ServicioPatente.GuardarPatenteUsuario(idPatente, UsuarioSeleccionado.IdUsuario);
                             ServicioPatente.NegarPatenteUsuario(idPatente, UsuarioSeleccionado.IdUsuario);
                             //dgvAdminPatenteUsuario.EndEdit();
                             //checkbox.Value = checkbox.FalseValue;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Al menos un usuario debe tener asignada esta patente.");
                         }
                     }
                     else if (checkbox.ColumnIndex == 2 && !isChecked)
@@ -115,6 +149,11 @@ namespace SSTIS
         private void frmAdministracionPatenteUsuario_Enter(object sender, EventArgs e)
         {
             CargaInicial();
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
         }
     }
 }

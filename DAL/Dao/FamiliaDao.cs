@@ -16,9 +16,11 @@ namespace DAL.Impl
     {
         public IRepositorioBitacora RepositorioBitacora;
         public IDigitoVerificador DigitoVerificador;
+        public IDao<Usuario> UsuarioDao;
 
-        public FamiliaDao(IRepositorioBitacora repositorioBitacora, IDigitoVerificador DigitoVerificador)
+        public FamiliaDao(IRepositorioBitacora repositorioBitacora, IDigitoVerificador DigitoVerificador, IDao<Usuario> UsuarioDao)
         {
+            this.UsuarioDao = UsuarioDao;
             this.DigitoVerificador = DigitoVerificador;
             this.RepositorioBitacora = repositorioBitacora;
         }
@@ -165,7 +167,7 @@ namespace DAL.Impl
             {
                 foreach (var id in familiaIds)
                 {
-                    var queryString = $"SELECT IdPatente FROM FamiliaPatente WHERE FamiliaId = '{id}'";
+                    var queryString = $"SELECT IdPatente FROM FamiliaPatente WHERE IdFamilia = '{id}'";
                     patentes.AddRange(SqlUtils.Exec<Patente>(queryString));
                 }
             }
@@ -183,8 +185,25 @@ namespace DAL.Impl
 
             try
             {
-                var queryString = $"SELECT IdPatente FROM FamiliaPatente WHERE IdFamilia = '{familiaId}'";
+                var queryString = $"SELECT distinct IdPatente FROM FamiliaPatente WHERE IdFamilia = '{familiaId}'";
                 patentes.AddRange(SqlUtils.Exec<Guid>(queryString));
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(), string.Format("Ocurrio une error al obtener las patentes por el familias. " +
+                                                                                                             "Error: {0}", ex.Message));
+            }
+            return patentes;
+        }
+
+        public List<Patente> ObtenerPatentesPorFamiliaGUID(Guid familiaId)
+        {
+            var patentes = new List<Patente>();
+
+            try
+            {
+                var queryString = $"SELECT distinct IdPatente FROM FamiliaPatente WHERE IdFamilia = '{familiaId}'";
+                patentes.AddRange(SqlUtils.Exec<Patente>(queryString));
             }
             catch (Exception ex)
             {
@@ -198,7 +217,7 @@ namespace DAL.Impl
         {
             try
             {
-                var queryString = $"SELECT FamiliaId FROM Familia WHERE Descripcion = '{descripcion}'";
+                var queryString = $"SELECT IdFamilia FROM Familia WHERE Descripcion = '{descripcion}'";
                 return SqlUtils.Exec<Guid>(queryString)[0];
             }
             catch (Exception ex)
@@ -327,6 +346,29 @@ namespace DAL.Impl
                                                                                                              " Error: {0}", ex.Message));
             }
 
+        }
+
+        public List<Familia> ObtenerFamiliasUsuario(Guid usuarioId)
+        {
+            var familiasDb = Retrive();
+            var familiaUsuario = ObtenerIdsFamiliasPorUsuario(usuarioId);
+
+            return familiasDb.FindAll(x => familiaUsuario.Any(y => y == x.IdFamilia));
+        }
+
+        public List<Usuario> ObtenerUsuariosPorFamilia(Guid familiaId)
+        {
+            var queryString = string.Format("SELECT DISTINCT IdUsuario FROM FamiliaUsuario WHERE IdFamilia = '{0}'", familiaId);
+            var listaUsuarios = new List<Usuario>();
+
+            var usuarios = SqlUtils.Exec<Guid>(queryString);
+
+            foreach (var usuario in usuarios)
+            {
+                listaUsuarios.Add(UsuarioDao.GetById(usuario));
+            }
+
+            return listaUsuarios;
         }
     }
 }

@@ -44,5 +44,8 @@ namespace BLL.Interfaces
         bool VerificarDatos(List<Guid> idsToDelete);
 
         bool CheckeoDePatentes(Usuario usuarioToDelete);
+
+        bool CheckeoDePatentesParaBorrar(Usuario usuario, bool requestFamilia = false,
+            bool requestFamiliaUsuario = false, Guid? idAQuitar = null);
     }
 }

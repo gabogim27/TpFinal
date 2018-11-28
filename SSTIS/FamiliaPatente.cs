@@ -50,17 +50,35 @@ namespace SSTIS
 
         public void BorrarPatente(Guid familiaId, Guid patenteId)
         {
-            var borrada = ServicioPatente.BorrarPatente(familiaId, patenteId);
-            if (borrada)
+            if (CheckeoPatentes(LoginInfo.Usuario, true))
             {
-                DialogResult = DialogResult.OK;
+                var borrada = ServicioPatente.BorrarPatente(familiaId, patenteId);
+                if (borrada)
+                {
+                    DialogResult = DialogResult.OK;
+                }
             }
+            else
+            {
+                MessageBox.Show("La familia actualmente esta en uso");
+            }
+
+        }
+
+        public bool CheckeoPatentes(Usuario usuario, bool requestFamilia = false, bool requestFamiliaUsuario = false, Guid? idFamiliaAQuitar = null)
+        {
+            var returnValue = true;
+
+            returnValue = ServicioPatente.CheckeoDePatentesParaBorrar(usuario, requestFamilia, requestFamiliaUsuario, idFamiliaAQuitar);
+
+            return returnValue;
+
         }
 
         private void frmAdmFamiliaPatente_Load(object sender, EventArgs e)
         {
             //var ABMFamilia = Program.simpleInyectorContainer.GetInstance<IABMFamilia>();VER PORQUE TRAER 
-                        //LA FAMILIA EN NULL           
+            //LA FAMILIA EN NULL           
             CargarGrilla();
             //lstPatentes.DataSource = patenteBLL.Cargar();
         }
@@ -73,7 +91,7 @@ namespace SSTIS
             listaPatente = ServicioPatente.RetrievePatentes();
             var patentesPorFamiliaId =
                 ServicioFamiliaImplementor.ObtenerPatentesPorFamiliaId(FamiliaInfo.NuevaFamilia.IdFamilia);
-            
+
             dgvAdminFamiliaPatente.Rows.Clear();
 
             for (int i = 0; i < listaPatente.Count; i++)
@@ -109,11 +127,11 @@ namespace SSTIS
 
         private void dgvAdminFamiliaPatente_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+
             if (dgvAdminFamiliaPatente.CurrentCell is DataGridViewCheckBoxCell)
             {
                 if (FamiliaNueva)
-                {                   
+                {
 
                     DataGridViewCheckBoxCell checkbox = (DataGridViewCheckBoxCell)dgvAdminFamiliaPatente.CurrentCell;
 
@@ -150,7 +168,7 @@ namespace SSTIS
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-           DialogResult = DialogResult.OK;           
+            DialogResult = DialogResult.OK;
         }
 
         private void frmAdmFamiliaPatente_FormClosing(object sender, FormClosingEventArgs e)

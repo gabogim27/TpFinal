@@ -48,12 +48,20 @@ namespace SSTIS
 
         private void Bitacora_Load(object sender, EventArgs e)
         {
-            CargarUsuarios();
-            CargarCriticidades();
-            rpvBitacora.RefreshReport();
+            CargaInicial();
             //this.rwBitacora.RefreshReport();
             //this.rwBitacora.RefreshReport();
             //this.rpvBitacora.RefreshReport();
+        }
+
+        private void CargaInicial()
+        {
+            chklUsuario.Items.Clear();
+            chklCriticidad.Items.Clear();
+            rpvBitacora.Clear();
+            CargarUsuarios();
+            CargarCriticidades();
+            rpvBitacora.RefreshReport();
         }
 
         private void CargarCriticidades()
@@ -225,6 +233,16 @@ namespace SSTIS
             {
                 chklCriticidad.SetItemChecked(i, chkSelectAllLogLevel.Checked);
             }
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            Hide();
+        }
+
+        private void frmBitacora_Enter(object sender, EventArgs e)
+        {
+            CargaInicial();
         }
     }
 }

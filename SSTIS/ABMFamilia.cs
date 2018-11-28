@@ -23,16 +23,18 @@ namespace SSTIS
         public IServicioFamilia ServicioFamiliaImplementor;
         public IAdmPatenteFamilia AdminPatFamilia;
         public IServicio<Familia> ServicioFamilia;
+        public IServicioPatente ServicioPatenteImplementor;
         public Familia familiaSeleccionada = null;
 
         public frmABMFamilia(INuevaFamilia NuevaFamilia, IServicioFamilia ServicioFamiliaImplementor,
-            IServicio<Familia> ServicioFamilia, IModificarFamilia ModificarFamilia, IAdmPatenteFamilia AdminPatFamilia)
+            IServicio<Familia> ServicioFamilia, IModificarFamilia ModificarFamilia, IAdmPatenteFamilia AdminPatFamilia, IServicioPatente ServicioPatenteImplementor)
         {
             this.NuevaFamilia = NuevaFamilia;
             this.ModificarFamilia = ModificarFamilia;
             this.ServicioFamiliaImplementor = ServicioFamiliaImplementor;
             this.ServicioFamilia = ServicioFamilia;
             this.AdminPatFamilia = AdminPatFamilia;
+            this.ServicioPatenteImplementor = ServicioPatenteImplementor;
             InitializeComponent();
         }
 
@@ -85,43 +87,67 @@ namespace SSTIS
         {
             var familiasAEliminar = chklFamilias.CheckedItems.OfType<Familia>().ToList();
 
-            if (familiasAEliminar.Count != 0)
+            foreach (var familiaToDelete in familiasAEliminar)
             {
-                var confirmResult = MessageBox.Show("Esta seguro que desea eliminar las familias " +
-                                                    "seleccionadas?",
-                    "Confirme Baja.",
-                    MessageBoxButtons.YesNo);
-                if (confirmResult == DialogResult.Yes)
+                var returnValue = false;
+                var usuarios = ServicioFamiliaImplementor.ObtenerUsuariosPorFamilia(ServicioFamiliaImplementor.ObtenerIdFamiliaPorDescripcion(familiaToDelete.Descripcion));
+
+                foreach (var usuario in usuarios)
                 {
-                    var familiaNoEliminadas = new List<string>();
-
-                    foreach (var familiaToDelete in familiasAEliminar)
+                    if (ServicioPatenteImplementor.CheckeoDePatentesParaBorrar(usuario, true))
                     {
-                        if (!ServicioFamilia.Delete(familiaToDelete))
-                        {
-                            familiaNoEliminadas.Add(familiaToDelete.Descripcion);
-                        }
+                        returnValue = true;
                     }
-
-                    if (familiaNoEliminadas.Count > 0)
+                    else
                     {
-                        var familiasAInformar = string.Join(", ", familiaNoEliminadas.ToArray());
-                        MessageBox.Show(string.Format("Las Familias: {0} no se pueden eliminar" +
-                                                      "ya que se encuentran en uso.", familiasAInformar));
+                        MessageBox.Show("La familia actualmente esta en uso");
                     }
-                    CargarFamiliaCheckedList();
-                    chklFamilias.Refresh();
-                    MessageBox.Show("Familia/s eliminada's correctamente.");
                 }
-                else
+
+                if (returnValue || (!returnValue && usuarios != null && usuarios.Count == 0))
                 {
-                    return;
+                    var exitoso = ServicioFamilia.Delete(new Familia() { Descripcion = familiaToDelete.Descripcion, IdFamilia = ServicioFamiliaImplementor.ObtenerIdFamiliaPorDescripcion(familiaToDelete.Descripcion) });
                 }
             }
-            else
-            {
-                MessageBox.Show("Debe seleccionar una familia para poder eliminar.");
-            }
+
+            CargarFamiliaCheckedList();
+            //if (familiasAEliminar.Count != 0)
+            //{
+            //    var confirmResult = MessageBox.Show("Esta seguro que desea eliminar las familias " +
+            //                                        "seleccionadas?",
+            //        "Confirme Baja.",
+            //        MessageBoxButtons.YesNo);
+            //    if (confirmResult == DialogResult.Yes)
+            //    {
+            //        var familiaNoEliminadas = new List<string>();
+
+            //        foreach (var familiaToDelete in familiasAEliminar)
+            //        {
+            //            if (!ServicioFamilia.Delete(familiaToDelete))
+            //            {
+            //                familiaNoEliminadas.Add(familiaToDelete.Descripcion);
+            //            }
+            //        }
+
+            //        if (familiaNoEliminadas.Count > 0)
+            //        {
+            //            var familiasAInformar = string.Join(", ", familiaNoEliminadas.ToArray());
+            //            MessageBox.Show(string.Format("Las Familias: {0} no se pueden eliminar" +
+            //                                          "ya que se encuentran en uso.", familiasAInformar));
+            //        }
+            //        CargarFamiliaCheckedList();
+            //        chklFamilias.Refresh();
+            //        MessageBox.Show("Familia/s eliminada's correctamente.");
+            //    }
+            //    else
+            //    {
+            //        return;
+            //    }
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Debe seleccionar una familia para poder eliminar.");
+            //}
 
         }
 
