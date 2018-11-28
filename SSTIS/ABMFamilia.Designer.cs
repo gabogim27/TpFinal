@@ -90,6 +90,7 @@
             this.Text = "ABMFamilia";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmABMFamilia_FormClosing);
             this.Load += new System.EventHandler(this.frmABMFamilia_Load);
+            this.Enter += new System.EventHandler(this.frmABMFamilia_Enter);
             this.ResumeLayout(false);
 
         }

@@ -178,5 +178,10 @@ namespace SSTIS
             Hide();
             e.Cancel = true;
         }
+
+        private void frmABMFamilia_Enter(object sender, EventArgs e)
+        {
+            CargarFamiliaCheckedList();
+        }
     }
 }

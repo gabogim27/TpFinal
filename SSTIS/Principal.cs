@@ -20,11 +20,12 @@ namespace SSTIS
         private IRestaurarCopiaDeSeguridad RestaurarCopiaDeSeguridad;
         private IABMFamilia ABMFamilia;
         private ICambiarIdioma CambiarIdioma;
+        private ICambiarContraseña CambiarContraseña;
         
         public frmPrincipal(IABMUsuarios abmUsuarios, ISessionInfo SessionInfo,
             IBitacora Bitacora, IRealizarCopiaSeguridad RealizarCopiaDeSeguridad,
             IRestaurarCopiaDeSeguridad RestaurarCopiaDeSeguridad, IABMFamilia ABMFamilia,
-            ICambiarIdioma CambiarIdioma)
+            ICambiarIdioma CambiarIdioma, ICambiarContraseña CambiarContraseña)
         {
             this.SessionInfo = SessionInfo;
             this.ABMFamilia = ABMFamilia;
@@ -33,6 +34,7 @@ namespace SSTIS
             this.RestaurarCopiaDeSeguridad = RestaurarCopiaDeSeguridad;
             this.abmUsuarios = abmUsuarios;
             this.CambiarIdioma = CambiarIdioma;
+            this.CambiarContraseña = CambiarContraseña;
             InitializeComponent();
         }
 
@@ -106,6 +108,12 @@ namespace SSTIS
         {
             CambiarIdioma.MdiParent = this;
             CambiarIdioma.Show();
+        }
+
+        private void cambiarContraseñaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CambiarContraseña.MdiParent = this;
+            CambiarContraseña.Show();
         }
     }
 }

@@ -117,34 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lblSeleccionarIdioma" xml:space="preserve">
-    <value>Seleccionar Idioma</value>
-  </data>
-  <data name="lblContraseña" xml:space="preserve">
-    <value>Contraseña</value>
-  </data>
-  <data name="btnIngresar" xml:space="preserve">
-    <value>Ingresar</value>
-  </data>
-  <data name="lblTitulo" xml:space="preserve">
-    <value>Por favor ingrese usuario y contraseña para ingresar</value>
-  </data>
-  <data name="btnSalir" xml:space="preserve">
-    <value>Salir</value>
-  </data>
-  <data name="MSJ002" xml:space="preserve">
-    <value>Por favor verifique los datos ingresados.</value>
-  </data>
-  <data name="MSJ003" xml:space="preserve">
-    <value>Ocurrio un error al loguearse. Por favor verifique los datos ingresados.</value>
-  </data>
-  <data name="MSJ001" xml:space="preserve">
-    <value>Estas seguro que desea salir del Sistema TIS?</value>
-  </data>
-  <data name="lblRecuperarPassword" xml:space="preserve">
-    <value>Recuperar Contraseña</value>
-  </data>
-  <data name="lblEmail" xml:space="preserve">
-    <value>E-mail</value>
-  </data>
 </root>

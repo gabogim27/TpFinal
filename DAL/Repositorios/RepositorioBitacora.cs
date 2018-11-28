@@ -1,6 +1,10 @@
-﻿using BE;
+﻿using System.IO;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using BE;
 using DAL.Dao;
 using DAL.Interfaces;
+using EasyEncryption;
 using log4net;
 
 namespace DAL.Repositorios
@@ -16,6 +20,8 @@ namespace DAL.Repositorios
         private static readonly ILog log = LogManager.GetLogger(typeof(RepositorioBitacora));
 
         public IBitacoraDao BitacoraDao { get; set; }
+        public const string Key = "bZr2URKx";
+        public const string Iv = "HNtgQw0w";
 
         public RepositorioBitacora(IBitacoraDao bitacoraDao)
         {
@@ -24,34 +30,18 @@ namespace DAL.Repositorios
 
         public void RegistrarEnBitacora(string criticidad, string mensaje, Usuario usuario = null)
         {
-            GlobalContext.Properties["IdUsuario"] = usuario != null ? usuario.IdUsuario : (object) null;
-            var digitoVH = BitacoraDao.GenerarDVH(usuario);
-            GlobalContext.Properties["logLevel"] = criticidad;
-            GlobalContext.Properties["dvh"] = digitoVH;
-
-            log.InfoFormat(mensaje);
-            
+            BitacoraDao.RegistrarEnBitacora(criticidad, mensaje, usuario);
         }
 
         public void FiltrarBitacora(BitacoraFiltros filtros)
         {
             BitacoraDao.FiltrarBitacora(filtros);
-        }
+        }       
 
-        public Bitacora LeerBitacoraConId(int bitacoraId)
+        public int GenerarDVH(Bitacora log)
         {
-            return BitacoraDao.LeerBitacoraConId(bitacoraId);
-        }
-
-        public int GenerarDVH(Usuario usu)
-        {
-            return BitacoraDao.GenerarDVH(usu);
-        }
-
-        public int ObtenerUltimoIdBitacora()
-        {
-            return BitacoraDao.ObtenerUltimoIdBitacora();
-        }
+            return BitacoraDao.GenerarDVH(log);
+        }        
 
         public List<Bitacora> LeerBitacoraPorUsuarioCriticidadYFecha(List<Guid> idUsuarios, List<string> criticidades, DateTime desde, DateTime hasta)
         {

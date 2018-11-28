@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            this.BitacoraViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnBuscar = new System.Windows.Forms.Button();
             this.dtpHasta = new System.Windows.Forms.DateTimePicker();
             this.dtpDesde = new System.Windows.Forms.DateTimePicker();
@@ -40,9 +41,12 @@
             this.rpvBitacora = new Microsoft.Reporting.WinForms.ReportViewer();
             this.chkSelectAllUsers = new System.Windows.Forms.CheckBox();
             this.chkSelectAllLogLevel = new System.Windows.Forms.CheckBox();
-            this.BitacoraViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.BitacoraViewModelBindingSource)).BeginInit();
             this.SuspendLayout();
+            // 
+            // BitacoraViewModelBindingSource
+            // 
+            this.BitacoraViewModelBindingSource.DataSource = typeof(SSTIS.BitacoraViewModel);
             // 
             // btnBuscar
             // 
@@ -109,10 +113,10 @@
             this.rpvBitacora.LocalReport.DataSources.Add(reportDataSource1);
             this.rpvBitacora.LocalReport.DisplayName = "Sistema TIS";
             this.rpvBitacora.LocalReport.ReportEmbeddedResource = "SSTIS.Reportes.Bitacora.Report1.rdlc";
-            this.rpvBitacora.Location = new System.Drawing.Point(50, 189);
+            this.rpvBitacora.Location = new System.Drawing.Point(15, 189);
             this.rpvBitacora.Name = "rpvBitacora";
             this.rpvBitacora.ServerReport.BearerToken = null;
-            this.rpvBitacora.Size = new System.Drawing.Size(714, 320);
+            this.rpvBitacora.Size = new System.Drawing.Size(798, 320);
             this.rpvBitacora.TabIndex = 33;
             // 
             // chkSelectAllUsers
@@ -136,10 +140,6 @@
             this.chkSelectAllLogLevel.Text = "Select All";
             this.chkSelectAllLogLevel.UseVisualStyleBackColor = true;
             this.chkSelectAllLogLevel.CheckedChanged += new System.EventHandler(this.chkSelectAllLogLevel_CheckedChanged);
-            // 
-            // BitacoraViewModelBindingSource
-            // 
-            this.BitacoraViewModelBindingSource.DataSource = typeof(SSTIS.BitacoraViewModel);
             // 
             // frmBitacora
             // 

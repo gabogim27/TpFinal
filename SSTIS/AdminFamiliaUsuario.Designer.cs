@@ -30,9 +30,9 @@
         {
             this.Label1 = new System.Windows.Forms.Label();
             this.dgvFamiliaUsuario = new System.Windows.Forms.DataGridView();
-            this.lblUsuario = new System.Windows.Forms.Label();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.lblUsuario = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFamiliaUsuario)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,15 +59,6 @@
             this.dgvFamiliaUsuario.TabIndex = 9;
             this.dgvFamiliaUsuario.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFamiliaUsuario_CellContentClick);
             // 
-            // lblUsuario
-            // 
-            this.lblUsuario.AutoSize = true;
-            this.lblUsuario.Location = new System.Drawing.Point(126, 44);
-            this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(56, 13);
-            this.lblUsuario.TabIndex = 12;
-            this.lblUsuario.Text = "USUARIO";
-            // 
             // Column1
             // 
             this.Column1.HeaderText = "Familia";
@@ -79,6 +70,15 @@
             this.Column3.HeaderText = "Otorgada";
             this.Column3.Name = "Column3";
             this.Column3.ReadOnly = true;
+            // 
+            // lblUsuario
+            // 
+            this.lblUsuario.AutoSize = true;
+            this.lblUsuario.Location = new System.Drawing.Point(126, 44);
+            this.lblUsuario.Name = "lblUsuario";
+            this.lblUsuario.Size = new System.Drawing.Size(56, 13);
+            this.lblUsuario.TabIndex = 12;
+            this.lblUsuario.Text = "USUARIO";
             // 
             // frmAdminFamiliaUsuario
             // 
@@ -92,6 +92,7 @@
             this.Text = "AdminFamiliaUsuario";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmAdminFamiliaUsuario_FormClosing);
             this.Load += new System.EventHandler(this.frmAdminFamiliaUsuario_Load);
+            this.Enter += new System.EventHandler(this.frmAdminFamiliaUsuario_Enter);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFamiliaUsuario)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -20,6 +20,24 @@ namespace DAL.Utils
             return conn;
         }
 
+        public static List<string> Tables { get; set; } = GetTables();
+
+        private static List<string> GetTables()
+        {
+            using (SqlConnection connection = Connection())
+            {
+                connection.Open();
+                DataTable schema = connection.GetSchema("Tables");
+                List<string> tableNames = new List<string>();
+                foreach (DataRow row in schema.Rows)
+                {
+                    tableNames.Add(row[2].ToString());
+                }
+
+                return tableNames;
+            }
+        }
+
         public static bool Exec(string query, object param = null)
         {
             using (var connection = SqlUtils.Connection())

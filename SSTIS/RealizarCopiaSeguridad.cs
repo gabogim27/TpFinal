@@ -99,5 +99,10 @@ namespace SSTIS
             Hide();
             e.Cancel = true;
         }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            Hide();
+        }
     }
 }

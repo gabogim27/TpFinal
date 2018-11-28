@@ -28,6 +28,11 @@ namespace SSTIS
 
         private void frmAdministracionPatenteUsuario_Load(object sender, EventArgs e)
         {
+            CargaInicial();
+        }
+
+        private void CargaInicial()
+        {
             UsuarioSeleccionado = Program.simpleInyectorContainer.GetInstance<IABMUsuarios>().usuarioSeleccionado();
             lblUsuario.Text = UsuarioSeleccionado.Email;
             dgvAdminPatenteUsuario.Rows.Clear();
@@ -105,6 +110,11 @@ namespace SSTIS
         {
             Hide();
             e.Cancel = true;
+        }
+
+        private void frmAdministracionPatenteUsuario_Enter(object sender, EventArgs e)
+        {
+            CargaInicial();
         }
     }
 }

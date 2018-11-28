@@ -14,9 +14,11 @@ namespace DAL.Dao
     public class PatenteDao : IPatenteDao
     {
         public IRepositorioBitacora RepositorioBitacora;
+        public IDigitoVerificador DigitoVerificador;
 
-        public PatenteDao(IRepositorioBitacora repositorioBitacora)
+        public PatenteDao(IRepositorioBitacora repositorioBitacora, IDigitoVerificador DigitoVerificador)
         {
+            this.DigitoVerificador = DigitoVerificador;
             this.RepositorioBitacora = repositorioBitacora;
         }
 
@@ -104,10 +106,9 @@ namespace DAL.Dao
         {
             try
             {
-                //var digitoVH =
-                //digitoVerificador.CalcularDVHorizontal(new List<string> { }, new List<int> {patenteId, usuarioId});
+                var digitoVH = DigitoVerificador.CalcularDVHorizontal(new List<string> { patenteId.ToString(), usuarioId.ToString() }, new List<int> { });
                 var queryString =
-                    $"INSERT INTO UsuarioPatente(IdPatente, IdUsuario, Negada, DVH) VALUES ('{patenteId}', '{usuarioId}', 0, 0)";
+                    $"INSERT INTO UsuarioPatente(IdPatente, IdUsuario, Negada, DVH) VALUES ('{patenteId}', '{usuarioId}', 0, {digitoVH})";
                 return SqlUtils.Exec(queryString);
             }
             catch (Exception ex)
@@ -217,9 +218,7 @@ namespace DAL.Dao
             var asignado = false;
             try
             {
-                //TODO: hacer el DVH mañana
-                var digitoVerificadorHorizontal = 0;
-                //digitoVerificador.CalcularDVHorizontal(new List<string>(), new List<int>() { familiaId, patenteId });
+                var digitoVerificadorHorizontal = DigitoVerificador.CalcularDVHorizontal(new List<string>() { familiaId.ToString(), patenteId.ToString() }, new List<int>() { });
                 asignado = SqlUtils.Exec($"INSERT INTO FamiliaPatente (IdFamilia, IdPatente, DVH) VALUES ('{familiaId}', '{patenteId}', {digitoVerificadorHorizontal})");
 
             }
@@ -371,11 +370,32 @@ namespace DAL.Dao
         {
             var returnValue = false;
 
-            var usuarioPatente = ConsultarUsuarioPatente(usuarioToDelete.IdUsuario).Select(x => x.IdPatente).ToList();
+            var usuarioPatentes = ConsultarUsuarioPatente(usuarioToDelete.IdUsuario).Select(x => x.IdPatente).ToList();
+            var familiasUsuario = new List<Guid>();
 
-            var familiasUsuario = usuarioToDelete.Familia.Select(x => x.IdFamilia).ToList();
 
-            foreach (var patente in usuarioPatente)
+            if (usuarioToDelete.Familia != null)
+            {
+                familiasUsuario = usuarioToDelete.Familia.Select(x => x.IdFamilia).ToList();
+
+            }
+
+            if (familiasUsuario.Any())
+            {
+                foreach (var idFam in familiasUsuario)
+                {
+                    returnValue = esPatenteFamiliaEnUso(usuarioToDelete.IdUsuario, idFam);
+                }
+            }
+            else
+            {
+                foreach (var usuPat in usuarioPatentes)
+                {
+                    returnValue = esPatenteFamiliaEnUso(usuarioToDelete.IdUsuario, null, usuPat);
+                }
+            }
+
+            foreach (var patente in usuarioPatentes)
             {
                 returnValue = EsPatenteEnUso(patente, usuarioToDelete.IdUsuario);
 
@@ -383,10 +403,6 @@ namespace DAL.Dao
                     break;
             }
 
-            foreach (var idFam in familiasUsuario)
-            {
-                returnValue = esPatenteFamiliaEnUso(idFam, usuarioToDelete.IdUsuario);
-            }
 
             return returnValue;
         }
@@ -403,50 +419,99 @@ namespace DAL.Dao
             {
                 returnValue = true;
             }
+            else if (usuarios.All(x => x != idUsuario))
+            {
+                returnValue = true;
+            }
 
             return returnValue;
         }
 
-        private bool esPatenteFamiliaEnUso(Guid idFam, Guid idUsuario)
+        private bool esPatenteFamiliaEnUso(Guid idUsuario, Guid? idFam = null, Guid? idPatente = null)
         {
             var returnValue = false;
-            var queryPatFamilia = string.Format("SELECT IdPatente FROM FamiliaPatente WHERE IdFamilia = '{0}'", idFam);
+            if (idFam != null)
+            {
+                var queryPatFamilia = string.Format("SELECT IdPatente FROM FamiliaPatente WHERE IdFamilia = '{0}'", idFam);
 
-            var patentesFamilia = new List<Guid>();
+                var patentesFamilia = new List<Guid>();
 
-            
+
                 patentesFamilia = SqlUtils.Exec<Guid>(queryPatFamilia);
 
-            var idsPat = string.Join(",", patentesFamilia);
-            idsPat = "'" + idsPat.Replace("", "'") + "'";
+                var idsPat = string.Join(",", patentesFamilia);
+                idsPat = "'" + idsPat.Replace("", "'") + "'";
 
-            ///Buscar como checkear que esa familia pertenezca a ese usuario SI otro usuario tiene la misma familia pero 
-            ///no tiene asignada la patente si la recibe por la familia puedo eliminar al usuario
-            var queryFamilias = string.Format("SELECT DISTINCT IdFamilia FROM FamiliaPatente WHERE IdPatente IN ({0})", idsPat);
-            var idDeFamilias = new List<Guid>();
-            var usuariosConFamilia = new List<Guid>();
+                ///Buscar como checkear que esa familia pertenezca a ese usuario SI otro usuario tiene la misma familia pero 
+                ///no tiene asignada la patente si la recibe por la familia puedo eliminar al usuario
+                var queryFamilias = string.Format("SELECT DISTINCT IdFamilia FROM FamiliaPatente WHERE IdPatente IN ({0})", idsPat);
+                var idDeFamilias = new List<Guid>();
+                var usuariosConFamilia = new List<Guid>();
 
 
-            
+
                 idDeFamilias = SqlUtils.Exec<Guid>(queryFamilias);
 
                 var idsFam = string.Join(",", idDeFamilias);
                 idsFam = "'" + idsFam.Replace("", "'") + "'";
 
-            var queryFamiliaUsuario = string.Format("SELECT DISTINCT IdUsuario FROM FamiliaUsuario WHERE IdFamilia IN ({0})", idsFam);
+                var queryFamiliaUsuario = string.Format("SELECT DISTINCT IdUsuario FROM FamiliaUsuario WHERE IdFamilia IN ({0})", idsFam);
 
-                usuariosConFamilia =SqlUtils.Exec<Guid>(queryFamiliaUsuario);
+                usuariosConFamilia = SqlUtils.Exec<Guid>(queryFamiliaUsuario);
 
-            ///si hay mas de un usuario con la familia que tiene la patente entonces si me la puedo sacar sin importar si yo soy el que tiene esa familia
-            if (usuariosConFamilia.Count > 1)
-            {
-                returnValue = true;
+                ///si hay mas de un usuario con la familia que tiene la patente entonces si me la puedo sacar sin importar si yo soy el que tiene esa familia
+                if (usuariosConFamilia.Count > 1)
+                {
+                    returnValue = true;
+                }
+                ////si otro tiene esa familia entonces yo me la puedo sacar
+                else if (usuariosConFamilia[0] != idUsuario)
+                {
+                    returnValue = true;
+                }
             }
-            ////si otro tiene esa familia entonces yo me la puedo sacar
-            else if (usuariosConFamilia[0] != idUsuario)
+            else
             {
-                returnValue = true;
+
+                var queryFamByPatente = string.Format("SELECT IdFamilia FROM FamiliaPatente WHERE IdPatente = '{0}'", idPatente);
+
+                var idsFamilia = new List<Guid>();
+
+
+                idsFamilia = SqlUtils.Exec<Guid>(queryFamByPatente);
+
+                var idsPat = string.Join(",", idsFamilia);
+                idsPat = "'" + idsPat.Replace("", "'") + "'";
+
+                ///Buscar como checkear que esa familia pertenezca a ese usuario SI otro usuario tiene la misma familia pero 
+                ///no tiene asignada la patente si la recibe por la familia puedo eliminar al usuario
+                var queryFamilias = string.Format("SELECT DISTINCT IdFamilia FROM FamiliaPatente WHERE IdPatente IN ({0})", idsPat);
+                var idDeFamilias = new List<Guid>();
+                var usuariosConFamilia = new List<Guid>();
+
+
+
+                idDeFamilias = SqlUtils.Exec<Guid>(queryFamilias);
+
+                var idsFam = string.Join(",", idDeFamilias);
+                idsFam = "'" + idsFam.Replace("", "'") + "'";
+
+                var queryFamiliaUsuario = string.Format("SELECT DISTINCT IdUsuario FROM FamiliaUsuario WHERE IdFamilia IN ({0})", idsFam);
+
+                usuariosConFamilia = SqlUtils.Exec<Guid>(queryFamiliaUsuario);
+
+                ///si hay mas de un usuario con la familia que tiene la patente entonces si me la puedo sacar sin importar si yo soy el que tiene esa familia
+                if (usuariosConFamilia.Count > 1)
+                {
+                    returnValue = true;
+                }
+                ////si otro tiene esa familia entonces yo me la puedo sacar
+                else if (usuariosConFamilia[0] != idUsuario)
+                {
+                    returnValue = true;
+                }
             }
+
 
 
             return returnValue;

@@ -34,6 +34,11 @@ namespace SSTIS
 
         private void frmAdminFamiliaUsuario_Load(object sender, EventArgs e)
         {
+            CargaInicial();
+        }
+
+        private void CargaInicial()
+        {
             UsuarioSeleccionado = Program.simpleInyectorContainer.GetInstance<IABMUsuarios>().usuarioSeleccionado();
             lblUsuario.Text = UsuarioSeleccionado.Email;
             dgvFamiliaUsuario.Rows.Clear();
@@ -99,6 +104,11 @@ namespace SSTIS
         {
             Hide();
             e.Cancel = true;
+        }
+
+        private void frmAdminFamiliaUsuario_Enter(object sender, EventArgs e)
+        {
+            CargaInicial();
         }
     }
 }

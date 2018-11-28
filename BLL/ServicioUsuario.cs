@@ -145,6 +145,11 @@ namespace BLL
             }
         }
 
+        public bool ReactivarUsuario(Usuario ObjDel)
+        {
+            return RepositorioUsuarioImplementor.ReactivarUsuario(ObjDel);
+        }
+
         public Usuario ObtenerUsuarioConEmail(string email)
         {
             return RepositorioUsuarioImplementor.ObtenerUsuarioConEmail(email);
@@ -163,6 +168,16 @@ namespace BLL
         public List<Patente> ObtenerPatentesDeUsuario(Guid usuarioId)
         {
             return RepositorioUsuarioImplementor.ObtenerPatentesDeUsuario(usuarioId);
+        }
+
+        public bool BloquearUsuario(Guid idUsuario)
+        {
+            return RepositorioUsuarioImplementor.BloquearUsuario(idUsuario);
+        }
+
+        public bool DesbloquearUsuario(Guid idUsuario)
+        {
+            return RepositorioUsuarioImplementor.DesBloquearUsuario(idUsuario);
         }
     }
 }

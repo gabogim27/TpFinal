@@ -33,28 +33,32 @@ namespace DAL.Impl
         public bool Create(Usuario ObjAlta)
         {
             var emailEncript = DES.Encrypt(ObjAlta.Email, Key, Iv);
-            var queryString = string.Format("INSERT INTO dbo.Usuario(IdUsuario, Nombre, Apellido, Password, Email, " +
-                "CantLoginsFallidos, Estado, IdDomicilio, IdContacto, IdIdioma, PrimerLogin, Sexo, Dvh) values " +
-                "('{0}','{1}','{2}','{3}','{4}',{5},{6},'{7}','{8}','{9}',{10}, '{11}', {12})",
-                ObjAlta.IdUsuario = Guid.NewGuid(),
-                ObjAlta.Nombre,
-                ObjAlta.Apellido,
-                ObjAlta.ContraseñaEncriptada,
-                emailEncript,
-                ObjAlta.CantIngresosFallidos = 0,
-                Convert.ToByte(ObjAlta.Estado = true),
-                ObjAlta.Domicilio.IdDomicilio,
-                ObjAlta.Contacto.IdContacto,
-                ObjAlta.IdIdioma,
-                Convert.ToByte(ObjAlta.PrimerLogin = true),
-                ObjAlta.Sexo,
-                ObjAlta.Dvh
-                );
+            var queryString = "INSERT INTO dbo.Usuario(IdUsuario, Nombre, Apellido, Password, Email, " +
+                              "CantLoginsFallidos, Estado, IdDomicilio, IdContacto, IdIdioma, PrimerLogin, Sexo, Dvh) values " +
+                              "(@idUsuario,@nombre,@apellido,@password,@email,@cantloginsFallios,@estado,@idDomicilio," +
+                              "@idContacto,@idIdioma,@primerLogin,@sexo,@dvh)";
+           
             var returnValue = false;
 
             try
             {
-                SqlUtils.Exec(queryString);
+                SqlUtils.Exec(queryString, new
+                {
+                    @idUsuario = ObjAlta.IdUsuario,
+                    @nombre = ObjAlta.Nombre,
+                    @apellido = ObjAlta.Apellido,
+                    @password = ObjAlta.ContraseñaEncriptada,
+                    @email = emailEncript,
+                    @cantloginsFallios = ObjAlta.CantIngresosFallidos = 0,
+                    @estado = Convert.ToByte(ObjAlta.Estado = true),
+                    @idDomicilio = ObjAlta.Domicilio.IdDomicilio,
+                    @idContacto = ObjAlta.Contacto.IdContacto,
+                    @idIdioma = ObjAlta.IdIdioma,
+                    @primerLogin = Convert.ToByte(ObjAlta.PrimerLogin = true),
+                    @sexo = ObjAlta.Sexo,
+                    @dvh = ObjAlta.Dvh
+                });
+
                 log.InfoFormat("Usuario con ID: {0} persistido correctamenete", ObjAlta.IdUsuario);
                 return !returnValue;
             }
@@ -113,16 +117,29 @@ namespace DAL.Impl
         {
             try
             {
-                var queryString = string.Format("delete from dbo.Usuario where " +
-                                                "IdUsuario = '{0}'",
-                    ObjDel.IdUsuario
-                );
+                var query = string.Format("Update Usuario set Estado = 0 where IdUsuario = '{0}'", ObjDel.IdUsuario);
 
-                return SqlUtils.Exec(queryString);
+                return SqlUtils.Exec(query);
             }
             catch (Exception e)
             {
                 log.ErrorFormat("Ocurrio un error al intentar eliminar el usuario: {0}", ObjDel.IdUsuario);
+            }
+
+            return false;
+        }
+
+        public bool ReactivarUsuario(BE.Usuario ObjDel)
+        {
+            try
+            {
+                var query = string.Format("Update Usuario set Estado = 1 where IdUsuario = '{0}'", ObjDel.IdUsuario);
+
+                return SqlUtils.Exec(query);
+            }
+            catch (Exception e)
+            {
+                log.ErrorFormat("Ocurrio un error al intentar reactivar el usuario: {0}", ObjDel.IdUsuario);
             }
 
             return false;
@@ -133,17 +150,18 @@ namespace DAL.Impl
             try
             {
                 var emailEcnript = DES.Encrypt(ObjUpd.Email, Key, Iv);
-                var queryString = string.Format("Update dbo.Usuario set " +
-                                                "Nombre = '{0}', Apellido = '{1}', Email = '{2}', " +
-                                                "Sexo = '{3}' where IdUsuario = '{4}'",
-                    ObjUpd.Nombre,
-                    ObjUpd.Apellido,
-                    emailEcnript,
-                    ObjUpd.Sexo,
-                    ObjUpd.IdUsuario
-                );
-
-                return SqlUtils.Exec(queryString);
+                var queryString = "Update dbo.Usuario set " +
+                                  "Nombre = @nombre, Apellido = @apellido, Email = @email, " +
+                                  "Sexo = @sexo where IdUsuario = @idUsuario";
+    
+                return SqlUtils.Exec(queryString, new
+                {
+                    @nombre = ObjUpd.Nombre,
+                    @apellido = ObjUpd.Nombre,
+                    @email = emailEcnript,
+                    @sexo = ObjUpd.Sexo,
+                    @idUsuario = ObjUpd.IdUsuario
+                });
             }
             catch (Exception e)
             {
@@ -157,6 +175,8 @@ namespace DAL.Impl
             var usuario = ObtenerUsuarioConEmail(email);
 
             if (usuario == null) return false;
+
+            if (usuario != null && !usuario.Estado) return false;
 
             if (!usuario.PrimerLogin)
             {
@@ -217,7 +237,7 @@ namespace DAL.Impl
             {
                 var queryString = string.Format("SELECT * FROM dbo.Usuario WHERE Email = '{0}'", DES.Encrypt(email, Key, Iv));
                 var usuario = SqlUtils.Exec<Usuario>(queryString).FirstOrDefault();
-                usuario.Email = DES.Encrypt(usuario.Email, Key, Iv);
+                usuario.Email = DES.Decrypt(usuario.Email, Key, Iv);
                 return usuario;
             }
             catch (Exception ex)
@@ -319,7 +339,7 @@ namespace DAL.Impl
         {
             try
             {
-                var query = string.Format("Update Usuario set Estado = 0 where IdUsuario = '{0}'", idUsuario);
+                var query = string.Format("Update Usuario set Bloqueado = 0 where IdUsuario = '{0}'", idUsuario);
                 var result = SqlUtils.Exec(query);
                 if (result)
                 {
@@ -344,7 +364,7 @@ namespace DAL.Impl
         {
             try
             {
-                var query = string.Format("Update Usuario set Estado = 1 and PrimerLogin = 1 where IdUsuario = '{0}'", idUsuario);
+                var query = string.Format("Update Usuario set Bloqueado = 1 and PrimerLogin = 1 where IdUsuario = '{0}'", idUsuario);
                 var result = SqlUtils.Exec(query);
                 if (result)
                 {

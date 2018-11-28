@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using BLL;
+using DAL.Interfaces;
 using EasyEncryption;
 
 namespace SSTIS
@@ -26,11 +27,15 @@ namespace SSTIS
         public IAdminPatenteUsuario AdminPatenteUsuario;
         public IServicioPatente ServicioPatente;
         public IServicioFamilia ServicioFamiliaImplementor;
+        public IServicioUsuario ServicioUsuarioImplementor;
+        private IDigitoVerificador DigitoVerificador;
 
         public INuevoUsuario nuevoUsuario { get; set; }
         public static Usuario usuario { get; set; }
         public const string Key = "bZr2URKx";
         public const string Iv = "HNtgQw0w";
+        private const string Entidad = "Usuario";
+        private static bool MostrarActivos { get; set; }
 
         public frmABMUsuarios(
             IServicio<Usuario> ServicioUsuario,
@@ -39,7 +44,8 @@ namespace SSTIS
             IServicio<Provincia> ServicioProvincia,
             IServicioLocalidad ServicioLocalidadImplementor, IAdminFamiliaUsuario AdminFamiliaUsuario,
             IAdminPatenteUsuario AdminPatenteUsuario, IServicioPatente ServicioPatente,
-            IServicioFamilia ServicioFamiliaImplementor)
+            IServicioFamilia ServicioFamiliaImplementor, IServicioUsuario ServicioUsuarioImplementor,
+            IDigitoVerificador DigitoVerificador)
         {
             InitializeComponent();
             this.ServicioUsuario = ServicioUsuario;
@@ -51,13 +57,15 @@ namespace SSTIS
             this.AdminPatenteUsuario = AdminPatenteUsuario;
             this.ServicioPatente = ServicioPatente;
             this.ServicioFamiliaImplementor = ServicioFamiliaImplementor;
+            this.ServicioUsuarioImplementor = ServicioUsuarioImplementor;
+            this.DigitoVerificador = DigitoVerificador;
         }
 
         public Usuario usuarioSeleccionado()
         {
             usuario.Familia = new List<Familia>();
             usuario.Familia = ServicioFamiliaImplementor.ObtenerFamiliasPorUsuario(usuario.IdUsuario);
- 
+
             return usuario;
         }
         //public ABMUsuarios(IRepository<Usuario> repository)
@@ -105,8 +113,15 @@ namespace SSTIS
 
         private void ABMUsuarios_Load(object sender, EventArgs e)
         {
+            CargarInicial();
+        }
+
+        private void CargarInicial()
+        {
             RestablecerControles();
+            MostrarActivos = true;
             cboLocalidad.Enabled = true;
+            gbGrillaUsuarios.Text = "Usuarios Activos";
             CargarComboProvincia();
             cboProvincia.SelectedIndex = -1;
             CargarColumnas();
@@ -153,7 +168,18 @@ namespace SSTIS
 
         private void CargarGrilla()
         {
-            var usuarios = ServicioUsuario.Retrive().OrderBy(x =>x.Email).ToList();
+            var usuarios = new List<Usuario>();
+            if (MostrarActivos)
+            {
+                gbGrillaUsuarios.Text = "Usuarios Activos";
+                usuarios = ServicioUsuario.Retrive().Where(x => x.Estado).OrderBy(x => x.Email).ToList();
+            }
+            else
+            {
+                gbGrillaUsuarios.Text = "Usuarios Inactivos";
+                usuarios = ServicioUsuario.Retrive().Where(x => !x.Estado).OrderBy(x => x.Email).ToList();
+            }
+
             dgvUsuarios.Rows.Clear();
 
             for (int i = 0; i < usuarios.Count; i++)
@@ -192,6 +218,15 @@ namespace SSTIS
                     {
                         if (ServicioUsuario.Update(usuarioToUpdate))
                         {
+                            if (DigitoVerificador.ComprobarPrimerDigito(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper())))
+                            {
+                                DigitoVerificador.InsertarDVVertical(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper()));
+                            }
+                            else
+                            {
+                                DigitoVerificador.ActualizarDVVertical(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper()));
+                            }
+
                             MessageBox.Show("Usuario actualizado correctamente");
                             CargarGrilla();
                             RestablecerControles();
@@ -399,17 +434,37 @@ namespace SSTIS
                 }
                 else
                 {
-                    var permitir = ServicioPatente.VerificarDatos(idsToDelete);
                     var usuariosToDelete = usuariosExistentes.Where(x => idsToDelete.Any(y => y == x.IdUsuario));
+                    //HACER UN CICLO PARA ITERAR POR TODOS LOS USUARIOS
+                    var permitir = ServicioPatente.CheckeoDePatentes(usuariosToDelete.First());
+
+                    if (usuariosToDelete.Any(x => !x.Estado))
+                    {
+                        MessageBox.Show("No es posible eliminar usuarios inactivos.");
+                        return;
+                    }
+
                     var confirmResult = MessageBox.Show("Esta seguro que desea eliminar los usuarios seleccionados?",
                         "Confirme baja de usuario",
                         MessageBoxButtons.YesNo);
                     if (confirmResult == DialogResult.Yes)
                     {
+
                         foreach (var usuarioToDelete in usuariosToDelete)
                         {
-                            if (ServicioPatente.CheckeoDePatentes(usuarioToDelete))
-                                ServicioUsuario.Delete(usuarioToDelete);
+                            //if (ServicioPatente.CheckeoDePatentes(usuarioToDelete))
+                            var borrado = ServicioUsuario.Delete(usuarioToDelete);
+                            if (borrado)
+                            {
+                                if (DigitoVerificador.ComprobarPrimerDigito(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper())))
+                                {
+                                    DigitoVerificador.InsertarDVVertical(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper()));
+                                }
+                                else
+                                {
+                                    DigitoVerificador.ActualizarDVVertical(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper()));
+                                }
+                            }
                         }
                         MessageBox.Show("Usuario/s eliminado/s correctamente.");
                     }
@@ -441,11 +496,11 @@ namespace SSTIS
             if (dgvUsuarios.SelectedRows.Count == 1)
             {
                 //El usuario logueado no puede modificar las patentes
-                if (Guid.Parse(dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString()) == LoginInfo.Usuario.IdUsuario)
-                {
-                    MessageBox.Show("No se puede modificar las patentes del usuario activo.");
-                    return;
-                }
+                //if (Guid.Parse(dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString()) == LoginInfo.Usuario.IdUsuario)
+                //{
+                //    MessageBox.Show("No se puede modificar las patentes del usuario activo.");
+                //    return;
+                //}
 
                 AdminPatenteUsuario.ShowDialog();
             }
@@ -488,6 +543,83 @@ namespace SSTIS
         {
             Hide();
             e.Cancel = true;
+        }
+
+        private void Button5_Click(object sender, EventArgs e)
+        {
+            if (dgvUsuarios.SelectedRows.Count == 1 && !usuarioSeleccionado().Bloqueado)
+            {
+                var confirmResult = MessageBox.Show("Esta seguro que desea bloquear el usuario seleccionado?",
+                    "Confirme bloqueo de usuario",
+                    MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    var bloqueado = ServicioUsuarioImplementor.BloquearUsuario(usuarioSeleccionado().IdUsuario);
+                    if (bloqueado)
+                    {
+                        MessageBox.Show("Usuario bloqueado correctamente.");
+                    }
+                }
+            }
+            else if (dgvUsuarios.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Debe seleccionar un usuario.");
+            }
+            else if (dgvUsuarios.SelectedRows.Count > 1)
+            {
+                MessageBox.Show("Se debe bloquear de a un usuario a la vez.");
+            }
+            else if (usuarioSeleccionado().Bloqueado)
+            {
+                MessageBox.Show("El usuario ya se encuentra bloqueado.");
+            }
+        }
+
+        private void btnMostrarActivos_Click(object sender, EventArgs e)
+        {
+            MostrarActivos = true;
+            CargarGrilla();
+        }
+
+        private void btnMostrarInactivos_Click(object sender, EventArgs e)
+        {
+            MostrarActivos = false;
+            CargarGrilla();
+        }
+
+        private void btnDesbloquear_Click(object sender, EventArgs e)
+        {
+            if (dgvUsuarios.SelectedRows.Count == 1 && usuarioSeleccionado().Bloqueado)
+            {
+                var confirmResult = MessageBox.Show("Esta seguro que desea desbloquear el usuario seleccionado?",
+                    "Confirme desbloqueo de usuario",
+                    MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    var bloqueado = ServicioUsuarioImplementor.DesbloquearUsuario(usuarioSeleccionado().IdUsuario);
+                    if (bloqueado)
+                    {
+                        MessageBox.Show("Usuario desbloqueado correctamente.");
+                    }
+                }
+            }
+            else if (dgvUsuarios.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Debe seleccionar un usuario.");
+            }
+            else if (dgvUsuarios.SelectedRows.Count > 1)
+            {
+                MessageBox.Show("Se debe desbloquear de a un usuario a la vez.");
+            }
+            else if (!usuarioSeleccionado().Bloqueado)
+            {
+                MessageBox.Show("El usuario ya se encuentra desbloqueado.");
+            }
+        }
+
+        private void frmABMUsuarios_Enter(object sender, EventArgs e)
+        {
+            CargarInicial();
         }
     }
 }

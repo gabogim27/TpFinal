@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using BE;
 using BLL;
 using BLL.Interfaces;
+using DAL.Interfaces;
 using DAL.Repositorios;
 using SSTIS.Interfaces;
 using SSTIS.MessageBoxHelper;
@@ -30,15 +31,17 @@ namespace SSTIS
         public IServicioPatente ServicioPatente;
         public IServicioFamilia ServicioFamiliaImplementor;
         public IServicioBitacora ServicioBitacoraImplementor;
+        public IDigitoVerificador DigitoVerificador;
         
         private static readonly List<Familia> listaFamilas = new List<Familia>();
         private static readonly List<Patente> listaPatentes = new List<Patente>();
+        private const string Entidad = "Usuario";
 
         public frmNuevoUsuario(IServicio<Usuario> servicioUsuario, IServicio<Localidad> servicioLocalidad,
             IServicio<Provincia> servicioProvincia, IServicioUsuario servicioUsuarioImplementor,
             IServicioLocalidad servicioLocalidadImplementor, IServicio<Familia> servicioFamilia,
             IServicioPatente servicioPatente, IServicioFamilia servicioFamiliaImplementor,
-            IServicioBitacora servicioBitacoraImplementor)
+            IServicioBitacora servicioBitacoraImplementor, IDigitoVerificador DigitoVerificador)
         {
             this.ServicioUsuario = servicioUsuario;
             this.ServicioLocalidad = servicioLocalidad;
@@ -49,6 +52,7 @@ namespace SSTIS
             this.ServicioPatente = servicioPatente;
             this.ServicioFamiliaImplementor = servicioFamiliaImplementor;
             this.ServicioBitacoraImplementor = servicioBitacoraImplementor;
+            this.DigitoVerificador = DigitoVerificador;
             InitializeComponent();
         }
 
@@ -58,14 +62,31 @@ namespace SSTIS
             {               
                 if (ValidarDatosIngresados())
                 {
-                    if (ServicioUsuarioImplementor.ObtenerUsuarioConEmail(txtEmail.Text.Trim()) != null)
+                    var usuarioExistente = ServicioUsuario.Retrive().FirstOrDefault(x => x.Email == txtEmail.Text.Trim());
+                    if (usuarioExistente != null)
                     {
+                        if (!usuarioExistente.Estado)
+                        {
+                            DialogResult dr = MessageBox.Show("Actualmente el usuario esta inactivo. Desea " +
+                                                              "reactivarlo nuevamente?", "Usuario Inactivo", MessageBoxButtons.YesNoCancel,
+                                MessageBoxIcon.Information);
+
+                            if (dr == DialogResult.Yes)
+                            {
+                                if (ServicioUsuarioImplementor.ReactivarUsuario(usuarioExistente))
+                                {
+                                    MessageBox.Show("Usuario Reactivado correctamente.");
+                                    return;
+                                }
+                            }
+                        }
+
                         //Registramos el intento fallido de nuevo usuario.
                         ServicioBitacoraImplementor.RegistrarEnBitacora(Log.Level.Baja.ToString(),
                             string.Format("Creacion de usuario fallida. Usuario con E-mail: {0} existente en BD.", txtEmail.Text.Trim()));
                         MessageBox.Show("El usuario ingresado ya existe.", "Usuario existente", MessageBoxButtons.OK);
                         lblUsuarioExistente.Visible = true;
-                        lblUsuarioExistente.Text = "Usuario Existente";
+                        lblUsuarioExistente.Text = "E-mail Existente";
                         lblUsuarioExistente.BackColor = Color.Red;
                         return;
                     }
@@ -78,11 +99,20 @@ namespace SSTIS
                     var creado = this.ServicioUsuario.Create(nuevoUsuario);
                     if (creado)
                     {
+                        if (DigitoVerificador.ComprobarPrimerDigito(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper())))
+                        {
+                            DigitoVerificador.InsertarDVVertical(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper()));
+                        }
+                        else
+                        {
+                            DigitoVerificador.ActualizarDVVertical(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper()));
+                        }
+
                         var familiasSeleccionadas = GetSelectedFamilies();
                         ServicioFamiliaImplementor.GuardarFamiliaUsuario(familiasSeleccionadas, nuevoUsuario.IdUsuario);
                         ServicioPatente.GuardarPatentesUsuario(GetSelectedPatentes(), nuevoUsuario.IdUsuario);
                         ServicioBitacoraImplementor.RegistrarEnBitacora(Log.Level.Alta.ToString(), 
-                            string.Format("Usuario con id: {0} creado correctamente.", nuevoUsuario.IdUsuario), nuevoUsuario);
+                            string.Format("Usuario con id: '{0}' creado correctamente.", nuevoUsuario.IdUsuario), nuevoUsuario);
                         MessageBox.Show("Usuario creado correctamente");
                     }
                     else
@@ -207,6 +237,11 @@ namespace SSTIS
 
         private void NuevoUsuario_Load(object sender, EventArgs e)
         {
+            CargaInicial();
+        }
+
+        private void CargaInicial()
+        {
             cboLocalidad.Enabled = false;
             CargarComboProvincia();
             cboProvincia.SelectedIndex = -1;
@@ -271,6 +306,11 @@ namespace SSTIS
             cboLocalidad.SelectedIndex = -1;
             cboLocalidad.Enabled = false;
             //CargarGrilla();
+        }
+
+        private void frmNuevoUsuario_Enter(object sender, EventArgs e)
+        {
+            CargaInicial();
         }
     }
 }

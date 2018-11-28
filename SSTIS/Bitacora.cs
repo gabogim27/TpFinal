@@ -142,7 +142,7 @@ namespace SSTIS
                 {
                     var email = UsuariosEnBitacora.FirstOrDefault(_ => _.IdUsuario == item.IdUsuario)?.Email;
                     DataRow row = table.NewRow();
-                    row["Fecha"] = item.Fecha.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                    row["Fecha"] = item.Fecha.Value.ToString("dd/MM/yyyy hh:mm:ss.fffffff tt");
                     row["Usuario"] = email;
                     row["Funcionalidad"] = item.Actividad;
                     row["Descripcion"] = item.InformacionAsociada;

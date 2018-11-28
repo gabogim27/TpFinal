@@ -25,6 +25,7 @@ namespace DAL.Repositorios
         }
         public bool Create(Usuario ObjAlta)
         {
+            ObjAlta.IdUsuario = Guid.NewGuid();
             int dvh = DigitoVerificador.CalcularDVHorizontal(new List<string>()
             {
                 ObjAlta.IdUsuario.ToString(), ObjAlta.Email, ObjAlta.Domicilio.IdDomicilio.ToString(),
@@ -50,12 +51,22 @@ namespace DAL.Repositorios
 
         public bool Update(Usuario ObjUpd)
         {
+            int dvh = DigitoVerificador.CalcularDVHorizontal(new List<string>()
+            {
+                ObjUpd.IdUsuario.ToString(), ObjUpd.Email, ObjUpd.Domicilio.IdDomicilio.ToString(),
+                ObjUpd.Contacto.IdContacto.ToString() }, new List<int>() { Convert.ToInt32(ObjUpd.Estado) });
+            ObjUpd.Dvh = dvh;
             return UsuarioDao.Update(ObjUpd);
         }
 
         public bool LogIn(string email, string contraseña)
         {
             return UsuarioDaoImplementor.LogIn(email, contraseña);
+        }
+
+        public bool ReactivarUsuario(Usuario ObjDel)
+        {
+            return UsuarioDaoImplementor.ReactivarUsuario(ObjDel);
         }
 
         public Usuario ObtenerUsuarioConEmail(string email)

@@ -98,6 +98,7 @@
             this.Text = "AdministracionPatenteUsuario";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmAdministracionPatenteUsuario_FormClosing);
             this.Load += new System.EventHandler(this.frmAdministracionPatenteUsuario_Load);
+            this.Enter += new System.EventHandler(this.frmAdministracionPatenteUsuario_Enter);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdminPatenteUsuario)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

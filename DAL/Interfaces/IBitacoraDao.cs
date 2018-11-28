@@ -10,13 +10,11 @@ namespace DAL.Interfaces
 
     public interface IBitacoraDao
     {
+        void RegistrarEnBitacora(string criticidad, string mensaje, Usuario usuario = null);
+
         void FiltrarBitacora(BitacoraFiltros filtros);
 
-        Bitacora LeerBitacoraConId(int bitacoraId);
-
-        int GenerarDVH(Usuario usu);
-
-        int ObtenerUltimoIdBitacora();
+        int GenerarDVH(Bitacora log);       
 
         List<Bitacora> LeerBitacoraPorUsuarioCriticidadYFecha(List<Guid> dUsuarios, List<string> criticidades, DateTime desde, DateTime hasta);
     }

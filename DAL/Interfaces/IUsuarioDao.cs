@@ -12,6 +12,8 @@ namespace DAL.Interfaces
     {
         bool LogIn(string email, string contraseña);
 
+        bool ReactivarUsuario(BE.Usuario ObjDel);
+
         bool CambiarPassword(Usuario usuario, string nuevaContraseña, bool primerLogin);
 
         Usuario ObtenerUsuarioConEmail(string email);

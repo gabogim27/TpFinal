@@ -376,6 +376,7 @@
             this.Text = "NuevoUsuario";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmNuevoUsuario_FormClosing);
             this.Load += new System.EventHandler(this.NuevoUsuario_Load);
+            this.Enter += new System.EventHandler(this.frmNuevoUsuario_Enter);
             this.GroupBox3.ResumeLayout(false);
             this.GroupBox2.ResumeLayout(false);
             this.GroupBox2.PerformLayout();

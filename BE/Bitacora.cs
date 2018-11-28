@@ -19,7 +19,7 @@
 
         public string InformacionAsociada { get; set; }
 
-        public Guid IdUsuario { get; set; }
+        public Guid? IdUsuario { get; set; }
 
         public int DVH { get; set; }
     }

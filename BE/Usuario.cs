@@ -19,7 +19,7 @@ namespace BE
         public Contacto Contacto { get; set; }
         public string ContraseñaEncriptada { get; set; }
         public int Dvh { get; set; }
-
+        public bool Bloqueado { get; set; }
         public List<Familia> Familia { get; set; }
 
         public List<Patente> Patentes { get; set; }

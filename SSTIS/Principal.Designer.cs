@@ -49,6 +49,7 @@
             this.AyudaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.CambiarIdiomaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.CerrarSesiónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cambiarContraseñaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -197,7 +198,8 @@
             // AyudaToolStripMenuItem1
             // 
             this.AyudaToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CambiarIdiomaToolStripMenuItem1});
+            this.CambiarIdiomaToolStripMenuItem1,
+            this.cambiarContraseñaToolStripMenuItem});
             this.AyudaToolStripMenuItem1.Name = "AyudaToolStripMenuItem1";
             this.AyudaToolStripMenuItem1.Size = new System.Drawing.Size(53, 20);
             this.AyudaToolStripMenuItem1.Text = "Ayuda";
@@ -205,7 +207,7 @@
             // CambiarIdiomaToolStripMenuItem1
             // 
             this.CambiarIdiomaToolStripMenuItem1.Name = "CambiarIdiomaToolStripMenuItem1";
-            this.CambiarIdiomaToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.CambiarIdiomaToolStripMenuItem1.Size = new System.Drawing.Size(182, 22);
             this.CambiarIdiomaToolStripMenuItem1.Text = "Cambiar Idioma";
             this.CambiarIdiomaToolStripMenuItem1.Click += new System.EventHandler(this.CambiarIdiomaToolStripMenuItem1_Click);
             // 
@@ -215,6 +217,13 @@
             this.CerrarSesiónToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
             this.CerrarSesiónToolStripMenuItem.Text = "Cerrar Sesión";
             this.CerrarSesiónToolStripMenuItem.Click += new System.EventHandler(this.CerrarSesiónToolStripMenuItem_Click);
+            // 
+            // cambiarContraseñaToolStripMenuItem
+            // 
+            this.cambiarContraseñaToolStripMenuItem.Name = "cambiarContraseñaToolStripMenuItem";
+            this.cambiarContraseñaToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.cambiarContraseñaToolStripMenuItem.Text = "Cambiar Contraseña";
+            this.cambiarContraseñaToolStripMenuItem.Click += new System.EventHandler(this.cambiarContraseñaToolStripMenuItem_Click);
             // 
             // frmPrincipal
             // 
@@ -257,5 +266,6 @@
         internal System.Windows.Forms.ToolStripMenuItem CambiarIdiomaToolStripMenuItem1;
         internal System.Windows.Forms.ToolStripMenuItem CerrarSesiónToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem administrarFamiliaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cambiarContraseñaToolStripMenuItem;
     }
 }

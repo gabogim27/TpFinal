@@ -105,6 +105,10 @@ namespace BLL
         {
             return RepositorioFamiliaImplementor.ObtenerFamiliasPorUsuario(usuarioId);
         }
-       
+
+        public List<Guid> ObtenerPatentesPorFamiliaId(Guid familiaId)
+        {
+            return RepositorioFamiliaImplementor.ObtenerPatentesPorFamiliaId(familiaId);
+        }
     }
 }

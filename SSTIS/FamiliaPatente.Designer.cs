@@ -104,6 +104,7 @@
             this.Text = "FamiliaPatente";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmAdmFamiliaPatente_FormClosing);
             this.Load += new System.EventHandler(this.frmAdmFamiliaPatente_Load);
+            this.Enter += new System.EventHandler(this.frmAdmFamiliaPatente_Enter);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdminFamiliaPatente)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

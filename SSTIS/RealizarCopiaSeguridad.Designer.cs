@@ -39,7 +39,7 @@
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblProgreso = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.btnCancelar = new System.Windows.Forms.Button();
+            this.btnVolver = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
@@ -98,6 +98,7 @@
             // 
             // cboVolumen
             // 
+            this.cboVolumen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboVolumen.FormattingEnabled = true;
             this.cboVolumen.Items.AddRange(new object[] {
             "1",
@@ -150,14 +151,15 @@
             this.progressBar1.Size = new System.Drawing.Size(286, 26);
             this.progressBar1.TabIndex = 44;
             // 
-            // btnCancelar
+            // btnVolver
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(342, 159);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(116, 32);
-            this.btnCancelar.TabIndex = 47;
-            this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnVolver.Location = new System.Drawing.Point(342, 159);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(116, 32);
+            this.btnVolver.TabIndex = 47;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // openFileDialog1
             // 
@@ -168,7 +170,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(466, 284);
-            this.Controls.Add(this.btnCancelar);
+            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.lblProgreso);
             this.Controls.Add(this.progressBar1);
@@ -202,7 +204,7 @@
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Label lblProgreso;
         private System.Windows.Forms.ProgressBar progressBar1;
-        internal System.Windows.Forms.Button btnCancelar;
+        internal System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }

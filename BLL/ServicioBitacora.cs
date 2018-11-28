@@ -30,17 +30,7 @@ namespace BLL
             throw new NotImplementedException();
         }
 
-        public Bitacora LeerBitacoraConId(int bitacoraId)
-        {
-            throw new NotImplementedException();
-        }
-
         public int GenerarDVH(Usuario usu)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int ObtenerUltimoIdBitacora()
         {
             throw new NotImplementedException();
         }

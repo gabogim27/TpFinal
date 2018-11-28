@@ -15,9 +15,11 @@ namespace DAL.Impl
     public class FamiliaDao : IDao<Familia>, IFamiliaDao
     {
         public IRepositorioBitacora RepositorioBitacora;
+        public IDigitoVerificador DigitoVerificador;
 
-        public FamiliaDao(IRepositorioBitacora repositorioBitacora)
+        public FamiliaDao(IRepositorioBitacora repositorioBitacora, IDigitoVerificador DigitoVerificador)
         {
+            this.DigitoVerificador = DigitoVerificador;
             this.RepositorioBitacora = repositorioBitacora;
         }
         public bool Create(BE.Familia ObjAlta)
@@ -118,8 +120,8 @@ namespace DAL.Impl
         {
             try
             {
-
-                string processQuery = string.Format("INSERT INTO FamiliaUsuario (IdFamilia, IdUsuario) VALUES ('{0}', '{1}')", familiaId, usuarioId);
+                var digitoVH = DigitoVerificador.CalcularDVHorizontal(new List<string> { familiaId.ToString(), usuarioId.ToString() }, new List<int> { });
+                string processQuery = string.Format("INSERT INTO FamiliaUsuario (IdFamilia, IdUsuario, DVH) VALUES ('{0}', '{1}', {2})", familiaId, usuarioId, digitoVH);
                 SqlUtils.Connection().Execute(processQuery);
 
                 return true;
@@ -166,6 +168,23 @@ namespace DAL.Impl
                     var queryString = $"SELECT IdPatente FROM FamiliaPatente WHERE FamiliaId = '{id}'";
                     patentes.AddRange(SqlUtils.Exec<Patente>(queryString));
                 }
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(), string.Format("Ocurrio une error al obtener las patentes por el familias. " +
+                                                                                                             "Error: {0}", ex.Message));
+            }
+            return patentes;
+        }
+
+        public List<Guid> ObtenerPatentesPorFamiliaId(Guid familiaId)
+        {
+            var patentes = new List<Guid>();
+
+            try
+            {
+                var queryString = $"SELECT IdPatente FROM FamiliaPatente WHERE IdFamilia = '{familiaId}'";
+                patentes.AddRange(SqlUtils.Exec<Guid>(queryString));
             }
             catch (Exception ex)
             {
@@ -271,7 +290,7 @@ namespace DAL.Impl
             var famIds = new List<Guid>();
             try
             {
-                var queryString = $"SELECT IdFamilia FROM FamiliaUsuario WHERE IdUsuario = {usuarioId}";
+                var queryString = $"SELECT IdFamilia FROM FamiliaUsuario WHERE IdUsuario = '{usuarioId}'";
 
                 famIds = SqlUtils.Exec<Guid>(queryString);
                 return famIds;
@@ -288,10 +307,10 @@ namespace DAL.Impl
 
         public List<Familia> ObtenerFamiliasPorUsuario(Guid usuarioId)
         {
-                var allFamilies = Retrive();
-                var familiaUsuario = ObtenerIdsFamiliasPorUsuario(usuarioId);
+            var allFamilies = Retrive();
+            var familiaUsuario = ObtenerIdsFamiliasPorUsuario(usuarioId);
 
-                return allFamilies.FindAll(x => familiaUsuario.Any(y => y == x.IdFamilia));
+            return allFamilies.FindAll(x => familiaUsuario.Any(y => y == x.IdFamilia));
         }
 
         public void BorrarFamiliaDeFamiliaPatente(Guid familiaId)
@@ -305,7 +324,7 @@ namespace DAL.Impl
             catch (Exception ex)
             {
                 RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(), String.Format("Ocurrio un error al borrar la familiaPatente " +
-                                                                                                             " Error: {0}",  ex.Message));
+                                                                                                             " Error: {0}", ex.Message));
             }
 
         }

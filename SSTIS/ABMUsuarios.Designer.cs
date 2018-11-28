@@ -36,7 +36,7 @@
             this.Label8 = new System.Windows.Forms.Label();
             this.Label6 = new System.Windows.Forms.Label();
             this.btnCrearUsuario = new System.Windows.Forms.Button();
-            this.Button6 = new System.Windows.Forms.Button();
+            this.btnDesbloquear = new System.Windows.Forms.Button();
             this.Button3 = new System.Windows.Forms.Button();
             this.Button5 = new System.Windows.Forms.Button();
             this.btnEliminarUsuario = new System.Windows.Forms.Button();
@@ -44,7 +44,9 @@
             this.GroupBox3 = new System.Windows.Forms.GroupBox();
             this.Button8 = new System.Windows.Forms.Button();
             this.btnEditarUsuario = new System.Windows.Forms.Button();
-            this.GroupBox4 = new System.Windows.Forms.GroupBox();
+            this.gbGrillaUsuarios = new System.Windows.Forms.GroupBox();
+            this.btnMostrarInactivos = new System.Windows.Forms.Button();
+            this.btnMostrarActivos = new System.Windows.Forms.Button();
             this.dgvUsuarios = new System.Windows.Forms.DataGridView();
             this.GroupBox2 = new System.Windows.Forms.GroupBox();
             this.txtCp = new System.Windows.Forms.TextBox();
@@ -63,7 +65,7 @@
             this.Label2 = new System.Windows.Forms.Label();
             this.Label1 = new System.Windows.Forms.Label();
             this.GroupBox3.SuspendLayout();
-            this.GroupBox4.SuspendLayout();
+            this.gbGrillaUsuarios.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
             this.GroupBox2.SuspendLayout();
             this.GroupBox1.SuspendLayout();
@@ -141,14 +143,15 @@
             this.btnCrearUsuario.UseVisualStyleBackColor = true;
             this.btnCrearUsuario.Click += new System.EventHandler(this.btnCrearUsuario_Click);
             // 
-            // Button6
+            // btnDesbloquear
             // 
-            this.Button6.Location = new System.Drawing.Point(6, 363);
-            this.Button6.Name = "Button6";
-            this.Button6.Size = new System.Drawing.Size(144, 30);
-            this.Button6.TabIndex = 9;
-            this.Button6.Text = "Desbloquear";
-            this.Button6.UseVisualStyleBackColor = true;
+            this.btnDesbloquear.Location = new System.Drawing.Point(6, 363);
+            this.btnDesbloquear.Name = "btnDesbloquear";
+            this.btnDesbloquear.Size = new System.Drawing.Size(144, 30);
+            this.btnDesbloquear.TabIndex = 9;
+            this.btnDesbloquear.Text = "Desbloquear";
+            this.btnDesbloquear.UseVisualStyleBackColor = true;
+            this.btnDesbloquear.Click += new System.EventHandler(this.btnDesbloquear_Click);
             // 
             // Button3
             // 
@@ -168,6 +171,7 @@
             this.Button5.TabIndex = 8;
             this.Button5.Text = "Bloquear ";
             this.Button5.UseVisualStyleBackColor = true;
+            this.Button5.Click += new System.EventHandler(this.Button5_Click);
             // 
             // btnEliminarUsuario
             // 
@@ -194,14 +198,14 @@
             this.GroupBox3.Controls.Add(this.Button8);
             this.GroupBox3.Controls.Add(this.btnCrearUsuario);
             this.GroupBox3.Controls.Add(this.btnEditarUsuario);
-            this.GroupBox3.Controls.Add(this.Button6);
+            this.GroupBox3.Controls.Add(this.btnDesbloquear);
             this.GroupBox3.Controls.Add(this.Button3);
             this.GroupBox3.Controls.Add(this.Button5);
             this.GroupBox3.Controls.Add(this.btnEliminarUsuario);
             this.GroupBox3.Controls.Add(this.btnAdmiFamilia);
-            this.GroupBox3.Location = new System.Drawing.Point(438, 12);
+            this.GroupBox3.Location = new System.Drawing.Point(839, 12);
             this.GroupBox3.Name = "GroupBox3";
-            this.GroupBox3.Size = new System.Drawing.Size(160, 422);
+            this.GroupBox3.Size = new System.Drawing.Size(160, 401);
             this.GroupBox3.TabIndex = 15;
             this.GroupBox3.TabStop = false;
             this.GroupBox3.Text = "Accion";
@@ -225,15 +229,37 @@
             this.btnEditarUsuario.UseVisualStyleBackColor = true;
             this.btnEditarUsuario.Click += new System.EventHandler(this.btnEditarUsuario_Click);
             // 
-            // GroupBox4
+            // gbGrillaUsuarios
             // 
-            this.GroupBox4.Controls.Add(this.dgvUsuarios);
-            this.GroupBox4.Location = new System.Drawing.Point(12, 12);
-            this.GroupBox4.Name = "GroupBox4";
-            this.GroupBox4.Size = new System.Drawing.Size(407, 187);
-            this.GroupBox4.TabIndex = 16;
-            this.GroupBox4.TabStop = false;
-            this.GroupBox4.Text = "Usuario";
+            this.gbGrillaUsuarios.Controls.Add(this.btnMostrarInactivos);
+            this.gbGrillaUsuarios.Controls.Add(this.btnMostrarActivos);
+            this.gbGrillaUsuarios.Controls.Add(this.dgvUsuarios);
+            this.gbGrillaUsuarios.Location = new System.Drawing.Point(12, 12);
+            this.gbGrillaUsuarios.Name = "gbGrillaUsuarios";
+            this.gbGrillaUsuarios.Size = new System.Drawing.Size(789, 279);
+            this.gbGrillaUsuarios.TabIndex = 16;
+            this.gbGrillaUsuarios.TabStop = false;
+            this.gbGrillaUsuarios.Text = "Usuario";
+            // 
+            // btnMostrarInactivos
+            // 
+            this.btnMostrarInactivos.Location = new System.Drawing.Point(434, 240);
+            this.btnMostrarInactivos.Name = "btnMostrarInactivos";
+            this.btnMostrarInactivos.Size = new System.Drawing.Size(144, 30);
+            this.btnMostrarInactivos.TabIndex = 12;
+            this.btnMostrarInactivos.Text = "Ver Usuarios Inactivos";
+            this.btnMostrarInactivos.UseVisualStyleBackColor = true;
+            this.btnMostrarInactivos.Click += new System.EventHandler(this.btnMostrarInactivos_Click);
+            // 
+            // btnMostrarActivos
+            // 
+            this.btnMostrarActivos.Location = new System.Drawing.Point(124, 240);
+            this.btnMostrarActivos.Name = "btnMostrarActivos";
+            this.btnMostrarActivos.Size = new System.Drawing.Size(144, 30);
+            this.btnMostrarActivos.TabIndex = 13;
+            this.btnMostrarActivos.Text = "Ver Usuarios Activos";
+            this.btnMostrarActivos.UseVisualStyleBackColor = true;
+            this.btnMostrarActivos.Click += new System.EventHandler(this.btnMostrarActivos_Click);
             // 
             // dgvUsuarios
             // 
@@ -244,7 +270,7 @@
             this.dgvUsuarios.Name = "dgvUsuarios";
             this.dgvUsuarios.ReadOnly = true;
             this.dgvUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUsuarios.Size = new System.Drawing.Size(385, 156);
+            this.dgvUsuarios.Size = new System.Drawing.Size(749, 215);
             this.dgvUsuarios.StandardTab = true;
             this.dgvUsuarios.TabIndex = 0;
             this.dgvUsuarios.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsuarios_CellClick);
@@ -264,7 +290,7 @@
             this.GroupBox2.Controls.Add(this.Label9);
             this.GroupBox2.Controls.Add(this.Label8);
             this.GroupBox2.Controls.Add(this.Label6);
-            this.GroupBox2.Location = new System.Drawing.Point(12, 414);
+            this.GroupBox2.Location = new System.Drawing.Point(412, 325);
             this.GroupBox2.Name = "GroupBox2";
             this.GroupBox2.Size = new System.Drawing.Size(361, 214);
             this.GroupBox2.TabIndex = 14;
@@ -327,7 +353,7 @@
             this.GroupBox1.Controls.Add(this.Label4);
             this.GroupBox1.Controls.Add(this.Label2);
             this.GroupBox1.Controls.Add(this.Label1);
-            this.GroupBox1.Location = new System.Drawing.Point(15, 205);
+            this.GroupBox1.Location = new System.Drawing.Point(15, 325);
             this.GroupBox1.Name = "GroupBox1";
             this.GroupBox1.Size = new System.Drawing.Size(361, 203);
             this.GroupBox1.TabIndex = 13;
@@ -419,17 +445,18 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(603, 616);
+            this.ClientSize = new System.Drawing.Size(1020, 558);
             this.Controls.Add(this.GroupBox3);
-            this.Controls.Add(this.GroupBox4);
+            this.Controls.Add(this.gbGrillaUsuarios);
             this.Controls.Add(this.GroupBox2);
             this.Controls.Add(this.GroupBox1);
             this.Name = "frmABMUsuarios";
             this.Text = "ABMUsuarios";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmABMUsuarios_FormClosing);
             this.Load += new System.EventHandler(this.ABMUsuarios_Load);
+            this.Enter += new System.EventHandler(this.frmABMUsuarios_Enter);
             this.GroupBox3.ResumeLayout(false);
-            this.GroupBox4.ResumeLayout(false);
+            this.gbGrillaUsuarios.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).EndInit();
             this.GroupBox2.ResumeLayout(false);
             this.GroupBox2.PerformLayout();
@@ -448,7 +475,7 @@
         internal System.Windows.Forms.Label Label8;
         internal System.Windows.Forms.Label Label6;
         internal System.Windows.Forms.Button btnCrearUsuario;
-        internal System.Windows.Forms.Button Button6;
+        internal System.Windows.Forms.Button btnDesbloquear;
         internal System.Windows.Forms.Button Button3;
         internal System.Windows.Forms.Button Button5;
         internal System.Windows.Forms.Button btnEliminarUsuario;
@@ -456,7 +483,7 @@
         internal System.Windows.Forms.GroupBox GroupBox3;
         internal System.Windows.Forms.Button Button8;
         internal System.Windows.Forms.Button btnEditarUsuario;
-        internal System.Windows.Forms.GroupBox GroupBox4;
+        internal System.Windows.Forms.GroupBox gbGrillaUsuarios;
         internal System.Windows.Forms.DataGridView dgvUsuarios;
         internal System.Windows.Forms.GroupBox GroupBox2;
         internal System.Windows.Forms.GroupBox GroupBox1;
@@ -474,5 +501,7 @@
         internal System.Windows.Forms.ComboBox cboLocalidad;
         internal System.Windows.Forms.TextBox txtCp;
         private System.Windows.Forms.Label label3;
+        internal System.Windows.Forms.Button btnMostrarActivos;
+        internal System.Windows.Forms.Button btnMostrarInactivos;
     }
 }

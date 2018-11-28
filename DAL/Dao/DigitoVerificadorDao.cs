@@ -8,18 +8,14 @@ using System.Data;
 using System.Data.SqlClient;
 using BE;
 using DAL.Utils;
+using log4net;
 
 namespace DAL.Impl
 {
     public class DigitoVerificadorDao : IDigitoVerificador
     {
-        private IRepositorioBitacora RepositorioBitacora;
-        public DigitoVerificadorDao(IRepositorioBitacora RepositorioBitacora)
-        {
-            this.RepositorioBitacora = RepositorioBitacora;
-        }
-
-        public List<string> Entidades { get; set; }
+        private static readonly ILog log = LogManager.GetLogger(typeof(DigitoVerificadorDao));
+        public List<string> Entidades { get; set; } = SqlUtils.Tables;
 
         public int CalcularDVHorizontal(List<string> columnasString, List<int> columnasInt)
         {
@@ -53,8 +49,7 @@ namespace DAL.Impl
             }
             catch (Exception ex)
             {
-                RepositorioBitacora.RegistrarEnBitacora(Log.Level.Alta.ToString(), string.Format("Error al " +
-                                                                                                 "sumar los DVH de la entidad: {0}. Error: {1}", entidad, ex.Message));
+                log.ErrorFormat(string.Format("Error al sumar los DVH de la entidad: {0}. Error: {1}", entidad, ex.Message));
             }
 
             return result;
@@ -65,17 +60,16 @@ namespace DAL.Impl
             try
             {
                 var digito = CalcularDVVertical(entidad);
+                var idDVV = Guid.NewGuid();
+                var queryString = "INSERT INTO DigitoVerificadorVertical(IdDVH, Entidad, ValorDigitoVerificador) VALUES(@idDVV, @entidad, @digito)";
 
-                var queryString = "INSERT INTO DigitoVerificadorVertical(Entidad, ValorDigitoVerificador) VALUES(@entidad, @digito)";
 
-
-                SqlUtils.Exec(queryString, new { @entidad = entidad, @digito = digito });
+                SqlUtils.Exec(queryString, new { @idDVV = idDVV, @entidad = entidad, @digito = digito });
 
             }
             catch (Exception ex)
             {
-                RepositorioBitacora.RegistrarEnBitacora(Log.Level.Alta.ToString(), string.Format("Error al " +
-                                                                                                 "agregar un registro en la tabla DVV. Error: {0}. ", ex.Message));
+                log.ErrorFormat(string.Format("Error al agregar un registro en la tabla DVV. Error: {0}. ", ex.Message));
             }
 
         }
@@ -93,8 +87,7 @@ namespace DAL.Impl
             }
             catch (Exception ex)
             {
-                RepositorioBitacora.RegistrarEnBitacora(Log.Level.Alta.ToString(), string.Format("Error al " +
-                                                                                                 "actualizar un registro en la tabla DVV. Error: {0}. ", ex.Message));
+                log.ErrorFormat(string.Format("Error al actualizar un registro en la tabla DVV. Error: {0}. ", ex.Message));
             }
 
         }
@@ -127,8 +120,7 @@ namespace DAL.Impl
             }
             catch (Exception ex)
             {
-                RepositorioBitacora.RegistrarEnBitacora(Log.Level.Alta.ToString(), string.Format("Error al " +
-                                                                                                 "consultar por la entidad: {0} en la tabla DVV. Error: {1}. ", entidades, ex.Message));
+                log.ErrorFormat(string.Format("Error al consultar por la entidad: {0} en la tabla DVV. Error: {1}. ", entidades, ex.Message));
             }
 
             return entidadesdic;

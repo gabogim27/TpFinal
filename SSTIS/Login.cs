@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using BE;
 using BLL.Interfaces;
+using DAL.Interfaces;
 using DAL.Utils;
 using log4net;
 using Microsoft.VisualBasic;
@@ -33,16 +34,21 @@ namespace SSTIS
         public IPrincipal Principal;
         public IServicioIdioma ServicioIdioma;
         public ISessionInfo SesionInfo;
-        private static readonly string ResourcesFilePath = "C:\\\\TPFinalDiploma\\\\TpFinal\\\\SSTIS\\\\\\Resources\\\\SpanishResources.resx";
-        
+        public IDigitoVerificador DigitoVerificador;
+        //private static readonly string ResourcesFilePath = "C:\\\\TPFinalDiploma\\\\TpFinal\\\\SSTIS\\\\\\Resources\\\\SpanishResources.resx";
+        private static readonly string ResourcesFilePath = LoginInfo.ResourcesFilePath;
+        public ICambiarContraseña CambiarContraseña { get; set; }
+
         public frmLogin(IServicio<Usuario> servicioUsuario, IServicioUsuario servicioUsuarioImplementor, 
-            IPrincipal principal, IServicioIdioma servicioIdioma, ISessionInfo SesionInfo)
+            IPrincipal principal, IServicioIdioma servicioIdioma, ISessionInfo SesionInfo, 
+            IDigitoVerificador DigitoVerificaor)
         {
             this.ServicioUsuario = servicioUsuario;
             this.ServicioUsuarioImplementor = servicioUsuarioImplementor;
             this.Principal = principal;
             this.ServicioIdioma = servicioIdioma;
             this.SesionInfo = SesionInfo;
+            this.DigitoVerificador = DigitoVerificaor;
             InitializeComponent();
         }
 
@@ -89,6 +95,11 @@ namespace SSTIS
             {
                 if (ServicioUsuarioImplementor.LogIn(email, contraseña))
                 {
+                    if (usuarioActivo.Bloqueado)
+                    {
+                        MessageBox.Show("Usuario Bloqueado. Por favor contacte al Administrador.");
+                    }
+
                     LoginInfo.Usuario = usuarioActivo;
                     LoginInfo.LenguajeSeleccionado = lenguajeSeleccionado;
                     SesionInfo.GuardarDatosSesionUsuario(LoginInfo.Usuario);
@@ -114,18 +125,19 @@ namespace SSTIS
             var usu = LoginInfo.Usuario;
             if (usu.PrimerLogin)
             {
-                var nuevaContraseña = Interaction.InputBox("Ingrese su nueva contraseña", "Nuevo contraseña", "");
-                var cambioExitoso = ServicioUsuarioImplementor.CambiarContraseña(usu, nuevaContraseña, true);
-                if (cambioExitoso)
-                {
-                    //Log.Info("Password Actualizado");
-                    MessageBox.Show("Su contraseña fue actualizada");
-                }
-                else
-                {
-                    //Log.Info("Fallo la actualizacion del password");
-                    MessageBox.Show("Error contraseña no actualizada");
-                }
+                CambiarContraseña.ShowDialog();
+                //var nuevaContraseña = Interaction.InputBox("Ingrese su nueva contraseña", "Nuevo contraseña", "");
+                //var cambioExitoso = ServicioUsuarioImplementor.CambiarContraseña(usu, nuevaContraseña, true);
+                //if (cambioExitoso)
+                //{
+                //    //Log.Info("Password Actualizado");
+                //    MessageBox.Show("Su contraseña fue actualizada");
+                //}
+                //else
+                //{
+                //    //Log.Info("Fallo la actualizacion del password");
+                //    MessageBox.Show("Error contraseña no actualizada");
+                //}
             }
         }
 
@@ -181,6 +193,18 @@ namespace SSTIS
             if (Alert.ConfirmationMessage("MSJ001", "Salir del sistema", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 this.Close();
+            }
+        }
+
+        private void ComprobarBaseDeDatos()
+        {
+            if (!DigitoVerificador.ComprobarIntegridad())
+            {
+                ////traducir
+                Alert.ShowSimpleAlert("Problema integridad base de datos, contacte al administrador", "MSJ000");
+
+                this.Close();
+
             }
         }
 
