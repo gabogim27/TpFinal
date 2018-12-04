@@ -367,14 +367,26 @@ namespace SSTIS
             cboLocalidad.ValueMember = "IdLocalidad";
         }
 
-        public bool CheckeoPatentes(Usuario usuario, bool requestFamilia = false, bool requestFamiliaUsuario = false, Guid? idFamiliaAQuitar = null)
+        public bool CheckeoPatentes(Usuario usuario, bool requestFamilia = false, bool requestFamiliaUsuario = false, Guid? idFamiliaAQuitar = null, bool esBorrado = false)
         {
+            CargarPatentesFamilia(usuario);
             var returnValue = true;
-
-            returnValue = ServicioPatente.CheckeoDePatentesParaBorrar(usuario, requestFamilia, requestFamiliaUsuario, idFamiliaAQuitar);
+            if (usuario.Patentes.Count > 0 || usuario.Familia.Count > 0)
+            {
+                returnValue = ServicioPatente.CheckeoDePatentesParaBorrar(usuario, requestFamilia, requestFamiliaUsuario, idFamiliaAQuitar, esBorrado);              
+            }
 
             return returnValue;
+        }
 
+        public void CargarPatentesFamilia(Usuario usuario)
+        {
+            usuario.Patentes = new List<Patente>();
+            usuario.Familia = new List<Familia>();
+
+            usuario.Familia = ServicioFamiliaImplementor.ObtenerFamiliasUsuario(usuario.IdUsuario);
+
+            usuario.Patentes.AddRange(ServicioUsuarioImplementor.ObtenerPatentesDeUsuario(usuario.IdUsuario));
         }
 
         private void btnEliminarUsuario_Click(object sender, EventArgs e)
@@ -442,7 +454,7 @@ namespace SSTIS
                     //HACER UN CICLO PARA ITERAR POR TODOS LOS USUARIOS
                     foreach (var usuariosABorrar in usuariosToDelete)
                     {
-                        var permitir = CheckeoPatentes(usuariosABorrar);
+                        var permitir = CheckeoPatentes(usuariosABorrar, false, false, null, true);
                         if (permitir)
                         {
                             listaUsuariosConfirmar.Add(usuariosABorrar);

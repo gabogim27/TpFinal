@@ -81,17 +81,17 @@ namespace SSTIS.Container
             container.Register<IRepositorioPatente, RepositorioPatente>(Lifestyle.Singleton);
             container.Register<IPatenteDao, PatenteDao>(Lifestyle.Singleton);
             //Formularios
-            container.Register<INuevoUsuario, frmNuevoUsuario>(Lifestyle.Transient);
-            container.Register<IABMUsuarios, frmABMUsuarios>(Lifestyle.Transient);
-            container.Register<ILogin, frmLogin>(Lifestyle.Transient);
-            container.Register<IPrincipal, frmPrincipal>(Lifestyle.Transient);
-            container.Register<IRealizarCopiaSeguridad, frmRealizarCopiaSeguridad>(Lifestyle.Transient);
-            container.Register<IRestaurarCopiaDeSeguridad, frmRestaurarCopiaDeSeguridad>(Lifestyle.Transient);
-            container.Register<IBitacora, SSTIS.frmBitacora>(Lifestyle.Transient);
-            container.Register<INuevaFamilia, frmNuevaFamilia>(Lifestyle.Transient);
-            container.Register<IABMFamilia, frmABMFamilia>(Lifestyle.Transient);
-            container.Register<IAdmPatenteFamilia, frmAdmFamiliaPatente>(Lifestyle.Transient);
-            container.Register<IModificarFamilia, frmModificarFamiliaPopup>(Lifestyle.Transient);
+            //container.Register<INuevoUsuario, frmNuevoUsuario>(Lifestyle.Transient);
+            ////container.Register<IABMUsuarios, frmABMUsuarios>(Lifestyle.Transient);
+            //container.Register<ILogin, frmLogin>(Lifestyle.Transient);
+            //container.Register<IPrincipal, frmPrincipal>(Lifestyle.Transient);
+            //container.Register<IRealizarCopiaSeguridad, frmRealizarCopiaSeguridad>(Lifestyle.Transient);
+            //container.Register<IRestaurarCopiaDeSeguridad, frmRestaurarCopiaDeSeguridad>(Lifestyle.Transient);
+            //container.Register<IBitacora, SSTIS.frmBitacora>(Lifestyle.Transient);
+            //container.Register<INuevaFamilia, frmNuevaFamilia>(Lifestyle.Transient);
+            //container.Register<IABMFamilia, frmABMFamilia>(Lifestyle.Transient);
+            //container.Register<IAdmPatenteFamilia, frmAdmFamiliaPatente>(Lifestyle.Transient);
+            //container.Register<IModificarFamilia, frmModificarFamiliaPopup>(Lifestyle.Transient);
             // Register your types, for instance
             container.Verify();
             return container;

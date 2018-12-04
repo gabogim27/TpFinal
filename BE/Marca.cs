@@ -6,10 +6,9 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class Familia
+    public class Marca
     {
-        public Guid IdFamilia { get; set; }
+        public Guid IdMarca { get; set; }
         public string Descripcion { get; set; }
-        public List<Patente> PatentesDeFamilia { get; set; }
     }
 }

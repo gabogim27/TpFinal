@@ -24,7 +24,7 @@ namespace DAL.Impl
         public const string Iv = "HNtgQw0w";
 
         public IRepositorioBitacora RepositorioBitacora;
-
+        
         public UsuarioDao(IRepositorioBitacora RepositorioBitacora)
         {
             this.RepositorioBitacora = RepositorioBitacora;
@@ -37,7 +37,7 @@ namespace DAL.Impl
                               "CantLoginsFallidos, Estado, IdDomicilio, IdContacto, IdIdioma, PrimerLogin, Sexo, Dvh) values " +
                               "(@idUsuario,@nombre,@apellido,@password,@email,@cantloginsFallios,@estado,@idDomicilio," +
                               "@idContacto,@idIdioma,@primerLogin,@sexo,@dvh)";
-           
+
             var returnValue = false;
 
             try
@@ -100,8 +100,26 @@ namespace DAL.Impl
                         .ToList();
                     foreach (var user in usuarios)
                     {
+                        user.Familia = new List<Familia>();
+                        user.Patentes = new List<Patente>();
                         user.Email = DES.Decrypt(user.Email, Key, Iv);
+                        //nos traemos la familia del usuario 
+                        var familias = GetFamiliasForUser(user.IdUsuario);
+                        if (familias != null)
+                        {
+                            user.Familia.AddRange(familias);
+                            //nos traemos las patentes asociadas a esa familia(si existe)
+                            foreach (var famusu in user.Familia)
+                            {
+                                famusu.PatentesDeFamilia = new List<Patente>();
+                                var patentesDeFamilia = TraerPatentesAsociadasAFamilia(famusu.IdFamilia);
+                                famusu.PatentesDeFamilia.AddRange(patentesDeFamilia);
+                            }
+                        }
+                        //Cargamos las patentes del usuario
+                        user.Patentes.AddRange(TraerPatentesAsociadasAUsuario(user.IdUsuario));
                     }
+
                     return usuarios;
                 }
 
@@ -111,6 +129,68 @@ namespace DAL.Impl
                 log.ErrorFormat("Hubo un error al traer la lista de usuarios: {0}", ex.Message);
             }
             return new List<Usuario>();
+        }
+
+        public List<Familia> GetFamiliasForUser(Guid idUsuario)
+        {
+            try
+            {
+                var query = string.Format("select famusu.IdFamilia, fam.Descripcion from FamiliaUsuario famusu" +
+                                          " inner join FAMILIA fam on fam.IdFamilia = famusu.IdFamilia" +
+                                          " where famusu.IdUsuario = '{0}'", idUsuario);
+                return SqlUtils.Exec<Familia>(query);
+
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
+                    string.Format("Ocurrio un error al buscar en FamiliaUsuario idUsuario: {0}. Error: {1}",
+                        idUsuario, ex.Message));
+            }
+
+            return null;
+        }
+
+        public List<Patente> TraerPatentesAsociadasAFamilia(Guid familiaId)
+        {
+            var patentes = new List<Patente>();
+            try
+            {
+                //var famIds = string.Join(",", familiaIds.Select(x => $"'{x}'"));
+                var query = string.Format("select fampat.IdPatente, pat.Descripcion from FamiliaPatente fampat" +
+                                          " inner join Patente pat on pat.IdPatente = fampat.IdPatente" +
+                                          " where fampat.IdFamilia = '{0}'", familiaId);
+                patentes = SqlUtils.Exec<Patente>(query);
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
+                    string.Format("Ocurrio un error al traer las patentes de la BD. Error: " +
+                                  "{0}", ex.Message));
+            }
+
+            return patentes;
+        }
+
+        public List<Patente> TraerPatentesAsociadasAUsuario(Guid usuarioId)
+        {
+            var patentes = new List<Patente>();
+            try
+            {
+                //var famIds = string.Join(",", familiaIds.Select(x => $"'{x}'"));
+                var query = string.Format("select usupat.IdPatente, pat.Descripcion, usupat.Negada from UsuarioPatente usupat" +
+                                          " inner join Patente pat on usupat.IdPatente = pat.IdPatente" +
+                                          " where usupat.IdUsuario = '{0}'", usuarioId);
+                patentes = SqlUtils.Exec<Patente>(query);
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
+                    string.Format("Ocurrio un error al traer las patentes de la BD. Error: " +
+                                  "{0}", ex.Message));
+            }
+
+            return patentes;
         }
 
         public bool Delete(BE.Usuario ObjDel)
@@ -153,7 +233,7 @@ namespace DAL.Impl
                 var queryString = "Update dbo.Usuario set " +
                                   "Nombre = @nombre, Apellido = @apellido, Email = @email, " +
                                   "Sexo = @sexo where IdUsuario = @idUsuario";
-    
+
                 return SqlUtils.Exec(queryString, new
                 {
                     @nombre = ObjUpd.Nombre,

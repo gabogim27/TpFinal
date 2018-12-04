@@ -29,17 +29,17 @@ namespace DAL.Repositorios
 
         public List<T> Retrive()
         {
-            throw new NotImplementedException();
+            return this.Dao.Retrive();
         }
 
         public bool Delete(T ObjDel)
         {
-            throw new NotImplementedException();
+            return this.Dao.Delete(ObjDel);
         }
 
         public bool Update(T ObjUpd)
         {
-            throw new NotImplementedException();
+            return this.Dao.Update(ObjUpd);
         }
     }
 }

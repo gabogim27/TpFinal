@@ -21,11 +21,13 @@ namespace SSTIS
         private IABMFamilia ABMFamilia;
         private ICambiarIdioma CambiarIdioma;
         private ICambiarContraseña CambiarContraseña;
+        private IPolizaWizard PolizaWizard;
         
         public frmPrincipal(IABMUsuarios abmUsuarios, ISessionInfo SessionInfo,
             IBitacora Bitacora, IRealizarCopiaSeguridad RealizarCopiaDeSeguridad,
             IRestaurarCopiaDeSeguridad RestaurarCopiaDeSeguridad, IABMFamilia ABMFamilia,
-            ICambiarIdioma CambiarIdioma, ICambiarContraseña CambiarContraseña)
+            ICambiarIdioma CambiarIdioma, ICambiarContraseña CambiarContraseña,
+            IPolizaWizard PolizaWizard)
         {
             this.SessionInfo = SessionInfo;
             this.ABMFamilia = ABMFamilia;
@@ -35,6 +37,7 @@ namespace SSTIS
             this.abmUsuarios = abmUsuarios;
             this.CambiarIdioma = CambiarIdioma;
             this.CambiarContraseña = CambiarContraseña;
+            this.PolizaWizard = PolizaWizard;
             InitializeComponent();
         }
 
@@ -114,6 +117,12 @@ namespace SSTIS
         {
             CambiarContraseña.MdiParent = this;
             CambiarContraseña.Show();
+        }
+
+        private void EmisiónDePólizasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PolizaWizard.MdiParent = this;
+            PolizaWizard.Show();
         }
     }
 }

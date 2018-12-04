@@ -46,6 +46,10 @@ namespace DAL.Interfaces
         bool CheckeoDePatentes(Usuario usuarioToDelete);
 
         bool CheckeoDePatentesParaBorrar(Usuario usuario, bool requestFamilia = false,
-            bool requestFamiliaUsuario = false, Guid? idAQuitar = null);
+            bool requestFamiliaUsuario = false, Guid? idAQuitar = null, bool esBorrado = false);
+
+        void BorrarListaPatentesUsuario(List<Guid> patentesId, Guid usuarioId);
+
+        List<UsuarioPatente> ConsultarUsuarioPatente(Guid usuarioId);
     }
 }

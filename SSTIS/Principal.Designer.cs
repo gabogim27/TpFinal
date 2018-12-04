@@ -48,8 +48,8 @@
             this.VisualizarBitácoraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AyudaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.CambiarIdiomaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.CerrarSesiónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cambiarContraseñaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CerrarSesiónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,19 +84,20 @@
             this.EmisiónDePólizasToolStripMenuItem,
             this.BuscarPólizaToolStripMenuItem});
             this.GestionPólizasToolStripMenuItem.Name = "GestionPólizasToolStripMenuItem";
-            this.GestionPólizasToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.GestionPólizasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.GestionPólizasToolStripMenuItem.Text = "Gestion Pólizas";
             // 
             // EmisiónDePólizasToolStripMenuItem
             // 
             this.EmisiónDePólizasToolStripMenuItem.Name = "EmisiónDePólizasToolStripMenuItem";
-            this.EmisiónDePólizasToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.EmisiónDePólizasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.EmisiónDePólizasToolStripMenuItem.Text = "Emisión de Pólizas";
+            this.EmisiónDePólizasToolStripMenuItem.Click += new System.EventHandler(this.EmisiónDePólizasToolStripMenuItem_Click);
             // 
             // BuscarPólizaToolStripMenuItem
             // 
             this.BuscarPólizaToolStripMenuItem.Name = "BuscarPólizaToolStripMenuItem";
-            this.BuscarPólizaToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.BuscarPólizaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.BuscarPólizaToolStripMenuItem.Text = "Ver Pólizas";
             // 
             // GestionClientesToolStripMenuItem
@@ -104,13 +105,13 @@
             this.GestionClientesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.VerClientesToolStripMenuItem});
             this.GestionClientesToolStripMenuItem.Name = "GestionClientesToolStripMenuItem";
-            this.GestionClientesToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.GestionClientesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.GestionClientesToolStripMenuItem.Text = "Gestion Clientes";
             // 
             // VerClientesToolStripMenuItem
             // 
             this.VerClientesToolStripMenuItem.Name = "VerClientesToolStripMenuItem";
-            this.VerClientesToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.VerClientesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.VerClientesToolStripMenuItem.Text = "Ver Datos Cliente";
             // 
             // GestionFacturasToolStripMenuItem
@@ -118,13 +119,13 @@
             this.GestionFacturasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.VerDetalleFacturaToolStripMenuItem});
             this.GestionFacturasToolStripMenuItem.Name = "GestionFacturasToolStripMenuItem";
-            this.GestionFacturasToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.GestionFacturasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.GestionFacturasToolStripMenuItem.Text = "Gestion Facturas";
             // 
             // VerDetalleFacturaToolStripMenuItem
             // 
             this.VerDetalleFacturaToolStripMenuItem.Name = "VerDetalleFacturaToolStripMenuItem";
-            this.VerDetalleFacturaToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.VerDetalleFacturaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.VerDetalleFacturaToolStripMenuItem.Text = "Ver Detalle Factura";
             // 
             // GestionVehiculosToolStripMenuItem
@@ -132,13 +133,13 @@
             this.GestionVehiculosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.VerVehiculoToolStripMenuItem});
             this.GestionVehiculosToolStripMenuItem.Name = "GestionVehiculosToolStripMenuItem";
-            this.GestionVehiculosToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.GestionVehiculosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.GestionVehiculosToolStripMenuItem.Text = "Gestion Vehiculos";
             // 
             // VerVehiculoToolStripMenuItem
             // 
             this.VerVehiculoToolStripMenuItem.Name = "VerVehiculoToolStripMenuItem";
-            this.VerVehiculoToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.VerVehiculoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.VerVehiculoToolStripMenuItem.Text = "Ver Datos Vehiculo";
             // 
             // AyudaToolStripMenuItem
@@ -211,19 +212,19 @@
             this.CambiarIdiomaToolStripMenuItem1.Text = "Cambiar Idioma";
             this.CambiarIdiomaToolStripMenuItem1.Click += new System.EventHandler(this.CambiarIdiomaToolStripMenuItem1_Click);
             // 
-            // CerrarSesiónToolStripMenuItem
-            // 
-            this.CerrarSesiónToolStripMenuItem.Name = "CerrarSesiónToolStripMenuItem";
-            this.CerrarSesiónToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
-            this.CerrarSesiónToolStripMenuItem.Text = "Cerrar Sesión";
-            this.CerrarSesiónToolStripMenuItem.Click += new System.EventHandler(this.CerrarSesiónToolStripMenuItem_Click);
-            // 
             // cambiarContraseñaToolStripMenuItem
             // 
             this.cambiarContraseñaToolStripMenuItem.Name = "cambiarContraseñaToolStripMenuItem";
             this.cambiarContraseñaToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.cambiarContraseñaToolStripMenuItem.Text = "Cambiar Contraseña";
             this.cambiarContraseñaToolStripMenuItem.Click += new System.EventHandler(this.cambiarContraseñaToolStripMenuItem_Click);
+            // 
+            // CerrarSesiónToolStripMenuItem
+            // 
+            this.CerrarSesiónToolStripMenuItem.Name = "CerrarSesiónToolStripMenuItem";
+            this.CerrarSesiónToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
+            this.CerrarSesiónToolStripMenuItem.Text = "Cerrar Sesión";
+            this.CerrarSesiónToolStripMenuItem.Click += new System.EventHandler(this.CerrarSesiónToolStripMenuItem_Click);
             // 
             // frmPrincipal
             // 

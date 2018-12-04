@@ -46,6 +46,6 @@ namespace BLL.Interfaces
         bool CheckeoDePatentes(Usuario usuarioToDelete);
 
         bool CheckeoDePatentesParaBorrar(Usuario usuario, bool requestFamilia = false,
-            bool requestFamiliaUsuario = false, Guid? idAQuitar = null);
+            bool requestFamiliaUsuario = false, Guid? idAQuitar = null, bool esBorrado = false);
     }
 }

@@ -114,9 +114,19 @@ namespace DAL.Repositorios
         }
 
         public bool CheckeoDePatentesParaBorrar(Usuario usuario, bool requestFamilia = false, bool requestFamiliaUsuario = false,
-            Guid? idAQuitar = null)
+            Guid? idAQuitar = null, bool esBorrado = false)
         {
-            return PatenteDao.CheckeoDePatentesParaBorrar(usuario, requestFamilia, requestFamiliaUsuario);
+            return PatenteDao.CheckeoDePatentesParaBorrar(usuario, requestFamilia, requestFamiliaUsuario, idAQuitar, esBorrado);
+        }
+
+        public void BorrarListaPatentesUsuario(List<Guid> patentesId, Guid usuarioId)
+        {
+            PatenteDao.BorrarListaPatentesUsuario(patentesId, usuarioId);
+        }
+
+        public List<UsuarioPatente> ConsultarUsuarioPatente(Guid usuarioId)
+        {
+            return PatenteDao.ConsultarUsuarioPatente(usuarioId);
         }
     }
 }

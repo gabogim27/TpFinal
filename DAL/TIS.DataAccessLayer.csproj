@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit.3.11.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.11.0\build\NUnit.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,6 +13,8 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,6 +43,9 @@
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="nunit.framework, Version=3.11.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.11.0\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="SimpleInjector, Version=4.3.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleInjector.4.3.0\lib\net45\SimpleInjector.dll</HintPath>
     </Reference>
@@ -54,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dao\BitacoraDao.cs" />
+    <Compile Include="Dao\ClienteDao.cs" />
     <Compile Include="Dao\ContactoDao.cs" />
     <Compile Include="Dao\DigitoVerificadorDao.cs" />
     <Compile Include="Dao\DomicilioDao.cs" />
@@ -61,8 +68,10 @@
     <Compile Include="Dao\IdiomaDao.cs" />
     <Compile Include="Dao\LocalidadDao.cs" />
     <Compile Include="Dao\PatenteDao.cs" />
+    <Compile Include="Dao\PolizaDao.cs" />
     <Compile Include="Dao\ProvinciaDao.cs" />
     <Compile Include="Dao\UsuarioDao.cs" />
+    <Compile Include="Dao\VehiculoDao.cs" />
     <Compile Include="Interfaces\IBitacoraDao.cs" />
     <Compile Include="Interfaces\IDao.cs" />
     <Compile Include="Interfaces\IDigitoVerificador.cs" />
@@ -70,17 +79,21 @@
     <Compile Include="Interfaces\IIdiomaDao.cs" />
     <Compile Include="Interfaces\ILocalidadDao.cs" />
     <Compile Include="Interfaces\IPatenteDao.cs" />
+    <Compile Include="Interfaces\IPolizaDao.cs" />
     <Compile Include="Interfaces\IProvinciaDao.cs" />
     <Compile Include="Interfaces\IRepositorioBitacora.cs" />
     <Compile Include="Interfaces\IRepositorioFamilia.cs" />
     <Compile Include="Interfaces\IRepositorioIdioma.cs" />
     <Compile Include="Interfaces\IRepositorioLocalidad.cs" />
     <Compile Include="Interfaces\IRepositorioPatente.cs" />
+    <Compile Include="Interfaces\IRepositorioPoliza.cs" />
     <Compile Include="Interfaces\IRepositorioProvincia.cs" />
     <Compile Include="Interfaces\IRepositorioUsuario.cs" />
     <Compile Include="Interfaces\IUsuarioDao.cs" />
+    <Compile Include="Interfaces\RepositorioPoliza.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\RepositorioBitacora.cs" />
+    <Compile Include="Repositorios\RepositorioCliente.cs" />
     <Compile Include="Repositorios\RepositorioContacto.cs" />
     <Compile Include="Repositorios\RepositorioDomicilio.cs" />
     <Compile Include="Repositorios\RepositorioFamilia.cs" />
@@ -106,6 +119,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NUnit.3.11.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.11.0\build\NUnit.props'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

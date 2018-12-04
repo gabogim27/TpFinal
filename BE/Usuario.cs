@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace BE
 {
     public class Usuario 
-    {
+    {       
         public Guid IdUsuario { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }

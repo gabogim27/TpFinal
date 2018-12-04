@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using BE;
 using BLL;
@@ -76,6 +77,15 @@ namespace SSTIS
             simpleInyectorContainer.Register<IServicioPatente, ServicioPatente>(Lifestyle.Singleton);
             simpleInyectorContainer.Register<IRepositorioPatente, RepositorioPatente>(Lifestyle.Singleton);
             simpleInyectorContainer.Register<IPatenteDao, PatenteDao>(Lifestyle.Singleton);
+            //Poliza
+            simpleInyectorContainer.Register<IPolizaDao, PolizaDao>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IRepositorioPoliza, RepositorioPoliza>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IServicioPoliza, ServicioPoliza>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IDao<Poliza>, PolizaDao>(Lifestyle.Singleton);
+            //Cliente
+            simpleInyectorContainer.Register<IDao<Cliente>, ClienteDao>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IRepository<Cliente>, RepositorioCliente>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IServicio<Cliente>, ServicioCliente>(Lifestyle.Singleton);
             //Formularios
             simpleInyectorContainer.Register<INuevoUsuario, frmNuevoUsuario>(Lifestyle.Singleton);
             simpleInyectorContainer.Register<IABMUsuarios, frmABMUsuarios>(Lifestyle.Singleton);
@@ -93,6 +103,7 @@ namespace SSTIS
             simpleInyectorContainer.Register<ISessionInfo, SessionInfo>(Lifestyle.Singleton);
             simpleInyectorContainer.Register<ICambiarIdioma, frmCambiarIdioma>(Lifestyle.Singleton);
             simpleInyectorContainer.Register<ICambiarContraseña, frmCambiarContraseña>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IPolizaWizard, PolizaWizard>(Lifestyle.Singleton);
             //ContainerConfig.Bootstrap();
             log4net.Config.XmlConfigurator.Configure();
             Application.EnableVisualStyles();

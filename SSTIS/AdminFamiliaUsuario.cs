@@ -22,10 +22,12 @@ namespace SSTIS
         private Usuario UsuarioSeleccionado = new Usuario();
         private List<Familia> Familias = new List<Familia>();
         private IServicioBitacora ServicioBitacora;
+        private IServicioPatente ServicioPatenteImplementor;
 
         public frmAdminFamiliaUsuario(IServicio<Familia> ServicioFamilia, IServicioFamilia ServicioFamiliaImplementor,
-            IServicioBitacora ServicioBitacora)
+            IServicioBitacora ServicioBitacora, IServicioPatente ServicioPatenteImplementor)
         {
+            this.ServicioPatenteImplementor = ServicioPatenteImplementor;
             this.ServicioBitacora = ServicioBitacora;
             this.ServicioFamilia = ServicioFamilia;
             this.ServicioFamiliaImplementor = ServicioFamiliaImplementor;
@@ -81,14 +83,21 @@ namespace SSTIS
                     }
                     else
                     {
-                        var result = ServicioFamiliaImplementor.BorrarFamiliaUsuario(idFamilia, UsuarioSeleccionado.IdUsuario);
-                        if (!result)
+                        if (CheckeoPatentes(UsuarioSeleccionado, false, true, idFamilia, false))
                         {
-                            ServicioBitacora.RegistrarEnBitacora(Log.Level.Alta.ToString(), 
-                                string.Format("Ocurrio un error al eliminar un registro de la relacion FamiliaUsuario. Familia: " +
-                                              "{0}, usuario: {1}", idFamilia, UsuarioSeleccionado.IdUsuario), UsuarioSeleccionado);
-                            MessageBox.Show("No se ha podido eliminar la relacion FamiliaUsuario. " +
-                                            "Por favor contacte al Administrador.");
+                            var result = ServicioFamiliaImplementor.BorrarFamiliaUsuario(idFamilia, UsuarioSeleccionado.IdUsuario);
+                            if (!result)
+                            {
+                                ServicioBitacora.RegistrarEnBitacora(Log.Level.Alta.ToString(),
+                                    string.Format("Ocurrio un error al eliminar un registro de la relacion FamiliaUsuario. Familia: " +
+                                                  "{0}, usuario: {1}", idFamilia, UsuarioSeleccionado.IdUsuario), UsuarioSeleccionado);
+                                MessageBox.Show("No se ha podido eliminar la relacion FamiliaUsuario. " +
+                                                "Por favor contacte al Administrador.");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("No puede quitar esta familia");
                         }
                     }
 
@@ -98,6 +107,16 @@ namespace SSTIS
             }
 
             CargarGrilla();
+        }
+
+        public bool CheckeoPatentes(Usuario usuario, bool requestFamilia = false, bool requestFamiliaUsuario = false, Guid? idFamiliaAQuitar = null, bool esBorrado = false)
+        {
+            var returnValue = true;
+
+            returnValue = ServicioPatenteImplementor.CheckeoDePatentesParaBorrar(usuario, requestFamilia, requestFamiliaUsuario, idFamiliaAQuitar, esBorrado);
+
+            return returnValue;
+
         }
 
         private void frmAdminFamiliaUsuario_FormClosing(object sender, FormClosingEventArgs e)
