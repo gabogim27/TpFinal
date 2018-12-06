@@ -86,6 +86,13 @@ namespace SSTIS
             simpleInyectorContainer.Register<IDao<Cliente>, ClienteDao>(Lifestyle.Singleton);
             simpleInyectorContainer.Register<IRepository<Cliente>, RepositorioCliente>(Lifestyle.Singleton);
             simpleInyectorContainer.Register<IServicio<Cliente>, ServicioCliente>(Lifestyle.Singleton);
+            //Poliza
+            simpleInyectorContainer.Register<IServicio<Vehiculo>, ServicioVehiculo>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IRepository<Vehiculo>, RepositorioVehiculo>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IDao<Vehiculo>, VehiculoDao>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IVehiculoDao, VehiculoDao>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IServicioVehiculo, ServicioVehiculo>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IRepositorioVehiculo, RepositorioVehiculo>(Lifestyle.Singleton);
             //Formularios
             simpleInyectorContainer.Register<INuevoUsuario, frmNuevoUsuario>(Lifestyle.Singleton);
             simpleInyectorContainer.Register<IABMUsuarios, frmABMUsuarios>(Lifestyle.Singleton);

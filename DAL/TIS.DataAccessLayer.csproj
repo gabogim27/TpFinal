@@ -89,7 +89,9 @@
     <Compile Include="Interfaces\IRepositorioPoliza.cs" />
     <Compile Include="Interfaces\IRepositorioProvincia.cs" />
     <Compile Include="Interfaces\IRepositorioUsuario.cs" />
+    <Compile Include="Interfaces\IRepositorioVehiculo.cs" />
     <Compile Include="Interfaces\IUsuarioDao.cs" />
+    <Compile Include="Interfaces\IVehiculoDao.cs" />
     <Compile Include="Interfaces\RepositorioPoliza.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\RepositorioBitacora.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="Repositorios\RepositorioPatente.cs" />
     <Compile Include="Repositorios\RepositorioProvincia.cs" />
     <Compile Include="Repositorios\RepositorioUsuario.cs" />
+    <Compile Include="Repositorios\RepositorioVehiculo.cs" />
     <Compile Include="Repositorios\Repository.cs" />
     <Compile Include="Utils\DalLogLevel.cs" />
     <Compile Include="Utils\SqlUtils.cs" />

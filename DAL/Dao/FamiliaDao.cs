@@ -50,7 +50,16 @@ namespace DAL.Impl
             try
             {
                 var query = "Select * from Familia";
-                return SqlUtils.Exec<Familia>(query);
+                var familias =  SqlUtils.Exec<Familia>(query);
+
+                foreach (var fam in familias)
+                {
+                    var listaPat = new List<Patente>();
+                    listaPat.AddRange(ObtenerPatentesPorFamiliaGUID(fam.IdFamilia));
+                    fam.PatentesDeFamilia = listaPat;
+                }
+
+                return familias;
             }
             catch (Exception ex)
             {

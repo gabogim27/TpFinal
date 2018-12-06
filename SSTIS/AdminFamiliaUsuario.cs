@@ -83,7 +83,7 @@ namespace SSTIS
                     }
                     else
                     {
-                        if (CheckeoPatentes(UsuarioSeleccionado, false, true, idFamilia, false))
+                        if (CheckeoPatentes(UsuarioSeleccionado, new Familia() {IdFamilia = idFamilia, Descripcion = familiaDescripcion}))
                         {
                             var result = ServicioFamiliaImplementor.BorrarFamiliaUsuario(idFamilia, UsuarioSeleccionado.IdUsuario);
                             if (!result)
@@ -109,11 +109,11 @@ namespace SSTIS
             CargarGrilla();
         }
 
-        public bool CheckeoPatentes(Usuario usuario, bool requestFamilia = false, bool requestFamiliaUsuario = false, Guid? idFamiliaAQuitar = null, bool esBorrado = false)
+        public bool CheckeoPatentes(Usuario usuario, Familia familia)
         {
             var returnValue = true;
 
-            returnValue = ServicioPatenteImplementor.CheckeoDePatentesParaBorrar(usuario, requestFamilia, requestFamiliaUsuario, idFamiliaAQuitar, esBorrado);
+            returnValue = ServicioPatenteImplementor.CheckeoFamiliaParaBorrar(usuario, familia);
 
             return returnValue;
 

@@ -25,12 +25,13 @@ namespace SSTIS
         public IServicio<Localidad> ServicioLocalidad;
         public IServicio<Provincia> ServicioProvincia;
         public IServicio<Cliente> ServicioCliente;
+        public IServicioVehiculo ServicioVehiculoImplementor;
 
         private decimal CantidadSumaAsegurada;
 
         public PolizaWizard(IServicioPoliza ServicioPolizaImplementor, IServicioUsuario ServicioUsuarioImplementor,
             IServicioLocalidad ServicioLocalidadImplementor, IServicio<Localidad> ServicioLocalidad, IServicio<Provincia> ServicioProvincia,
-            IServicio<Cliente> ServicioCliente)
+            IServicio<Cliente> ServicioCliente, IServicioVehiculo ServicioVehiculoImplementor)
         {
             this.ServicioUsuarioImplementor = ServicioUsuarioImplementor;
             this.ServicioPolizaImplementor = ServicioPolizaImplementor;
@@ -38,6 +39,7 @@ namespace SSTIS
             this.ServicioLocalidad = ServicioLocalidad;
             this.ServicioProvincia = ServicioProvincia;
             this.ServicioCliente = ServicioCliente;
+            this.ServicioVehiculoImplementor = ServicioVehiculoImplementor;
             InitializeComponent();
         }
 
@@ -291,6 +293,7 @@ namespace SSTIS
             btnBorrarImagen3.Visible = false;
             btnBorrarImagen4.Visible = false;
             CargarControlesVehiculo();
+            cboModelo.Enabled = false;
         }
 
         private void wizardDatosVehiculo_Commit(object sender, WizardPageConfirmEventArgs e)
@@ -300,12 +303,35 @@ namespace SSTIS
 
         private void ValidarDatosVehiculo()
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(txtPatente.Text.Trim()) && string.IsNullOrEmpty(txtNumSerie.Text.Trim()) &&
+                string.IsNullOrEmpty(txtNumChasis.Text.Trim()) && cboTipoUso.SelectedIndex == -1 &&
+                cboModelo.SelectedIndex == -1 && cboMarca.SelectedIndex == -1 && cboCombustible.SelectedIndex == -1 &&
+                cboColor.SelectedIndex == -1 && cboCantPuertas.SelectedIndex == -1)
+            {
+                MessageBox.Show("Por favor complete todos los datos del vehículo.");
+            }
         }
 
         private void CargarControlesVehiculo()
         {
-            throw new NotImplementedException();
+            CargarMarcas();
+            CargarTipoDeUsoVehiculo();
+        }
+
+        private void CargarTipoDeUsoVehiculo()
+        {
+            cboTipoUso.DataSource = ServicioVehiculoImplementor.TraerTipoDeUsosDeVehiculo();
+            cboTipoUso.DisplayMember = "Descripcion";
+            cboTipoUso.ValueMember = "IdTipoUso";
+            cboTipoUso.SelectedIndex = -1;
+        }
+
+        private void CargarMarcas()
+        {
+            cboMarca.DataSource = ServicioVehiculoImplementor.TraerMarcas();
+            cboMarca.DisplayMember = "Descripcion";
+            cboMarca.ValueMember = "IdMarca";
+            cboMarca.SelectedIndex = -1;
         }
 
 
@@ -335,6 +361,17 @@ namespace SSTIS
             pbFoto4.Image = null;
             pbFoto4.Refresh();
             btnBorrarImagen4.Visible = false;
+        }
+
+        private void cboMarca_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            cboModelo.Enabled = true;
+            var selectedMarca = Guid.Parse(cboMarca.SelectedValue.ToString());
+            var modelosPorMarca = ServicioVehiculoImplementor.TraerModelosPorMarca(selectedMarca);
+            cboModelo.DataSource = modelosPorMarca;
+            cboModelo.DisplayMember = "Descripcion";
+            cboModelo.ValueMember = "IdModelo";
+            cboModelo.SelectedIndex = -1;
         }
     }
 }

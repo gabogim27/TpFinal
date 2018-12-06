@@ -122,7 +122,6 @@ namespace DAL.Impl
 
                     return usuarios;
                 }
-
             }
             catch (Exception ex)
             {

@@ -802,15 +802,16 @@
             // 
             this.cboMarca.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboMarca.FormattingEnabled = true;
-            this.cboMarca.Location = new System.Drawing.Point(167, 172);
+            this.cboMarca.Location = new System.Drawing.Point(167, 143);
             this.cboMarca.Name = "cboMarca";
             this.cboMarca.Size = new System.Drawing.Size(121, 23);
             this.cboMarca.TabIndex = 36;
+            this.cboMarca.SelectionChangeCommitted += new System.EventHandler(this.cboMarca_SelectionChangeCommitted);
             // 
             // lblMarca
             // 
             this.lblMarca.AutoSize = true;
-            this.lblMarca.Location = new System.Drawing.Point(42, 172);
+            this.lblMarca.Location = new System.Drawing.Point(42, 146);
             this.lblMarca.Name = "lblMarca";
             this.lblMarca.Size = new System.Drawing.Size(43, 15);
             this.lblMarca.TabIndex = 35;
@@ -820,7 +821,7 @@
             // 
             this.cboModelo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboModelo.FormattingEnabled = true;
-            this.cboModelo.Location = new System.Drawing.Point(167, 143);
+            this.cboModelo.Location = new System.Drawing.Point(167, 172);
             this.cboModelo.Name = "cboModelo";
             this.cboModelo.Size = new System.Drawing.Size(121, 23);
             this.cboModelo.TabIndex = 34;
@@ -837,7 +838,7 @@
             // lblModelo
             // 
             this.lblModelo.AutoSize = true;
-            this.lblModelo.Location = new System.Drawing.Point(42, 143);
+            this.lblModelo.Location = new System.Drawing.Point(42, 175);
             this.lblModelo.Name = "lblModelo";
             this.lblModelo.Size = new System.Drawing.Size(51, 15);
             this.lblModelo.TabIndex = 8;

@@ -62,6 +62,7 @@
     <Compile Include="Interfaces\IServicioPoliza.cs" />
     <Compile Include="Interfaces\IServicioProvincia.cs" />
     <Compile Include="Interfaces\IServicioUsuario.cs" />
+    <Compile Include="Interfaces\IServicioVehiculo.cs" />
     <Compile Include="IServicioFamilia.cs" />
     <Compile Include="ServicioBitacora.cs" />
     <Compile Include="ServicioCliente.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="ServicioProvincia.cs" />
     <Compile Include="ServicioUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServicioVehiculo.cs" />
     <Compile Include="Utils\LogLevel.cs" />
     <Compile Include="Utils\Utils.cs" />
   </ItemGroup>

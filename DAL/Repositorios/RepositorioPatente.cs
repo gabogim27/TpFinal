@@ -128,5 +128,10 @@ namespace DAL.Repositorios
         {
             return PatenteDao.ConsultarUsuarioPatente(usuarioId);
         }
+
+        public bool CheckeoFamiliaParaBorrar(Usuario usuario = null, Familia familiaABorrar = null, Guid? idPatente = null)
+        {
+            return PatenteDao.CheckeoFamiliaParaBorrar(usuario, familiaABorrar, idPatente);
+        }
     }
 }

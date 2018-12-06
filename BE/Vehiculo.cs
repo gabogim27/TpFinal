@@ -19,5 +19,6 @@
         public string NumChasis { get; set; }
         public string NumSerie { get; set; }
         public string Patente { get; set; }
+        public string Año { get; set; }
     }
 }

@@ -20,14 +20,17 @@ namespace SSTIS
     public partial class frmAdmFamiliaPatente : Form, IAdmPatenteFamilia
     {
         private IServicioPatente ServicioPatente;
+        private IServicio<Familia> ServicioFamilia;
         private IServicioFamilia ServicioFamiliaImplementor;
         private List<Patente> listaPatente = new List<Patente>();
 
 
-        public frmAdmFamiliaPatente(IServicioPatente ServicioPatente, IServicioFamilia ServicioFamiliaImplementor)
+        public frmAdmFamiliaPatente(IServicioPatente ServicioPatente, IServicioFamilia ServicioFamiliaImplementor,
+            IServicio<Familia> ServicioFamilia)
         {
             this.ServicioFamiliaImplementor = ServicioFamiliaImplementor;
             this.ServicioPatente = ServicioPatente;
+            this.ServicioFamilia = ServicioFamilia;
             InitializeComponent();
         }
 
@@ -50,7 +53,7 @@ namespace SSTIS
 
         public void BorrarPatente(Guid familiaId, Guid patenteId)
         {
-            if (CheckeoPatentes(LoginInfo.Usuario, true))
+            if (CheckeoPatentes(ServicioFamilia.Retrive().FirstOrDefault(x => x.IdFamilia == familiaId), patenteId))
             {
                 var borrada = ServicioPatente.BorrarPatente(familiaId, patenteId);
                 if (borrada)
@@ -65,11 +68,11 @@ namespace SSTIS
 
         }
 
-        public bool CheckeoPatentes(Usuario usuario, bool requestFamilia = false, bool requestFamiliaUsuario = false, Guid? idFamiliaAQuitar = null)
+        public bool CheckeoPatentes(Familia familia, Guid patenteId)
         {
             var returnValue = true;
 
-            returnValue = ServicioPatente.CheckeoDePatentesParaBorrar(usuario, requestFamilia, requestFamiliaUsuario, idFamiliaAQuitar);
+            returnValue = ServicioPatente.CheckeoFamiliaParaBorrar(null, familia, patenteId);
 
             return returnValue;
 

@@ -51,5 +51,7 @@ namespace DAL.Interfaces
         void BorrarListaPatentesUsuario(List<Guid> patentesId, Guid usuarioId);
 
         List<UsuarioPatente> ConsultarUsuarioPatente(Guid usuarioId);
+
+        bool CheckeoFamiliaParaBorrar(Usuario usuario = null, Familia familiaABorrar = null, Guid? idPatente = null);
     }
 }

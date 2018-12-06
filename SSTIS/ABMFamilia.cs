@@ -90,11 +90,9 @@ namespace SSTIS
             foreach (var familiaToDelete in familiasAEliminar)
             {
                 var returnValue = false;
-                var usuarios = ServicioFamiliaImplementor.ObtenerUsuariosPorFamilia(ServicioFamiliaImplementor.ObtenerIdFamiliaPorDescripcion(familiaToDelete.Descripcion));
-
-                foreach (var usuario in usuarios)
-                {
-                    if (ServicioPatenteImplementor.CheckeoDePatentesParaBorrar(usuario, true))
+                
+                
+                    if (ServicioPatenteImplementor.CheckeoFamiliaParaBorrar(null, familiaToDelete, null))
                     {
                         returnValue = true;
                     }
@@ -102,9 +100,9 @@ namespace SSTIS
                     {
                         MessageBox.Show("La familia actualmente esta en uso");
                     }
-                }
+  
 
-                if (returnValue || (!returnValue && usuarios != null && usuarios.Count == 0))
+                if (returnValue)
                 {
                     var exitoso = ServicioFamilia.Delete(new Familia() { Descripcion = familiaToDelete.Descripcion, IdFamilia = ServicioFamiliaImplementor.ObtenerIdFamiliaPorDescripcion(familiaToDelete.Descripcion) });
                 }
