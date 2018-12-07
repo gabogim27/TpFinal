@@ -113,10 +113,9 @@ namespace DAL.Repositorios
             return PatenteDao.CheckeoDePatentes(usuarioToDelete);
         }
 
-        public bool CheckeoDePatentesParaBorrar(Usuario usuario, bool requestFamilia = false, bool requestFamiliaUsuario = false,
-            Guid? idAQuitar = null, bool esBorrado = false)
+        public bool CheckeoDePatentesParaBorrar(Usuario usuarioABorrar)
         {
-            return PatenteDao.CheckeoDePatentesParaBorrar(usuario, requestFamilia, requestFamiliaUsuario, idAQuitar, esBorrado);
+            return PatenteDao.CheckeoDePatentesParaBorrar(usuarioABorrar);
         }
 
         public void BorrarListaPatentesUsuario(List<Guid> patentesId, Guid usuarioId)
@@ -129,9 +128,9 @@ namespace DAL.Repositorios
             return PatenteDao.ConsultarUsuarioPatente(usuarioId);
         }
 
-        public bool CheckeoFamiliaParaBorrar(Usuario usuario = null, Familia familiaABorrar = null, Guid? idPatente = null)
+        public bool CheckeoFamiliaParaBorrar(Usuario usuario = null, Familia familiaABorrar = null, Guid? idPatente = null, bool esNegado = false)
         {
-            return PatenteDao.CheckeoFamiliaParaBorrar(usuario, familiaABorrar, idPatente);
+            return PatenteDao.CheckeoFamiliaParaBorrar(usuario, familiaABorrar, idPatente, esNegado);
         }
     }
 }

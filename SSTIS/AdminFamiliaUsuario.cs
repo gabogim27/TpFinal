@@ -75,22 +75,22 @@ namespace SSTIS
 
                     bool isChecked = (bool)checkbox.EditedFormattedValue;
                     var familiaDescripcion = dgvFamiliaUsuario.CurrentRow.Cells[0].Value.ToString();
-                    var idFamilia = Familias.FirstOrDefault(f => f.Descripcion == familiaDescripcion).IdFamilia;
+                    var familiaChequeada = Familias.FirstOrDefault(f => f.Descripcion == familiaDescripcion);
                     //Otorgada
                     if (checkbox.ColumnIndex == 1 && isChecked)
                     {
-                        ServicioFamiliaImplementor.GuardarFamiliasUsuario(idFamilia, UsuarioSeleccionado.IdUsuario);
+                        ServicioFamiliaImplementor.GuardarFamiliasUsuario(familiaChequeada.IdFamilia, UsuarioSeleccionado.IdUsuario);
                     }
                     else
                     {
-                        if (CheckeoPatentes(UsuarioSeleccionado, new Familia() {IdFamilia = idFamilia, Descripcion = familiaDescripcion}))
+                        if (CheckeoPatentes(null, familiaChequeada))
                         {
-                            var result = ServicioFamiliaImplementor.BorrarFamiliaUsuario(idFamilia, UsuarioSeleccionado.IdUsuario);
+                            var result = ServicioFamiliaImplementor.BorrarFamiliaUsuario(familiaChequeada.IdFamilia, UsuarioSeleccionado.IdUsuario);
                             if (!result)
                             {
                                 ServicioBitacora.RegistrarEnBitacora(Log.Level.Alta.ToString(),
                                     string.Format("Ocurrio un error al eliminar un registro de la relacion FamiliaUsuario. Familia: " +
-                                                  "{0}, usuario: {1}", idFamilia, UsuarioSeleccionado.IdUsuario), UsuarioSeleccionado);
+                                                  "{0}, usuario: {1}", familiaChequeada.IdFamilia, UsuarioSeleccionado.IdUsuario), UsuarioSeleccionado);
                                 MessageBox.Show("No se ha podido eliminar la relacion FamiliaUsuario. " +
                                                 "Por favor contacte al Administrador.");
                             }

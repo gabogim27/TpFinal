@@ -367,13 +367,13 @@ namespace SSTIS
             cboLocalidad.ValueMember = "IdLocalidad";
         }
 
-        public bool CheckeoPatentes(Usuario usuario, bool requestFamilia = false, bool requestFamiliaUsuario = false, Guid? idFamiliaAQuitar = null, bool esBorrado = false)
+        public bool CheckeoPatentes(Usuario usuario)
         {
-            CargarPatentesFamilia(usuario);
+            //CargarPatentesFamilia(usuario);
             var returnValue = true;
             if (usuario.Patentes.Count > 0 || usuario.Familia.Count > 0)
             {
-                returnValue = ServicioPatente.CheckeoDePatentesParaBorrar(usuario, requestFamilia, requestFamiliaUsuario, idFamiliaAQuitar, esBorrado);              
+                returnValue = ServicioPatente.CheckeoDePatentesParaBorrar(usuario);              
             }
 
             return returnValue;
@@ -454,7 +454,7 @@ namespace SSTIS
                     //HACER UN CICLO PARA ITERAR POR TODOS LOS USUARIOS
                     foreach (var usuariosABorrar in usuariosToDelete)
                     {
-                        var permitir = CheckeoPatentes(usuariosABorrar, false, false, null, true);
+                        var permitir = CheckeoPatentes(usuariosABorrar);
                         if (permitir)
                         {
                             listaUsuariosConfirmar.Add(usuariosABorrar);

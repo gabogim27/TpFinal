@@ -59,11 +59,11 @@ namespace SSTIS
             }
         }
 
-        public bool CheckeoPatentes(Usuario usuario)
+        public bool CheckeoPatentes(Guid idPatente, bool esNegada = false)
         {
             var returnValue = true;
 
-            returnValue = ServicioPatente.CheckeoDePatentesParaBorrar(usuario);
+            returnValue = ServicioPatente.CheckeoFamiliaParaBorrar(null, null, idPatente, esNegada);
 
             return returnValue;
 
@@ -88,7 +88,7 @@ namespace SSTIS
                     }
                     else if (checkbox.ColumnIndex == 1 && !isChecked)
                     {
-                        if (CheckeoPatentes(UsuarioSeleccionado))
+                        if (CheckeoPatentes(idPatente))
                         {
                             ServicioPatente.BorrarPatenteUsuario(idPatente, UsuarioSeleccionado.IdUsuario);
                         }
@@ -107,7 +107,7 @@ namespace SSTIS
 
                         if (existePatenteUsuario.Count > 0)
                         {
-                            if (CheckeoPatentes(UsuarioSeleccionado))
+                            if (CheckeoPatentes(idPatente, true))
                             {
                                 ServicioPatente.NegarPatenteUsuario(idPatente, UsuarioSeleccionado.IdUsuario);
                             }
@@ -117,7 +117,7 @@ namespace SSTIS
                             }
 
                         }
-                        else if (CheckeoPatentes(UsuarioSeleccionado))
+                        else if (CheckeoPatentes(idPatente, true))
                         {
                             //Primerio guardamos la patente y luego la negamos
                             ServicioPatente.GuardarPatenteUsuario(idPatente, UsuarioSeleccionado.IdUsuario);
