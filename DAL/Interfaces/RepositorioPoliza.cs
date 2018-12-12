@@ -22,6 +22,11 @@ namespace DAL.Interfaces
             return PolizaDaoImplementor.TraerUlitmoNumeroDePoliza();
         }
 
+        public bool Create(Poliza entity)
+        {
+            return PolizaDaoImplementor.Create(entity);
+        }
+
         public List<Cobertura> TraerCoberturas()
         {
             return PolizaDaoImplementor.TraerCoberturas();

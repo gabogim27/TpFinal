@@ -10,8 +10,9 @@
     {
         public Guid IdPoliza { get; set; }
         public DetallePoliza Detalle { get; set; }
-        public Guid IdCliente { get; set; }//CAMBIARLO AL OBJETO
+        public Cliente Cliente { get; set; }
         public bool Estado { get; set; }
         public int NroPoliza { get; set; }
+        public DateTime FechaEmision { get; set; }
     }
 }

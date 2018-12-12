@@ -20,10 +20,10 @@ namespace DAL.Dao
         }
         public bool Create(Vehiculo entity)
         {
-            var queryString = "INSERT INTO dbo.Usuario(IdVehiculo, IdTipoUso, IdTipoVehiculo, IdMarca, IdModelo, " +
-                              "CantPuertas, Color, Combustible, NumChasis, NumSerie, Patente, Año) values " +
-                              "(@idVehiculo,@idTipoUso,@idTipoVehiculo,@idMarca,@idModelo,@canPuertas,@color,@combustible," +
-                              "@numchasis,@numserie,@patente,@año)";
+            var queryString = "INSERT INTO dbo.Vehiculo(IdVehiculo, IdTipoUso, IdMarca, IdModelo, " +
+                              "CantPuertas, Color, Combustible, NumChasis, NumSerie, Patente, Año, Foto1, Foto2, Foto3, Foto4) values " +
+                              "(@idVehiculo,@idTipoUso,@idMarca,@idModelo,@canPuertas,@color,@combustible," +
+                              "@numchasis,@numserie,@patente,@año, @foto1, @foto2, @foto3, @foto4)";
 
             var returnValue = false;
 
@@ -33,7 +33,6 @@ namespace DAL.Dao
                 {
                     @idVehiculo = entity.IdVehiculo,
                     @idTipoUso = entity._TipoUso.IdTipoUso,
-                    @idTipoVehiculo = entity._TipoVehiculo.IdTipoVehiculo,
                     @idMarca = entity.Marca.IdMarca,
                     @idModelo = entity.Modelo.IdModelo,
                     @canPuertas = entity.CantPuertas,
@@ -42,7 +41,11 @@ namespace DAL.Dao
                     @numchasis = entity.NumChasis,
                     @numserie = entity.NumSerie,
                     @patente = entity.Patente,
-                    @año = entity.Año
+                    @año = entity.Año,
+                    @foto1 = entity.Foto1,
+                    @foto2 = entity.Foto2,
+                    @foto3 = entity.Foto3,
+                    @foto4 = entity.Foto4
                 });
 
                  RepositorioBitacora.RegistrarEnBitacora(Log.Level.Alta.ToString(), string.Format("Usuario con ID: {0} persistido correctamenete", entity.IdVehiculo));

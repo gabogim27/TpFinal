@@ -38,7 +38,7 @@
             this.btnCrearUsuario = new System.Windows.Forms.Button();
             this.btnDesbloquear = new System.Windows.Forms.Button();
             this.Button3 = new System.Windows.Forms.Button();
-            this.Button5 = new System.Windows.Forms.Button();
+            this.btnBloquear = new System.Windows.Forms.Button();
             this.btnEliminarUsuario = new System.Windows.Forms.Button();
             this.btnAdmiFamilia = new System.Windows.Forms.Button();
             this.GroupBox3 = new System.Windows.Forms.GroupBox();
@@ -163,15 +163,15 @@
             this.Button3.UseVisualStyleBackColor = true;
             this.Button3.Click += new System.EventHandler(this.Button3_Click);
             // 
-            // Button5
+            // btnBloquear
             // 
-            this.Button5.Location = new System.Drawing.Point(9, 177);
-            this.Button5.Name = "Button5";
-            this.Button5.Size = new System.Drawing.Size(144, 30);
-            this.Button5.TabIndex = 8;
-            this.Button5.Text = "Bloquear ";
-            this.Button5.UseVisualStyleBackColor = true;
-            this.Button5.Click += new System.EventHandler(this.Button5_Click);
+            this.btnBloquear.Location = new System.Drawing.Point(9, 177);
+            this.btnBloquear.Name = "btnBloquear";
+            this.btnBloquear.Size = new System.Drawing.Size(144, 30);
+            this.btnBloquear.TabIndex = 8;
+            this.btnBloquear.Text = "Bloquear ";
+            this.btnBloquear.UseVisualStyleBackColor = true;
+            this.btnBloquear.Click += new System.EventHandler(this.Button5_Click);
             // 
             // btnEliminarUsuario
             // 
@@ -200,7 +200,7 @@
             this.GroupBox3.Controls.Add(this.btnEditarUsuario);
             this.GroupBox3.Controls.Add(this.btnDesbloquear);
             this.GroupBox3.Controls.Add(this.Button3);
-            this.GroupBox3.Controls.Add(this.Button5);
+            this.GroupBox3.Controls.Add(this.btnBloquear);
             this.GroupBox3.Controls.Add(this.btnEliminarUsuario);
             this.GroupBox3.Controls.Add(this.btnAdmiFamilia);
             this.GroupBox3.Location = new System.Drawing.Point(839, 12);
@@ -477,7 +477,7 @@
         internal System.Windows.Forms.Button btnCrearUsuario;
         internal System.Windows.Forms.Button btnDesbloquear;
         internal System.Windows.Forms.Button Button3;
-        internal System.Windows.Forms.Button Button5;
+        internal System.Windows.Forms.Button btnBloquear;
         internal System.Windows.Forms.Button btnEliminarUsuario;
         internal System.Windows.Forms.Button btnAdmiFamilia;
         internal System.Windows.Forms.GroupBox GroupBox3;

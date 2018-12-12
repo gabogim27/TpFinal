@@ -10,7 +10,7 @@ namespace BLL.Interfaces
     public interface IServicioPoliza
     {
         int TraerUlitmoNumeroDePoliza();
-
+        bool Create(Poliza entity);
         List<Cobertura> TraerCoberturas();
     }
 }

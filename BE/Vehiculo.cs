@@ -1,4 +1,6 @@
-﻿namespace BE
+﻿using System.Linq.Expressions;
+
+namespace BE
 {
     using System;
     using System.Collections.Generic;
@@ -10,7 +12,7 @@
     {
         public Guid IdVehiculo { get; set; }
         public TipoUso _TipoUso { get; set; }
-        public TipoVehiculo _TipoVehiculo { get; set; }
+        //public TipoVehiculo _TipoVehiculo { get; set; }
         public Marca Marca { get; set; }
         public Modelo Modelo { get; set; }
         public int CantPuertas { get; set; }
@@ -20,5 +22,9 @@
         public string NumSerie { get; set; }
         public string Patente { get; set; }
         public string Año { get; set; }
+        public byte[] Foto1 { get; set; }
+        public byte[] Foto2 { get; set; }
+        public byte[] Foto3 { get; set; }
+        public byte[] Foto4 { get; set; }
     }
 }

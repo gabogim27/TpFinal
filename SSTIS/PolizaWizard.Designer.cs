@@ -63,7 +63,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.dtpFechaNacimiento = new System.Windows.Forms.DateTimePicker();
             this.lblFechaDeNacimiento = new System.Windows.Forms.Label();
             this.txtDni = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -88,6 +88,8 @@
             this.pbFoto2 = new System.Windows.Forms.PictureBox();
             this.pbFoto1 = new System.Windows.Forms.PictureBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.txtAño = new System.Windows.Forms.TextBox();
             this.cboCantPuertas = new System.Windows.Forms.ComboBox();
             this.label23 = new System.Windows.Forms.Label();
             this.cboColor = new System.Windows.Forms.ComboBox();
@@ -107,6 +109,45 @@
             this.txtPatente = new System.Windows.Forms.TextBox();
             this.lblPatente = new System.Windows.Forms.Label();
             this.wizardFactura = new AeroWizard.WizardPage();
+            this.grpDatosFactura = new System.Windows.Forms.GroupBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btnCobrarFac = new System.Windows.Forms.Button();
+            this.btnImprimirFac = new System.Windows.Forms.Button();
+            this.btnAnular = new System.Windows.Forms.Button();
+            this.btnNuevaFac = new System.Windows.Forms.Button();
+            this.lblNumFac = new System.Windows.Forms.Label();
+            this.txtNumFactura = new System.Windows.Forms.TextBox();
+            this.txtSeguroContratadoFac = new System.Windows.Forms.TextBox();
+            this.txtImporteFac = new System.Windows.Forms.TextBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.txtMarcaFac = new System.Windows.Forms.TextBox();
+            this.txtModeloFac = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.txtPatenteFac = new System.Windows.Forms.TextBox();
+            this.txtNumChasisFac = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.txtNumSerieFac = new System.Windows.Forms.TextBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.txtNumCuotaFac = new System.Windows.Forms.TextBox();
+            this.dtpFechaEmision = new System.Windows.Forms.DateTimePicker();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.dtpVencimientoFac = new System.Windows.Forms.DateTimePicker();
+            this.label20 = new System.Windows.Forms.Label();
+            this.txtDomicilioFac = new System.Windows.Forms.TextBox();
+            this.txtEstadoFac = new System.Windows.Forms.TextBox();
+            this.Label21 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.txtCapitalFac = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txtNomYApFac = new System.Windows.Forms.TextBox();
+            this.txtNumPolizaFac = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.wizardControl)).BeginInit();
             this.wizardInicio.SuspendLayout();
@@ -122,6 +163,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbFoto2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFoto1)).BeginInit();
             this.groupBox3.SuspendLayout();
+            this.wizardFactura.SuspendLayout();
+            this.grpDatosFactura.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // wizardControl
@@ -137,12 +182,13 @@
             this.wizardControl.Pages.Add(this.wizardDatosVehiculo);
             this.wizardControl.Pages.Add(this.wizardFactura);
             this.wizardControl.ShowProgressInTaskbarIcon = true;
-            this.wizardControl.Size = new System.Drawing.Size(964, 450);
+            this.wizardControl.Size = new System.Drawing.Size(979, 493);
             this.wizardControl.StepListFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
             this.wizardControl.TabIndex = 0;
             this.wizardControl.Text = "Emisión de Póliza";
             this.wizardControl.Title = "Emisión de Póliza";
             this.wizardControl.SelectedPageChanged += new System.EventHandler(this.stwControl_SelectedPageChanged);
+            this.wizardControl.Enter += new System.EventHandler(this.wizardControl_Enter);
             // 
             // wizardInicio
             // 
@@ -156,7 +202,7 @@
             this.wizardInicio.Controls.Add(this.label1);
             this.wizardInicio.Controls.Add(this.cboTipoPoliza);
             this.wizardInicio.Name = "wizardInicio";
-            this.wizardInicio.Size = new System.Drawing.Size(766, 296);
+            this.wizardInicio.Size = new System.Drawing.Size(781, 339);
             this.wizardControl.SetStepText(this.wizardInicio, "Pantalla de Inicio");
             this.wizardInicio.TabIndex = 2;
             this.wizardInicio.Text = "Bienvenidos al Sistema de Emision de Pólizas";
@@ -257,7 +303,7 @@
             this.wizardCoberturas.Controls.Add(this.txtPrimaTotal);
             this.wizardCoberturas.Controls.Add(this.lblPrima);
             this.wizardCoberturas.Name = "wizardCoberturas";
-            this.wizardCoberturas.Size = new System.Drawing.Size(766, 296);
+            this.wizardCoberturas.Size = new System.Drawing.Size(781, 339);
             this.wizardControl.SetStepText(this.wizardCoberturas, "Coberturas");
             this.wizardCoberturas.TabIndex = 3;
             this.wizardCoberturas.Text = "Carga De Coberturas";
@@ -339,7 +385,7 @@
             this.wizardDatosCliente.Controls.Add(this.groupBox2);
             this.wizardDatosCliente.Controls.Add(this.groupBox1);
             this.wizardDatosCliente.Name = "wizardDatosCliente";
-            this.wizardDatosCliente.Size = new System.Drawing.Size(766, 296);
+            this.wizardDatosCliente.Size = new System.Drawing.Size(781, 339);
             this.wizardControl.SetStepText(this.wizardDatosCliente, "Datos Cliente");
             this.wizardDatosCliente.TabIndex = 4;
             this.wizardDatosCliente.Text = "Datos Cliente";
@@ -470,7 +516,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.dateTimePicker2);
+            this.groupBox1.Controls.Add(this.dtpFechaNacimiento);
             this.groupBox1.Controls.Add(this.lblFechaDeNacimiento);
             this.groupBox1.Controls.Add(this.txtDni);
             this.groupBox1.Controls.Add(this.label14);
@@ -490,12 +536,12 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos Principales";
             // 
-            // dateTimePicker2
+            // dtpFechaNacimiento
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(136, 127);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(200, 23);
-            this.dateTimePicker2.TabIndex = 28;
+            this.dtpFechaNacimiento.Location = new System.Drawing.Point(136, 127);
+            this.dtpFechaNacimiento.Name = "dtpFechaNacimiento";
+            this.dtpFechaNacimiento.Size = new System.Drawing.Size(200, 23);
+            this.dtpFechaNacimiento.TabIndex = 28;
             // 
             // lblFechaDeNacimiento
             // 
@@ -606,7 +652,7 @@
             this.wizardDatosVehiculo.Controls.Add(this.groupBox4);
             this.wizardDatosVehiculo.Controls.Add(this.groupBox3);
             this.wizardDatosVehiculo.Name = "wizardDatosVehiculo";
-            this.wizardDatosVehiculo.Size = new System.Drawing.Size(766, 296);
+            this.wizardDatosVehiculo.Size = new System.Drawing.Size(781, 339);
             this.wizardControl.SetStepText(this.wizardDatosVehiculo, "Datos Vehiculo");
             this.wizardDatosVehiculo.TabIndex = 5;
             this.wizardDatosVehiculo.Text = "Datos Vehiculo";
@@ -719,6 +765,8 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label28);
+            this.groupBox3.Controls.Add(this.txtAño);
             this.groupBox3.Controls.Add(this.cboCantPuertas);
             this.groupBox3.Controls.Add(this.label23);
             this.groupBox3.Controls.Add(this.cboColor);
@@ -739,16 +787,36 @@
             this.groupBox3.Controls.Add(this.lblPatente);
             this.groupBox3.Location = new System.Drawing.Point(3, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(322, 290);
+            this.groupBox3.Size = new System.Drawing.Size(322, 324);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Datos Vehículo";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(42, 82);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(32, 15);
+            this.label28.TabIndex = 44;
+            this.label28.Text = "Año:";
+            // 
+            // txtAño
+            // 
+            this.txtAño.Location = new System.Drawing.Point(167, 82);
+            this.txtAño.Name = "txtAño";
+            this.txtAño.Size = new System.Drawing.Size(100, 23);
+            this.txtAño.TabIndex = 43;
             // 
             // cboCantPuertas
             // 
             this.cboCantPuertas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCantPuertas.FormattingEnabled = true;
-            this.cboCantPuertas.Location = new System.Drawing.Point(167, 259);
+            this.cboCantPuertas.Items.AddRange(new object[] {
+            "3",
+            "4",
+            "5"});
+            this.cboCantPuertas.Location = new System.Drawing.Point(167, 298);
             this.cboCantPuertas.Name = "cboCantPuertas";
             this.cboCantPuertas.Size = new System.Drawing.Size(121, 23);
             this.cboCantPuertas.TabIndex = 42;
@@ -756,7 +824,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(42, 259);
+            this.label23.Location = new System.Drawing.Point(42, 298);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(116, 15);
             this.label23.TabIndex = 41;
@@ -766,7 +834,16 @@
             // 
             this.cboColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboColor.FormattingEnabled = true;
-            this.cboColor.Location = new System.Drawing.Point(167, 230);
+            this.cboColor.Items.AddRange(new object[] {
+            "Blanco",
+            "Azul",
+            "Gris",
+            "Negro",
+            "Rojo",
+            "Amarillo",
+            "Plateado",
+            "Otro"});
+            this.cboColor.Location = new System.Drawing.Point(167, 269);
             this.cboColor.Name = "cboColor";
             this.cboColor.Size = new System.Drawing.Size(121, 23);
             this.cboColor.TabIndex = 40;
@@ -774,7 +851,7 @@
             // lblColor
             // 
             this.lblColor.AutoSize = true;
-            this.lblColor.Location = new System.Drawing.Point(42, 230);
+            this.lblColor.Location = new System.Drawing.Point(42, 269);
             this.lblColor.Name = "lblColor";
             this.lblColor.Size = new System.Drawing.Size(39, 15);
             this.lblColor.TabIndex = 39;
@@ -784,7 +861,11 @@
             // 
             this.cboCombustible.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCombustible.FormattingEnabled = true;
-            this.cboCombustible.Location = new System.Drawing.Point(167, 201);
+            this.cboCombustible.Items.AddRange(new object[] {
+            "Nafta",
+            "Diesel",
+            "Gas"});
+            this.cboCombustible.Location = new System.Drawing.Point(167, 240);
             this.cboCombustible.Name = "cboCombustible";
             this.cboCombustible.Size = new System.Drawing.Size(121, 23);
             this.cboCombustible.TabIndex = 38;
@@ -792,7 +873,7 @@
             // lblCombustible
             // 
             this.lblCombustible.AutoSize = true;
-            this.lblCombustible.Location = new System.Drawing.Point(42, 201);
+            this.lblCombustible.Location = new System.Drawing.Point(42, 240);
             this.lblCombustible.Name = "lblCombustible";
             this.lblCombustible.Size = new System.Drawing.Size(78, 15);
             this.lblCombustible.TabIndex = 37;
@@ -802,7 +883,7 @@
             // 
             this.cboMarca.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboMarca.FormattingEnabled = true;
-            this.cboMarca.Location = new System.Drawing.Point(167, 143);
+            this.cboMarca.Location = new System.Drawing.Point(167, 182);
             this.cboMarca.Name = "cboMarca";
             this.cboMarca.Size = new System.Drawing.Size(121, 23);
             this.cboMarca.TabIndex = 36;
@@ -811,7 +892,7 @@
             // lblMarca
             // 
             this.lblMarca.AutoSize = true;
-            this.lblMarca.Location = new System.Drawing.Point(42, 146);
+            this.lblMarca.Location = new System.Drawing.Point(42, 185);
             this.lblMarca.Name = "lblMarca";
             this.lblMarca.Size = new System.Drawing.Size(43, 15);
             this.lblMarca.TabIndex = 35;
@@ -821,7 +902,7 @@
             // 
             this.cboModelo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboModelo.FormattingEnabled = true;
-            this.cboModelo.Location = new System.Drawing.Point(167, 172);
+            this.cboModelo.Location = new System.Drawing.Point(167, 211);
             this.cboModelo.Name = "cboModelo";
             this.cboModelo.Size = new System.Drawing.Size(121, 23);
             this.cboModelo.TabIndex = 34;
@@ -838,7 +919,7 @@
             // lblModelo
             // 
             this.lblModelo.AutoSize = true;
-            this.lblModelo.Location = new System.Drawing.Point(42, 175);
+            this.lblModelo.Location = new System.Drawing.Point(42, 214);
             this.lblModelo.Name = "lblModelo";
             this.lblModelo.Size = new System.Drawing.Size(51, 15);
             this.lblModelo.TabIndex = 8;
@@ -847,7 +928,7 @@
             // lblNumChasis
             // 
             this.lblNumChasis.AutoSize = true;
-            this.lblNumChasis.Location = new System.Drawing.Point(42, 114);
+            this.lblNumChasis.Location = new System.Drawing.Point(42, 153);
             this.lblNumChasis.Name = "lblNumChasis";
             this.lblNumChasis.Size = new System.Drawing.Size(77, 15);
             this.lblNumChasis.TabIndex = 6;
@@ -855,7 +936,7 @@
             // 
             // txtNumChasis
             // 
-            this.txtNumChasis.Location = new System.Drawing.Point(167, 114);
+            this.txtNumChasis.Location = new System.Drawing.Point(167, 153);
             this.txtNumChasis.Name = "txtNumChasis";
             this.txtNumChasis.Size = new System.Drawing.Size(100, 23);
             this.txtNumChasis.TabIndex = 5;
@@ -863,7 +944,7 @@
             // lblNumSerie
             // 
             this.lblNumSerie.AutoSize = true;
-            this.lblNumSerie.Location = new System.Drawing.Point(42, 82);
+            this.lblNumSerie.Location = new System.Drawing.Point(42, 121);
             this.lblNumSerie.Name = "lblNumSerie";
             this.lblNumSerie.Size = new System.Drawing.Size(68, 15);
             this.lblNumSerie.TabIndex = 4;
@@ -871,7 +952,7 @@
             // 
             // txtNumSerie
             // 
-            this.txtNumSerie.Location = new System.Drawing.Point(167, 82);
+            this.txtNumSerie.Location = new System.Drawing.Point(167, 121);
             this.txtNumSerie.Name = "txtNumSerie";
             this.txtNumSerie.Size = new System.Drawing.Size(100, 23);
             this.txtNumSerie.TabIndex = 3;
@@ -903,12 +984,373 @@
             // 
             // wizardFactura
             // 
+            this.wizardFactura.Controls.Add(this.grpDatosFactura);
             this.wizardFactura.IsFinishPage = true;
             this.wizardFactura.Name = "wizardFactura";
-            this.wizardFactura.Size = new System.Drawing.Size(766, 296);
+            this.wizardFactura.Size = new System.Drawing.Size(781, 339);
             this.wizardControl.SetStepText(this.wizardFactura, "Datos Factura");
             this.wizardFactura.TabIndex = 6;
             this.wizardFactura.Text = "Datos Factura";
+            this.wizardFactura.Commit += new System.EventHandler<AeroWizard.WizardPageConfirmEventArgs>(this.wizardFactura_Commit);
+            this.wizardFactura.Initialize += new System.EventHandler<AeroWizard.WizardPageInitEventArgs>(this.wizardFactura_Initialize);
+            // 
+            // grpDatosFactura
+            // 
+            this.grpDatosFactura.Controls.Add(this.groupBox6);
+            this.grpDatosFactura.Controls.Add(this.lblNumFac);
+            this.grpDatosFactura.Controls.Add(this.txtNumFactura);
+            this.grpDatosFactura.Controls.Add(this.txtSeguroContratadoFac);
+            this.grpDatosFactura.Controls.Add(this.txtImporteFac);
+            this.grpDatosFactura.Controls.Add(this.label31);
+            this.grpDatosFactura.Controls.Add(this.groupBox5);
+            this.grpDatosFactura.Controls.Add(this.txtNumCuotaFac);
+            this.grpDatosFactura.Controls.Add(this.dtpFechaEmision);
+            this.grpDatosFactura.Controls.Add(this.label22);
+            this.grpDatosFactura.Controls.Add(this.label24);
+            this.grpDatosFactura.Controls.Add(this.dtpVencimientoFac);
+            this.grpDatosFactura.Controls.Add(this.label20);
+            this.grpDatosFactura.Controls.Add(this.txtDomicilioFac);
+            this.grpDatosFactura.Controls.Add(this.txtEstadoFac);
+            this.grpDatosFactura.Controls.Add(this.Label21);
+            this.grpDatosFactura.Controls.Add(this.label19);
+            this.grpDatosFactura.Controls.Add(this.txtCapitalFac);
+            this.grpDatosFactura.Controls.Add(this.label18);
+            this.grpDatosFactura.Controls.Add(this.label16);
+            this.grpDatosFactura.Controls.Add(this.txtNomYApFac);
+            this.grpDatosFactura.Controls.Add(this.txtNumPolizaFac);
+            this.grpDatosFactura.Controls.Add(this.label17);
+            this.grpDatosFactura.Controls.Add(this.label15);
+            this.grpDatosFactura.Location = new System.Drawing.Point(4, 4);
+            this.grpDatosFactura.Name = "grpDatosFactura";
+            this.grpDatosFactura.Size = new System.Drawing.Size(796, 335);
+            this.grpDatosFactura.TabIndex = 74;
+            this.grpDatosFactura.TabStop = false;
+            this.grpDatosFactura.Text = "Datos Factura";
+            this.grpDatosFactura.UseCompatibleTextRendering = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.btnCobrarFac);
+            this.groupBox6.Controls.Add(this.btnImprimirFac);
+            this.groupBox6.Controls.Add(this.btnAnular);
+            this.groupBox6.Controls.Add(this.btnNuevaFac);
+            this.groupBox6.Location = new System.Drawing.Point(642, 92);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(132, 150);
+            this.groupBox6.TabIndex = 81;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Acciones";
+            // 
+            // btnCobrarFac
+            // 
+            this.btnCobrarFac.Location = new System.Drawing.Point(24, 117);
+            this.btnCobrarFac.Name = "btnCobrarFac";
+            this.btnCobrarFac.Size = new System.Drawing.Size(75, 23);
+            this.btnCobrarFac.TabIndex = 3;
+            this.btnCobrarFac.Text = "Cobrar";
+            this.btnCobrarFac.UseVisualStyleBackColor = true;
+            // 
+            // btnImprimirFac
+            // 
+            this.btnImprimirFac.Location = new System.Drawing.Point(24, 86);
+            this.btnImprimirFac.Name = "btnImprimirFac";
+            this.btnImprimirFac.Size = new System.Drawing.Size(75, 23);
+            this.btnImprimirFac.TabIndex = 2;
+            this.btnImprimirFac.Text = "Imprimir";
+            this.btnImprimirFac.UseVisualStyleBackColor = true;
+            // 
+            // btnAnular
+            // 
+            this.btnAnular.Location = new System.Drawing.Point(24, 53);
+            this.btnAnular.Name = "btnAnular";
+            this.btnAnular.Size = new System.Drawing.Size(75, 23);
+            this.btnAnular.TabIndex = 1;
+            this.btnAnular.Text = "Anular";
+            this.btnAnular.UseVisualStyleBackColor = true;
+            // 
+            // btnNuevaFac
+            // 
+            this.btnNuevaFac.Location = new System.Drawing.Point(24, 22);
+            this.btnNuevaFac.Name = "btnNuevaFac";
+            this.btnNuevaFac.Size = new System.Drawing.Size(75, 23);
+            this.btnNuevaFac.TabIndex = 0;
+            this.btnNuevaFac.Text = "Nueva";
+            this.btnNuevaFac.UseVisualStyleBackColor = true;
+            // 
+            // lblNumFac
+            // 
+            this.lblNumFac.AutoSize = true;
+            this.lblNumFac.Location = new System.Drawing.Point(154, 19);
+            this.lblNumFac.Name = "lblNumFac";
+            this.lblNumFac.Size = new System.Drawing.Size(153, 15);
+            this.lblNumFac.TabIndex = 84;
+            this.lblNumFac.Text = "Ingrese Número de Factura:";
+            // 
+            // txtNumFactura
+            // 
+            this.txtNumFactura.Location = new System.Drawing.Point(317, 16);
+            this.txtNumFactura.Name = "txtNumFactura";
+            this.txtNumFactura.Size = new System.Drawing.Size(150, 23);
+            this.txtNumFactura.TabIndex = 85;
+            // 
+            // txtSeguroContratadoFac
+            // 
+            this.txtSeguroContratadoFac.Location = new System.Drawing.Point(122, 134);
+            this.txtSeguroContratadoFac.Name = "txtSeguroContratadoFac";
+            this.txtSeguroContratadoFac.Size = new System.Drawing.Size(150, 23);
+            this.txtSeguroContratadoFac.TabIndex = 83;
+            // 
+            // txtImporteFac
+            // 
+            this.txtImporteFac.Location = new System.Drawing.Point(398, 293);
+            this.txtImporteFac.Name = "txtImporteFac";
+            this.txtImporteFac.Size = new System.Drawing.Size(100, 23);
+            this.txtImporteFac.TabIndex = 82;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(340, 299);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(52, 15);
+            this.label31.TabIndex = 81;
+            this.label31.Text = "Importe:";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.txtMarcaFac);
+            this.groupBox5.Controls.Add(this.txtModeloFac);
+            this.groupBox5.Controls.Add(this.label25);
+            this.groupBox5.Controls.Add(this.txtPatenteFac);
+            this.groupBox5.Controls.Add(this.txtNumChasisFac);
+            this.groupBox5.Controls.Add(this.label26);
+            this.groupBox5.Controls.Add(this.txtNumSerieFac);
+            this.groupBox5.Controls.Add(this.label27);
+            this.groupBox5.Controls.Add(this.label29);
+            this.groupBox5.Controls.Add(this.label30);
+            this.groupBox5.Location = new System.Drawing.Point(337, 121);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(236, 168);
+            this.groupBox5.TabIndex = 80;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Datos del auto";
+            // 
+            // txtMarcaFac
+            // 
+            this.txtMarcaFac.Location = new System.Drawing.Point(113, 143);
+            this.txtMarcaFac.Name = "txtMarcaFac";
+            this.txtMarcaFac.Size = new System.Drawing.Size(100, 23);
+            this.txtMarcaFac.TabIndex = 70;
+            // 
+            // txtModeloFac
+            // 
+            this.txtModeloFac.Location = new System.Drawing.Point(112, 114);
+            this.txtModeloFac.Name = "txtModeloFac";
+            this.txtModeloFac.Size = new System.Drawing.Size(100, 23);
+            this.txtModeloFac.TabIndex = 69;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(4, 24);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(50, 15);
+            this.label25.TabIndex = 68;
+            this.label25.Text = "Patente:";
+            // 
+            // txtPatenteFac
+            // 
+            this.txtPatenteFac.Location = new System.Drawing.Point(113, 24);
+            this.txtPatenteFac.Name = "txtPatenteFac";
+            this.txtPatenteFac.Size = new System.Drawing.Size(100, 23);
+            this.txtPatenteFac.TabIndex = 67;
+            // 
+            // txtNumChasisFac
+            // 
+            this.txtNumChasisFac.Location = new System.Drawing.Point(113, 85);
+            this.txtNumChasisFac.Name = "txtNumChasisFac";
+            this.txtNumChasisFac.Size = new System.Drawing.Size(100, 23);
+            this.txtNumChasisFac.TabIndex = 65;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(3, 57);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(67, 15);
+            this.label26.TabIndex = 63;
+            this.label26.Text = "N° de serie:";
+            // 
+            // txtNumSerieFac
+            // 
+            this.txtNumSerieFac.Location = new System.Drawing.Point(112, 57);
+            this.txtNumSerieFac.Name = "txtNumSerieFac";
+            this.txtNumSerieFac.Size = new System.Drawing.Size(100, 23);
+            this.txtNumSerieFac.TabIndex = 62;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(3, 144);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(43, 15);
+            this.label27.TabIndex = 61;
+            this.label27.Text = "Marca:";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(3, 119);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(51, 15);
+            this.label29.TabIndex = 60;
+            this.label29.Text = "Modelo:";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(3, 88);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(75, 15);
+            this.label30.TabIndex = 59;
+            this.label30.Text = "N° de chasis:";
+            // 
+            // txtNumCuotaFac
+            // 
+            this.txtNumCuotaFac.Location = new System.Drawing.Point(398, 92);
+            this.txtNumCuotaFac.Name = "txtNumCuotaFac";
+            this.txtNumCuotaFac.Size = new System.Drawing.Size(100, 23);
+            this.txtNumCuotaFac.TabIndex = 79;
+            // 
+            // dtpFechaEmision
+            // 
+            this.dtpFechaEmision.Location = new System.Drawing.Point(398, 58);
+            this.dtpFechaEmision.Name = "dtpFechaEmision";
+            this.dtpFechaEmision.Size = new System.Drawing.Size(200, 23);
+            this.dtpFechaEmision.TabIndex = 78;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(290, 100);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(59, 15);
+            this.label22.TabIndex = 77;
+            this.label22.Text = "N° Cuota:";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(290, 64);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(102, 15);
+            this.label24.TabIndex = 76;
+            this.label24.Text = "Fecha de emisión:";
+            // 
+            // dtpVencimientoFac
+            // 
+            this.dtpVencimientoFac.Location = new System.Drawing.Point(121, 290);
+            this.dtpVencimientoFac.Name = "dtpVencimientoFac";
+            this.dtpVencimientoFac.Size = new System.Drawing.Size(200, 23);
+            this.dtpVencimientoFac.TabIndex = 75;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(7, 296);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(76, 15);
+            this.label20.TabIndex = 74;
+            this.label20.Text = "Vencimiento:";
+            // 
+            // txtDomicilioFac
+            // 
+            this.txtDomicilioFac.Location = new System.Drawing.Point(122, 102);
+            this.txtDomicilioFac.Name = "txtDomicilioFac";
+            this.txtDomicilioFac.Size = new System.Drawing.Size(150, 23);
+            this.txtDomicilioFac.TabIndex = 66;
+            // 
+            // txtEstadoFac
+            // 
+            this.txtEstadoFac.Location = new System.Drawing.Point(122, 250);
+            this.txtEstadoFac.Name = "txtEstadoFac";
+            this.txtEstadoFac.Size = new System.Drawing.Size(150, 23);
+            this.txtEstadoFac.TabIndex = 73;
+            // 
+            // Label21
+            // 
+            this.Label21.AutoSize = true;
+            this.Label21.Location = new System.Drawing.Point(11, 257);
+            this.Label21.Name = "Label21";
+            this.Label21.Size = new System.Drawing.Size(45, 15);
+            this.Label21.TabIndex = 69;
+            this.Label21.Text = "Estado:";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(8, 67);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(110, 15);
+            this.label19.TabIndex = 62;
+            this.label19.Text = "Nombre y Apellido:";
+            // 
+            // txtCapitalFac
+            // 
+            this.txtCapitalFac.Location = new System.Drawing.Point(122, 211);
+            this.txtCapitalFac.Name = "txtCapitalFac";
+            this.txtCapitalFac.Size = new System.Drawing.Size(150, 23);
+            this.txtCapitalFac.TabIndex = 72;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(14, 105);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(61, 15);
+            this.label18.TabIndex = 63;
+            this.label18.Text = "Domicilio:";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(8, 218);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(107, 15);
+            this.label16.TabIndex = 65;
+            this.label16.Text = "Capital Asegurado:";
+            // 
+            // txtNomYApFac
+            // 
+            this.txtNomYApFac.Location = new System.Drawing.Point(122, 64);
+            this.txtNomYApFac.Name = "txtNomYApFac";
+            this.txtNomYApFac.Size = new System.Drawing.Size(150, 23);
+            this.txtNomYApFac.TabIndex = 67;
+            // 
+            // txtNumPolizaFac
+            // 
+            this.txtNumPolizaFac.Location = new System.Drawing.Point(122, 175);
+            this.txtNumPolizaFac.Name = "txtNumPolizaFac";
+            this.txtNumPolizaFac.Size = new System.Drawing.Size(150, 23);
+            this.txtNumPolizaFac.TabIndex = 71;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(11, 175);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(74, 15);
+            this.label17.TabIndex = 64;
+            this.label17.Text = "N° de póliza:";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(12, 137);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(108, 15);
+            this.label15.TabIndex = 68;
+            this.label15.Text = "Seguro contratado:";
             // 
             // openFileDialog1
             // 
@@ -919,12 +1361,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(964, 450);
+            this.ClientSize = new System.Drawing.Size(979, 493);
             this.Controls.Add(this.wizardControl);
             this.Name = "PolizaWizard";
             this.Text = "PolizaWizard";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PolizaWizard_FormClosing);
             this.Load += new System.EventHandler(this.PolizaWizard_Load);
+            this.Enter += new System.EventHandler(this.PolizaWizard_Enter);
             ((System.ComponentModel.ISupportInitialize)(this.wizardControl)).EndInit();
             this.wizardInicio.ResumeLayout(false);
             this.wizardInicio.PerformLayout();
@@ -944,6 +1387,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbFoto1)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.wizardFactura.ResumeLayout(false);
+            this.grpDatosFactura.ResumeLayout(false);
+            this.grpDatosFactura.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1019,7 +1468,7 @@
         private AeroWizard.WizardPage wizardFactura;
         private System.Windows.Forms.Label lblTransaccion;
         private System.Windows.Forms.ComboBox cboTransaccion;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker dtpFechaNacimiento;
         internal System.Windows.Forms.Label lblFechaDeNacimiento;
         private System.Windows.Forms.DataGridView dgvCoberturas;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Seleccionar;
@@ -1030,5 +1479,46 @@
         private System.Windows.Forms.Button btnBorrarImagen4;
         private System.Windows.Forms.Button btnBorrarImagen3;
         private System.Windows.Forms.Button btnBorrarImagen1;
+        internal System.Windows.Forms.TextBox txtEstadoFac;
+        internal System.Windows.Forms.Label Label21;
+        internal System.Windows.Forms.TextBox txtCapitalFac;
+        internal System.Windows.Forms.TextBox txtNumPolizaFac;
+        internal System.Windows.Forms.Label label15;
+        internal System.Windows.Forms.TextBox txtNomYApFac;
+        internal System.Windows.Forms.TextBox txtDomicilioFac;
+        internal System.Windows.Forms.Label label16;
+        internal System.Windows.Forms.Label label17;
+        internal System.Windows.Forms.Label label18;
+        internal System.Windows.Forms.Label label19;
+        private System.Windows.Forms.GroupBox grpDatosFactura;
+        internal System.Windows.Forms.DateTimePicker dtpVencimientoFac;
+        internal System.Windows.Forms.Label label20;
+        internal System.Windows.Forms.TextBox txtNumCuotaFac;
+        internal System.Windows.Forms.DateTimePicker dtpFechaEmision;
+        internal System.Windows.Forms.Label label22;
+        internal System.Windows.Forms.Label label24;
+        internal System.Windows.Forms.GroupBox groupBox5;
+        internal System.Windows.Forms.Label label25;
+        internal System.Windows.Forms.TextBox txtPatenteFac;
+        internal System.Windows.Forms.TextBox txtNumChasisFac;
+        internal System.Windows.Forms.Label label26;
+        internal System.Windows.Forms.TextBox txtNumSerieFac;
+        internal System.Windows.Forms.Label label27;
+        internal System.Windows.Forms.Label label29;
+        internal System.Windows.Forms.Label label30;
+        internal System.Windows.Forms.TextBox txtImporteFac;
+        internal System.Windows.Forms.Label label31;
+        internal System.Windows.Forms.TextBox txtSeguroContratadoFac;
+        internal System.Windows.Forms.TextBox txtMarcaFac;
+        internal System.Windows.Forms.TextBox txtModeloFac;
+        internal System.Windows.Forms.Label lblNumFac;
+        internal System.Windows.Forms.TextBox txtNumFactura;
+        internal System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button btnCobrarFac;
+        private System.Windows.Forms.Button btnImprimirFac;
+        private System.Windows.Forms.Button btnAnular;
+        private System.Windows.Forms.Button btnNuevaFac;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.TextBox txtAño;
     }
 }

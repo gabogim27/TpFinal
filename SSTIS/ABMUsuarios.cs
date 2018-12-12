@@ -36,6 +36,7 @@ namespace SSTIS
         public const string Iv = "HNtgQw0w";
         private const string Entidad = "Usuario";
         private static bool MostrarActivos { get; set; }
+        bool cargaInicial = true;
 
         public frmABMUsuarios(
             IServicio<Usuario> ServicioUsuario,
@@ -118,14 +119,14 @@ namespace SSTIS
 
         private void CargarInicial()
         {
+            CargarColumnas();
             RestablecerControles();
             MostrarActivos = true;
             cboLocalidad.Enabled = true;
             gbGrillaUsuarios.Text = "Usuarios Activos";
             CargarComboProvincia();
             cboProvincia.SelectedIndex = -1;
-            CargarColumnas();
-            CargarGrilla();
+            //CargarGrilla();
             dgvUsuarios.ClearSelection();
         }
 
@@ -141,29 +142,35 @@ namespace SSTIS
             cboProvincia.SelectedIndex = -1;
             cboLocalidad.SelectedIndex = -1;
             cboLocalidad.Enabled = false;
-            //CargarGrilla();
+            CargarGrilla();
         }
 
         private void CargarColumnas()
-        {
-            dgvUsuarios.Columns.Add("IdUsuario", "IdUsuario");
-            dgvUsuarios.Columns[0].Visible = false;
-            dgvUsuarios.Columns.Add("IdProvincia", "IdProvincia");
-            dgvUsuarios.Columns[1].Visible = false;
-            dgvUsuarios.Columns.Add("IdLocalidad", "IdLocalidad");
-            dgvUsuarios.Columns[2].Visible = false;
-            dgvUsuarios.Columns.Add("Nombre", "Nombre");
-            dgvUsuarios.Columns.Add("Apellido", "Apellido");
-            dgvUsuarios.Columns.Add("E-mail", "Email");
-            dgvUsuarios.Columns.Add("Sexo", "Sexo");
-            dgvUsuarios.Columns.Add("Direccion", "Direccion");
-            dgvUsuarios.Columns.Add("CP", "CP");
-            dgvUsuarios.Columns.Add("Descripcion", "Descripcion");
-            dgvUsuarios.Columns.Add("Descripcion", "Descripcion");
-            dgvUsuarios.Columns.Add("Telefono", "Telefono");
-            dgvUsuarios.Columns.Add("Celular", "Celular");
-            dgvUsuarios.Columns.Add("IdDomicilio", "IdDomicilio");
-            dgvUsuarios.Columns[13].Visible = false;
+        {           
+            if (cargaInicial)
+            {
+                dgvUsuarios.AutoGenerateColumns = false;
+                dgvUsuarios.Columns.Add("IdUsuario", "IdUsuario");
+                dgvUsuarios.Columns[0].Visible = false;
+                dgvUsuarios.Columns.Add("IdProvincia", "IdProvincia");
+                dgvUsuarios.Columns[1].Visible = false;
+                dgvUsuarios.Columns.Add("IdLocalidad", "IdLocalidad");
+                dgvUsuarios.Columns[2].Visible = false;
+                dgvUsuarios.Columns.Add("Nombre", "Nombre");
+                dgvUsuarios.Columns.Add("Apellido", "Apellido");
+                dgvUsuarios.Columns.Add("E-mail", "Email");
+                dgvUsuarios.Columns.Add("Sexo", "Sexo");
+                dgvUsuarios.Columns.Add("Direccion", "Direccion");
+                dgvUsuarios.Columns.Add("CP", "CP");
+                dgvUsuarios.Columns.Add("Descripcion", "Descripcion");
+                dgvUsuarios.Columns.Add("Descripcion", "Descripcion");
+                dgvUsuarios.Columns.Add("Telefono", "Telefono");
+                dgvUsuarios.Columns.Add("Celular", "Celular");
+                dgvUsuarios.Columns.Add("IdDomicilio", "IdDomicilio");
+                dgvUsuarios.Columns[13].Visible = false;
+            }
+
+            cargaInicial = false;
         }
 
         private void CargarGrilla()
@@ -172,15 +179,16 @@ namespace SSTIS
             if (MostrarActivos)
             {
                 gbGrillaUsuarios.Text = "Usuarios Activos";
-                usuarios = ServicioUsuario.Retrive().Where(x => x.Estado).OrderBy(x => x.Email).ToList();
+                usuarios = ServicioUsuario.Retrive().Where(x => x.Estado && !x.Bloqueado).OrderBy(x => x.Email).ToList();
             }
             else
             {
                 gbGrillaUsuarios.Text = "Usuarios Inactivos";
-                usuarios = ServicioUsuario.Retrive().Where(x => !x.Estado).OrderBy(x => x.Email).ToList();
+                usuarios = ServicioUsuario.Retrive().Where(x => !x.Estado || x.Bloqueado).OrderBy(x => x.Email).ToList();
             }
 
             dgvUsuarios.Rows.Clear();
+            dgvUsuarios.Refresh();
 
             for (int i = 0; i < usuarios.Count; i++)
             {
@@ -316,7 +324,10 @@ namespace SSTIS
             {
                 cboLocalidad.Enabled = true;
                 //Cargamos en memoria el usuario seleccionado de la grilla
-                GetUsuarioById(Guid.Parse(dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString()));
+                var user = GetUsuarioById(Guid.Parse(dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString()));
+                btnBloquear.Enabled = !user.Bloqueado;
+                btnDesbloquear.Enabled = user.Bloqueado;
+                btnEliminarUsuario.Enabled = user.Estado;
                 txtNombre.Text = dgvUsuarios.SelectedRows[0].Cells[3].Value.ToString();
                 txtApellido.Text = dgvUsuarios.SelectedRows[0].Cells[4].Value.ToString();
                 txtEmail.Text = dgvUsuarios.SelectedRows[0].Cells[5].Value.ToString();
@@ -586,7 +597,7 @@ namespace SSTIS
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            if (dgvUsuarios.SelectedRows.Count == 1 && !usuarioSeleccionado().Bloqueado)
+            if ((dgvUsuarios.SelectedRows.Count == 1 && !usuarioSeleccionado().Bloqueado))
             {
                 var confirmResult = MessageBox.Show("Esta seguro que desea bloquear el usuario seleccionado?",
                     "Confirme bloqueo de usuario",
@@ -597,6 +608,8 @@ namespace SSTIS
                     if (bloqueado)
                     {
                         MessageBox.Show("Usuario bloqueado correctamente.");
+                        btnDesbloquear.Enabled = true;
+                        btnBloquear.Enabled = false; 
                     }
                 }
             }
@@ -635,10 +648,12 @@ namespace SSTIS
                     MessageBoxButtons.YesNo);
                 if (confirmResult == DialogResult.Yes)
                 {
-                    var bloqueado = ServicioUsuarioImplementor.DesbloquearUsuario(usuarioSeleccionado().IdUsuario);
-                    if (bloqueado)
+                    var desbloqueado = ServicioUsuarioImplementor.DesbloquearUsuario(usuarioSeleccionado().IdUsuario);
+                    if (desbloqueado)
                     {
                         MessageBox.Show("Usuario desbloqueado correctamente.");
+                        btnDesbloquear.Enabled = false;
+                        btnBloquear.Enabled = true;
                     }
                 }
             }

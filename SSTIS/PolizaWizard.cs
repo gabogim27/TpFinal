@@ -26,12 +26,21 @@ namespace SSTIS
         public IServicio<Provincia> ServicioProvincia;
         public IServicio<Cliente> ServicioCliente;
         public IServicioVehiculo ServicioVehiculoImplementor;
+        public IServicio<Vehiculo> ServicioVehiculo;
 
         private decimal CantidadSumaAsegurada;
+        private byte[] Foto1 = null;
+        private byte[] Foto2 = null;
+        private byte[] Foto3 = null;
+        private byte[] Foto4 = null;
+        private Cliente ClienteGuardado = null;
+        private Vehiculo VehiculoGuardado = null;
+        private Poliza PolizaGuardada = null;
 
         public PolizaWizard(IServicioPoliza ServicioPolizaImplementor, IServicioUsuario ServicioUsuarioImplementor,
-            IServicioLocalidad ServicioLocalidadImplementor, IServicio<Localidad> ServicioLocalidad, IServicio<Provincia> ServicioProvincia,
-            IServicio<Cliente> ServicioCliente, IServicioVehiculo ServicioVehiculoImplementor)
+            IServicioLocalidad ServicioLocalidadImplementor, IServicio<Localidad> ServicioLocalidad,
+            IServicio<Provincia> ServicioProvincia,
+            IServicio<Cliente> ServicioCliente, IServicioVehiculo ServicioVehiculoImplementor, IServicio<Vehiculo> ServicioVehiculo)
         {
             this.ServicioUsuarioImplementor = ServicioUsuarioImplementor;
             this.ServicioPolizaImplementor = ServicioPolizaImplementor;
@@ -40,6 +49,7 @@ namespace SSTIS
             this.ServicioProvincia = ServicioProvincia;
             this.ServicioCliente = ServicioCliente;
             this.ServicioVehiculoImplementor = ServicioVehiculoImplementor;
+            this.ServicioVehiculo = ServicioVehiculo;
             InitializeComponent();
         }
 
@@ -56,7 +66,6 @@ namespace SSTIS
         private void PolizaWizard_Load(object sender, EventArgs e)
         {
             //wizardInicio.NextPage.Enabled = false;
-            
 
         }
 
@@ -139,6 +148,7 @@ namespace SSTIS
                 {
                     CantidadSumaAsegurada -= coberturaChequeada.PrimaAsegurada;
                 }
+
                 txtPrimaTotal.Text = CantidadSumaAsegurada.ToString();
             }
         }
@@ -232,7 +242,9 @@ namespace SSTIS
 
         private void btnCargarImagen_Click(object sender, EventArgs e)
         {
-            openFileDialog1.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png"; ;
+            openFileDialog1.Filter =
+                "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
+            ;
             openFileDialog1.Title = "Por favor seleccione las imagenes";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -244,31 +256,34 @@ namespace SSTIS
                         var foto = openFileDialog1.FileNames[i];
                         //if (Path.GetExtension(foto) == ".png" || Path.GetExtension(foto) == ".jpeg")
                         //{
-                            if (PictureBoxIsNullOrEmpty(pbFoto1))
-                            {
-                                pbFoto1.Image = new Bitmap(foto);
-                                btnBorrarImagen1.Visible = true;
-                            }
-                            else if (PictureBoxIsNullOrEmpty(pbFoto2))
-                            {
-                                pbFoto2.Image = new Bitmap(foto);
-                                btnBorrarImagen2.Visible = true;
-                            }
-                            else if (PictureBoxIsNullOrEmpty(pbFoto3))
-                            {
-                                pbFoto3.Image = new Bitmap(foto);
-                                btnBorrarImagen3.Visible = true;
-                            }
-                            else if (PictureBoxIsNullOrEmpty(pbFoto4))
-                            {
-                                pbFoto4.Image = new Bitmap(foto);
-                                btnBorrarImagen4.Visible = true;
-                            }
-                            else
-                            {
-                                MessageBox.Show("Solo se pueden agregar hasta 4 imágenes");
-                            }
-                        //}
+                        if (PictureBoxIsNullOrEmpty(pbFoto1))
+                        {
+                            pbFoto1.Image = new Bitmap(foto);
+                            Foto1 = File.ReadAllBytes(foto);
+                            btnBorrarImagen1.Visible = true;
+                        }
+                        else if (PictureBoxIsNullOrEmpty(pbFoto2))
+                        {
+                            pbFoto2.Image = new Bitmap(foto);
+                            Foto2 = File.ReadAllBytes(foto);
+                            btnBorrarImagen2.Visible = true;
+                        }
+                        else if (PictureBoxIsNullOrEmpty(pbFoto3))
+                        {
+                            pbFoto3.Image = new Bitmap(foto);
+                            Foto3 = File.ReadAllBytes(foto);
+                            btnBorrarImagen3.Visible = true;
+                        }
+                        else if (PictureBoxIsNullOrEmpty(pbFoto4))
+                        {
+                            pbFoto4.Image = new Bitmap(foto);
+                            Foto4 = File.ReadAllBytes(foto);
+                            btnBorrarImagen4.Visible = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Solo se pueden agregar hasta 4 imágenes");
+                        }
                     }
                 }
                 else
@@ -372,6 +387,207 @@ namespace SSTIS
             cboModelo.DisplayMember = "Descripcion";
             cboModelo.ValueMember = "IdModelo";
             cboModelo.SelectedIndex = -1;
+        }
+
+        private void wizardFactura_Initialize(object sender, WizardPageInitEventArgs e)
+        {
+            //SI ES UNA NUEVA POLIZA TRAEMOS LOS DATOS DE LOS OTROS CONTROLES
+            if (cboTransaccion.SelectedItem.ToString().ToUpper() == "NUEVA PÓLIZA")
+            {
+                txtNomYApFac.Text = txtNombre.Text.Trim() + " " + txtApellido.Text.Trim();
+                txtDomicilioFac.Text = txtDomicilio.Text.Trim();
+                txtNumPolizaFac.Text = txtNumeroPoliza.Text.Trim();
+                txtCapitalFac.Text = txtPrimaTotal.Text.Trim();
+                if (CoberturasChequeadas())
+                {
+                    txtSeguroContratadoFac.Text = "Todo Riesgo";
+                }
+                else
+                {
+                    txtSeguroContratadoFac.Text = "Terceros Completo";
+                }
+
+                //CAMBIAR ESTO CUANDO YA ESTE HECHA EL ALTA
+                txtEstadoFac.Text = "En Emisión";
+                //A diez dias de la fecha de emision
+                dtpVencimientoFac.Value = DateTime.Today.AddDays(10);
+                dtpFechaEmision.Value = DateTime.Today;
+                //Si es una nueva emision seria 1 sino buscar la ultima paga y sumarle 1
+                txtNumCuotaFac.Text = "1";
+                txtPatenteFac.Text = txtPatente.Text.Trim();
+                txtNumChasisFac.Text = txtNumChasis.Text.Trim();
+                txtNumSerieFac.Text = txtNumSerie.Text.Trim();
+                txtModeloFac.Text = ((Modelo)cboModelo.SelectedItem).Descripcion;
+                txtMarcaFac.Text = ((Marca)cboMarca.SelectedItem).Descripcion;
+            }
+            else
+            {
+                //TREAMOS LOS DATOS DE LA BASE DE DATOS
+
+            }
+
+        }
+
+        private bool CoberturasChequeadas()
+        {
+            bool data = false;
+            var cont = 0;
+            foreach (DataGridViewRow row in dgvCoberturas.Rows)
+            {
+                if (dgvCoberturas[0, row.Index].Value != null)
+                {
+                    data = (bool)dgvCoberturas[0, row.Index].Value;
+                    if (data)
+                        cont++;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return cont == dgvCoberturas.Rows.Count;
+        }
+
+
+        private void wizardFactura_Commit(object sender, WizardPageConfirmEventArgs e)
+        {
+            //Realizamos la persistencia de datos en la BD
+            //1 - Guardamos los datos del cliente
+            //2 - Guardamos los datos del vehiculo
+            //3 - Guardamos los datos de la poliza
+            //4 - Guardamos los datos de la factura
+            if (!ValidarControlesFactura())
+            {
+                var guardadoCliente = GuardarDatosCliente();
+                var guardadoVehiculo = GuardarDatosVehiculo();
+
+                if (guardadoCliente && guardadoVehiculo)
+                {
+
+                    var guardadoPoliza = GuardarDatosPoliza();
+                    if (guardadoPoliza)
+                    {
+                        MessageBox.Show("Poliza guardada correctamente");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Hubo un error al guardar la póliza.");
+                    }
+                }
+            }
+
+
+        }
+
+        private bool GuardarDatosPoliza()
+        {
+            var poliza = new Poliza()
+            {
+                IdPoliza = Guid.NewGuid(),
+                Cliente = ClienteGuardado,
+                Estado = true,
+                NroPoliza = int.Parse(txtNumPolizaFac.Text.Trim()),
+                FechaEmision = dtpFechaEmision.Value,
+                Detalle = new BE.DetallePoliza()
+                {
+                    IdDetalle = Guid.NewGuid(),
+                    Vehiculo = VehiculoGuardado,
+                    Cobertura = new Cobertura() { IdCobertura = TraerCoberturas().First().IdCobertura },
+                    Prima = decimal.Parse(txtPrimaTotal.Text),
+                    SumaAsegurada = 200000
+                },
+            };
+
+            PolizaGuardada = poliza;
+            return ServicioPolizaImplementor.Create(poliza);
+        }
+
+        private bool ValidarControlesFactura()
+        {
+            return string.IsNullOrEmpty(txtNomYApFac.Text.Trim()) &&
+                   string.IsNullOrEmpty(txtDomicilioFac.Text.Trim()) &&
+                   string.IsNullOrEmpty(txtSeguroContratadoFac.Text.Trim()) &&
+                   string.IsNullOrEmpty(txtNumPolizaFac.Text.Trim()) &&
+                   string.IsNullOrEmpty(txtCapitalFac.Text.Trim()) && string.IsNullOrEmpty(txtEstadoFac.Text.Trim()) &&
+                   string.IsNullOrEmpty(txtNumFactura.Text.Trim()) &&
+                   string.IsNullOrEmpty(txtNumCuotaFac.Text.Trim()) &&
+                   string.IsNullOrEmpty(txtImporteFac.Text.Trim());
+        }
+
+        private bool GuardarDatosVehiculo()
+        {
+            var vehiculo = new Vehiculo()
+            {
+                IdVehiculo = Guid.NewGuid(),
+                Patente = txtPatente.Text.Trim(),
+                Marca = new Marca() { IdMarca = ((Marca)cboMarca.SelectedItem).IdMarca },
+                _TipoUso = new TipoUso() { IdTipoUso = ((TipoUso)cboTipoUso.SelectedItem).IdTipoUso },
+                Modelo = new Modelo() { IdModelo = ((Modelo)cboModelo.SelectedItem).IdModelo },
+                Combustible = cboCombustible.SelectedItem.ToString(),
+                Color = cboColor.SelectedItem.ToString(),
+                CantPuertas = int.Parse(cboCantPuertas.SelectedItem.ToString()),
+                Año = txtAño.Text.Trim(),
+                NumChasis = txtNumChasis.Text.Trim(),
+                NumSerie = txtNumSerie.Text.Trim(),
+                Foto1 = Foto1,
+                Foto2 = Foto2,
+                Foto3 = Foto3,
+                Foto4 = Foto4,
+            };
+            VehiculoGuardado = vehiculo;
+
+            return ServicioVehiculo.Create(vehiculo);
+
+        }
+
+        private bool GuardarDatosCliente()
+        {
+            var cliente = new Cliente()
+            {
+                IdCliente = Guid.NewGuid(),
+                Nombre = txtNombre.Text.Trim(),
+                Apellido = txtApellido.Text.Trim(),
+                Dni = int.Parse(txtDni.Text),
+                FechaNacimiento = dtpFechaNacimiento.Value,
+                Email = txtEmail.Text.Trim(),
+                Sexo = rdbSexo.Checked ? "Hombre" : "Mujer",
+                Domicilio = new Domicilio()
+                {
+                    IdDomicilio = Guid.NewGuid(),
+                    Direccion = txtDomicilio.Text.Trim(),
+                    CodPostal = txtCp.Text.Trim(),
+                    Localidad = new Localidad()
+                    {
+                        IdLocalidad = Guid.Parse(cboLocalidad.SelectedValue.ToString())
+                    },
+                    Provincia = new Provincia()
+                    {
+                        IdProvincia = Guid.Parse(cboProvincia.SelectedValue.ToString())
+                    },
+                },
+                Estado = true,
+                Contacto = new Contacto()
+                {
+                    IdContacto = Guid.NewGuid(),
+                    Celular = txtCelular.Text.Trim(),
+                    Telefono = txtTelFijo.Text.Trim()
+                }
+            };
+
+            ClienteGuardado = cliente;
+
+            return ServicioCliente.Create(cliente);
+        }
+
+        private void PolizaWizard_Enter(object sender, EventArgs e)
+        {
+        }
+
+        private void wizardControl_Enter(object sender, EventArgs e)
+        {
+            //this.wizardControl.Dispose();
+            //InitializeComponent();
         }
     }
 }

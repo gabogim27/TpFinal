@@ -113,6 +113,9 @@ namespace SSTIS
         {
             var returnValue = true;
 
+            if (ServicioFamiliaImplementor.ObtenerUsuariosPorFamilia(familia.IdFamilia).Count > 1)
+                return true;
+
             returnValue = ServicioPatenteImplementor.CheckeoFamiliaParaBorrar(usuario, familia);
 
             return returnValue;

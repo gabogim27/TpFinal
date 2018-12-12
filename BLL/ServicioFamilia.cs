@@ -40,6 +40,7 @@ namespace BLL
             if (!ComprobarUsoFamilia(entity.IdFamilia))
             {
                 RepositorioFamiliaImplementor.BorrarFamiliaDeFamiliaPatente(entity.IdFamilia);
+                RepositorioFamiliaImplementor.BorrarFamiliaDeFamiliaUsuario(entity.IdFamilia);
                 return RepositorioFamilia.Delete(entity);
             }
 

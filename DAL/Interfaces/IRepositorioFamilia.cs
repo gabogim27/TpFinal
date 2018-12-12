@@ -32,6 +32,8 @@ namespace DAL.Interfaces
 
         void BorrarFamiliaDeFamiliaPatente(Guid familiaId);
 
+        void BorrarFamiliaDeFamiliaUsuario(Guid familiaId);
+
         List<Familia> ObtenerFamiliasPorUsuario(Guid usuarioId);
 
         List<Guid> ObtenerPatentesPorFamiliaId(Guid familiaId);

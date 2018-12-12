@@ -24,6 +24,11 @@ namespace BLL
             return RepositorioPolizaImplementor.TraerUlitmoNumeroDePoliza();
         }
 
+        public bool Create(Poliza entity)
+        {
+            return RepositorioPolizaImplementor.Create(entity);
+        }
+
         public List<Cobertura> TraerCoberturas()
         {
             return RepositorioPolizaImplementor.TraerCoberturas();

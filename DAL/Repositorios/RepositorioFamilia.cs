@@ -99,6 +99,11 @@ namespace DAL.Repositorios
             FamiliaDaoImplementor.BorrarFamiliaDeFamiliaPatente(familiaId);
         }
 
+        public void BorrarFamiliaDeFamiliaUsuario(Guid familiaId)
+        {
+            FamiliaDaoImplementor.BorrarFamiliaDeFamiliaUsuario(familiaId);
+        }
+
         public List<Familia> ObtenerFamiliasPorUsuario(Guid usuarioId)
         {
             return FamiliaDaoImplementor.ObtenerFamiliasPorUsuario(usuarioId);

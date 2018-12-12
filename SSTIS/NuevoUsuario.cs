@@ -242,6 +242,10 @@ namespace SSTIS
 
         private void CargaInicial()
         {
+            GroupBox3.Visible = false;
+            groupBox4.Visible = false;
+            chklFamilia.Visible = false;
+            chklPatente.Visible = false;
             cboLocalidad.Enabled = false;
             CargarComboProvincia();
             cboProvincia.SelectedIndex = -1;

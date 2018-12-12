@@ -354,7 +354,21 @@ namespace DAL.Impl
                 RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(), String.Format("Ocurrio un error al borrar la familiaPatente " +
                                                                                                              " Error: {0}", ex.Message));
             }
+        }
 
+        public void BorrarFamiliaDeFamiliaUsuario(Guid familiaId)
+        {
+            try
+            {
+                var queryString = string.Format("DELETE FROM FamiliaUsuario WHERE IdFamilia = '{0}'", familiaId);
+
+                SqlUtils.Exec(queryString);
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(), String.Format("Ocurrio un error al borrar la familiaUsuario " +
+                                                                                                             " Error: {0}", ex.Message));
+            }
         }
 
         public List<Familia> ObtenerFamiliasUsuario(Guid usuarioId)
@@ -377,7 +391,7 @@ namespace DAL.Impl
                 listaUsuarios.Add(UsuarioDao.GetById(usuario));
             }
 
-            return listaUsuarios;
+            return listaUsuarios.Where(x => x.Estado).ToList();
         }
     }
 }

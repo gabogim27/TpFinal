@@ -410,7 +410,7 @@ namespace DAL.Dao
 
             ///Si ningun usuario tiene patentes no se puede borrar ningun usuario
             //Chequear que el que se esta borrando no sea el unico usuario con las patentes escenciales
-            if (usuariosGlobales.All(x => x.Patentes.Count < 1))
+            if (usuariosGlobales.All(x => x.Patentes.Count < 1 && x.Familia.Count < 1))
             {
                 return false;
             }
@@ -430,11 +430,23 @@ namespace DAL.Dao
                     diccionarioPatentes.Add(patEscencial.IdPatente, 0);
                     foreach (var usuPat in usuariosGlobales)
                     {
+                        //Chequeamos las patentes
                         foreach (var pat in usuPat.Patentes)
                         {
                             if (pat.IdPatente == patEscencial.IdPatente)
                             {
                                 diccionarioPatentes[patEscencial.IdPatente] += 1;
+                            }
+                        }
+                        //Chequeamos las familias
+                        foreach (var usuFam in usuPat.Familia)
+                        {
+                            foreach (var usuFamPat in usuFam.PatentesDeFamilia)
+                            {
+                                if (usuFamPat.IdPatente == patEscencial.IdPatente)
+                                {
+                                    diccionarioPatentes[patEscencial.IdPatente] += 1;
+                                }
                             }
                         }
                         //if (usuPat.Patentes.Any(x => x.IdPatente == patEscencial.IdPatente))
@@ -475,18 +487,32 @@ namespace DAL.Dao
             }
 
             return patentesUsuarios;
-        }        
+        }
 
         public bool CheckeoFamiliaParaBorrar(Usuario usuario = null, Familia familiaABorrar = null, Guid? idPatente = null, bool esNegado = false)
         {
             var diccionarioPatentes = new Dictionary<Guid, int>();
             var patenteToCheck = idPatente ?? Guid.Empty;
             var usuariosGlobales = UsuarioDao.Retrive().Where(x => x.Estado).ToList();
+            var patentesEscenciales = new List<Patente>();
+
+            //Son las patentes que vamos a usar para chequear todo el tiempo
+            patentesEscenciales = RetrievePatentes();
 
             if (familiaABorrar?.PatentesDeFamilia.Count <= 0 || usuario?.Patentes.Count <= 0)
             {
                 return true;
             }
+
+            //VERIFICA SI UNA FAMILIA ESTA ASIGNADA A MAS DE UN USUARIO Y SI ES ASO, VERIFICA QUE TENA TODAS LAS PATENTES
+            //if (familiaABorrar != null)
+            //{
+            //    if (usuariosGlobales.Count(x => x.Familia.Any(y => y.IdFamilia == familiaABorrar.IdFamilia)) > 1 
+            //        && familiaABorrar.PatentesDeFamilia.All(x => patentesEscenciales.Any(y => y.IdPatente == x.IdPatente)))
+            //    {
+            //        return true;
+            //    }
+            //}
 
             //Si estamos eliminando una patente de una familia, y esa patente ya la tiene asignada un usuario,
             //retornamos true de una
@@ -527,14 +553,16 @@ namespace DAL.Dao
 
             diccionarioPatentes = CargarDiccionario(usuariosGlobales, familiaABorrar, idPatente);
 
-            if ((familiaABorrar == null && !esNegado && patenteToCheck != Guid.Empty && diccionarioPatentes.All(x => x.Value > 1)) || (familiaABorrar != null && !esNegado && diccionarioPatentes.Count > 0 && diccionarioPatentes.All(x => x.Value > 0)) || (esNegado &&
+            if ((familiaABorrar == null && !esNegado && patenteToCheck != Guid.Empty &&
+                 diccionarioPatentes.All(x => x.Value > 1)) || (familiaABorrar != null &&
+                                                                !esNegado && diccionarioPatentes.Count > 0 && diccionarioPatentes.All(x => x.Value > 0)) || (esNegado &&
                                                                                                  patenteToCheck != Guid.Empty && diccionarioPatentes.All(x => x.Value > 1)))
             {
                 return true;
             }
 
             return false;
-        }      
+        }
 
         private Dictionary<Guid, int> CargarDiccionario(List<Usuario> usuariosGlobal, Familia familiaAConsultar, Guid? patenteId)
         {
@@ -572,7 +600,7 @@ namespace DAL.Dao
             }
 
             return diccionarioPatentes;
-        }             
+        }
 
         public bool CheckeoDePatentes(Usuario usuarioToDelete)
         {

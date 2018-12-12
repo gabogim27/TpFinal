@@ -10,7 +10,7 @@ namespace DAL.Interfaces
     public interface IRepositorioPoliza
     {
         int TraerUlitmoNumeroDePoliza();
-
+        bool Create(Poliza entity);
         List<Cobertura> TraerCoberturas();
     }
 }

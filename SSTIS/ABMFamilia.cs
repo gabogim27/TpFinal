@@ -90,17 +90,17 @@ namespace SSTIS
             foreach (var familiaToDelete in familiasAEliminar)
             {
                 var returnValue = false;
-                
-                
-                    if (ServicioPatenteImplementor.CheckeoFamiliaParaBorrar(null, familiaToDelete, null))
-                    {
-                        returnValue = true;
-                    }
-                    else
-                    {
-                        MessageBox.Show("La familia actualmente esta en uso");
-                    }
-  
+
+
+                if (ServicioPatenteImplementor.CheckeoFamiliaParaBorrar(null, familiaToDelete, null))
+                {
+                    returnValue = true;
+                }
+                else
+                {
+                    MessageBox.Show("La familia actualmente esta en uso");
+                }
+
 
                 if (returnValue)
                 {
@@ -206,6 +206,26 @@ namespace SSTIS
         private void frmABMFamilia_Enter(object sender, EventArgs e)
         {
             CargarFamiliaCheckedList();
+        }
+
+        private void btnModificarPatentes_Click(object sender, EventArgs e)
+        {
+            if (chklFamilias.CheckedItems.Count != 0)
+            {
+                FamiliaInfo.NuevaFamilia = (Familia)chklFamilias.CheckedItems[0];
+                AdminPatFamilia.FamiliaNueva = true;
+                var res = AdminPatFamilia.ShowDialog();
+                if (res == DialogResult.OK)
+                {
+                    //MessageBox.Show("kndaklbajkbcawibcawjk");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar una Familia.");
+            }
+            FamiliaInfo.NuevaFamilia = null;
+            AdminPatFamilia.FamiliaNueva = false;
         }
     }
 }

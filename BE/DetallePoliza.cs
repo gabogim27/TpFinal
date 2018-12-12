@@ -9,8 +9,8 @@
     public class DetallePoliza
     {
         public Guid IdDetalle { get; set; }
-        public List<Cobertura> Coberturas { get; set; }
-        public Guid IdVehiculo { get; set; }//CAMBIARLO A LISTA, PUEDE TENER UNO O MAS VEHICULOS ASEGURADOS
+        public Cobertura Cobertura { get; set; }
+        public Vehiculo Vehiculo { get; set; }//CAMBIARLO A LISTA, PUEDE TENER UNO O MAS VEHICULOS ASEGURADOS
         public decimal Prima { get; set; }
         public decimal SumaAsegurada { get; set; }
         public int DVH { get; set; }

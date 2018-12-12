@@ -25,6 +25,9 @@ namespace DAL.Dao
         public bool Create(Cliente entity)
         {
             var emailEncript = DES.Encrypt(entity.Email, Key, Iv);
+            var nombreEcript = DES.Encrypt(entity.Nombre, Key, Iv);
+            var apellidoEncript = DES.Encrypt(entity.Apellido, Key, Iv);
+            var dniEncript = DES.Encrypt(entity.Dni.ToString(), Key, Iv);
             var queryString = "INSERT INTO dbo.Cliente(IdCliente, IdDomicilio, IdContacto, Nombre, Apellido, Email, " +
                               "FechaNacimiento, Dni, Sexo, Estado) values " +
                               "(@idCliente,@idDomicilio,@idContacto,@nombre,@apellido,@email,@fechaNacimiento,@dni," +
@@ -39,17 +42,17 @@ namespace DAL.Dao
                     @idCliente = entity.IdCliente,
                     @idDomicilio = entity.Domicilio.IdDomicilio,
                     @idContacto = entity.Contacto.IdContacto,
-                    @nombre = entity.Nombre,
-                    @apellido = entity.Apellido,
+                    @nombre = nombreEcript,
+                    @apellido = apellidoEncript,
                     @email = emailEncript,
                     @fechaNacimiento = entity.FechaNacimiento,
-                    @dni = entity.Dni,
+                    @dni = dniEncript,
                     @estado = Convert.ToByte(entity.Estado = true),
                     @sexo = entity.Sexo,
                 });
 
                 BitacoraDao.RegistrarEnBitacora(Log.Level.Media.ToString(), string.Format("Cliente con ID: {0} persistido correctamente.", entity.IdCliente));
-                return !returnValue;
+                return returnValue;
             }
             catch (Exception ex)
             {

@@ -418,7 +418,7 @@ namespace DAL.Impl
         {
             try
             {
-                var query = string.Format("Update Usuario set Bloqueado = 0 where IdUsuario = '{0}'", idUsuario);
+                var query = string.Format("Update Usuario set Bloqueado = 1 where IdUsuario = '{0}'", idUsuario);
                 var result = SqlUtils.Exec(query);
                 if (result)
                 {
@@ -443,7 +443,7 @@ namespace DAL.Impl
         {
             try
             {
-                var query = string.Format("Update Usuario set Bloqueado = 1 and PrimerLogin = 1 where IdUsuario = '{0}'", idUsuario);
+                var query = string.Format("Update Usuario set Bloqueado = 0, PrimerLogin = 1 where IdUsuario = '{0}'", idUsuario);
                 var result = SqlUtils.Exec(query);
                 if (result)
                 {

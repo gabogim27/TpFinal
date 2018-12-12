@@ -68,7 +68,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(628, 388);
+            this.btnCancelar.Location = new System.Drawing.Point(447, 114);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(104, 39);
             this.btnCancelar.TabIndex = 12;
@@ -79,7 +79,7 @@
             // GroupBox3
             // 
             this.GroupBox3.Controls.Add(this.chklFamilia);
-            this.GroupBox3.Location = new System.Drawing.Point(487, 52);
+            this.GroupBox3.Location = new System.Drawing.Point(583, 56);
             this.GroupBox3.Name = "GroupBox3";
             this.GroupBox3.Size = new System.Drawing.Size(216, 142);
             this.GroupBox3.TabIndex = 10;
@@ -97,7 +97,7 @@
             // Label13
             // 
             this.Label13.AutoSize = true;
-            this.Label13.Location = new System.Drawing.Point(64, 17);
+            this.Label13.Location = new System.Drawing.Point(193, 17);
             this.Label13.Name = "Label13";
             this.Label13.Size = new System.Drawing.Size(96, 13);
             this.Label13.TabIndex = 9;
@@ -180,7 +180,7 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(475, 388);
+            this.btnAceptar.Location = new System.Drawing.Point(447, 69);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(104, 39);
             this.btnAceptar.TabIndex = 11;
@@ -346,7 +346,7 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.chklPatente);
-            this.groupBox4.Location = new System.Drawing.Point(487, 219);
+            this.groupBox4.Location = new System.Drawing.Point(583, 223);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(216, 141);
             this.groupBox4.TabIndex = 13;
@@ -363,7 +363,7 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(713, 17);
+            this.btnVolver.Location = new System.Drawing.Point(12, 12);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(75, 23);
             this.btnVolver.TabIndex = 14;
@@ -375,13 +375,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(578, 450);
             this.Controls.Add(this.btnVolver);
+            this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.GroupBox3);
             this.Controls.Add(this.Label13);
-            this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.GroupBox2);
             this.Controls.Add(this.GroupBox1);
             this.Name = "frmNuevoUsuario";

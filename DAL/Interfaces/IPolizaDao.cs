@@ -11,5 +11,6 @@ namespace DAL.Interfaces
     {
         int TraerUlitmoNumeroDePoliza();
         List<Cobertura> TraerCoberturas();
+        bool Create(Poliza entity);
     }
 }

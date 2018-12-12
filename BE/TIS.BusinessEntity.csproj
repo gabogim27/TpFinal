@@ -54,6 +54,7 @@
     <Compile Include="DetallePoliza.cs" />
     <Compile Include="DigitoVerificador.cs" />
     <Compile Include="Domicilio.cs" />
+    <Compile Include="Factura.cs" />
     <Compile Include="Familia.cs" />
     <Compile Include="FamiliaPatente.cs" />
     <Compile Include="Formulario.cs" />
