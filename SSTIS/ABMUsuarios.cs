@@ -224,6 +224,15 @@ namespace SSTIS
                     var usuarioToUpdate = ConvertToUsuario();
                     if (usuarioToUpdate != null)
                     {
+                        var usuarios = ServicioUsuario.Retrive();
+                        usuarios.RemoveAll(x => x.IdUsuario == usuarioToUpdate.IdUsuario);
+
+                        if (usuarios.All(x => x.Email == usuarioToUpdate.Email))
+                        {
+                            MessageBox.Show("E-mail ya existente.");
+                            return;
+                        }
+
                         if (ServicioUsuario.Update(usuarioToUpdate))
                         {
                             if (DigitoVerificador.ComprobarPrimerDigito(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper())))

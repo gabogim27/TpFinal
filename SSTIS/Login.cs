@@ -41,7 +41,7 @@ namespace SSTIS
 
         public frmLogin(IServicio<Usuario> servicioUsuario, IServicioUsuario servicioUsuarioImplementor, 
             IPrincipal principal, IServicioIdioma servicioIdioma, ISessionInfo SesionInfo, 
-            IDigitoVerificador DigitoVerificaor)
+            IDigitoVerificador DigitoVerificaor, ICambiarContraseña CambiarContraseña)
         {
             this.ServicioUsuario = servicioUsuario;
             this.ServicioUsuarioImplementor = servicioUsuarioImplementor;
@@ -49,6 +49,7 @@ namespace SSTIS
             this.ServicioIdioma = servicioIdioma;
             this.SesionInfo = SesionInfo;
             this.DigitoVerificador = DigitoVerificaor;
+            this.CambiarContraseña = CambiarContraseña;
             InitializeComponent();
         }
 
