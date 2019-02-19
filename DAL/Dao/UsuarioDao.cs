@@ -24,14 +24,17 @@ namespace DAL.Impl
         public const string Iv = "HNtgQw0w";
 
         public IRepositorioBitacora RepositorioBitacora;
-        
-        public UsuarioDao(IRepositorioBitacora RepositorioBitacora)
+        public IDigitoVerificador DigitoVerificador;
+
+        public UsuarioDao(IRepositorioBitacora RepositorioBitacora, IDigitoVerificador DigitoVerificador)
         {
             this.RepositorioBitacora = RepositorioBitacora;
+            this.DigitoVerificador = DigitoVerificador;
         }
 
         public bool Create(Usuario ObjAlta)
         {
+            var digitoVH = DigitoVerificador.CalcularDVHorizontal(new List<string> { ObjAlta.IdUsuario.ToString(), ObjAlta.Email }, new List<int> { });
             var emailEncript = DES.Encrypt(ObjAlta.Email, Key, Iv);
             var queryString = "INSERT INTO dbo.Usuario(IdUsuario, Nombre, Apellido, Password, Email, " +
                               "CantLoginsFallidos, Estado, IdDomicilio, IdContacto, IdIdioma, PrimerLogin, Sexo, Dvh) values " +
@@ -56,7 +59,7 @@ namespace DAL.Impl
                     @idIdioma = ObjAlta.IdIdioma,
                     @primerLogin = Convert.ToByte(ObjAlta.PrimerLogin = true),
                     @sexo = ObjAlta.Sexo,
-                    @dvh = ObjAlta.Dvh
+                    @dvh = digitoVH
                 });
 
                 log.InfoFormat("Usuario con ID: {0} persistido correctamenete", ObjAlta.IdUsuario);
@@ -228,19 +231,31 @@ namespace DAL.Impl
         {
             try
             {
+                var digitoVH = DigitoVerificador.CalcularDVHorizontal(new List<string> { ObjUpd.IdUsuario.ToString(), ObjUpd.Email }, new List<int> { });
                 var emailEcnript = DES.Encrypt(ObjUpd.Email, Key, Iv);
                 var queryString = "Update dbo.Usuario set " +
                                   "Nombre = @nombre, Apellido = @apellido, Email = @email, " +
-                                  "Sexo = @sexo where IdUsuario = @idUsuario";
+                                  "Sexo = @sexo where IdUsuario = @idUsuario, Dvh = @dvh";
 
-                return SqlUtils.Exec(queryString, new
+                var result = SqlUtils.Exec(queryString, new
                 {
                     @nombre = ObjUpd.Nombre,
                     @apellido = ObjUpd.Nombre,
                     @email = emailEcnript,
                     @sexo = ObjUpd.Sexo,
-                    @idUsuario = ObjUpd.IdUsuario
+                    @idUsuario = ObjUpd.IdUsuario,
+                    @dvh = digitoVH
                 });
+
+                return result;
+                //return SqlUtils.Exec(queryString, new
+                //{
+                //    @nombre = ObjUpd.Nombre,
+                //    @apellido = ObjUpd.Nombre,
+                //    @email = emailEcnript,
+                //    @sexo = ObjUpd.Sexo,
+                //    @idUsuario = ObjUpd.IdUsuario
+                //});
             }
             catch (Exception e)
             {

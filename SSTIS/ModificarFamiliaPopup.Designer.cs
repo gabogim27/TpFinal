@@ -67,6 +67,7 @@
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.txtFamilia);
             this.Controls.Add(this.Label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "frmModificarFamiliaPopup";
             this.Text = "ModificarFamiliaPopup";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmModificarFamiliaPopup_FormClosing);

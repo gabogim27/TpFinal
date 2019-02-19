@@ -160,6 +160,12 @@
     <Compile Include="Clientes.Designer.cs">
       <DependentUpon>Clientes.cs</DependentUpon>
     </Compile>
+    <Compile Include="CobrarFacturaPopUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CobrarFacturaPopUp.Designer.cs">
+      <DependentUpon>CobrarFacturaPopUp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Container\ContainerConfig.cs" />
     <Compile Include="Interfaces\IABMFamilia.cs" />
     <Compile Include="Interfaces\IAdminFamiliaUsuario.cs" />
@@ -168,12 +174,20 @@
     <Compile Include="Interfaces\IBitacora.cs" />
     <Compile Include="Interfaces\ICambiarContraseña.cs" />
     <Compile Include="Interfaces\ICambiarIdioma.cs" />
+    <Compile Include="Interfaces\ICobrarFactura.cs" />
     <Compile Include="Interfaces\IModificarFamilia.cs" />
+    <Compile Include="Interfaces\IModificarUsuario.cs" />
     <Compile Include="Interfaces\INuevaFamilia.cs" />
     <Compile Include="Interfaces\IPolizaWizard.cs" />
     <Compile Include="Interfaces\IRestaurarCopiaDeSeguridad.cs" />
     <Compile Include="Interfaces\ISessionInfo.cs" />
     <Compile Include="MessageBoxHelper\Alert.cs" />
+    <Compile Include="ModificarUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModificarUsuario.Designer.cs">
+      <DependentUpon>ModificarUsuario.cs</DependentUpon>
+    </Compile>
     <Compile Include="PolizaWizard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -216,12 +230,6 @@
     </Compile>
     <Compile Include="DetalleVehiculo.Designer.cs">
       <DependentUpon>DetalleVehiculo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Factura.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Factura.Designer.cs">
-      <DependentUpon>Factura.cs</DependentUpon>
     </Compile>
     <Compile Include="FamiliaPatente.cs">
       <SubType>Form</SubType>
@@ -328,6 +336,12 @@
     <EmbeddedResource Include="Clientes.resx">
       <DependentUpon>Clientes.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CobrarFacturaPopUp.resx">
+      <DependentUpon>CobrarFacturaPopUp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModificarUsuario.resx">
+      <DependentUpon>ModificarUsuario.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PolizaWizard.resx">
       <DependentUpon>PolizaWizard.cs</DependentUpon>
     </EmbeddedResource>
@@ -350,9 +364,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DetalleVehiculo.resx">
       <DependentUpon>DetalleVehiculo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Factura.resx">
-      <DependentUpon>Factura.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FamiliaPatente.resx">
       <DependentUpon>FamiliaPatente.cs</DependentUpon>

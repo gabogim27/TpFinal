@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BE;
 
 namespace SSTIS.Interfaces
 {
@@ -12,5 +13,6 @@ namespace SSTIS.Interfaces
         void Show();
         DialogResult ShowDialog();
         Form MdiParent { get; set; }
+        Factura FacturaAAbonar();
     }
 }

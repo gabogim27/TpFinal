@@ -32,7 +32,7 @@ namespace SSTIS
         public IServicioFamilia ServicioFamiliaImplementor;
         public IServicioBitacora ServicioBitacoraImplementor;
         public IDigitoVerificador DigitoVerificador;
-        
+
         private static readonly List<Familia> listaFamilas = new List<Familia>();
         private static readonly List<Patente> listaPatentes = new List<Patente>();
         private const string Entidad = "Usuario";
@@ -59,9 +59,18 @@ namespace SSTIS
         private void Button1_Click(object sender, EventArgs e)
         {
             try
-            {               
+            {
                 if (ValidarDatosIngresados())
                 {
+                    //VALIDAR LOS CAMPOS DE DOMICILIO
+                    if (string.IsNullOrEmpty(txtDomicilio.Text.Trim()) || string.IsNullOrEmpty(txtCp.Text.Trim()) ||
+                        cboLocalidad.SelectedIndex == -1 || cboProvincia.SelectedIndex == -1)
+                    {
+                        MessageBox.Show("Debe completar todos los datos del domicilio.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+
+                    }
+
                     var usuarioExistente = ServicioUsuario.Retrive().FirstOrDefault(x => x.Email == txtEmail.Text.Trim());
                     if (usuarioExistente != null)
                     {
@@ -108,16 +117,16 @@ namespace SSTIS
                             DigitoVerificador.ActualizarDVVertical(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper()));
                         }
 
-                        var familiasSeleccionadas = GetSelectedFamilies();
-                        ServicioFamiliaImplementor.GuardarFamiliaUsuario(familiasSeleccionadas, nuevoUsuario.IdUsuario);
-                        ServicioPatente.GuardarPatentesUsuario(GetSelectedPatentes(), nuevoUsuario.IdUsuario);
-                        ServicioBitacoraImplementor.RegistrarEnBitacora(Log.Level.Alta.ToString(), 
+                        //var familiasSeleccionadas = GetSelectedFamilies();
+                        //ServicioFamiliaImplementor.GuardarFamiliaUsuario(familiasSeleccionadas, nuevoUsuario.IdUsuario);
+                        //ServicioPatente.GuardarPatentesUsuario(GetSelectedPatentes(), nuevoUsuario.IdUsuario);
+                        ServicioBitacoraImplementor.RegistrarEnBitacora(Log.Level.Alta.ToString(),
                             string.Format("Usuario con id: '{0}' creado correctamente.", nuevoUsuario.IdUsuario), nuevoUsuario);
                         MessageBox.Show("Usuario creado correctamente");
                     }
                     else
                     {
-                        ServicioBitacoraImplementor.RegistrarEnBitacora(Log.Level.Alta.ToString(), 
+                        ServicioBitacoraImplementor.RegistrarEnBitacora(Log.Level.Alta.ToString(),
                             String.Format("Hubo un error al crear el usuario: {0}", nuevoUsuario.Email), nuevoUsuario);
                         Alert.ShowSimpleAlert("El alta de nuevo usuario ha fallado");
                     }
@@ -187,18 +196,6 @@ namespace SSTIS
                 MessageBox.Show("El e-mail ingresado esta en formato incorrecto. Por favor corrijalo!!!");
                 returnValue = false;
             }
-            //Verificamos que se haya seleccionado alguna familia
-            //if (chklFamilia.CheckedItems.Count == 0)
-            //{
-            //    MessageBox.Show("Debe seleccionar al menos una familia");
-            //    returnValue = false;
-            //}
-            ////Verificamos que se haya seleccionado alguna patente
-            //if (chklPatente.CheckedItems.Count == 0)
-            //{
-            //    MessageBox.Show("Debe seleccionar al menos una patente");
-            //    returnValue = false;
-            //}
 
             return returnValue;
         }

@@ -182,6 +182,7 @@
             this.Controls.Add(this.btnExaminar);
             this.Controls.Add(this.txtUbicacion);
             this.Controls.Add(this.Label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmRealizarCopiaSeguridad";
             this.Text = "RealizarCopiaSeguridad";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRealizarCopiaSeguridad_FormClosing);

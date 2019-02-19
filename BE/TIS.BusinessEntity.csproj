@@ -51,6 +51,7 @@
     <Compile Include="Cliente.cs" />
     <Compile Include="Cobertura.cs" />
     <Compile Include="Contacto.cs" />
+    <Compile Include="DetalleFactura.cs" />
     <Compile Include="DetallePoliza.cs" />
     <Compile Include="DigitoVerificador.cs" />
     <Compile Include="Domicilio.cs" />

@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using AeroWizard;
 using BE;
 using BLL.Interfaces;
 using SSTIS.Interfaces;
-using TextBox = System.Windows.Forms.TextBox;
 
 namespace SSTIS
 {
@@ -27,6 +21,8 @@ namespace SSTIS
         public IServicio<Cliente> ServicioCliente;
         public IServicioVehiculo ServicioVehiculoImplementor;
         public IServicio<Vehiculo> ServicioVehiculo;
+        public IServicio<Factura> ServicioFactura;
+        public ICobrarFactura CobrarFactura;
 
         private decimal CantidadSumaAsegurada;
         private byte[] Foto1 = null;
@@ -36,11 +32,14 @@ namespace SSTIS
         private Cliente ClienteGuardado = null;
         private Vehiculo VehiculoGuardado = null;
         private Poliza PolizaGuardada = null;
+        private Factura FacturaGuardada = null;
 
         public PolizaWizard(IServicioPoliza ServicioPolizaImplementor, IServicioUsuario ServicioUsuarioImplementor,
             IServicioLocalidad ServicioLocalidadImplementor, IServicio<Localidad> ServicioLocalidad,
             IServicio<Provincia> ServicioProvincia,
-            IServicio<Cliente> ServicioCliente, IServicioVehiculo ServicioVehiculoImplementor, IServicio<Vehiculo> ServicioVehiculo)
+            IServicio<Cliente> ServicioCliente, IServicioVehiculo ServicioVehiculoImplementor,
+            IServicio<Vehiculo> ServicioVehiculo, IServicio<Factura> ServicioFactura,
+            ICobrarFactura CobrarFactura)
         {
             this.ServicioUsuarioImplementor = ServicioUsuarioImplementor;
             this.ServicioPolizaImplementor = ServicioPolizaImplementor;
@@ -50,6 +49,8 @@ namespace SSTIS
             this.ServicioCliente = ServicioCliente;
             this.ServicioVehiculoImplementor = ServicioVehiculoImplementor;
             this.ServicioVehiculo = ServicioVehiculo;
+            this.ServicioFactura = ServicioFactura;
+            this.CobrarFactura = CobrarFactura;
             InitializeComponent();
         }
 
@@ -65,6 +66,8 @@ namespace SSTIS
 
         private void PolizaWizard_Load(object sender, EventArgs e)
         {
+            RestablecerControles();
+            this.wizardControl.SelectedPage.NextPage = this.wizardInicio;
             //wizardInicio.NextPage.Enabled = false;
 
         }
@@ -79,6 +82,7 @@ namespace SSTIS
                     e.Cancel = true;
                     return;
                 }
+                this.wizardControl.SelectedPage.NextPage = this.wizardCoberturas;
             }
         }
 
@@ -168,6 +172,8 @@ namespace SSTIS
                 e.Cancel = true;
                 return;
             }
+
+            this.wizardControl.SelectedPage.NextPage = this.wizardDatosCliente;
         }
 
         private bool ValidarDatosClienteIngresados()
@@ -175,10 +181,10 @@ namespace SSTIS
             var returnValue = true;
             //Verificamos todos los controles de tipo textbox
 
-            if (string.IsNullOrEmpty(txtNombre.Text.Trim()) && string.IsNullOrEmpty(txtApellido.Text.Trim()) &&
-                string.IsNullOrEmpty(txtEmail.Text.Trim()) && string.IsNullOrEmpty(txtDni.Text.Trim()) &&
-                string.IsNullOrEmpty(txtCelular.Text.Trim()) && string.IsNullOrEmpty(txtCp.Text.Trim()) &&
-                string.IsNullOrEmpty(txtDomicilio.Text.Trim()) && string.IsNullOrEmpty(txtTelFijo.Text.Trim()))
+            if (string.IsNullOrEmpty(txtNombre.Text.Trim()) || string.IsNullOrEmpty(txtApellido.Text.Trim()) ||
+                string.IsNullOrEmpty(txtEmail.Text.Trim()) || string.IsNullOrEmpty(txtDni.Text.Trim()) ||
+                string.IsNullOrEmpty(txtCelular.Text.Trim()) || string.IsNullOrEmpty(txtCp.Text.Trim()) ||
+                string.IsNullOrEmpty(txtDomicilio.Text.Trim()) || string.IsNullOrEmpty(txtTelFijo.Text.Trim()))
             {
                 MessageBox.Show("Todos los datos deben estar completos");
                 return false;
@@ -218,6 +224,8 @@ namespace SSTIS
                 e.Cancel = true;
                 return;
             }
+
+            this.wizardControl.SelectedPage.NextPage = this.wizardDatosVehiculo;
         }
 
         private void CargarComboProvincia()
@@ -313,18 +321,23 @@ namespace SSTIS
 
         private void wizardDatosVehiculo_Commit(object sender, WizardPageConfirmEventArgs e)
         {
-            ValidarDatosVehiculo();
-        }
-
-        private void ValidarDatosVehiculo()
-        {
-            if (string.IsNullOrEmpty(txtPatente.Text.Trim()) && string.IsNullOrEmpty(txtNumSerie.Text.Trim()) &&
-                string.IsNullOrEmpty(txtNumChasis.Text.Trim()) && cboTipoUso.SelectedIndex == -1 &&
-                cboModelo.SelectedIndex == -1 && cboMarca.SelectedIndex == -1 && cboCombustible.SelectedIndex == -1 &&
-                cboColor.SelectedIndex == -1 && cboCantPuertas.SelectedIndex == -1)
+            if (ValidarDatosVehiculo())
             {
                 MessageBox.Show("Por favor complete todos los datos del vehículo.");
+                e.Cancel = true;
+                return;
             }
+
+            this.wizardControl.SelectedPage.NextPage = this.wizardFactura;
+        }
+
+        private bool ValidarDatosVehiculo()
+        {
+            return string.IsNullOrEmpty(txtPatente.Text.Trim()) || string.IsNullOrEmpty(txtNumSerie.Text.Trim()) ||
+                   string.IsNullOrEmpty(txtNumChasis.Text.Trim()) || cboTipoUso.SelectedIndex == -1 ||
+                   cboModelo.SelectedIndex == -1 || cboMarca.SelectedIndex == -1 ||
+                   cboCombustible.SelectedIndex == -1 ||
+                   cboColor.SelectedIndex == -1 || cboCantPuertas.SelectedIndex == -1;
         }
 
         private void CargarControlesVehiculo()
@@ -394,6 +407,8 @@ namespace SSTIS
             //SI ES UNA NUEVA POLIZA TRAEMOS LOS DATOS DE LOS OTROS CONTROLES
             if (cboTransaccion.SelectedItem.ToString().ToUpper() == "NUEVA PÓLIZA")
             {
+                btnNuevaFac.Enabled = false;
+                btnAnular.Enabled = false;
                 txtNomYApFac.Text = txtNombre.Text.Trim() + " " + txtApellido.Text.Trim();
                 txtDomicilioFac.Text = txtDomicilio.Text.Trim();
                 txtNumPolizaFac.Text = txtNumeroPoliza.Text.Trim();
@@ -457,6 +472,16 @@ namespace SSTIS
             //2 - Guardamos los datos del vehiculo
             //3 - Guardamos los datos de la poliza
             //4 - Guardamos los datos de la factura
+            if (FacturaGuardada == null && SavePolicy())
+            {
+                this.wizardControl.SelectedPage.NextPage = this.wizardInicio;
+            }
+
+            RestablecerControles();
+        }
+
+        private bool SavePolicy()
+        {
             if (!ValidarControlesFactura())
             {
                 var guardadoCliente = GuardarDatosCliente();
@@ -464,20 +489,91 @@ namespace SSTIS
 
                 if (guardadoCliente && guardadoVehiculo)
                 {
-
-                    var guardadoPoliza = GuardarDatosPoliza();
-                    if (guardadoPoliza)
+                    if (GuardarDatosPoliza())
                     {
-                        MessageBox.Show("Poliza guardada correctamente");
+                        if (GuardarDatosFactura())
+                        {
+                            MessageBox.Show("Poliza generada correctamente");
+                            return true;
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("Hubo un error al guardar la póliza.");
+                        MessageBox.Show("Hubo un error al generar la póliza.");
                     }
                 }
             }
+            else
+            {
+                MessageBox.Show("Por favor complete los datos faltantes de la factura.");
+            }
 
+            return false;
+        }
 
+        private void RestablecerControles()
+        {
+            //Wizard inicio
+            cboTransaccion.SelectedIndex = -1;
+            cboTipoPoliza.SelectedIndex = -1;
+            //Wizard Coberturas
+            foreach (DataGridViewRow row in dgvCoberturas.Rows)
+            {
+                DataGridViewCheckBoxCell chk = (DataGridViewCheckBoxCell)row.Cells[0];
+                chk.Value = chk.FalseValue;
+            }
+
+            txtPrimaTotal.Text = string.Empty;
+            //Wizard Datos cliente
+            txtNombre.Text = string.Empty;
+            txtApellido.Text = string.Empty;
+            txtDni.Text = string.Empty;
+            dtpFechaNacimiento.Value = DateTime.Today;
+            txtEmail.Text = string.Empty;
+            rdbSexo.Checked = false;
+            rdbSexo2.Checked = false;
+            txtDomicilio.Text = string.Empty;
+            txtCp.Text = string.Empty;
+            cboLocalidad.SelectedIndex = -1;
+            cboProvincia.SelectedIndex = -1;
+            txtTelFijo.Text = string.Empty;
+            txtCelular.Text = string.Empty;
+            //Wizard Datos Vehiculo
+            txtPatente.Text = string.Empty;
+            cboTipoUso.SelectedIndex = -1;
+            txtAño.Text = string.Empty;
+            txtNumSerie.Text = string.Empty;
+            txtNumChasis.Text = string.Empty;
+            cboMarca.SelectedIndex = -1;
+            cboModelo.SelectedIndex = -1;
+            cboCombustible.SelectedIndex = -1;
+            cboColor.SelectedIndex = -1;
+            cboCantPuertas.SelectedIndex = -1;
+            pbFoto1.Image = null;
+            pbFoto1.Refresh();
+            pbFoto2.Image = null;
+            pbFoto2.Refresh();
+            pbFoto3.Image = null;
+            pbFoto3.Refresh();
+            pbFoto4.Image = null;
+            pbFoto4.Refresh();
+            //Wizard Datos Factura
+            txtNomYApFac.Text = string.Empty;
+            txtDomicilioFac.Text = string.Empty;
+            txtSeguroContratadoFac.Text = string.Empty;
+            txtNumPolizaFac.Text = string.Empty;
+            txtCapitalFac.Text = string.Empty;
+            txtEstadoFac.Text = string.Empty;
+            dtpVencimientoFac.Value = DateTime.Today;
+            txtNumFactura.Text = string.Empty;
+            dtpFechaEmision.Value = DateTime.Today;
+            txtNumCuotaFac.Text = string.Empty;
+            txtPatenteFac.Text = string.Empty;
+            txtNumSerieFac.Text = string.Empty;
+            txtNumChasisFac.Text = string.Empty;
+            txtMarcaFac.Text = string.Empty;
+            txtModeloFac.Text = string.Empty;
+            txtImporteFac.Text = string.Empty;
         }
 
         private bool GuardarDatosPoliza()
@@ -505,13 +601,13 @@ namespace SSTIS
 
         private bool ValidarControlesFactura()
         {
-            return string.IsNullOrEmpty(txtNomYApFac.Text.Trim()) &&
-                   string.IsNullOrEmpty(txtDomicilioFac.Text.Trim()) &&
-                   string.IsNullOrEmpty(txtSeguroContratadoFac.Text.Trim()) &&
-                   string.IsNullOrEmpty(txtNumPolizaFac.Text.Trim()) &&
-                   string.IsNullOrEmpty(txtCapitalFac.Text.Trim()) && string.IsNullOrEmpty(txtEstadoFac.Text.Trim()) &&
-                   string.IsNullOrEmpty(txtNumFactura.Text.Trim()) &&
-                   string.IsNullOrEmpty(txtNumCuotaFac.Text.Trim()) &&
+            return string.IsNullOrEmpty(txtNomYApFac.Text.Trim()) ||
+                   string.IsNullOrEmpty(txtDomicilioFac.Text.Trim()) ||
+                   string.IsNullOrEmpty(txtSeguroContratadoFac.Text.Trim()) ||
+                   string.IsNullOrEmpty(txtNumPolizaFac.Text.Trim()) ||
+                   string.IsNullOrEmpty(txtCapitalFac.Text.Trim()) || string.IsNullOrEmpty(txtEstadoFac.Text.Trim()) ||
+                   string.IsNullOrEmpty(txtNumFactura.Text.Trim()) ||
+                   string.IsNullOrEmpty(txtNumCuotaFac.Text.Trim()) ||
                    string.IsNullOrEmpty(txtImporteFac.Text.Trim());
         }
 
@@ -580,6 +676,31 @@ namespace SSTIS
             return ServicioCliente.Create(cliente);
         }
 
+        private bool GuardarDatosFactura()
+        {
+            var factura = new Factura()
+            {
+                IdFactura = Guid.NewGuid(),
+                NumeroCuota = int.Parse(txtNumCuotaFac.Text.Trim()),
+                NumeroFactura = int.Parse(txtNumFactura.Text.Trim()),
+                Vencimiento = dtpFechaNacimiento.Value,
+                Estado = true,
+                Paga = false,
+                Poliza = PolizaGuardada,
+                DetalleFactura = new DetalleFactura()
+                {
+                    IdDetalle = Guid.NewGuid(),
+                    Vehiculo = VehiculoGuardado,
+                    Cliente = ClienteGuardado,
+                    Importe = decimal.Parse(txtImporteFac.Text.Trim())
+                }
+            };
+
+            FacturaGuardada = factura;
+
+            return ServicioFactura.Create(factura);
+        }
+
         private void PolizaWizard_Enter(object sender, EventArgs e)
         {
         }
@@ -588,6 +709,105 @@ namespace SSTIS
         {
             //this.wizardControl.Dispose();
             //InitializeComponent();
+        }
+
+        private void wizardControl_Finished(object sender, EventArgs e)
+        {
+            //Arrancarlo en el primer wizard
+            if (wizardControl.SelectedPage == wizardFactura)
+            {
+                this.wizardControl.SelectedPage.NextPage = this.wizardInicio;
+            }
+        }
+
+        private void wizardControl_Cancelling(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            RestablecerControles();
+            this.wizardControl.SelectedPage.NextPage = this.wizardInicio;
+        }
+
+        private void btnCobrarFac_Click(object sender, EventArgs e)
+        {
+            if (FacturaGuardada != null)
+            {
+                CobrarFactura.ShowDialog();
+            }
+            else
+            {
+                var confirmResult = MessageBox.Show("Primero debe guardar todos los datos de la póliza. Confirma la operacion?",
+                    "Confirme alta de póliza",
+                    MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    if (SavePolicy())
+                        CobrarFactura.ShowDialog();
+                    return;
+                }
+            }
+        }
+
+        public Factura FacturaAAbonar()
+        {
+            return FacturaGuardada;
+        }
+
+        private Bitmap bmp;
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            e.Graphics.DrawImage(bmp, 0, 0);
+        }
+
+        private void btnImprimirFac_Click(object sender, EventArgs e)
+        {
+            if (FacturaGuardada != null)
+            {
+                ImprimirFactura();
+            }
+            else
+            {
+                var confirmResult = MessageBox.Show("Primero debe guardar todos los datos de la póliza. Confirma la operacion?",
+                    "Confirme alta de póliza",
+                    MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    if (SavePolicy())
+                        ImprimirFactura();
+                    return;
+                }
+            }
+
+        }
+
+        private void ImprimirFactura()
+        {
+            if (!string.IsNullOrEmpty(txtNumFactura.Text.Trim()) && !string.IsNullOrEmpty(txtImporteFac.Text.Trim()))
+            {
+                Graphics g = this.CreateGraphics();
+                bmp = new Bitmap(this.Size.Width, this.Size.Height, g);
+                Graphics mg = Graphics.FromImage(bmp);
+                mg.CopyFromScreen(this.Location.X, this.Location.Y, 0, 0, this.Size);
+                printPreviewDialog1.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Debe completar todos los datos de la factura para poder imprimir.");
+            }
+        }
+
+        private void cboTransaccion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboTransaccion.SelectedIndex == 1)
+            {
+                //Es una modificacion de póliza
+                txtNumeroPoliza.Text = string.Empty;
+                txtNumeroPoliza.Enabled = true;
+            }
+            else
+            {
+                TraerNumeroDePoliza();
+                txtNumeroPoliza.Enabled = true;
+            }
         }
     }
 }

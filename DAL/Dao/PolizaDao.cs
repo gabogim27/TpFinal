@@ -1,4 +1,6 @@
-﻿using DAL.Interfaces;
+﻿using System.Data;
+using Dapper;
+using DAL.Interfaces;
 using DAL.Utils;
 
 namespace DAL.Dao
@@ -75,6 +77,50 @@ namespace DAL.Dao
             }
 
             return returnValue;
+        }
+
+        public Poliza TraerPolizaPorNumero(int numero)
+        {
+            try
+            {
+                var queryString = @"SELECT pol.*, det.*, veh.*, cli.* , cob.*
+                                    FROM dbo.poliza pol
+                                    inner join dbo.Detalle_Poliza det on det.IdDetalle = pol.IdDetalle
+                                    inner join dbo.vehiculo veh on veh.IdVehiculo = det.IdVehiculo
+                                    inner join dbo.Cliente cli on cli.IdCliente = pol.IdCliente
+                                    inner join dbo.Cobertura cob on cob.IdCobertura = det.IdCobertura
+                                    where NroPoliza = " + "'" + numero + "'";
+                BitacoraDao.RegistrarEnBitacora(Log.Level.Baja.ToString(),
+                    string.Format("Buscando póliza con número: {0} ",
+                        numero));
+
+                using (IDbConnection connection = SqlUtils.Connection())
+                {
+                    connection.Open();
+                    var polizaByNumero = connection.Query<Poliza, DetallePoliza, Vehiculo, Cliente, Cobertura, Poliza>(
+                            queryString,
+                            (poliza, detallePoliza, vehiculo, cliente, cobertura) =>
+                            {
+                                poliza.Detalle = detallePoliza;
+                                poliza.Detalle.Vehiculo = vehiculo;
+                                poliza.Cliente = cliente;
+                                poliza.Detalle.Cobertura = cobertura;
+                                return poliza;
+                            },
+                            splitOn: "IdPoliza, IdDetalle, IdVehiculo, IdCliente, IdCobertura")
+                        .Distinct()
+                        .FirstOrDefault();
+                    return polizaByNumero;
+                }
+            }
+            catch (Exception ex)
+            {
+                BitacoraDao.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(),
+                    string.Format("Ocurrio un error al buscar la poliza con numero: {0} en la BD. Error: " +
+                                  "{1}", numero, ex.Message));
+            }
+
+            return null;
         }
 
         public Poliza GetById(Guid id)

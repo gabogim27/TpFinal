@@ -1,6 +1,6 @@
 ﻿namespace SSTIS
 {
-    partial class frmNuevoUsuario
+    partial class ModificarUsuario
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnCancelar = new System.Windows.Forms.Button();
-            this.GroupBox3 = new System.Windows.Forms.GroupBox();
-            this.chklFamilia = new System.Windows.Forms.CheckedListBox();
+            this.btnVolver = new System.Windows.Forms.Button();
+            this.btnAceptar = new System.Windows.Forms.Button();
             this.Label13 = new System.Windows.Forms.Label();
+            this.GroupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtCp = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cboProvincia = new System.Windows.Forms.ComboBox();
             this.cboLocalidad = new System.Windows.Forms.ComboBox();
             this.txtCelular = new System.Windows.Forms.TextBox();
             this.txtTelFijo = new System.Windows.Forms.TextBox();
@@ -41,11 +44,8 @@
             this.Label9 = new System.Windows.Forms.Label();
             this.Label8 = new System.Windows.Forms.Label();
             this.Label6 = new System.Windows.Forms.Label();
-            this.btnAceptar = new System.Windows.Forms.Button();
-            this.GroupBox2 = new System.Windows.Forms.GroupBox();
-            this.txtCp = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cboProvincia = new System.Windows.Forms.ComboBox();
+            this.GroupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblUsuarioExistente = new System.Windows.Forms.Label();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.txtApellido = new System.Windows.Forms.TextBox();
             this.txtNombre = new System.Windows.Forms.TextBox();
@@ -55,53 +55,84 @@
             this.Label4 = new System.Windows.Forms.Label();
             this.Label2 = new System.Windows.Forms.Label();
             this.Label1 = new System.Windows.Forms.Label();
-            this.GroupBox1 = new System.Windows.Forms.GroupBox();
-            this.lblUsuarioExistente = new System.Windows.Forms.Label();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.chklPatente = new System.Windows.Forms.CheckedListBox();
-            this.btnVolver = new System.Windows.Forms.Button();
-            this.GroupBox3.SuspendLayout();
             this.GroupBox2.SuspendLayout();
             this.GroupBox1.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
-            // btnCancelar
+            // btnVolver
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(447, 114);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(104, 39);
-            this.btnCancelar.TabIndex = 12;
-            this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = true;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.btnVolver.Location = new System.Drawing.Point(9, 9);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(75, 23);
+            this.btnVolver.TabIndex = 20;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
-            // GroupBox3
+            // btnAceptar
             // 
-            this.GroupBox3.Controls.Add(this.chklFamilia);
-            this.GroupBox3.Location = new System.Drawing.Point(583, 56);
-            this.GroupBox3.Name = "GroupBox3";
-            this.GroupBox3.Size = new System.Drawing.Size(216, 142);
-            this.GroupBox3.TabIndex = 10;
-            this.GroupBox3.TabStop = false;
-            this.GroupBox3.Text = "Familia";
-            // 
-            // chklFamilia
-            // 
-            this.chklFamilia.FormattingEnabled = true;
-            this.chklFamilia.Location = new System.Drawing.Point(43, 19);
-            this.chklFamilia.Name = "chklFamilia";
-            this.chklFamilia.Size = new System.Drawing.Size(120, 94);
-            this.chklFamilia.TabIndex = 0;
+            this.btnAceptar.Location = new System.Drawing.Point(431, 219);
+            this.btnAceptar.Name = "btnAceptar";
+            this.btnAceptar.Size = new System.Drawing.Size(104, 39);
+            this.btnAceptar.TabIndex = 18;
+            this.btnAceptar.Text = "Aceptar";
+            this.btnAceptar.UseVisualStyleBackColor = true;
+            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
             // Label13
             // 
             this.Label13.AutoSize = true;
-            this.Label13.Location = new System.Drawing.Point(193, 17);
+            this.Label13.Location = new System.Drawing.Point(190, 14);
             this.Label13.Name = "Label13";
-            this.Label13.Size = new System.Drawing.Size(96, 13);
-            this.Label13.TabIndex = 9;
-            this.Label13.Text = "CREAR USUARIO";
+            this.Label13.Size = new System.Drawing.Size(118, 13);
+            this.Label13.TabIndex = 17;
+            this.Label13.Text = "MODIFICAR USUARIO";
+            // 
+            // GroupBox2
+            // 
+            this.GroupBox2.Controls.Add(this.txtCp);
+            this.GroupBox2.Controls.Add(this.label3);
+            this.GroupBox2.Controls.Add(this.cboProvincia);
+            this.GroupBox2.Controls.Add(this.cboLocalidad);
+            this.GroupBox2.Controls.Add(this.txtCelular);
+            this.GroupBox2.Controls.Add(this.txtTelFijo);
+            this.GroupBox2.Controls.Add(this.txtDomicilio);
+            this.GroupBox2.Controls.Add(this.Label11);
+            this.GroupBox2.Controls.Add(this.Localidad);
+            this.GroupBox2.Controls.Add(this.Label9);
+            this.GroupBox2.Controls.Add(this.Label8);
+            this.GroupBox2.Controls.Add(this.Label6);
+            this.GroupBox2.Location = new System.Drawing.Point(64, 237);
+            this.GroupBox2.Name = "GroupBox2";
+            this.GroupBox2.Size = new System.Drawing.Size(361, 194);
+            this.GroupBox2.TabIndex = 16;
+            this.GroupBox2.TabStop = false;
+            this.GroupBox2.Text = "Otros datos";
+            // 
+            // txtCp
+            // 
+            this.txtCp.Location = new System.Drawing.Point(122, 104);
+            this.txtCp.Name = "txtCp";
+            this.txtCp.Size = new System.Drawing.Size(100, 20);
+            this.txtCp.TabIndex = 23;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 107);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(75, 13);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "Código Postal:";
+            // 
+            // cboProvincia
+            // 
+            this.cboProvincia.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboProvincia.FormattingEnabled = true;
+            this.cboProvincia.Location = new System.Drawing.Point(121, 48);
+            this.cboProvincia.Name = "cboProvincia";
+            this.cboProvincia.Size = new System.Drawing.Size(121, 21);
+            this.cboProvincia.TabIndex = 21;
             // 
             // cboLocalidad
             // 
@@ -178,63 +209,33 @@
             this.Label6.TabIndex = 11;
             this.Label6.Text = "Domicilio:";
             // 
-            // btnAceptar
+            // GroupBox1
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(447, 69);
-            this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(104, 39);
-            this.btnAceptar.TabIndex = 11;
-            this.btnAceptar.Text = "Aceptar";
-            this.btnAceptar.UseVisualStyleBackColor = true;
-            this.btnAceptar.Click += new System.EventHandler(this.Button1_Click);
+            this.GroupBox1.Controls.Add(this.lblUsuarioExistente);
+            this.GroupBox1.Controls.Add(this.txtEmail);
+            this.GroupBox1.Controls.Add(this.txtApellido);
+            this.GroupBox1.Controls.Add(this.txtNombre);
+            this.GroupBox1.Controls.Add(this.rdbSexo2);
+            this.GroupBox1.Controls.Add(this.rdbSexo);
+            this.GroupBox1.Controls.Add(this.Label5);
+            this.GroupBox1.Controls.Add(this.Label4);
+            this.GroupBox1.Controls.Add(this.Label2);
+            this.GroupBox1.Controls.Add(this.Label1);
+            this.GroupBox1.Location = new System.Drawing.Point(64, 49);
+            this.GroupBox1.Name = "GroupBox1";
+            this.GroupBox1.Size = new System.Drawing.Size(361, 182);
+            this.GroupBox1.TabIndex = 15;
+            this.GroupBox1.TabStop = false;
+            this.GroupBox1.Text = "Datos";
             // 
-            // GroupBox2
+            // lblUsuarioExistente
             // 
-            this.GroupBox2.Controls.Add(this.txtCp);
-            this.GroupBox2.Controls.Add(this.label3);
-            this.GroupBox2.Controls.Add(this.cboProvincia);
-            this.GroupBox2.Controls.Add(this.cboLocalidad);
-            this.GroupBox2.Controls.Add(this.txtCelular);
-            this.GroupBox2.Controls.Add(this.txtTelFijo);
-            this.GroupBox2.Controls.Add(this.txtDomicilio);
-            this.GroupBox2.Controls.Add(this.Label11);
-            this.GroupBox2.Controls.Add(this.Localidad);
-            this.GroupBox2.Controls.Add(this.Label9);
-            this.GroupBox2.Controls.Add(this.Label8);
-            this.GroupBox2.Controls.Add(this.Label6);
-            this.GroupBox2.Location = new System.Drawing.Point(67, 240);
-            this.GroupBox2.Name = "GroupBox2";
-            this.GroupBox2.Size = new System.Drawing.Size(361, 194);
-            this.GroupBox2.TabIndex = 8;
-            this.GroupBox2.TabStop = false;
-            this.GroupBox2.Text = "Otros datos";
-            // 
-            // txtCp
-            // 
-            this.txtCp.Location = new System.Drawing.Point(122, 104);
-            this.txtCp.Name = "txtCp";
-            this.txtCp.Size = new System.Drawing.Size(100, 20);
-            this.txtCp.TabIndex = 23;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 107);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(75, 13);
-            this.label3.TabIndex = 22;
-            this.label3.Text = "Código Postal:";
-            // 
-            // cboProvincia
-            // 
-            this.cboProvincia.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboProvincia.FormattingEnabled = true;
-            this.cboProvincia.Location = new System.Drawing.Point(121, 48);
-            this.cboProvincia.Name = "cboProvincia";
-            this.cboProvincia.Size = new System.Drawing.Size(121, 21);
-            this.cboProvincia.TabIndex = 21;
-            this.cboProvincia.SelectedIndexChanged += new System.EventHandler(this.cboProvincia_SelectedIndexChanged);
-            this.cboProvincia.SelectionChangeCommitted += new System.EventHandler(this.cboProvincia_SelectionChangeCommitted);
+            this.lblUsuarioExistente.AutoSize = true;
+            this.lblUsuarioExistente.Location = new System.Drawing.Point(252, 106);
+            this.lblUsuarioExistente.Name = "lblUsuarioExistente";
+            this.lblUsuarioExistente.Size = new System.Drawing.Size(0, 13);
+            this.lblUsuarioExistente.TabIndex = 16;
+            this.lblUsuarioExistente.Visible = false;
             // 
             // txtEmail
             // 
@@ -315,87 +316,24 @@
             this.Label1.TabIndex = 0;
             this.Label1.Text = "Nombre:";
             // 
-            // GroupBox1
-            // 
-            this.GroupBox1.Controls.Add(this.lblUsuarioExistente);
-            this.GroupBox1.Controls.Add(this.txtEmail);
-            this.GroupBox1.Controls.Add(this.txtApellido);
-            this.GroupBox1.Controls.Add(this.txtNombre);
-            this.GroupBox1.Controls.Add(this.rdbSexo2);
-            this.GroupBox1.Controls.Add(this.rdbSexo);
-            this.GroupBox1.Controls.Add(this.Label5);
-            this.GroupBox1.Controls.Add(this.Label4);
-            this.GroupBox1.Controls.Add(this.Label2);
-            this.GroupBox1.Controls.Add(this.Label1);
-            this.GroupBox1.Location = new System.Drawing.Point(67, 52);
-            this.GroupBox1.Name = "GroupBox1";
-            this.GroupBox1.Size = new System.Drawing.Size(361, 182);
-            this.GroupBox1.TabIndex = 7;
-            this.GroupBox1.TabStop = false;
-            this.GroupBox1.Text = "Datos";
-            // 
-            // lblUsuarioExistente
-            // 
-            this.lblUsuarioExistente.AutoSize = true;
-            this.lblUsuarioExistente.Location = new System.Drawing.Point(252, 106);
-            this.lblUsuarioExistente.Name = "lblUsuarioExistente";
-            this.lblUsuarioExistente.Size = new System.Drawing.Size(0, 13);
-            this.lblUsuarioExistente.TabIndex = 16;
-            this.lblUsuarioExistente.Visible = false;
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.chklPatente);
-            this.groupBox4.Location = new System.Drawing.Point(583, 223);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(216, 141);
-            this.groupBox4.TabIndex = 13;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Patente";
-            // 
-            // chklPatente
-            // 
-            this.chklPatente.FormattingEnabled = true;
-            this.chklPatente.Location = new System.Drawing.Point(43, 17);
-            this.chklPatente.Name = "chklPatente";
-            this.chklPatente.Size = new System.Drawing.Size(120, 94);
-            this.chklPatente.TabIndex = 1;
-            // 
-            // btnVolver
-            // 
-            this.btnVolver.Location = new System.Drawing.Point(12, 12);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(75, 23);
-            this.btnVolver.TabIndex = 14;
-            this.btnVolver.Text = "Volver";
-            this.btnVolver.UseVisualStyleBackColor = true;
-            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
-            // 
-            // frmNuevoUsuario
+            // ModificarUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(578, 450);
+            this.ClientSize = new System.Drawing.Size(558, 450);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnAceptar);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.btnCancelar);
-            this.Controls.Add(this.GroupBox3);
             this.Controls.Add(this.Label13);
             this.Controls.Add(this.GroupBox2);
             this.Controls.Add(this.GroupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "frmNuevoUsuario";
-            this.Text = "NuevoUsuario";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmNuevoUsuario_FormClosing);
-            this.Load += new System.EventHandler(this.NuevoUsuario_Load);
-            this.Enter += new System.EventHandler(this.frmNuevoUsuario_Enter);
-            this.GroupBox3.ResumeLayout(false);
+            this.Name = "ModificarUsuario";
+            this.Text = "ModificarUsuario";
+            this.Load += new System.EventHandler(this.ModificarUsuario_Load);
             this.GroupBox2.ResumeLayout(false);
             this.GroupBox2.PerformLayout();
             this.GroupBox1.ResumeLayout(false);
             this.GroupBox1.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -403,9 +341,13 @@
 
         #endregion
 
-        internal System.Windows.Forms.Button btnCancelar;
-        internal System.Windows.Forms.GroupBox GroupBox3;
+        private System.Windows.Forms.Button btnVolver;
+        internal System.Windows.Forms.Button btnAceptar;
         internal System.Windows.Forms.Label Label13;
+        internal System.Windows.Forms.GroupBox GroupBox2;
+        internal System.Windows.Forms.TextBox txtCp;
+        internal System.Windows.Forms.Label label3;
+        internal System.Windows.Forms.ComboBox cboProvincia;
         internal System.Windows.Forms.ComboBox cboLocalidad;
         internal System.Windows.Forms.TextBox txtCelular;
         internal System.Windows.Forms.TextBox txtTelFijo;
@@ -415,8 +357,8 @@
         internal System.Windows.Forms.Label Label9;
         internal System.Windows.Forms.Label Label8;
         internal System.Windows.Forms.Label Label6;
-        internal System.Windows.Forms.Button btnAceptar;
-        internal System.Windows.Forms.GroupBox GroupBox2;
+        internal System.Windows.Forms.GroupBox GroupBox1;
+        private System.Windows.Forms.Label lblUsuarioExistente;
         internal System.Windows.Forms.TextBox txtEmail;
         internal System.Windows.Forms.TextBox txtApellido;
         internal System.Windows.Forms.TextBox txtNombre;
@@ -426,14 +368,5 @@
         internal System.Windows.Forms.Label Label4;
         internal System.Windows.Forms.Label Label2;
         internal System.Windows.Forms.Label Label1;
-        internal System.Windows.Forms.GroupBox GroupBox1;
-        internal System.Windows.Forms.ComboBox cboProvincia;
-        internal System.Windows.Forms.TextBox txtCp;
-        internal System.Windows.Forms.Label label3;
-        private System.Windows.Forms.CheckedListBox chklFamilia;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.CheckedListBox chklPatente;
-        private System.Windows.Forms.Label lblUsuarioExistente;
-        private System.Windows.Forms.Button btnVolver;
     }
 }

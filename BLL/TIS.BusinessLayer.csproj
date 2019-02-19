@@ -70,6 +70,7 @@
     <Compile Include="ServicioDomicilio.cs" />
     <Compile Include="FamiliaBLL.cs" />
     <Compile Include="Interfaces\IServicio.cs" />
+    <Compile Include="ServicioFactura.cs" />
     <Compile Include="ServicioFamilia.cs" />
     <Compile Include="ServicioIdioma.cs" />
     <Compile Include="ServicioLocalidad.cs" />

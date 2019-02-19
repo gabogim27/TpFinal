@@ -64,6 +64,7 @@
     <Compile Include="Dao\ContactoDao.cs" />
     <Compile Include="Dao\DigitoVerificadorDao.cs" />
     <Compile Include="Dao\DomicilioDao.cs" />
+    <Compile Include="Dao\FacturaDao.cs" />
     <Compile Include="Dao\FamiliaDao.cs" />
     <Compile Include="Dao\IdiomaDao.cs" />
     <Compile Include="Dao\LocalidadDao.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Repositorios\RepositorioCliente.cs" />
     <Compile Include="Repositorios\RepositorioContacto.cs" />
     <Compile Include="Repositorios\RepositorioDomicilio.cs" />
+    <Compile Include="Repositorios\RepositorioFactura.cs" />
     <Compile Include="Repositorios\RepositorioFamilia.cs" />
     <Compile Include="Repositorios\RepositorioIdioma.cs" />
     <Compile Include="Repositorios\RepositorioLocalidad.cs" />
