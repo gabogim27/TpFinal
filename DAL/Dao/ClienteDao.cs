@@ -24,10 +24,10 @@ namespace DAL.Dao
 
         public bool Create(Cliente entity)
         {
-            var emailEncript = DES.Encrypt(entity.Email, Key, Iv);
-            var nombreEcript = DES.Encrypt(entity.Nombre, Key, Iv);
-            var apellidoEncript = DES.Encrypt(entity.Apellido, Key, Iv);
-            var dniEncript = DES.Encrypt(entity.Dni.ToString(), Key, Iv);
+            //var emailEncript = DES.Encrypt(entity.Email, Key, Iv);
+            //var nombreEcript = DES.Encrypt(entity.Nombre, Key, Iv);
+            //var apellidoEncript = DES.Encrypt(entity.Apellido, Key, Iv);
+            //var dniEncript = DES.Encrypt(entity.Dni.ToString(), Key, Iv);
             var queryString = "INSERT INTO dbo.Cliente(IdCliente, IdDomicilio, IdContacto, Nombre, Apellido, Email, " +
                               "FechaNacimiento, Dni, Sexo, Estado) values " +
                               "(@idCliente,@idDomicilio,@idContacto,@nombre,@apellido,@email,@fechaNacimiento,@dni," +
@@ -42,11 +42,11 @@ namespace DAL.Dao
                     @idCliente = entity.IdCliente,
                     @idDomicilio = entity.Domicilio.IdDomicilio,
                     @idContacto = entity.Contacto.IdContacto,
-                    @nombre = nombreEcript,
-                    @apellido = apellidoEncript,
-                    @email = emailEncript,
+                    @nombre = entity.Nombre,
+                    @apellido = entity.Apellido,
+                    @email = entity.Email,
                     @fechaNacimiento = entity.FechaNacimiento,
-                    @dni = dniEncript,
+                    @dni = entity.Dni,
                     @estado = Convert.ToByte(entity.Estado = true),
                     @sexo = entity.Sexo,
                 });
@@ -92,7 +92,7 @@ namespace DAL.Dao
                             splitOn: "IdCliente, IdContacto, IdDomicilio, IdLocalidad, IdProvincia")
                         .Distinct()
                         .FirstOrDefault();
-                    client.Email = DES.Decrypt(client.Email, Key, Iv);
+                    //client.Email = DES.Decrypt(client.Email, Key, Iv);
                     return client;
                 }
             }
@@ -134,10 +134,10 @@ namespace DAL.Dao
                         .Distinct()
                         .ToList();
 
-                    foreach (var client in clientes)
-                    {
-                        client.Email = DES.Decrypt(client.Email, Key, Iv);
-                    }
+                    //foreach (var client in clientes)
+                    //{
+                    //    client.Email = DES.Decrypt(client.Email, Key, Iv);
+                    //}
                     return clientes;                  
                 }
             }
@@ -169,7 +169,7 @@ namespace DAL.Dao
         {
             try
             {
-                var emailEcnript = DES.Encrypt(entity.Email, Key, Iv);
+                //var emailEcnript = DES.Encrypt(entity.Email, Key, Iv);
                 var queryString = "Update dbo.Cliente set " +
                                   "Nombre = @nombre, Apellido = @apellido, FechaNacimiento = @fechaNac, " +
                                   " Dni = @dni, Email = @email, " +
@@ -177,11 +177,12 @@ namespace DAL.Dao
 
                 return SqlUtils.Exec(queryString, new
                 {
+                    @idCliente = entity.IdCliente,
                     @nombre = entity.Nombre,
                     @apellido = entity.Nombre,
                     @fechaNac = entity.FechaNacimiento,
                     @dni = entity.Dni,
-                    @email = emailEcnript,
+                    @email = entity.Email,
                     @sexo = entity.Sexo,
                     @idUsuario = entity.IdCliente
                 });

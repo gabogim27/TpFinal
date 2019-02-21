@@ -234,8 +234,8 @@ namespace DAL.Impl
                 var digitoVH = DigitoVerificador.CalcularDVHorizontal(new List<string> { ObjUpd.IdUsuario.ToString(), ObjUpd.Email }, new List<int> { });
                 var emailEcnript = DES.Encrypt(ObjUpd.Email, Key, Iv);
                 var queryString = "Update dbo.Usuario set " +
-                                  "Nombre = @nombre, Apellido = @apellido, Email = @email, " +
-                                  "Sexo = @sexo where IdUsuario = @idUsuario, Dvh = @dvh";
+                                  "Nombre = @nombre, Apellido = @apellido, Email = @email, Dvh = @dvh," +
+                                  "Sexo = @sexo where IdUsuario = @idUsuario";
 
                 var result = SqlUtils.Exec(queryString, new
                 {

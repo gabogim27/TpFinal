@@ -33,5 +33,20 @@ namespace BLL
         {
             return RepositorioPolizaImplementor.TraerCoberturas();
         }
+
+        public List<Cobertura> TraercoberturasPorPolizaId(Guid idPoliza)
+        {
+            return RepositorioPolizaImplementor.TraercoberturasPorPolizaId(idPoliza);
+        }
+
+        public bool ActualizarCoberturasSeleccionadas(Poliza entity)
+        {
+            return RepositorioPolizaImplementor.ActualizarCoberturasSeleccionadas(entity);
+        }
+
+        public Poliza TraerPolizaPorNumero(int numero)
+        {
+            return RepositorioPolizaImplementor.TraerPolizaPorNumero(numero);
+        }
     }
 }

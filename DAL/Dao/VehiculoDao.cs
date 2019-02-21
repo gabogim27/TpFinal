@@ -1,4 +1,6 @@
-﻿using BE;
+﻿using System.Data;
+using BE;
+using Dapper;
 using DAL.Interfaces;
 using DAL.Utils;
 
@@ -63,7 +65,42 @@ namespace DAL.Dao
 
         public Vehiculo GetById(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var queryString = @"SELECT veh.*, tip.*, ma.*, mo.*
+                                    FROM dbo.Vehiculo veh
+                                    inner join dbo.TipoUso tip on tip.IdTipoUso = veh.IdTipoUso
+                                    inner join dbo.Marca ma on ma.IdMarca = veh.IdMarca
+                                    inner join dbo.Modelo mo on mo.IdModelo = veh.IdModelo
+                                    where IdVehiculo = " + "'" + id + "'";
+
+                RepositorioBitacora.RegistrarEnBitacora(Log.Level.Alta.ToString(), string.Format("Buscando vehiculo con Id: {0} en la BD", id));
+
+                using (IDbConnection connection = SqlUtils.Connection())
+                {
+                    connection.Open();
+                    var client = connection.Query<Vehiculo, TipoUso, Marca, Modelo, Vehiculo>(
+                            queryString,
+                            (vehiculo, tipoUso, marca, modelo) =>
+                            {
+                                vehiculo._TipoUso = tipoUso;
+                                vehiculo.Marca = marca;
+                                vehiculo.Modelo = modelo;
+                                return vehiculo;
+                            },
+                            splitOn: "IdVehiculo, IdTipoUso, IdMarca, IdModelo")
+                        .Distinct()
+                        .FirstOrDefault();
+                    //client.Email = DES.Decrypt(client.Email, Key, Iv);
+                    return client;
+                }
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(Log.Level.Alta.ToString(), string.Format("No es posible encontrar el vehiculo con Id: {0}. Error: {1}", id, ex.Message));
+            }
+
+            return null;
         }
 
         public List<Vehiculo> Retrive()
@@ -78,7 +115,42 @@ namespace DAL.Dao
 
         public bool Update(Vehiculo entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                //var emailEcnript = DES.Encrypt(entity.Email, Key, Iv);
+                var queryString = "Update dbo.Vehiculo set " +
+                                  "IdTipoUso = @idTipoUso, IdMarca = @idMarca, IdModelo = @idModelo, " +
+                                  " CantPuertas = @cantPuertas, Color = @color, Combustible = @combustible, " +
+                                  "NumChasis = @numChasis, NumSerie = @numSerie, Patente = @patente, Año = @año, "  +
+                                  "Foto1 = @foto1, Foto2 = @foto2, Foto3 = @foto3, Foto4 = @foto4 " +
+                                  "where IdVehiculo = @idVehiculo";
+
+                return SqlUtils.Exec(queryString, new
+                {
+                    @idVehiculo = entity.IdVehiculo,
+                    @idTipoUso = entity._TipoUso.IdTipoUso,
+                    @idMarca = entity.Marca.IdMarca,
+                    @idModelo = entity.Modelo.IdModelo,
+                    @cantPuertas = entity.CantPuertas,
+                    @color = entity.Color,
+                    @combustible = entity.Combustible,
+                    @numChasis = entity.NumChasis,
+                    @numSerie = entity.NumSerie,
+                    @patente = entity.Patente,
+                    @año = entity.Año,
+                    @foto1 = entity.Foto1,
+                    @foto2 = entity.Foto2,
+                    @foto3 = entity.Foto3,
+                    @foto4 = entity.Foto4,
+                });
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(DalLogLevel.LogLevel.Media.ToString(),
+                    string.Format("Ocurrio un error al actualizar el vehiculo con patente: {0} en la BD. Error: " +
+                                  "{1}", entity.Patente, ex.Message));
+                return false;
+            }
         }
 
         public List<Marca> TraerMarcas()
