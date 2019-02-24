@@ -99,6 +99,7 @@
             this.Controls.Add(this.btnBaja);
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnNueva);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmABMFamilia";
             this.Text = "ABMFamilia";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmABMFamilia_FormClosing);

@@ -57,6 +57,7 @@ namespace SSTIS
         {
             //LIMPIAR EL DICCIONARIO EN LA CARGA DE CADA FORMULARIO YA QUE POR CADA UNO 
             //SE ACTUALIZA CON LAS TRADUCCIONES DE CADA FORM
+            //ComprobarBaseDeDatos();
             CargarCombo();
             this.AcceptButton = btnIngresar;
             cboIdioma.SelectedIndex = 1;//por default le dejamos español

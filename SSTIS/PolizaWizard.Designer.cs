@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PolizaWizard));
             this.wizardControl = new AeroWizard.StepWizardControl();
             this.wizardInicio = new AeroWizard.WizardPage();
             this.lblTransaccion = new System.Windows.Forms.Label();
@@ -41,10 +42,6 @@
             this.cboTipoPoliza = new System.Windows.Forms.ComboBox();
             this.wizardCoberturas = new AeroWizard.WizardPage();
             this.dgvCoberturas = new System.Windows.Forms.DataGridView();
-            this.Seleccionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.IdCobertura = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PrimaAsegurada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnRestablecer = new System.Windows.Forms.Button();
             this.txtPrimaTotal = new System.Windows.Forms.TextBox();
             this.lblPrima = new System.Windows.Forms.Label();
@@ -149,6 +146,12 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
+            this.Seleccionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.IdCobertura = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PrimaAsegurada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.wizardControl)).BeginInit();
             this.wizardInicio.SuspendLayout();
             this.wizardCoberturas.SuspendLayout();
@@ -187,6 +190,8 @@
             this.wizardControl.TabIndex = 0;
             this.wizardControl.Text = "Emisión de Póliza";
             this.wizardControl.Title = "Emisión de Póliza";
+            this.wizardControl.Cancelling += new System.ComponentModel.CancelEventHandler(this.wizardControl_Cancelling);
+            this.wizardControl.Finished += new System.EventHandler(this.wizardControl_Finished);
             this.wizardControl.SelectedPageChanged += new System.EventHandler(this.stwControl_SelectedPageChanged);
             this.wizardControl.Enter += new System.EventHandler(this.wizardControl_Enter);
             // 
@@ -230,6 +235,7 @@
             this.cboTransaccion.Name = "cboTransaccion";
             this.cboTransaccion.Size = new System.Drawing.Size(179, 23);
             this.cboTransaccion.TabIndex = 6;
+            this.cboTransaccion.SelectedIndexChanged += new System.EventHandler(this.cboTransaccion_SelectedIndexChanged);
             // 
             // lblPantallaDeInicio
             // 
@@ -248,6 +254,7 @@
             this.txtNumeroPoliza.Name = "txtNumeroPoliza";
             this.txtNumeroPoliza.Size = new System.Drawing.Size(158, 23);
             this.txtNumeroPoliza.TabIndex = 4;
+            this.txtNumeroPoliza.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumeroPoliza_KeyPress);
             // 
             // dateTimePicker1
             // 
@@ -323,35 +330,6 @@
             this.dgvCoberturas.Size = new System.Drawing.Size(757, 207);
             this.dgvCoberturas.TabIndex = 5;
             this.dgvCoberturas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCoberturas_CellContentClick);
-            // 
-            // Seleccionar
-            // 
-            this.Seleccionar.HeaderText = "Seleccionar";
-            this.Seleccionar.Name = "Seleccionar";
-            // 
-            // IdCobertura
-            // 
-            this.IdCobertura.DataPropertyName = "IdCobertura";
-            this.IdCobertura.HeaderText = "IdCobertura";
-            this.IdCobertura.Name = "IdCobertura";
-            this.IdCobertura.ReadOnly = true;
-            this.IdCobertura.Visible = false;
-            // 
-            // Descripcion
-            // 
-            this.Descripcion.DataPropertyName = "Descripcion";
-            this.Descripcion.HeaderText = "Descripcion";
-            this.Descripcion.Name = "Descripcion";
-            this.Descripcion.ReadOnly = true;
-            this.Descripcion.Width = 350;
-            // 
-            // PrimaAsegurada
-            // 
-            this.PrimaAsegurada.DataPropertyName = "PrimaAsegurada";
-            this.PrimaAsegurada.HeaderText = "Prima Asegurada";
-            this.PrimaAsegurada.Name = "PrimaAsegurada";
-            this.PrimaAsegurada.ReadOnly = true;
-            this.PrimaAsegurada.Width = 150;
             // 
             // btnRestablecer
             // 
@@ -1049,6 +1027,7 @@
             this.btnCobrarFac.TabIndex = 3;
             this.btnCobrarFac.Text = "Cobrar";
             this.btnCobrarFac.UseVisualStyleBackColor = true;
+            this.btnCobrarFac.Click += new System.EventHandler(this.btnCobrarFac_Click);
             // 
             // btnImprimirFac
             // 
@@ -1058,6 +1037,7 @@
             this.btnImprimirFac.TabIndex = 2;
             this.btnImprimirFac.Text = "Imprimir";
             this.btnImprimirFac.UseVisualStyleBackColor = true;
+            this.btnImprimirFac.Click += new System.EventHandler(this.btnImprimirFac_Click);
             // 
             // btnAnular
             // 
@@ -1357,6 +1337,51 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Multiselect = true;
             // 
+            // printDocument1
+            // 
+            this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
+            // 
+            // printPreviewDialog1
+            // 
+            this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
+            this.printPreviewDialog1.Document = this.printDocument1;
+            this.printPreviewDialog1.Enabled = true;
+            this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
+            this.printPreviewDialog1.Name = "printPreviewDialog1";
+            this.printPreviewDialog1.Visible = false;
+            // 
+            // Seleccionar
+            // 
+            this.Seleccionar.DataPropertyName = "Seleccionada";
+            this.Seleccionar.HeaderText = "Seleccionar";
+            this.Seleccionar.Name = "Seleccionar";
+            // 
+            // IdCobertura
+            // 
+            this.IdCobertura.DataPropertyName = "IdCobertura";
+            this.IdCobertura.HeaderText = "IdCobertura";
+            this.IdCobertura.Name = "IdCobertura";
+            this.IdCobertura.ReadOnly = true;
+            this.IdCobertura.Visible = false;
+            // 
+            // Descripcion
+            // 
+            this.Descripcion.DataPropertyName = "Descripcion";
+            this.Descripcion.HeaderText = "Descripcion";
+            this.Descripcion.Name = "Descripcion";
+            this.Descripcion.ReadOnly = true;
+            this.Descripcion.Width = 350;
+            // 
+            // PrimaAsegurada
+            // 
+            this.PrimaAsegurada.DataPropertyName = "PrimaAsegurada";
+            this.PrimaAsegurada.HeaderText = "Prima Asegurada";
+            this.PrimaAsegurada.Name = "PrimaAsegurada";
+            this.PrimaAsegurada.ReadOnly = true;
+            this.PrimaAsegurada.Width = 150;
+            // 
             // PolizaWizard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1364,6 +1389,7 @@
             this.ClientSize = new System.Drawing.Size(979, 493);
             this.Controls.Add(this.wizardControl);
             this.Name = "PolizaWizard";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PolizaWizard";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PolizaWizard_FormClosing);
             this.Load += new System.EventHandler(this.PolizaWizard_Load);
@@ -1471,10 +1497,6 @@
         private System.Windows.Forms.DateTimePicker dtpFechaNacimiento;
         internal System.Windows.Forms.Label lblFechaDeNacimiento;
         private System.Windows.Forms.DataGridView dgvCoberturas;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Seleccionar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IdCobertura;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Descripcion;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PrimaAsegurada;
         private System.Windows.Forms.Button btnBorrarImagen2;
         private System.Windows.Forms.Button btnBorrarImagen4;
         private System.Windows.Forms.Button btnBorrarImagen3;
@@ -1520,5 +1542,11 @@
         private System.Windows.Forms.Button btnNuevaFac;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.TextBox txtAño;
+        private System.Drawing.Printing.PrintDocument printDocument1;
+        private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Seleccionar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IdCobertura;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Descripcion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PrimaAsegurada;
     }
 }

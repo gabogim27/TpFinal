@@ -93,8 +93,13 @@ namespace SSTIS
             simpleInyectorContainer.Register<IVehiculoDao, VehiculoDao>(Lifestyle.Singleton);
             simpleInyectorContainer.Register<IServicioVehiculo, ServicioVehiculo>(Lifestyle.Singleton);
             simpleInyectorContainer.Register<IRepositorioVehiculo, RepositorioVehiculo>(Lifestyle.Singleton);
+            //Factura
+            simpleInyectorContainer.Register<IServicio<Factura>, ServicioFactura>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IRepository<Factura>, RepositorioFactura>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IDao<Factura>, FacturaDao>(Lifestyle.Singleton);
             //Formularios
             simpleInyectorContainer.Register<INuevoUsuario, frmNuevoUsuario>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IModificarUsuario, ModificarUsuario>(Lifestyle.Singleton);
             simpleInyectorContainer.Register<IABMUsuarios, frmABMUsuarios>(Lifestyle.Singleton);
             simpleInyectorContainer.Register<ILogin, frmLogin>(Lifestyle.Singleton);
             simpleInyectorContainer.Register<IPrincipal, frmPrincipal>(Lifestyle.Singleton);
@@ -111,6 +116,7 @@ namespace SSTIS
             simpleInyectorContainer.Register<ICambiarIdioma, frmCambiarIdioma>(Lifestyle.Singleton);
             simpleInyectorContainer.Register<ICambiarContraseña, frmCambiarContraseña>(Lifestyle.Singleton);
             simpleInyectorContainer.Register<IPolizaWizard, PolizaWizard>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<ICobrarFactura, CobrarFacturaPopUp>(Lifestyle.Singleton);
             //ContainerConfig.Bootstrap();
             log4net.Config.XmlConfigurator.Configure();
             Application.EnableVisualStyles();

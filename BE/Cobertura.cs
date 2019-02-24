@@ -9,6 +9,7 @@
     public class Cobertura
     {
         public Guid IdCobertura { get; set; }
+        public bool Seleccionada { get; set; }
         public string Descripcion { get; set; }
         public decimal PrimaAsegurada { get; set; }
     }

@@ -62,7 +62,16 @@ namespace SSTIS
             {
                 if (ValidarDatosIngresados())
                 {
-                    var usuarioExistente = ServicioUsuario.Retrive().FirstOrDefault(x => x.Email == txtNuevoUsuarioEmail.Text.Trim());
+                    //VALIDAR LOS CAMPOS DE DOMICILIO
+                    ////if (string.IsNullOrEmpty(txtDomicilio.Text.Trim()) || string.IsNullOrEmpty(txtCp.Text.Trim()) ||
+                    ////    cboLocalidad.SelectedIndex == -1 || cboProvincia.SelectedIndex == -1)
+                    ////{
+                    ////    MessageBox.Show("Debe completar todos los datos del domicilio.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    ////    return;
+
+                    ////}
+
+                    var usuarioExistente = new Usuario();//ServicioUsuario.Retrive().FirstOrDefault(x => x.Email == txtEmail.Text.Trim());
                     if (usuarioExistente != null)
                     {
                         if (!usuarioExistente.Estado)
@@ -128,9 +137,9 @@ namespace SSTIS
                             DigitoVerificador.ActualizarDVVertical(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper()));
                         }
 
-                        var familiasSeleccionadas = GetSelectedFamilies();
-                        ServicioFamiliaImplementor.GuardarFamiliaUsuario(familiasSeleccionadas, nuevoUsuario.IdUsuario);
-                        ServicioPatente.GuardarPatentesUsuario(GetSelectedPatentes(), nuevoUsuario.IdUsuario);
+                        //var familiasSeleccionadas = GetSelectedFamilies();
+                        //ServicioFamiliaImplementor.GuardarFamiliaUsuario(familiasSeleccionadas, nuevoUsuario.IdUsuario);
+                        //ServicioPatente.GuardarPatentesUsuario(GetSelectedPatentes(), nuevoUsuario.IdUsuario);
                         ServicioBitacoraImplementor.RegistrarEnBitacora(Log.Level.Alta.ToString(),
                             string.Format("Usuario con id: '{0}' creado correctamente.", nuevoUsuario.IdUsuario), nuevoUsuario);
                         MessageBox.Show("Usuario creado correctamente");
@@ -207,18 +216,6 @@ namespace SSTIS
                 MessageBox.Show("El e-mail ingresado esta en formato incorrecto. Por favor corrijalo!!!");
                 returnValue = false;
             }
-            //Verificamos que se haya seleccionado alguna familia
-            //if (chklFamilia.CheckedItems.Count == 0)
-            //{
-            //    MessageBox.Show("Debe seleccionar al menos una familia");
-            //    returnValue = false;
-            //}
-            ////Verificamos que se haya seleccionado alguna patente
-            //if (chklPatente.CheckedItems.Count == 0)
-            //{
-            //    MessageBox.Show("Debe seleccionar al menos una patente");
-            //    returnValue = false;
-            //}
 
             return returnValue;
         }

@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.IO;
 using System.Linq;
 using EasyEncryption;
 using BLL.Interfaces;
@@ -12,7 +13,7 @@ namespace BLL
 {
     using System;
     using System.Collections.Generic;
-    using BE;   
+    using BE;
     using DAL.Impl;
 
     public class ServicioUsuario : IServicio<Usuario>, IServicioUsuario
@@ -27,9 +28,9 @@ namespace BLL
         public IRepositorioBitacora RepositorioBitacora;
         public IRepositorioUsuario RepositorioUsuarioImplementor;
 
-        public ServicioUsuario(IRepository<Usuario> repositorioUsuario, 
+        public ServicioUsuario(IRepository<Usuario> repositorioUsuario,
             IRepository<Localidad> repositorioLocalidad, IRepository<Domicilio> repositorioDomicilio,
-            IRepository<Contacto> repositorioContacto, IRepositorioBitacora repositorioBitacora, 
+            IRepository<Contacto> repositorioContacto, IRepositorioBitacora repositorioBitacora,
             IRepositorioUsuario repositorioUsuarioImplementor, IRepository<Provincia> repositorioProvincia)
         {
             this.RepositorioUsuario = repositorioUsuario ?? throw new ArgumentNullException(nameof(repositorioUsuario));
@@ -44,9 +45,12 @@ namespace BLL
         {
             //Llamar repositorio localidad
             Random random = new Random();
-            string nuevoPass = "admin123";
-            entity.ContraseñaEncriptada = MD5.ComputeMD5Hash(entity.Password = nuevoPass);
-            
+            var nuevoPass = random.Next();
+            //Guardarlo en un archivo en el C:
+            SavePasswordOnFile(nuevoPass, entity.Email);
+
+            //entity.ContraseñaEncriptada = MD5.ComputeMD5Hash(entity.Password = nuevoPass);
+            entity.ContraseñaEncriptada = nuevoPass.ToString();
             //Damos de alta el domicilio del usuario
             var objDomicilio = new BE.Domicilio();
             objDomicilio.IdDomicilio = Guid.NewGuid();
@@ -70,6 +74,27 @@ namespace BLL
             entity.Domicilio.IdDomicilio = objDomicilio.IdDomicilio;
             entity.Contacto.IdContacto = objContacto.IdContacto;
             return RepositorioUsuario.Create(entity);
+        }
+
+        private void SavePasswordOnFile(int nuevoPass, string usuario)
+        {
+            try
+            {
+                var path = "C:\\SistemaTIS";
+
+                Directory.CreateDirectory(path);
+
+                using (var tw = new StreamWriter(path + "\\" + usuario + "_Aleatory_Password.txt", true))
+                {
+                    tw.WriteLine(nuevoPass.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                var mensaje = string.Format("Ocurrio un error al guardar la password en el .txt. Error: {0}", ex.Message);
+
+                RepositorioBitacora.RegistrarEnBitacora(Convert.ToString(Utils.Utils.LogLevel.Alta), mensaje);
+            }
         }
 
         public Usuario GetById(Guid id)
@@ -104,7 +129,7 @@ namespace BLL
             try
             {
                 var ingresa = RepositorioUsuarioImplementor.LogIn(email, contraseña);
-                
+
                 usuario = RepositorioUsuarioImplementor.ObtenerUsuarioConEmail(email);
                 if (usuario == null)
                     return false;
@@ -127,7 +152,7 @@ namespace BLL
 
                 if (usuario.CantIngresosFallidos < 3)
                 {
-                    RepositorioBitacora.RegistrarEnBitacora(Utils.Utils.LogLevel.Alta.ToString(), 
+                    RepositorioBitacora.RegistrarEnBitacora(Utils.Utils.LogLevel.Alta.ToString(),
                         string.Format("Login Fallido para el usuario: " + "'{0}'", usuario.Email), usuario);
                 }
                 else

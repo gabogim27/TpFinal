@@ -31,5 +31,20 @@ namespace DAL.Interfaces
         {
             return PolizaDaoImplementor.TraerCoberturas();
         }
+
+        public List<Cobertura> TraercoberturasPorPolizaId(Guid idPoliza)
+        {
+            return PolizaDaoImplementor.TraercoberturasPorPolizaId(idPoliza);
+        }
+
+        public bool ActualizarCoberturasSeleccionadas(Poliza entity)
+        {
+            return PolizaDaoImplementor.ActualizarCoberturasSeleccionadas(entity);
+        }
+
+        public Poliza TraerPolizaPorNumero(int numero)
+        {
+            return PolizaDaoImplementor.TraerPolizaPorNumero(numero);
+        }
     }
 }

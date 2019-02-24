@@ -31,6 +31,7 @@ namespace SSTIS
         private IDigitoVerificador DigitoVerificador;
 
         public INuevoUsuario nuevoUsuario { get; set; }
+        public IModificarUsuario modificarUsuario { get; set; }
         public static Usuario usuario { get; set; }
         public const string Key = "bZr2URKx";
         public const string Iv = "HNtgQw0w";
@@ -41,6 +42,7 @@ namespace SSTIS
         public frmABMUsuarios(
             IServicio<Usuario> ServicioUsuario,
             INuevoUsuario nuevoUsuario,
+            IModificarUsuario modificarUsuario,
             IServicio<Localidad> ServicioLocalidad,
             IServicio<Provincia> ServicioProvincia,
             IServicioLocalidad ServicioLocalidadImplementor, IAdminFamiliaUsuario AdminFamiliaUsuario,
@@ -51,6 +53,7 @@ namespace SSTIS
             InitializeComponent();
             this.ServicioUsuario = ServicioUsuario;
             this.nuevoUsuario = nuevoUsuario;
+            this.modificarUsuario = modificarUsuario;
             this.ServicioLocalidad = ServicioLocalidad;
             this.ServicioProvincia = ServicioProvincia;
             this.ServicioLocalidadImplementor = ServicioLocalidadImplementor;
@@ -122,26 +125,26 @@ namespace SSTIS
             CargarColumnas();
             RestablecerControles();
             MostrarActivos = true;
-            cboLocalidad.Enabled = true;
+            //cboLocalidad.Enabled = true;
             gbGrillaUsuarios.Text = "Usuarios Activos";
-            CargarComboProvincia();
-            cboProvincia.SelectedIndex = -1;
-            //CargarGrilla();
+            //CargarComboProvincia();
+            //cboProvincia.SelectedIndex = -1;
+            CargarGrilla();
             dgvUsuarios.ClearSelection();
         }
 
         private void RestablecerControles()
         {
-            txtNombre.Text = string.Empty;
-            txtApellido.Text = string.Empty;
-            txtCelular.Text = string.Empty;
-            txtCp.Text = string.Empty;
-            txtDomicilio.Text = string.Empty;
-            txtEmail.Text = string.Empty;
-            txtTelFijo.Text = string.Empty;
-            cboProvincia.SelectedIndex = -1;
-            cboLocalidad.SelectedIndex = -1;
-            cboLocalidad.Enabled = false;
+            //txtNombre.Text = string.Empty;
+            //txtApellido.Text = string.Empty;
+            //txtCelular.Text = string.Empty;
+            //txtCp.Text = string.Empty;
+            //txtDomicilio.Text = string.Empty;
+            //txtEmail.Text = string.Empty;
+            //txtTelFijo.Text = string.Empty;
+            //cboProvincia.SelectedIndex = -1;
+            //cboLocalidad.SelectedIndex = -1;
+            //cboLocalidad.Enabled = false;
             CargarGrilla();
         }
 
@@ -206,58 +209,14 @@ namespace SSTIS
             }
         }
 
-        private void CargarComboProvincia()
-        {
-            //Retrieve provincias
-            var provincias = ServicioProvincia.Retrive();
-            cboProvincia.DataSource = provincias;
-            cboProvincia.DisplayMember = "Descripcion";
-            cboProvincia.ValueMember = "IdProvincia";
-        }
-
         private void btnEditarUsuario_Click(object sender, EventArgs e)
         {
             try
             {
                 if (dgvUsuarios.SelectedRows.Count > 0)
                 {
-                    var usuarioToUpdate = ConvertToUsuario();
-                    if (usuarioToUpdate != null)
-                    {
-                        var usuarios = ServicioUsuario.Retrive();
-                        usuarios.RemoveAll(x => x.IdUsuario == usuarioToUpdate.IdUsuario);
-
-                        if (usuarios.All(x => x.Email == usuarioToUpdate.Email))
-                        {
-                            MessageBox.Show("E-mail ya existente.");
-                            return;
-                        }
-
-                        if (ServicioUsuario.Update(usuarioToUpdate))
-                        {
-                            if (DigitoVerificador.ComprobarPrimerDigito(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper())))
-                            {
-                                DigitoVerificador.InsertarDVVertical(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper()));
-                            }
-                            else
-                            {
-                                DigitoVerificador.ActualizarDVVertical(DigitoVerificador.Entidades.Find(x => x.ToUpper() == Entidad.ToUpper()));
-                            }
-
-                            MessageBox.Show("Usuario actualizado correctamente");
-                            CargarGrilla();
-                            RestablecerControles();
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        RestablecerControles();
-                        MessageBox.Show("Ocurrio un error al actualizar los datos del usuario.", "Error",
-                            MessageBoxButtons.OK);
-                    }
-
-                    return;
+                    modificarUsuario.ShowDialog();
+                    CargarGrilla();
                 }
                 MessageBox.Show("Debe seleccionar un usuario para proceder con la edicion de los datos.");
             }
@@ -265,52 +224,7 @@ namespace SSTIS
             {
                 log.ErrorFormat("Ocurrio un error al actualizar el usuario: {0}", ex.Message);
             }
-        }
-
-        private Usuario ConvertToUsuario()
-        {
-            try
-            {
-                if (ControlsUtils.ValidarControles(txtNombre.Text, txtApellido.Text, txtDomicilio.Text, txtCp.Text,
-                        txtCelular.Text, txtTelFijo.Text) && cboLocalidad.SelectedIndex != -1 &&
-                    cboProvincia.SelectedIndex != -1)
-                {
-                    var idUsuarioSeleccionado = Guid.Parse(dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString());
-                    var usuario = GetUsuarioById(idUsuarioSeleccionado);
-
-                    usuario.Nombre = txtNombre.Text.Trim();
-                    usuario.Apellido = txtApellido.Text.Trim();
-                    usuario.Email = txtEmail.Text;
-
-                    if (rdbSexo.Checked)
-                    {
-                        usuario.Sexo = "Hombre";
-                    }
-                    else
-                    {
-                        usuario.Sexo = "Mujer";
-                    }
-
-                    usuario.Domicilio.Direccion = txtDomicilio.Text;
-                    usuario.Domicilio.CodPostal = txtCp.Text;
-                    var localidad = (Localidad)cboLocalidad.SelectedItem;
-                    usuario.Domicilio.Localidad.Descripcion = localidad.Descripcion;
-                    var provincia = (Provincia)cboProvincia.SelectedItem;
-                    usuario.Domicilio.Provincia.Descripcion = provincia.Descripcion;
-                    usuario.Contacto.Telefono = txtTelFijo.Text.Trim();
-                    usuario.Contacto.Celular = txtCelular.Text.Trim();
-
-                    return usuario;
-                }
-
-                return null;
-            }
-            catch (Exception ex)
-            {
-                log.ErrorFormat("Ocurrio un error al mapear el objeto. Error: {0}", ex.Message);
-                return null;
-            }
-        }
+        }   
 
         private Usuario GetUsuarioById(Guid idUsuarioSeleccionado)
         {
@@ -328,64 +242,12 @@ namespace SSTIS
         }
 
         private void dgvUsuarios_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                cboLocalidad.Enabled = true;
-                //Cargamos en memoria el usuario seleccionado de la grilla
+        {                          
                 var user = GetUsuarioById(Guid.Parse(dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString()));
                 btnBloquear.Enabled = !user.Bloqueado;
                 btnDesbloquear.Enabled = user.Bloqueado;
-                btnEliminarUsuario.Enabled = user.Estado;
-                txtNombre.Text = dgvUsuarios.SelectedRows[0].Cells[3].Value.ToString();
-                txtApellido.Text = dgvUsuarios.SelectedRows[0].Cells[4].Value.ToString();
-                txtEmail.Text = dgvUsuarios.SelectedRows[0].Cells[5].Value.ToString();
-
-                if (dgvUsuarios.SelectedRows[0].Cells[6].Value.ToString() == "Hombre")
-                {
-                    rdbSexo.Checked = true;
-                }
-                else
-                {
-                    rdbSexo2.Checked = true;
-                }
-
-                txtDomicilio.Text = dgvUsuarios.SelectedRows[0].Cells[7].Value.ToString();
-                txtCp.Text = dgvUsuarios.SelectedRows[0].Cells[8].Value.ToString();
-                cboProvincia.SelectedIndex = cboProvincia.FindString(dgvUsuarios.SelectedRows[0].Cells[9].Value.ToString());
-                LlenarComboLocalidadesPorProvinciaId(Guid.Parse(dgvUsuarios.SelectedRows[0].Cells[1].Value.ToString()));
-                cboLocalidad.SelectedIndex = cboLocalidad.FindString(dgvUsuarios.SelectedRows[0].Cells[10].Value.ToString());
-                txtTelFijo.Text = !string.IsNullOrEmpty(dgvUsuarios.SelectedRows[0].Cells[11].Value.ToString()) ?
-                    dgvUsuarios.SelectedRows[0].Cells[11].Value.ToString() : string.Empty;
-                txtCelular.Text = !string.IsNullOrEmpty(dgvUsuarios.SelectedRows[0].Cells[12].Value.ToString()) ?
-                    dgvUsuarios.SelectedRows[0].Cells[12].Value.ToString() : string.Empty;
-            }
-            catch (Exception exception)
-            {
-                log.Error("Ocurrio un error al mapear los datos.");
-            }
-        }
-
-        private void cboProvincia_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            var selectedProvincia = Guid.Parse(cboProvincia.SelectedValue.ToString());
-            var localidadesByProvinciaId = ServicioLocalidadImplementor.GetLocalidadesByProvinciaId(selectedProvincia);
-
-            cboLocalidad.Enabled = true;
-            cboLocalidad.DataSource = localidadesByProvinciaId;
-            cboLocalidad.DisplayMember = "Descripcion";
-            cboLocalidad.ValueMember = "IdLocalidad";
-            cboLocalidad.SelectedIndex = -1;
-        }
-
-        private void LlenarComboLocalidadesPorProvinciaId(Guid provinciaId)
-        {
-            var localidadesByProvinciaId = ServicioLocalidadImplementor.GetLocalidadesByProvinciaId(provinciaId);
-
-            cboLocalidad.DataSource = localidadesByProvinciaId;
-            cboLocalidad.DisplayMember = "Descripcion";
-            cboLocalidad.ValueMember = "IdLocalidad";
-        }
+                btnEliminarUsuario.Enabled = user.Estado;           
+        }             
 
         public bool CheckeoPatentes(Usuario usuario)
         {

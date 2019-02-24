@@ -79,8 +79,7 @@ namespace DAL.Impl
             try
             {
                 var digito = CalcularDVVertical(entidad);
-
-                var queryString = "INSERT INTO DigitoVerificadorVertical(Entidad, ValorDigitoVerificador) VALUES(@entidad, @digito)";
+                var queryString = "UPDATE DigitoVerificadorVertical SET ValorDigitoVerificador =  @digito WHERE Entidad = @entidad";
 
                 SqlUtils.Exec(queryString, new { @entidad = entidad, @digito = digito });
 
@@ -130,11 +129,11 @@ namespace DAL.Impl
         {
             var returnValue = true;
 
-            var ResultadoUsuario = CalcularDVVertical(Entidades.Find(x => x == "Usuario"));
+            var ResultadoUsuario = CalcularDVVertical(Entidades.Find(x => x.ToUpper() == "USUARIO"));
 
-            var dVVerticalUsuario = ConsultarDVVertical(Entidades.Find(x => x == "Usuario"));
+            var dVVerticalUsuario = ConsultarDVVertical(Entidades.Find(x => x.ToUpper() == "USUARIO"));
 
-            if (ResultadoUsuario != dVVerticalUsuario["Usuario"])
+            if (dVVerticalUsuario.ContainsKey("USUARIO") && ResultadoUsuario != dVVerticalUsuario["USUARIO"])
             {
                 returnValue = false;
             }

@@ -130,6 +130,7 @@
             this.Controls.Add(this.btnRestaurar);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.Label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmRestaurarCopiaDeSeguridad";
             this.Text = "CopiaDeSeguridad";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRestaurarCopiaDeSeguridad_FormClosing);

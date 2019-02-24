@@ -381,6 +381,10 @@
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.btnNuevoUsuarioCancelar);
             this.Controls.Add(this.GroupBox3);
+            //this.Controls.Add(this.Label13);
+            //this.Controls.Add(this.GroupBox2);
+            //this.Controls.Add(this.GroupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Controls.Add(this.lblNuevoUsuarioTitulo);
             this.Controls.Add(this.gbNuevoUsuarioOtrosDatos);
             this.Controls.Add(this.gbNuevoUsuarioDatos);

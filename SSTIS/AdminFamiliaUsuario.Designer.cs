@@ -100,6 +100,7 @@
             this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.Label1);
             this.Controls.Add(this.dgvFamiliaUsuario);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmAdminFamiliaUsuario";
             this.Text = "AdminFamiliaUsuario";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmAdminFamiliaUsuario_FormClosing);
