@@ -697,7 +697,152 @@ insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, M
 values (NEWID(), '14036BCA-1316-42A7-AED2-10BB3BF61E30', 'F19CEEC0-F6E4-4474-A506-EFB58E516EAE', null, 
 'MSJ003', 'An error occurred when logging in. Please verify the entered data.')
 
+--------- Formulario Nuevo Usuario ----------------------------------------------------------------------
+--- Español -------------------------------------------
 
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '632302C5-266A-440D-9F39-6DC6DDEBAACF', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'btnNuevoUsuarioVolver', 
+null, 'Volver')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '632302C5-266A-440D-9F39-6DC6DDEBAACF', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'btnNuevoUsuarioAceptar', 
+null, 'Aceptar')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '632302C5-266A-440D-9F39-6DC6DDEBAACF', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'btnNuevoUsuarioCancelar', 
+null, 'Cancelar')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '632302C5-266A-440D-9F39-6DC6DDEBAACF', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'gbNuevoUsuarioDatos', 
+null, 'Datos')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '632302C5-266A-440D-9F39-6DC6DDEBAACF', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'gbNuevoUsuarioOtrosDatos', 
+null, 'Otros Datos')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '632302C5-266A-440D-9F39-6DC6DDEBAACF', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'lblNuevoUsuarioNombre', 
+null, 'Nombre:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '632302C5-266A-440D-9F39-6DC6DDEBAACF', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'lblNuevoUsuarioApellido', 
+null, 'Apellido:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '632302C5-266A-440D-9F39-6DC6DDEBAACF', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'lblNuevoUsuarioEmail', 
+null, 'E-mail:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '632302C5-266A-440D-9F39-6DC6DDEBAACF', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'lblNuevoUsuarioSexo', 
+null, 'Sexo:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '632302C5-266A-440D-9F39-6DC6DDEBAACF', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'rdbNuevoUsuarioSexo', 
+null, 'Hombre:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '632302C5-266A-440D-9F39-6DC6DDEBAACF', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'rdbNuevoUsuarioSexo2', 
+null, 'Mujer:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '632302C5-266A-440D-9F39-6DC6DDEBAACF', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'lblNuevoUsuarioDomicilio', 
+null, 'Domicilio:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '632302C5-266A-440D-9F39-6DC6DDEBAACF', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'lblNuevoUsuarioProvincia', 
+null, 'Provincia:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '632302C5-266A-440D-9F39-6DC6DDEBAACF', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'lblNuevoUsuarioLocalidad', 
+null, 'Localidad:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '632302C5-266A-440D-9F39-6DC6DDEBAACF', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'lblNuevoUsuarioCp', 
+null, 'Codigo Postal:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '632302C5-266A-440D-9F39-6DC6DDEBAACF', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'lblNuevoUsuarioTelFijo', 
+null, 'Telefono Fijo:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '632302C5-266A-440D-9F39-6DC6DDEBAACF', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'lblNuevoUsuarioCelular', 
+null, 'Celular:')
+GO
+---------------------------------------------------------------------------------------------------------
+
+--------- Formulario Nuevo Usuario ----------------------------------------------------------------------
+--- Ingles -------------------------------------------
+
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '14036BCA-1316-42A7-AED2-10BB3BF61E30', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'btnNuevoUsuarioVolver', 
+null, 'Back')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '14036BCA-1316-42A7-AED2-10BB3BF61E30', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'btnNuevoUsuarioAceptar', 
+null, 'Accept')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '14036BCA-1316-42A7-AED2-10BB3BF61E30', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'btnNuevoUsuarioCancelar', 
+null, 'Cancel')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '14036BCA-1316-42A7-AED2-10BB3BF61E30', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'gbNuevoUsuarioDatos', 
+null, 'User data')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '14036BCA-1316-42A7-AED2-10BB3BF61E30', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'gbNuevoUsuarioOtrosDatos', 
+null, 'Other Information')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '14036BCA-1316-42A7-AED2-10BB3BF61E30', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'lblNuevoUsuarioNombre', 
+null, 'Name:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '14036BCA-1316-42A7-AED2-10BB3BF61E30', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'lblNuevoUsuarioApellido', 
+null, 'Surname:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '14036BCA-1316-42A7-AED2-10BB3BF61E30', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'lblNuevoUsuarioEmail', 
+null, 'E-mail:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '14036BCA-1316-42A7-AED2-10BB3BF61E30', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'lblNuevoUsuarioSexo', 
+null, 'Genre:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '14036BCA-1316-42A7-AED2-10BB3BF61E30', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'rdbNuevoUsuarioSexo', 
+null, 'Man:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '14036BCA-1316-42A7-AED2-10BB3BF61E30', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'rdbNuevoUsuarioSexo2', 
+null, 'Woman:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '14036BCA-1316-42A7-AED2-10BB3BF61E30', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'lblNuevoUsuarioDomicilio', 
+null, 'Address:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '14036BCA-1316-42A7-AED2-10BB3BF61E30', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'lblNuevoUsuarioProvincia', 
+null, 'Province:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '14036BCA-1316-42A7-AED2-10BB3BF61E30', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'lblNuevoUsuarioLocalidad', 
+null, 'City:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '14036BCA-1316-42A7-AED2-10BB3BF61E30', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'lblNuevoUsuarioCp', 
+null, 'Postal Code:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '14036BCA-1316-42A7-AED2-10BB3BF61E30', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'lblNuevoUsuarioTelFijo', 
+null, 'Telephone Number:')
+GO
+insert into dbo.TRADUCCION (IdTraduccion, IdIdioma, IdFormulario, ControlName, MensajeCodigo, Traduccion)
+values (NEWID(), '14036BCA-1316-42A7-AED2-10BB3BF61E30', '03776A87-ACEA-499E-A5AA-AFF9EF161005', 'lblNuevoUsuarioCelular', 
+null, 'Mobile Number:')
+GO
 
 ---------------------------------------------------------------------------------------------------------
 --------Coberturas---------------------------------------------------------------------------------------
