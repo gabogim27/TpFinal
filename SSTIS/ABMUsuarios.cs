@@ -222,7 +222,10 @@ namespace SSTIS
                     modificarUsuario.ShowDialog();
                     CargarGrilla();
                 }
-                MessageBox.Show("Debe seleccionar un usuario para proceder con la edicion de los datos.");
+                else
+                {
+                    MessageBox.Show("Debe seleccionar un usuario para proceder con la edicion de los datos.");
+                }
             }
             catch (Exception ex)
             {
