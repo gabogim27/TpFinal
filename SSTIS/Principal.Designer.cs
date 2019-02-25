@@ -99,6 +99,7 @@
             this.BuscarPólizaToolStripMenuItem.Name = "BuscarPólizaToolStripMenuItem";
             this.BuscarPólizaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.BuscarPólizaToolStripMenuItem.Text = "Ver Pólizas";
+            this.BuscarPólizaToolStripMenuItem.Click += new System.EventHandler(this.BuscarPólizaToolStripMenuItem_Click);
             // 
             // GestionClientesToolStripMenuItem
             // 
@@ -113,6 +114,7 @@
             this.VerClientesToolStripMenuItem.Name = "VerClientesToolStripMenuItem";
             this.VerClientesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.VerClientesToolStripMenuItem.Text = "Ver Datos Cliente";
+            this.VerClientesToolStripMenuItem.Click += new System.EventHandler(this.VerClientesToolStripMenuItem_Click);
             // 
             // GestionFacturasToolStripMenuItem
             // 
@@ -125,7 +127,7 @@
             // VerDetalleFacturaToolStripMenuItem
             // 
             this.VerDetalleFacturaToolStripMenuItem.Name = "VerDetalleFacturaToolStripMenuItem";
-            this.VerDetalleFacturaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.VerDetalleFacturaToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.VerDetalleFacturaToolStripMenuItem.Text = "Ver Detalle Factura";
             // 
             // GestionVehiculosToolStripMenuItem
@@ -141,6 +143,7 @@
             this.VerVehiculoToolStripMenuItem.Name = "VerVehiculoToolStripMenuItem";
             this.VerVehiculoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.VerVehiculoToolStripMenuItem.Text = "Ver Datos Vehiculo";
+            this.VerVehiculoToolStripMenuItem.Click += new System.EventHandler(this.VerVehiculoToolStripMenuItem_Click);
             // 
             // AyudaToolStripMenuItem
             // 

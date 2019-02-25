@@ -1,6 +1,19 @@
 IF (NOT EXISTS (SELECT * 
                  FROM INFORMATION_SCHEMA.TABLES 
                  WHERE TABLE_SCHEMA = 'dbo' 
+                 AND  TABLE_NAME = 'PolizaCobertura'))
+BEGIN
+CREATE TABLE [dbo].[PolizaCobertura](
+	[IdPoliza] uniqueidentifier NOT NULL,
+	[IdCobertura] uniqueidentifier NOT NULL,
+	CONSTRAINT PK_PolizaCobertura PRIMARY KEY NONCLUSTERED ([IdPoliza], [IdCobertura])
+) ON [PRIMARY]
+END
+GO
+
+IF (NOT EXISTS (SELECT * 
+                 FROM INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_SCHEMA = 'dbo' 
                  AND  TABLE_NAME = 'FamiliaPatente'))
 BEGIN
 CREATE TABLE [dbo].[FamiliaPatente](

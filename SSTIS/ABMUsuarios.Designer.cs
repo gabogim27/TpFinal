@@ -131,6 +131,7 @@
             this.Button8.TabIndex = 11;
             this.Button8.Text = "Blanqueo de contraseña";
             this.Button8.UseVisualStyleBackColor = true;
+            this.Button8.Click += new System.EventHandler(this.Button8_Click);
             // 
             // btnEditarUsuario
             // 

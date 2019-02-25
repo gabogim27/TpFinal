@@ -105,7 +105,41 @@ namespace DAL.Dao
 
         public List<Vehiculo> Retrive()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var queryString = @"SELECT veh.*, tip.*, ma.*, mo.*
+                                    FROM dbo.Vehiculo veh
+                                    inner join dbo.TipoUso tip on tip.IdTipoUso = veh.IdTipoUso
+                                    inner join dbo.Marca ma on ma.IdMarca = veh.IdMarca
+                                    inner join dbo.Modelo mo on mo.IdModelo = veh.IdModelo";
+
+                RepositorioBitacora.RegistrarEnBitacora(Log.Level.Alta.ToString(), "Buscando todos los vehiculos.");
+
+                using (IDbConnection connection = SqlUtils.Connection())
+                {
+                    connection.Open();
+                    var vehiculos = connection.Query<Vehiculo, TipoUso, Marca, Modelo, Vehiculo>(
+                            queryString,
+                            (vehiculo, tipoUso, marca, modelo) =>
+                            {
+                                vehiculo._TipoUso = tipoUso;
+                                vehiculo.Marca = marca;
+                                vehiculo.Modelo = modelo;
+                                return vehiculo;
+                            },
+                            splitOn: "IdVehiculo, IdTipoUso, IdMarca, IdModelo")
+                        .Distinct()
+                        .ToList();
+                    //client.Email = DES.Decrypt(client.Email, Key, Iv);
+                    return vehiculos;
+                }
+            }
+            catch (Exception ex)
+            {
+                RepositorioBitacora.RegistrarEnBitacora(Log.Level.Alta.ToString(), string.Format("Ocurrió un error al buscar los vehiculos. Error: {0}", ex.Message));
+            }
+
+            return null;
         }
 
         public bool Delete(Vehiculo entity)

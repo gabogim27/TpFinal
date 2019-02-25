@@ -117,6 +117,10 @@ namespace SSTIS
             simpleInyectorContainer.Register<ICambiarContraseña, frmCambiarContraseña>(Lifestyle.Singleton);
             simpleInyectorContainer.Register<IPolizaWizard, PolizaWizard>(Lifestyle.Singleton);
             simpleInyectorContainer.Register<ICobrarFactura, CobrarFacturaPopUp>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IDetallePoliza, DetallePoliza>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IJustificacionPopUp, JustificacionPopUp>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IDetalleCliente, DetalleCliente>(Lifestyle.Singleton);
+            simpleInyectorContainer.Register<IDetalleVehiculo, DetalleVehiculo>(Lifestyle.Singleton);
             //ContainerConfig.Bootstrap();
             log4net.Config.XmlConfigurator.Configure();
             Application.EnableVisualStyles();

@@ -175,12 +175,22 @@
     <Compile Include="Interfaces\ICambiarContraseña.cs" />
     <Compile Include="Interfaces\ICambiarIdioma.cs" />
     <Compile Include="Interfaces\ICobrarFactura.cs" />
+    <Compile Include="Interfaces\IDetalleCliente.cs" />
+    <Compile Include="Interfaces\IDetallePoliza.cs" />
+    <Compile Include="Interfaces\IDetalleVehiculo.cs" />
+    <Compile Include="Interfaces\IJustificacionPopUp.cs" />
     <Compile Include="Interfaces\IModificarFamilia.cs" />
     <Compile Include="Interfaces\IModificarUsuario.cs" />
     <Compile Include="Interfaces\INuevaFamilia.cs" />
     <Compile Include="Interfaces\IPolizaWizard.cs" />
     <Compile Include="Interfaces\IRestaurarCopiaDeSeguridad.cs" />
     <Compile Include="Interfaces\ISessionInfo.cs" />
+    <Compile Include="JustificacionPopUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="JustificacionPopUp.Designer.cs">
+      <DependentUpon>JustificacionPopUp.cs</DependentUpon>
+    </Compile>
     <Compile Include="MessageBoxHelper\Alert.cs" />
     <Compile Include="ModificarUsuario.cs">
       <SubType>Form</SubType>
@@ -338,6 +348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CobrarFacturaPopUp.resx">
       <DependentUpon>CobrarFacturaPopUp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JustificacionPopUp.resx">
+      <DependentUpon>JustificacionPopUp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ModificarUsuario.resx">
       <DependentUpon>ModificarUsuario.cs</DependentUpon>

@@ -20,7 +20,7 @@ namespace DAL.Dao
         private IDao<Cliente> ClienteDao;
         private IDao<Vehiculo> VehiculoDao;
 
-        public PolizaDao(IBitacoraDao BitacoraDao, IDigitoVerificador DigitoVerificador, 
+        public PolizaDao(IBitacoraDao BitacoraDao, IDigitoVerificador DigitoVerificador,
             IDao<Cliente> ClienteDao, IDao<Vehiculo> VehiculoDao)
         {
             this.BitacoraDao = BitacoraDao;
@@ -230,7 +230,7 @@ namespace DAL.Dao
         {
             try
             {
-                var queryString = @"SELECT pol.*, det.*, veh.*, cli.* , cob.*
+                var queryString = @"SELECT pol.*, det.*, veh.*, cli.*
                                     FROM dbo.poliza pol
                                     inner join dbo.Detalle_Poliza det on det.IdDetalle = pol.IdDetalle
                                     inner join dbo.vehiculo veh on veh.IdVehiculo = det.IdVehiculo
@@ -260,6 +260,18 @@ namespace DAL.Dao
 
                         if (coberturas != null)
                             poliza.Detalle.Coberturas.AddRange(coberturas);
+
+                        var client = poliza != null ? ClienteDao.GetById(poliza.Cliente.IdCliente) : null;
+
+                        if (client != null)
+                            poliza.Cliente = client;
+
+                        var auto = poliza != null
+                            ? VehiculoDao.GetById(poliza.Detalle.Vehiculo.IdVehiculo)
+                            : null;
+
+                        if (auto != null)
+                            poliza.Detalle.Vehiculo = auto;
                     }
 
                     return polizas;
@@ -287,6 +299,27 @@ namespace DAL.Dao
             {
                 BitacoraDao.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
                     string.Format("Ocurrio un error al tratar de anular la poliza con numero: {0} en la BD. Error: " +
+                                  "{1}", entity.NroPoliza, e.Message));
+            }
+
+            return false;
+        }
+
+        public bool ActualizarAprobacion(Poliza entity)
+        {
+
+            try
+            {
+                int estado = entity.Estado != null && entity.Estado.Value ? 1 : 0;
+                var query = string.Format("Update Poliza set Estado = {0}, Justificacion = '{1}' " +
+                                          "where NroPoliza = {2}", estado, entity.Justificacion, entity.NroPoliza);
+
+                return SqlUtils.Exec(query);
+            }
+            catch (Exception e)
+            {
+                BitacoraDao.RegistrarEnBitacora(DalLogLevel.LogLevel.Alta.ToString(),
+                    string.Format("Ocurrio un error al tratar de actualizar la poliza con numero: {0} en la BD. Error: " +
                                   "{1}", entity.NroPoliza, e.Message));
             }
 

@@ -48,5 +48,20 @@ namespace BLL
         {
             return RepositorioPolizaImplementor.TraerPolizaPorNumero(numero);
         }
+
+        public bool Delete(Poliza entity)
+        {
+            return RepositorioPolizaImplementor.Delete(entity);
+        }
+
+        public List<Poliza> Retrive()
+        {
+            return RepositorioPolizaImplementor.Retrive();
+        }
+
+        public bool ActualizarAprobacion(Poliza entity)
+        {
+            return RepositorioPolizaImplementor.ActualizarAprobacion(entity);
+        }
     }
 }

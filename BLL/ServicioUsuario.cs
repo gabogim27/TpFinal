@@ -76,7 +76,7 @@ namespace BLL
             return RepositorioUsuario.Create(entity);
         }
 
-        private void SavePasswordOnFile(int nuevoPass, string usuario)
+        public void SavePasswordOnFile(int nuevoPass, string usuario)
         {
             try
             {

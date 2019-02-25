@@ -67,10 +67,14 @@ namespace SSTIS
 
         public Usuario usuarioSeleccionado()
         {
-            usuario.Familia = new List<Familia>();
-            usuario.Familia = ServicioFamiliaImplementor.ObtenerFamiliasPorUsuario(usuario.IdUsuario);
+            //usuario.Familia = new List<Familia>();
+            //usuario.Familia = ServicioFamiliaImplementor.ObtenerFamiliasPorUsuario(usuario.IdUsuario);
 
-            return usuario;
+            var idUsuario = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
+
+            var usFromBD = ServicioUsuario.Retrive().FirstOrDefault(x => x.IdUsuario == Guid.Parse(idUsuario));
+
+            return usFromBD;
         }
         //public ABMUsuarios(IRepository<Usuario> repository)
         //{
@@ -149,7 +153,7 @@ namespace SSTIS
         }
 
         private void CargarColumnas()
-        {           
+        {
             if (cargaInicial)
             {
                 dgvUsuarios.AutoGenerateColumns = false;
@@ -224,7 +228,7 @@ namespace SSTIS
             {
                 log.ErrorFormat("Ocurrio un error al actualizar el usuario: {0}", ex.Message);
             }
-        }   
+        }
 
         private Usuario GetUsuarioById(Guid idUsuarioSeleccionado)
         {
@@ -242,12 +246,12 @@ namespace SSTIS
         }
 
         private void dgvUsuarios_CellClick(object sender, DataGridViewCellEventArgs e)
-        {                          
-                var user = GetUsuarioById(Guid.Parse(dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString()));
-                btnBloquear.Enabled = !user.Bloqueado;
-                btnDesbloquear.Enabled = user.Bloqueado;
-                btnEliminarUsuario.Enabled = user.Estado;           
-        }             
+        {
+            var user = GetUsuarioById(Guid.Parse(dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString()));
+            btnBloquear.Enabled = !user.Bloqueado;
+            btnDesbloquear.Enabled = user.Bloqueado;
+            btnEliminarUsuario.Enabled = user.Estado;
+        }
 
         public bool CheckeoPatentes(Usuario usuario)
         {
@@ -255,7 +259,7 @@ namespace SSTIS
             var returnValue = true;
             if (usuario.Patentes.Count > 0 || usuario.Familia.Count > 0)
             {
-                returnValue = ServicioPatente.CheckeoDePatentesParaBorrar(usuario);              
+                returnValue = ServicioPatente.CheckeoDePatentesParaBorrar(usuario);
             }
 
             return returnValue;
@@ -480,7 +484,7 @@ namespace SSTIS
                     {
                         MessageBox.Show("Usuario bloqueado correctamente.");
                         btnDesbloquear.Enabled = true;
-                        btnBloquear.Enabled = false; 
+                        btnBloquear.Enabled = false;
                     }
                 }
             }
@@ -545,6 +549,33 @@ namespace SSTIS
         private void frmABMUsuarios_Enter(object sender, EventArgs e)
         {
             CargarInicial();
+        }
+
+        private void Button8_Click(object sender, EventArgs e)
+        {
+            if (usuarioSeleccionado() != null)
+            {
+                //Actualizamos primer ingreso en = 1
+                Random randomPass = new Random();
+                var nuevoPass = randomPass.Next();
+                usuarioSeleccionado().PrimerLogin = true;
+                usuarioSeleccionado().Password = randomPass.ToString();
+                if (ServicioUsuario.Update(usuarioSeleccionado()))
+                {
+                    //Guardamos una password en el txt
+                    ServicioUsuarioImplementor.SavePasswordOnFile(nuevoPass, usuarioSeleccionado().Email);
+                    MessageBox.Show("Contraseña blanqueada correctamente. Se ha creado una password temporal en el archivo SistemaTIS.txt." +
+                                    " Por favor ingresela y luego el sistema le pedira que la cambie nuevamente.");
+                }
+                else
+                {
+                    MessageBox.Show("Ha ocurrido un error al tratar de blanquear la contraseña.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor seleccione un usuario.");
+            }
         }
     }
 }

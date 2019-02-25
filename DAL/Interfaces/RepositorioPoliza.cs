@@ -46,5 +46,20 @@ namespace DAL.Interfaces
         {
             return PolizaDaoImplementor.TraerPolizaPorNumero(numero);
         }
+
+        public bool Delete(Poliza entity)
+        {
+            return PolizaDaoImplementor.Delete(entity);
+        }
+
+        public List<Poliza> Retrive()
+        {
+            return PolizaDaoImplementor.Retrive();
+        }
+
+        public bool ActualizarAprobacion(Poliza entity)
+        {
+            return PolizaDaoImplementor.ActualizarAprobacion(entity);
+        }
     }
 }

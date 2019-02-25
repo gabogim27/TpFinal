@@ -15,5 +15,8 @@ namespace BLL.Interfaces
         List<Cobertura> TraercoberturasPorPolizaId(Guid idPoliza);
         bool ActualizarCoberturasSeleccionadas(Poliza entity);
         Poliza TraerPolizaPorNumero(int numero);
+        bool Delete(Poliza entity);
+        List<Poliza> Retrive();
+        bool ActualizarAprobacion(Poliza entity);
     }
 }

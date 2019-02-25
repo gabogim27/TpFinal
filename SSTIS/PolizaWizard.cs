@@ -82,7 +82,14 @@ namespace SSTIS
                     e.Cancel = true;
                     return;
                 }
-                else if (cboTransaccion.SelectedIndex == 1)
+
+                if (cboTransaccion.SelectedIndex == 0)
+                {
+                    this.wizardControl.SelectedPage.NextPage = this.wizardCoberturas;
+                }
+
+                //Modificacion
+                if (cboTransaccion.SelectedIndex == 1)
                 {
                     if (string.IsNullOrEmpty(txtNumeroPoliza.Text))
                     {
@@ -96,6 +103,15 @@ namespace SSTIS
                             ServicioPolizaImplementor.TraerPolizaPorNumero(int.Parse(txtNumeroPoliza.Text.Trim()));
                         if (poliza != null)
                         {
+                            if (!poliza.Estado.HasValue)
+                            {
+                                MessageBox.Show("La Póliza con número: " + poliza.NroPoliza +
+                                                " se encuentra anulada. " +
+                                                "Por favor ingrese un número de póliza válido.");
+                                e.Cancel = true;
+                                return;
+                            }
+
                             PolizaGuardada = poliza;
                         }
                         else
@@ -107,8 +123,45 @@ namespace SSTIS
                     }
                 }
 
-                this.wizardControl.SelectedPage.NextPage = this.wizardCoberturas;
+                //Anulacion
+                if (cboTransaccion.SelectedIndex == 2)
+                {
+                    if (string.IsNullOrEmpty(txtNumeroPoliza.Text))
+                    {
+                        MessageBox.Show("Debe ingresar un Numero de Póliza.");
+                        e.Cancel = true;
+                        return;
+                    }
+
+                    var poliza =
+                    ServicioPolizaImplementor.TraerPolizaPorNumero(int.Parse(txtNumeroPoliza.Text.Trim()));
+                    if (poliza != null && (!poliza.Estado.HasValue || poliza.Estado.Value))
+                    {
+                        var confirmResult = MessageBox.Show(
+                            "Esta seguro que desea anular la póliza. Confirme la operacion?",
+                            "Confirme anulación de póliza",
+                            MessageBoxButtons.YesNo);
+                        if (confirmResult == DialogResult.Yes)
+                        {
+                            PolizaGuardada = poliza;
+                            PolizaGuardada.Estado = false;
+                            GuardarDatosPoliza();
+                            MessageBox.Show("Póliza anulada correctamente.");
+                            txtNumeroPoliza.Text = string.Empty;
+                            e.Cancel = true;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("La póliza es inexistente o ya se encuentra dada de baja.");
+                        e.Cancel = true;
+                        return;
+                    }
+                }
             }
+
+            this.wizardControl.SelectedPage.NextPage = this.wizardCoberturas;
         }
 
         private int TraerNumeroDePoliza()
@@ -706,10 +759,13 @@ namespace SSTIS
             var index = 0;
             index = isCancel ? 1 : 0;
 
-            foreach (DataGridViewRow row in dgvCoberturas.Rows)
+            if (dgvCoberturas.Rows.Count > 1)
             {
-                DataGridViewCheckBoxCell chk = (DataGridViewCheckBoxCell)row.Cells[index];
-                chk.Value = false;
+                foreach (DataGridViewRow row in dgvCoberturas.Rows)
+                {
+                    DataGridViewCheckBoxCell chk = (DataGridViewCheckBoxCell)row.Cells[index];
+                    chk.Value = false;
+                }
             }
 
             txtPrimaTotal.Text = string.Empty;
@@ -767,26 +823,34 @@ namespace SSTIS
 
         private bool GuardarDatosPoliza()
         {
-            var poliza = new Poliza()
+            if (PolizaGuardada == null)
             {
-                IdPoliza = Guid.NewGuid(),
-                Cliente = ClienteGuardado,
-                Estado = true,
-                NroPoliza = int.Parse(txtNumPolizaFac.Text.Trim()),
-                FechaEmision = dtpFechaEmision.Value,
-                Detalle = new BE.DetallePoliza()
+                var poliza = new Poliza()
                 {
-                    IdDetalle = Guid.NewGuid(),
-                    Vehiculo = VehiculoGuardado,
-                    //HAY QUE ARREGLAR ESTO.
-                    Coberturas = GetSelectedCoberturas(),
-                    Prima = decimal.Parse(txtPrimaTotal.Text),
-                    SumaAsegurada = 200000
-                },
-            };
+                    IdPoliza = Guid.NewGuid(),
+                    Cliente = ClienteGuardado,
+                    Estado = null,
+                    NroPoliza = int.Parse(txtNumPolizaFac.Text.Trim()),
+                    FechaEmision = dtpFechaEmision.Value,
+                    Detalle = new BE.DetallePoliza()
+                    {
+                        IdDetalle = Guid.NewGuid(),
+                        Vehiculo = VehiculoGuardado,
+                        //HAY QUE ARREGLAR ESTO.
+                        Coberturas = GetSelectedCoberturas(),
+                        Prima = decimal.Parse(txtPrimaTotal.Text),
+                        SumaAsegurada = 200000
+                    },
+                };
 
-            PolizaGuardada = poliza;
-            return ServicioPolizaImplementor.Create(poliza);
+                PolizaGuardada = poliza;
+
+                return ServicioPolizaImplementor.Create(PolizaGuardada);
+            }
+            else
+            {
+                return ServicioPolizaImplementor.Delete(PolizaGuardada);
+            }
         }
 
         private bool ValidarControlesFactura()
@@ -1039,7 +1103,7 @@ namespace SSTIS
 
         private void cboTransaccion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboTransaccion.SelectedIndex == 1)
+            if (cboTransaccion.SelectedIndex == 1 || cboTransaccion.SelectedIndex == 2)
             {
                 //Es una modificacion de póliza
                 txtNumeroPoliza.Text = string.Empty;
@@ -1060,6 +1124,73 @@ namespace SSTIS
         {
             if (!(Char.IsDigit(e.KeyChar) || (e.KeyChar == (char)Keys.Back)))
                 e.Handled = true;
+        }
+
+        private void btnEliminarCliente_Click(object sender, EventArgs e)
+        {
+            if (ClienteGuardado != null)
+            {
+                var confirmResult = MessageBox.Show(
+                    "Al eliminar el cliente automáticamente se anulará la póliza. Confirma la operacion?",
+                    "Confirme anulación de póliza",
+                    MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    ClienteGuardado.Estado = false;
+                    if (GuardarDatosCliente())
+                    {
+                        PolizaGuardada.Estado = false;
+                        GuardarDatosPoliza();
+                        RestablecerControles(true);
+                        this.wizardControl.SelectedPage.NextPage = this.wizardInicio;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ocurrió un error al tratar de dar de baja el cliente. " +
+                                        "Por favor contacte al Administrador.");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("No hay ningun cliente a borrar.");
+            }
+        }
+
+        private void lblEliminarVehiculo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnEliminarVehiculo_Click(object sender, EventArgs e)
+        {
+            if (VehiculoGuardado != null)
+            {
+                var confirmResult = MessageBox.Show(
+                    "Al eliminar el vehículo, automáticamente se anulará la póliza. Confirma la operacion?",
+                    "Confirme anulación de póliza",
+                    MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    ClienteGuardado.Estado = false;
+                    if (GuardarDatosCliente())
+                    {
+                        PolizaGuardada.Estado = false;
+                        GuardarDatosPoliza();
+                        RestablecerControles(true);
+                        this.wizardControl.SelectedPage.NextPage = this.wizardInicio;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ocurrió un error al tratar de dar de baja el vehículo. " +
+                                        "Por favor contacte al Administrador.");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("No hay ningun vehículo a borrar.");
+            }
         }
     }
 }

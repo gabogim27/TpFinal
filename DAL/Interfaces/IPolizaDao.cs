@@ -15,5 +15,8 @@ namespace DAL.Interfaces
         Poliza TraerPolizaPorNumero(int numero);
         List<Cobertura> TraercoberturasPorPolizaId(Guid idPoliza);
         bool ActualizarCoberturasSeleccionadas(Poliza entity);
+        bool Delete(Poliza entity);
+        List<Poliza> Retrive();
+        bool ActualizarAprobacion(Poliza entity);
     }
 }

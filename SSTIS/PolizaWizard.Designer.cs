@@ -42,10 +42,16 @@
             this.cboTipoPoliza = new System.Windows.Forms.ComboBox();
             this.wizardCoberturas = new AeroWizard.WizardPage();
             this.dgvCoberturas = new System.Windows.Forms.DataGridView();
+            this.Seleccionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.IdCobertura = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PrimaAsegurada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnRestablecer = new System.Windows.Forms.Button();
             this.txtPrimaTotal = new System.Windows.Forms.TextBox();
             this.lblPrima = new System.Windows.Forms.Label();
             this.wizardDatosCliente = new AeroWizard.WizardPage();
+            this.lblEliminarCliente = new System.Windows.Forms.Label();
+            this.btnEliminarCliente = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtCp = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -74,6 +80,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.wizardDatosVehiculo = new AeroWizard.WizardPage();
+            this.lblEliminarVehiculo = new System.Windows.Forms.Label();
+            this.btnEliminarVehiculo = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btnBorrarImagen2 = new System.Windows.Forms.Button();
             this.btnBorrarImagen4 = new System.Windows.Forms.Button();
@@ -148,10 +156,6 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-            this.Seleccionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.IdCobertura = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PrimaAsegurada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.wizardControl)).BeginInit();
             this.wizardInicio.SuspendLayout();
             this.wizardCoberturas.SuspendLayout();
@@ -185,7 +189,7 @@
             this.wizardControl.Pages.Add(this.wizardDatosVehiculo);
             this.wizardControl.Pages.Add(this.wizardFactura);
             this.wizardControl.ShowProgressInTaskbarIcon = true;
-            this.wizardControl.Size = new System.Drawing.Size(979, 493);
+            this.wizardControl.Size = new System.Drawing.Size(979, 528);
             this.wizardControl.StepListFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
             this.wizardControl.TabIndex = 0;
             this.wizardControl.Text = "Emisión de Póliza";
@@ -207,7 +211,7 @@
             this.wizardInicio.Controls.Add(this.label1);
             this.wizardInicio.Controls.Add(this.cboTipoPoliza);
             this.wizardInicio.Name = "wizardInicio";
-            this.wizardInicio.Size = new System.Drawing.Size(781, 339);
+            this.wizardInicio.Size = new System.Drawing.Size(781, 374);
             this.wizardControl.SetStepText(this.wizardInicio, "Pantalla de Inicio");
             this.wizardInicio.TabIndex = 2;
             this.wizardInicio.Text = "Bienvenidos al Sistema de Emision de Pólizas";
@@ -310,7 +314,7 @@
             this.wizardCoberturas.Controls.Add(this.txtPrimaTotal);
             this.wizardCoberturas.Controls.Add(this.lblPrima);
             this.wizardCoberturas.Name = "wizardCoberturas";
-            this.wizardCoberturas.Size = new System.Drawing.Size(781, 339);
+            this.wizardCoberturas.Size = new System.Drawing.Size(781, 374);
             this.wizardControl.SetStepText(this.wizardCoberturas, "Coberturas");
             this.wizardCoberturas.TabIndex = 3;
             this.wizardCoberturas.Text = "Carga De Coberturas";
@@ -330,6 +334,36 @@
             this.dgvCoberturas.Size = new System.Drawing.Size(757, 207);
             this.dgvCoberturas.TabIndex = 5;
             this.dgvCoberturas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCoberturas_CellContentClick);
+            // 
+            // Seleccionar
+            // 
+            this.Seleccionar.DataPropertyName = "Seleccionada";
+            this.Seleccionar.HeaderText = "Seleccionar";
+            this.Seleccionar.Name = "Seleccionar";
+            // 
+            // IdCobertura
+            // 
+            this.IdCobertura.DataPropertyName = "IdCobertura";
+            this.IdCobertura.HeaderText = "IdCobertura";
+            this.IdCobertura.Name = "IdCobertura";
+            this.IdCobertura.ReadOnly = true;
+            this.IdCobertura.Visible = false;
+            // 
+            // Descripcion
+            // 
+            this.Descripcion.DataPropertyName = "Descripcion";
+            this.Descripcion.HeaderText = "Descripcion";
+            this.Descripcion.Name = "Descripcion";
+            this.Descripcion.ReadOnly = true;
+            this.Descripcion.Width = 350;
+            // 
+            // PrimaAsegurada
+            // 
+            this.PrimaAsegurada.DataPropertyName = "PrimaAsegurada";
+            this.PrimaAsegurada.HeaderText = "Prima Asegurada";
+            this.PrimaAsegurada.Name = "PrimaAsegurada";
+            this.PrimaAsegurada.ReadOnly = true;
+            this.PrimaAsegurada.Width = 150;
             // 
             // btnRestablecer
             // 
@@ -360,15 +394,38 @@
             // 
             // wizardDatosCliente
             // 
+            this.wizardDatosCliente.Controls.Add(this.lblEliminarCliente);
+            this.wizardDatosCliente.Controls.Add(this.btnEliminarCliente);
             this.wizardDatosCliente.Controls.Add(this.groupBox2);
             this.wizardDatosCliente.Controls.Add(this.groupBox1);
             this.wizardDatosCliente.Name = "wizardDatosCliente";
-            this.wizardDatosCliente.Size = new System.Drawing.Size(781, 339);
+            this.wizardDatosCliente.Size = new System.Drawing.Size(781, 374);
             this.wizardControl.SetStepText(this.wizardDatosCliente, "Datos Cliente");
             this.wizardDatosCliente.TabIndex = 4;
             this.wizardDatosCliente.Text = "Datos Cliente";
             this.wizardDatosCliente.Commit += new System.EventHandler<AeroWizard.WizardPageConfirmEventArgs>(this.wizardDatosCliente_Commit);
             this.wizardDatosCliente.Initialize += new System.EventHandler<AeroWizard.WizardPageInitEventArgs>(this.wizardDatosCliente_Initialize);
+            // 
+            // lblEliminarCliente
+            // 
+            this.lblEliminarCliente.AutoSize = true;
+            this.lblEliminarCliente.Location = new System.Drawing.Point(230, 285);
+            this.lblEliminarCliente.Name = "lblEliminarCliente";
+            this.lblEliminarCliente.Size = new System.Drawing.Size(95, 15);
+            this.lblEliminarCliente.TabIndex = 3;
+            this.lblEliminarCliente.Text = "Eliminar Cliente?";
+            // 
+            // btnEliminarCliente
+            // 
+            this.btnEliminarCliente.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnEliminarCliente.BackgroundImage")));
+            this.btnEliminarCliente.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnEliminarCliente.Location = new System.Drawing.Point(331, 264);
+            this.btnEliminarCliente.Name = "btnEliminarCliente";
+            this.btnEliminarCliente.Size = new System.Drawing.Size(116, 57);
+            this.btnEliminarCliente.TabIndex = 2;
+            this.btnEliminarCliente.Text = "button1";
+            this.btnEliminarCliente.UseVisualStyleBackColor = true;
+            this.btnEliminarCliente.Click += new System.EventHandler(this.btnEliminarCliente_Click);
             // 
             // groupBox2
             // 
@@ -516,7 +573,7 @@
             // 
             // dtpFechaNacimiento
             // 
-            this.dtpFechaNacimiento.Location = new System.Drawing.Point(136, 127);
+            this.dtpFechaNacimiento.Location = new System.Drawing.Point(135, 121);
             this.dtpFechaNacimiento.Name = "dtpFechaNacimiento";
             this.dtpFechaNacimiento.Size = new System.Drawing.Size(200, 23);
             this.dtpFechaNacimiento.TabIndex = 28;
@@ -627,15 +684,39 @@
             // 
             // wizardDatosVehiculo
             // 
+            this.wizardDatosVehiculo.Controls.Add(this.lblEliminarVehiculo);
+            this.wizardDatosVehiculo.Controls.Add(this.btnEliminarVehiculo);
             this.wizardDatosVehiculo.Controls.Add(this.groupBox4);
             this.wizardDatosVehiculo.Controls.Add(this.groupBox3);
             this.wizardDatosVehiculo.Name = "wizardDatosVehiculo";
-            this.wizardDatosVehiculo.Size = new System.Drawing.Size(781, 339);
+            this.wizardDatosVehiculo.Size = new System.Drawing.Size(781, 374);
             this.wizardControl.SetStepText(this.wizardDatosVehiculo, "Datos Vehiculo");
             this.wizardDatosVehiculo.TabIndex = 5;
             this.wizardDatosVehiculo.Text = "Datos Vehiculo";
             this.wizardDatosVehiculo.Commit += new System.EventHandler<AeroWizard.WizardPageConfirmEventArgs>(this.wizardDatosVehiculo_Commit);
             this.wizardDatosVehiculo.Initialize += new System.EventHandler<AeroWizard.WizardPageInitEventArgs>(this.wizardDatosVehiculo_Initialize);
+            // 
+            // lblEliminarVehiculo
+            // 
+            this.lblEliminarVehiculo.AutoSize = true;
+            this.lblEliminarVehiculo.Location = new System.Drawing.Point(331, 323);
+            this.lblEliminarVehiculo.Name = "lblEliminarVehiculo";
+            this.lblEliminarVehiculo.Size = new System.Drawing.Size(103, 15);
+            this.lblEliminarVehiculo.TabIndex = 45;
+            this.lblEliminarVehiculo.Text = "Eliminar Vehículo?";
+            this.lblEliminarVehiculo.Click += new System.EventHandler(this.lblEliminarVehiculo_Click);
+            // 
+            // btnEliminarVehiculo
+            // 
+            this.btnEliminarVehiculo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnEliminarVehiculo.BackgroundImage")));
+            this.btnEliminarVehiculo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnEliminarVehiculo.Location = new System.Drawing.Point(451, 302);
+            this.btnEliminarVehiculo.Name = "btnEliminarVehiculo";
+            this.btnEliminarVehiculo.Size = new System.Drawing.Size(116, 57);
+            this.btnEliminarVehiculo.TabIndex = 44;
+            this.btnEliminarVehiculo.Text = "button1";
+            this.btnEliminarVehiculo.UseVisualStyleBackColor = true;
+            this.btnEliminarVehiculo.Click += new System.EventHandler(this.btnEliminarVehiculo_Click);
             // 
             // groupBox4
             // 
@@ -1352,41 +1433,11 @@
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
             // 
-            // Seleccionar
-            // 
-            this.Seleccionar.DataPropertyName = "Seleccionada";
-            this.Seleccionar.HeaderText = "Seleccionar";
-            this.Seleccionar.Name = "Seleccionar";
-            // 
-            // IdCobertura
-            // 
-            this.IdCobertura.DataPropertyName = "IdCobertura";
-            this.IdCobertura.HeaderText = "IdCobertura";
-            this.IdCobertura.Name = "IdCobertura";
-            this.IdCobertura.ReadOnly = true;
-            this.IdCobertura.Visible = false;
-            // 
-            // Descripcion
-            // 
-            this.Descripcion.DataPropertyName = "Descripcion";
-            this.Descripcion.HeaderText = "Descripcion";
-            this.Descripcion.Name = "Descripcion";
-            this.Descripcion.ReadOnly = true;
-            this.Descripcion.Width = 350;
-            // 
-            // PrimaAsegurada
-            // 
-            this.PrimaAsegurada.DataPropertyName = "PrimaAsegurada";
-            this.PrimaAsegurada.HeaderText = "Prima Asegurada";
-            this.PrimaAsegurada.Name = "PrimaAsegurada";
-            this.PrimaAsegurada.ReadOnly = true;
-            this.PrimaAsegurada.Width = 150;
-            // 
             // PolizaWizard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(979, 493);
+            this.ClientSize = new System.Drawing.Size(979, 528);
             this.Controls.Add(this.wizardControl);
             this.Name = "PolizaWizard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -1401,11 +1452,13 @@
             this.wizardCoberturas.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCoberturas)).EndInit();
             this.wizardDatosCliente.ResumeLayout(false);
+            this.wizardDatosCliente.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.wizardDatosVehiculo.ResumeLayout(false);
+            this.wizardDatosVehiculo.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbFoto4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFoto3)).EndInit();
@@ -1494,7 +1547,6 @@
         private AeroWizard.WizardPage wizardFactura;
         private System.Windows.Forms.Label lblTransaccion;
         private System.Windows.Forms.ComboBox cboTransaccion;
-        private System.Windows.Forms.DateTimePicker dtpFechaNacimiento;
         internal System.Windows.Forms.Label lblFechaDeNacimiento;
         private System.Windows.Forms.DataGridView dgvCoberturas;
         private System.Windows.Forms.Button btnBorrarImagen2;
@@ -1548,5 +1600,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn IdCobertura;
         private System.Windows.Forms.DataGridViewTextBoxColumn Descripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn PrimaAsegurada;
+        private System.Windows.Forms.Label lblEliminarCliente;
+        private System.Windows.Forms.Button btnEliminarCliente;
+        private System.Windows.Forms.Label lblEliminarVehiculo;
+        private System.Windows.Forms.Button btnEliminarVehiculo;
+        private System.Windows.Forms.DateTimePicker dtpFechaNacimiento;
     }
 }

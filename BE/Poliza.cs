@@ -11,8 +11,9 @@
         public Guid IdPoliza { get; set; }
         public DetallePoliza Detalle { get; set; }
         public Cliente Cliente { get; set; }
-        public bool Estado { get; set; }
+        public bool? Estado { get; set; }
         public int NroPoliza { get; set; }
         public DateTime FechaEmision { get; set; }
+        public string Justificacion { get; set; }
     }
 }

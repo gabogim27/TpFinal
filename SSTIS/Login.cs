@@ -63,7 +63,7 @@ namespace SSTIS
             cboIdioma.SelectedIndex = 1;//por default le dejamos español
             LimpiarRecursos();
             LoginInfo.LenguajeSeleccionado = (IdiomaUsuario)cboIdioma.SelectedItem;
-            GetTraducciones();
+            //GetTraducciones();
             AplicarTraducciones();
         }
 

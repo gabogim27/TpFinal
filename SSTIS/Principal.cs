@@ -22,12 +22,17 @@ namespace SSTIS
         private ICambiarIdioma CambiarIdioma;
         private ICambiarContraseña CambiarContraseña;
         private IPolizaWizard PolizaWizard;
-        
+        private IDetallePoliza DetallePoliza;
+        private IDetalleCliente DetalleCliente;
+        public IDetalleVehiculo DetalleVehiculo;
+
+
         public frmPrincipal(IABMUsuarios abmUsuarios, ISessionInfo SessionInfo,
             IBitacora Bitacora, IRealizarCopiaSeguridad RealizarCopiaDeSeguridad,
             IRestaurarCopiaDeSeguridad RestaurarCopiaDeSeguridad, IABMFamilia ABMFamilia,
             ICambiarIdioma CambiarIdioma, ICambiarContraseña CambiarContraseña,
-            IPolizaWizard PolizaWizard)
+            IPolizaWizard PolizaWizard, IDetallePoliza DetallePoliza, IDetalleCliente DetalleCliente,
+            IDetalleVehiculo DetalleVehiculo)
         {
             this.SessionInfo = SessionInfo;
             this.ABMFamilia = ABMFamilia;
@@ -38,6 +43,9 @@ namespace SSTIS
             this.CambiarIdioma = CambiarIdioma;
             this.CambiarContraseña = CambiarContraseña;
             this.PolizaWizard = PolizaWizard;
+            this.DetallePoliza = DetallePoliza;
+            this.DetalleCliente = DetalleCliente;
+            this.DetalleVehiculo = DetalleVehiculo;
             InitializeComponent();
         }
 
@@ -123,6 +131,24 @@ namespace SSTIS
         {
             PolizaWizard.MdiParent = this;
             PolizaWizard.Show();
+        }
+
+        private void BuscarPólizaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DetallePoliza.MdiParent = this;
+            DetallePoliza.Show();
+        }
+
+        private void VerClientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DetalleCliente.MdiParent = this;
+            DetalleCliente.Show();
+        }
+
+        private void VerVehiculoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DetalleVehiculo.MdiParent = this;
+            DetalleVehiculo.Show();
         }
     }
 }

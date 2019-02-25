@@ -18,5 +18,6 @@ namespace BLL.Interfaces
         List<Patente> ObtenerPatentesDeUsuario(Guid usuarioId);
         bool BloquearUsuario(Guid idUsuario);
         bool DesbloquearUsuario(Guid idUsuario);
+        void SavePasswordOnFile(int nuevoPass, string usuario);
     }
 }
