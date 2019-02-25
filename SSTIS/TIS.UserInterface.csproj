@@ -291,25 +291,11 @@
       <DependentUpon>RealizarCopiaSeguridad.cs</DependentUpon>
     </Compile>
     <Compile Include="SimpleConfigInjector.cs" />
-    <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Utils\ControlsUtils.cs" />
     <Compile Include="Utils\FamiliaInfo.cs" />
     <Compile Include="Utils\LoginInfo.cs" />
     <Compile Include="Utils\SessionInfo.cs" />
     <None Include="Resources\login.jpg" />
-    <Content Include="SqlServerTypes\readme.htm" />
-    <Content Include="SqlServerTypes\x64\msvcr120.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlServerTypes\x86\msvcr120.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <EmbeddedResource Include="ABMClientes.resx">
       <DependentUpon>ABMClientes.cs</DependentUpon>
     </EmbeddedResource>

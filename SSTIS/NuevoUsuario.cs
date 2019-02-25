@@ -63,36 +63,56 @@ namespace SSTIS
                 if (ValidarDatosIngresados())
                 {
                     //VALIDAR LOS CAMPOS DE DOMICILIO
-                    if (string.IsNullOrEmpty(txtDomicilio.Text.Trim()) || string.IsNullOrEmpty(txtCp.Text.Trim()) ||
-                        cboLocalidad.SelectedIndex == -1 || cboProvincia.SelectedIndex == -1)
-                    {
-                        MessageBox.Show("Debe completar todos los datos del domicilio.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
+                    ////if (string.IsNullOrEmpty(txtDomicilio.Text.Trim()) || string.IsNullOrEmpty(txtCp.Text.Trim()) ||
+                    ////    cboLocalidad.SelectedIndex == -1 || cboProvincia.SelectedIndex == -1)
+                    ////{
+                    ////    MessageBox.Show("Debe completar todos los datos del domicilio.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    ////    return;
 
-                    }
+                    ////}
 
-                    var usuarioExistente = ServicioUsuario.Retrive().FirstOrDefault(x => x.Email == txtEmail.Text.Trim());
+                    var usuarioExistente = new Usuario();//ServicioUsuario.Retrive().FirstOrDefault(x => x.Email == txtEmail.Text.Trim());
                     if (usuarioExistente != null)
                     {
                         if (!usuarioExistente.Estado)
                         {
-                            DialogResult dr = MessageBox.Show("Actualmente el usuario esta inactivo. Desea " +
-                                                              "reactivarlo nuevamente?", "Usuario Inactivo", MessageBoxButtons.YesNoCancel,
-                                MessageBoxIcon.Information);
-
-                            if (dr == DialogResult.Yes)
+                            if (LoginInfo.LenguajeSeleccionado.Descripcion == "Español")
                             {
-                                if (ServicioUsuarioImplementor.ReactivarUsuario(usuarioExistente))
+                                DialogResult dr = MessageBox.Show("Actualmente el usuario esta inactivo. Desea " +
+                                                                  "reactivarlo nuevamente?", "Usuario Inactivo", MessageBoxButtons.YesNoCancel,
+                                    MessageBoxIcon.Information);
+
+                                if (dr == DialogResult.Yes)
                                 {
-                                    MessageBox.Show("Usuario Reactivado correctamente.");
-                                    return;
+                                    if (ServicioUsuarioImplementor.ReactivarUsuario(usuarioExistente))
+                                    {
+                                        MessageBox.Show("Usuario Reactivado correctamente.");
+                                        return;
+                                    }
                                 }
                             }
+                            else
+                            {
+                                DialogResult dr = MessageBox.Show("Currently, the user is not active. do you want  " +
+                                                                  "to unblock it?", "User Inactive", MessageBoxButtons.YesNoCancel,
+                                    MessageBoxIcon.Information);
+
+                                if (dr == DialogResult.Yes)
+                                {
+                                    if (ServicioUsuarioImplementor.ReactivarUsuario(usuarioExistente))
+                                    {
+                                        MessageBox.Show("Usuario re-activated succesfully.");
+                                        return;
+                                    }
+                                }
+                            }
+                            //    MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information, null)
+                            //No se puede traducir
                         }
 
                         //Registramos el intento fallido de nuevo usuario.
                         ServicioBitacoraImplementor.RegistrarEnBitacora(Log.Level.Baja.ToString(),
-                            string.Format("Creacion de usuario fallida. Usuario con E-mail: {0} existente en BD.", txtEmail.Text.Trim()));
+                            string.Format("Creacion de usuario fallida. Usuario con E-mail: {0} existente en BD.", txtNuevoUsuarioEmail.Text.Trim()));
                         MessageBox.Show("El usuario ingresado ya existe.", "Usuario existente", MessageBoxButtons.OK);
                         lblUsuarioExistente.Visible = true;
                         lblUsuarioExistente.Text = "E-mail Existente";
@@ -144,25 +164,25 @@ namespace SSTIS
             var nuevoUsuario = new BE.Usuario();
 
             var sexo = "";
-            var isChecked = rdbSexo.Checked;
+            var isChecked = rdbNuevoUsuarioSexo.Checked;
             if (isChecked)
-                sexo = rdbSexo.Text;
+                sexo = rdbNuevoUsuarioSexo.Text;
             else
-                sexo = rdbSexo2.Text;
-            nuevoUsuario.Nombre = txtNombre.Text;
-            nuevoUsuario.Apellido = txtApellido.Text;
-            nuevoUsuario.Email = txtEmail.Text;
+                sexo = rdbNuevoUsuarioSexo2.Text;
+            nuevoUsuario.Nombre = txtNuevoUsuarioNombre.Text;
+            nuevoUsuario.Apellido = txtNuevoUsuarioApellido.Text;
+            nuevoUsuario.Email = txtNuevoUsuarioEmail.Text;
             nuevoUsuario.Domicilio = new BE.Domicilio();
-            nuevoUsuario.Domicilio.Direccion = txtDomicilio.Text;
-            nuevoUsuario.Domicilio.CodPostal = txtCp.Text.Trim();
+            nuevoUsuario.Domicilio.Direccion = txtNuevoUsuarioDomicilio.Text;
+            nuevoUsuario.Domicilio.CodPostal = txtNuevoUsuarioCp.Text.Trim();
             nuevoUsuario.Contacto = new BE.Contacto();
-            nuevoUsuario.Contacto.Celular = txtCelular.Text;
-            nuevoUsuario.Contacto.Telefono = txtTelFijo.Text;
+            nuevoUsuario.Contacto.Celular = txtNuevoUsuarioCelular.Text;
+            nuevoUsuario.Contacto.Telefono = txtNuevoUsuarioTelFijo.Text;
             nuevoUsuario.Sexo = sexo;
             nuevoUsuario.Domicilio.Localidad = new BE.Localidad();
-            nuevoUsuario.Domicilio.Localidad.IdLocalidad = Guid.Parse(cboLocalidad.SelectedValue.ToString());
+            nuevoUsuario.Domicilio.Localidad.IdLocalidad = Guid.Parse(cboNuevoUsuarioLocalidad.SelectedValue.ToString());
             nuevoUsuario.Domicilio.Provincia = new Provincia();
-            nuevoUsuario.Domicilio.Provincia.IdProvincia = Guid.Parse(cboProvincia.SelectedValue.ToString());
+            nuevoUsuario.Domicilio.Provincia.IdProvincia = Guid.Parse(cboNuevoUsuarioProvincia.SelectedValue.ToString());
             nuevoUsuario.IdIdioma = LoginInfo.LenguajeSeleccionado.IdIdioma;
             return nuevoUsuario;
         }
@@ -191,7 +211,7 @@ namespace SSTIS
                 }
             }
             //Verificamos que se haya ingresado un mail valido
-            if (!ServicioUsuarioImplementor.ValidarEmail(txtEmail.Text.Trim()))
+            if (!ServicioUsuarioImplementor.ValidarEmail(txtNuevoUsuarioEmail.Text.Trim()))
             {
                 MessageBox.Show("El e-mail ingresado esta en formato incorrecto. Por favor corrijalo!!!");
                 returnValue = false;
@@ -226,9 +246,9 @@ namespace SSTIS
         {
             //Retrieve provincias
             var provincias = ServicioProvincia.Retrive();
-            cboProvincia.DataSource = provincias;
-            cboProvincia.DisplayMember = "Descripcion";
-            cboProvincia.ValueMember = "IdProvincia";
+            cboNuevoUsuarioProvincia.DataSource = provincias;
+            cboNuevoUsuarioProvincia.DisplayMember = "Descripcion";
+            cboNuevoUsuarioProvincia.ValueMember = "IdProvincia";
 
         }
 
@@ -243,9 +263,9 @@ namespace SSTIS
             groupBox4.Visible = false;
             chklFamilia.Visible = false;
             chklPatente.Visible = false;
-            cboLocalidad.Enabled = false;
+            cboNuevoUsuarioLocalidad.Enabled = false;
             CargarComboProvincia();
-            cboProvincia.SelectedIndex = -1;
+            cboNuevoUsuarioProvincia.SelectedIndex = -1;
             //Cargar los checklist
             CargarCheckListFamilia();
             CargarCheckListPatente();
@@ -272,13 +292,13 @@ namespace SSTIS
 
         private void cboProvincia_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            cboLocalidad.Enabled = true;
-            var selectedProvincia = Guid.Parse(cboProvincia.SelectedValue.ToString());
+            cboNuevoUsuarioLocalidad.Enabled = true;
+            var selectedProvincia = Guid.Parse(cboNuevoUsuarioProvincia.SelectedValue.ToString());
             var localidadesByProvinciaId = ServicioLocalidadImplementor.GetLocalidadesByProvinciaId(selectedProvincia);
-            cboLocalidad.DataSource = localidadesByProvinciaId;
-            cboLocalidad.DisplayMember = "Descripcion";
-            cboLocalidad.ValueMember = "IdLocalidad";
-            cboLocalidad.SelectedIndex = -1;
+            cboNuevoUsuarioLocalidad.DataSource = localidadesByProvinciaId;
+            cboNuevoUsuarioLocalidad.DisplayMember = "Descripcion";
+            cboNuevoUsuarioLocalidad.ValueMember = "IdLocalidad";
+            cboNuevoUsuarioLocalidad.SelectedIndex = -1;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -296,16 +316,16 @@ namespace SSTIS
 
         private void RestablecerControles()
         {
-            txtNombre.Text = string.Empty;
-            txtApellido.Text = string.Empty;
-            txtCelular.Text = string.Empty;
-            txtCp.Text = string.Empty;
-            txtDomicilio.Text = string.Empty;
-            txtEmail.Text = string.Empty;
-            txtTelFijo.Text = string.Empty;
-            cboProvincia.SelectedIndex = -1;
-            cboLocalidad.SelectedIndex = -1;
-            cboLocalidad.Enabled = false;
+            txtNuevoUsuarioNombre.Text = string.Empty;
+            txtNuevoUsuarioApellido.Text = string.Empty;
+            txtNuevoUsuarioCelular.Text = string.Empty;
+            txtNuevoUsuarioCp.Text = string.Empty;
+            txtNuevoUsuarioDomicilio.Text = string.Empty;
+            txtNuevoUsuarioEmail.Text = string.Empty;
+            txtNuevoUsuarioTelFijo.Text = string.Empty;
+            cboNuevoUsuarioProvincia.SelectedIndex = -1;
+            cboNuevoUsuarioLocalidad.SelectedIndex = -1;
+            cboNuevoUsuarioLocalidad.Enabled = false;
             //CargarGrilla();
         }
 

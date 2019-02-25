@@ -42,6 +42,23 @@ namespace SSTIS.MessageBoxHelper
         }
 
         /// <summary>
+        /// Method that handles alert showing buttons and icon
+        /// </summary>
+        /// <param name="msj"></param>
+        /// <param name="title"></param>
+        /// <param name="buttons"></param>
+        /// <param name="icon"></param>
+        /// <param name="messageNumber"></param>
+        public static DialogResult ReturnAlterWithButtonAndIcon(string msj, string title, MessageBoxButtons buttons, MessageBoxIcon icon, string messageNumber = null)
+        {
+            var mensaje = ProcessMessage(messageNumber);
+            var dr = new DialogResult();
+           
+            MessageBox.Show(mensaje, title, buttons, icon);
+            return dr;
+        }
+
+        /// <summary>
         /// Conformation messagebox
         /// </summary>
         /// <param name="messageCode"></param>
