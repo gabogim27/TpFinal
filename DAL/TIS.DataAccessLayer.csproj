@@ -73,6 +73,7 @@
     <Compile Include="Dao\ProvinciaDao.cs" />
     <Compile Include="Dao\UsuarioDao.cs" />
     <Compile Include="Dao\VehiculoDao.cs" />
+    <Compile Include="Encryption\EncryptionHelper.cs" />
     <Compile Include="Interfaces\IBitacoraDao.cs" />
     <Compile Include="Interfaces\IDao.cs" />
     <Compile Include="Interfaces\IDigitoVerificador.cs" />

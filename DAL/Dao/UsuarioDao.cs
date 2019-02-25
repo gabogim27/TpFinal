@@ -240,7 +240,7 @@ namespace DAL.Impl
                 var result = SqlUtils.Exec(queryString, new
                 {
                     @nombre = ObjUpd.Nombre,
-                    @apellido = ObjUpd.Nombre,
+                    @apellido = ObjUpd.Apellido,
                     @email = emailEcnript,
                     @sexo = ObjUpd.Sexo,
                     @idUsuario = ObjUpd.IdUsuario,

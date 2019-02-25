@@ -176,11 +176,14 @@ namespace SSTIS
                         return;
                     }
 
-                    polizaSeleccionada().Estado = true;
+                    var p = polizaSeleccionada();
 
-                    if (ServicioPolizaImplementor.ActualizarAprobacion(polizaSeleccionada()))
+                    p.Estado = true;
+
+                    if (ServicioPolizaImplementor.ActualizarAprobacion(p))
                     {
                         MessageBox.Show("Poliza aprobada correctamente.");
+                        MapPolizaWithPolizaUI();
                         CargarGrillaPoliza();
                     }
                     else
@@ -202,6 +205,7 @@ namespace SSTIS
                 if (polizaSeleccionada() != null && (!polizaSeleccionada().Estado.HasValue || !polizaSeleccionada().Estado.Value))
                 {
                     JustificacionPopUp.ShowDialog();
+                    MapPolizaWithPolizaUI();
                     CargarGrillaPoliza();
                 }
                 else if (polizaSeleccionada() != null &&

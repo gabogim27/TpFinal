@@ -707,10 +707,21 @@ namespace SSTIS
         private void wizardFactura_Commit(object sender, WizardPageConfirmEventArgs e)
         {
             //Realizamos la persistencia de datos en la BD
+            //0 - Chequear que no se repita el numero de la factura
             //1 - Guardamos los datos del cliente
             //2 - Guardamos los datos del vehiculo
             //3 - Guardamos los datos de la poliza
             //4 - Guardamos los datos de la factura
+            var existeFactura = ServicioFactura.Retrive()
+                .Any(x => x.NumeroFactura == int.Parse(txtNumFactura.Text.Trim()));
+
+            if (existeFactura)
+            {
+                MessageBox.Show("El numero de factura ingresado ya existe.");
+                e.Cancel = true;
+                return;
+            }
+
             if (PolizaGuardada == null && FacturaGuardada == null && SavePolicy())
             {
                 this.wizardControl.SelectedPage.NextPage = this.wizardInicio;

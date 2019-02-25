@@ -556,7 +556,7 @@ namespace SSTIS
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            if (usuarioSeleccionado() != null)
+            if (dgvUsuarios.SelectedRows.Count > 0 && usuarioSeleccionado() != null)
             {
                 //Actualizamos primer ingreso en = 1
                 Random randomPass = new Random();

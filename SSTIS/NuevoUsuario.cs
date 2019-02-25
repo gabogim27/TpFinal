@@ -63,15 +63,15 @@ namespace SSTIS
                 if (ValidarDatosIngresados())
                 {
                     //VALIDAR LOS CAMPOS DE DOMICILIO
-                    ////if (string.IsNullOrEmpty(txtDomicilio.Text.Trim()) || string.IsNullOrEmpty(txtCp.Text.Trim()) ||
-                    ////    cboLocalidad.SelectedIndex == -1 || cboProvincia.SelectedIndex == -1)
-                    ////{
-                    ////    MessageBox.Show("Debe completar todos los datos del domicilio.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    ////    return;
+                    if (string.IsNullOrEmpty(txtNuevoUsuarioDomicilio.Text.Trim()) || string.IsNullOrEmpty(txtNuevoUsuarioCp.Text.Trim()) ||
+                        cboNuevoUsuarioLocalidad.SelectedIndex == -1 || cboNuevoUsuarioProvincia.SelectedIndex == -1)
+                    {
+                        MessageBox.Show("Debe completar todos los datos del domicilio.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
 
-                    ////}
+                    }
 
-                    var usuarioExistente = new Usuario();//ServicioUsuario.Retrive().FirstOrDefault(x => x.Email == txtEmail.Text.Trim());
+                    var usuarioExistente = ServicioUsuario.Retrive().FirstOrDefault(x => x.Email == txtNuevoUsuarioEmail.Text.Trim());
                     if (usuarioExistente != null)
                     {
                         if (!usuarioExistente.Estado)
@@ -259,6 +259,7 @@ namespace SSTIS
 
         private void CargaInicial()
         {
+            lblUsuarioExistente.Visible = false;
             GroupBox3.Visible = false;
             groupBox4.Visible = false;
             chklFamilia.Visible = false;

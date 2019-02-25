@@ -15,6 +15,6 @@ namespace SSTIS.Utils
         public static IdiomaUsuario LenguajeSeleccionado = new IdiomaUsuario();
         public static IDictionary<string, string> Traducciones = new Dictionary<string, string>();
         
-        public static readonly string ResourcesFilePath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\\\Resources\\\\SpanishResources.resx";
+        public static readonly string ResourcesFilePath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent?.FullName + "\\Resources\\SpanishResources.resx";
     }
 }

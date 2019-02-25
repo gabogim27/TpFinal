@@ -7,14 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BLL.Interfaces;
 using SSTIS.Interfaces;
 
 namespace SSTIS
 {
     public partial class frmCambiarIdioma : Form, ICambiarIdioma
     {
-        public frmCambiarIdioma()
+        private IServicioIdioma ServicioIdioma;
+
+        public frmCambiarIdioma(IServicioIdioma ServicioIdioma)
         {
+            this.ServicioIdioma = ServicioIdioma;
             InitializeComponent();
         }
 
@@ -27,6 +31,19 @@ namespace SSTIS
         {
             Hide();
             e.Cancel = true;
+        }
+
+        private void frmCambiarIdioma_Load(object sender, EventArgs e)
+        {
+            CargarCombo();
+        }
+
+        private void CargarCombo()
+        {
+            var idiomas = ServicioIdioma.GetAllLanguages();
+            cboIdioma.DataSource = idiomas;
+            cboIdioma.ValueMember = "IdIdioma";
+            cboIdioma.DisplayMember = "Descripcion";
         }
     }
 }

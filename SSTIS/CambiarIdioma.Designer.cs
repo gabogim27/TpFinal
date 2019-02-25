@@ -83,6 +83,7 @@
             this.Name = "frmCambiarIdioma";
             this.Text = "CambiarIdioma";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmCambiarIdioma_FormClosing);
+            this.Load += new System.EventHandler(this.frmCambiarIdioma_Load);
             this.grpIdioma.ResumeLayout(false);
             this.grpIdioma.PerformLayout();
             this.ResumeLayout(false);

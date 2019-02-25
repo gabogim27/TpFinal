@@ -1,6 +1,9 @@
 ﻿using System.Data;
+using System.IO;
+using System.Xml;
 using BE;
 using Dapper;
+using SSTIS.Encryption;
 
 namespace DAL.Utils
 {
@@ -14,10 +17,34 @@ namespace DAL.Utils
 
     public class SqlUtils
     {
+        public static readonly string AppConfigFilePath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent?.FullName + "\\App.config";
+        private static string _connectionString = ConfigurationManager.ConnectionStrings["SistemaTISConnectionString"].ToString();
+
         public static SqlConnection Connection()
         {
-            var conn = new SqlConnection(ConfigurationManager.AppSettings["connString"]);
+            var connString = EncryptionHelper.DesencriptarASCII(_connectionString);
+            
+            var conn = new SqlConnection(connString);
+
             return conn;
+        }       
+
+        //Este metodo se correria solo una vez, luego siempre se llama al desencriptador
+        private static void EncriptarConnectionString()
+        {
+            var connString = _connectionString;
+            var encriptedConnString = EncryptionHelper.EncriptarASCII(connString);
+
+            XmlDocument doc = new XmlDocument();
+            doc.Load(AppConfigFilePath);
+            XmlNodeList xmlnode;
+            xmlnode = doc.GetElementsByTagName("connectionStrings");
+            foreach (XmlNode nodo in xmlnode)
+            {
+                nodo.FirstChild.Attributes[1].InnerText = encriptedConnString;
+            }
+
+            doc.Save(AppConfigFilePath);
         }
 
         public static List<string> Tables { get; set; } = GetTables();

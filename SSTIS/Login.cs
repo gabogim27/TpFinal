@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -10,12 +12,14 @@ using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 using BE;
 using BLL.Interfaces;
 using DAL.Interfaces;
 using DAL.Utils;
 using log4net;
 using Microsoft.VisualBasic;
+using SSTIS.Encryption;
 using SSTIS.Interfaces;
 using SSTIS.MessageBoxHelper;
 using SSTIS.Properties;
@@ -39,8 +43,8 @@ namespace SSTIS
         private static readonly string ResourcesFilePath = LoginInfo.ResourcesFilePath;
         public ICambiarContraseña CambiarContraseña { get; set; }
 
-        public frmLogin(IServicio<Usuario> servicioUsuario, IServicioUsuario servicioUsuarioImplementor, 
-            IPrincipal principal, IServicioIdioma servicioIdioma, ISessionInfo SesionInfo, 
+        public frmLogin(IServicio<Usuario> servicioUsuario, IServicioUsuario servicioUsuarioImplementor,
+            IPrincipal principal, IServicioIdioma servicioIdioma, ISessionInfo SesionInfo,
             IDigitoVerificador DigitoVerificaor, ICambiarContraseña CambiarContraseña)
         {
             this.ServicioUsuario = servicioUsuario;
@@ -92,7 +96,7 @@ namespace SSTIS
             var usuarioActivo = ServicioUsuarioImplementor.ObtenerUsuarioConEmail(email);
             var lenguajeSeleccionado = (IdiomaUsuario)cboIdioma.SelectedItem;
 
-            if (txtEmail.Text.Trim() != string.Empty && ControlsUtils.ValidarEmail(txtEmail.Text.Trim()) && 
+            if (txtEmail.Text.Trim() != string.Empty && ControlsUtils.ValidarEmail(txtEmail.Text.Trim()) &&
                 !string.IsNullOrEmpty(txtContrasenia.Text.Trim()))
             {
                 if (ServicioUsuarioImplementor.LogIn(email, contraseña))
@@ -107,7 +111,7 @@ namespace SSTIS
                     SesionInfo.GuardarDatosSesionUsuario(LoginInfo.Usuario);
                     ComprobarSiEsPrimerLogin();
                     this.Hide();
-                   
+
                     Principal.Show();
                 }
                 else
@@ -119,7 +123,7 @@ namespace SSTIS
             {
                 Alert.ShowAlterWithButtonAndIcon("", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, "MSJ002");
             }
-            
+
         }
 
         public void ComprobarSiEsPrimerLogin()
@@ -150,7 +154,7 @@ namespace SSTIS
 
         private void cboIdioma_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            var lenguajeSeleccionado = (IdiomaUsuario) cboIdioma.SelectedItem;
+            var lenguajeSeleccionado = (IdiomaUsuario)cboIdioma.SelectedItem;
             LoginInfo.LenguajeSeleccionado = lenguajeSeleccionado;
             //Disposea los recursos
             using (ResXResourceWriter resxWriter = new ResXResourceWriter(ResourcesFilePath))
@@ -208,7 +212,7 @@ namespace SSTIS
                 this.Close();
 
             }
-        }
+        }       
 
         private void txtEmail_KeyPress(object sender, KeyPressEventArgs e)
         {
