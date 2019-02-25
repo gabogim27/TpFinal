@@ -168,6 +168,12 @@
       <DependentUpon>CobrarFacturaPopUp.cs</DependentUpon>
     </Compile>
     <Compile Include="Container\ContainerConfig.cs" />
+    <Compile Include="DetalleFactura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DetalleFactura.Designer.cs">
+      <DependentUpon>DetalleFactura.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\IABMFamilia.cs" />
     <Compile Include="Interfaces\IAdminFamiliaUsuario.cs" />
     <Compile Include="Interfaces\IAdminPatenteUsuario.cs" />
@@ -177,6 +183,7 @@
     <Compile Include="Interfaces\ICambiarIdioma.cs" />
     <Compile Include="Interfaces\ICobrarFactura.cs" />
     <Compile Include="Interfaces\IDetalleCliente.cs" />
+    <Compile Include="Interfaces\IDetalleFactura.cs" />
     <Compile Include="Interfaces\IDetallePoliza.cs" />
     <Compile Include="Interfaces\IDetalleVehiculo.cs" />
     <Compile Include="Interfaces\IJustificacionPopUp.cs" />
@@ -335,6 +342,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CobrarFacturaPopUp.resx">
       <DependentUpon>CobrarFacturaPopUp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DetalleFactura.resx">
+      <DependentUpon>DetalleFactura.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="JustificacionPopUp.resx">
       <DependentUpon>JustificacionPopUp.cs</DependentUpon>

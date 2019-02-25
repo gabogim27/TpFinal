@@ -16,37 +16,19 @@ namespace DAL.Utils
     using System.Threading.Tasks;
 
     public class SqlUtils
-    {
-        public static readonly string AppConfigFilePath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent?.FullName + "\\App.config";
-        private static string _connectionString = ConfigurationManager.ConnectionStrings["SistemaTISConnectionString"].ToString();
-
+    {        
         public static SqlConnection Connection()
         {
-            var connString = EncryptionHelper.DesencriptarASCII(_connectionString);
+            //EncryptionHelper.EncriptarConnectionString();
+            var connStringDecripted = EncryptionHelper.DesEncriptarConnectionString();
             
-            var conn = new SqlConnection(connString);
+            var conn = new SqlConnection(connStringDecripted);
+
+            //EncryptionHelper.EncriptarConnectionString();
 
             return conn;
         }       
-
-        //Este metodo se correria solo una vez, luego siempre se llama al desencriptador
-        private static void EncriptarConnectionString()
-        {
-            var connString = _connectionString;
-            var encriptedConnString = EncryptionHelper.EncriptarASCII(connString);
-
-            XmlDocument doc = new XmlDocument();
-            doc.Load(AppConfigFilePath);
-            XmlNodeList xmlnode;
-            xmlnode = doc.GetElementsByTagName("connectionStrings");
-            foreach (XmlNode nodo in xmlnode)
-            {
-                nodo.FirstChild.Attributes[1].InnerText = encriptedConnString;
-            }
-
-            doc.Save(AppConfigFilePath);
-        }
-
+      
         public static List<string> Tables { get; set; } = GetTables();
 
         private static List<string> GetTables()

@@ -61,7 +61,7 @@ namespace SSTIS
         {
             //LIMPIAR EL DICCIONARIO EN LA CARGA DE CADA FORMULARIO YA QUE POR CADA UNO 
             //SE ACTUALIZA CON LAS TRADUCCIONES DE CADA FORM
-            //ComprobarBaseDeDatos();
+            ComprobarBaseDeDatos();
             CargarCombo();
             this.AcceptButton = btnIngresar;
             cboIdioma.SelectedIndex = 1;//por default le dejamos español
@@ -207,7 +207,7 @@ namespace SSTIS
             if (!DigitoVerificador.ComprobarIntegridad())
             {
                 ////traducir
-                Alert.ShowSimpleAlert("Problema integridad base de datos, contacte al administrador", "MSJ000");
+                MessageBox.Show("Problema integridad base de datos, contacte al administrador");
 
                 this.Close();
 

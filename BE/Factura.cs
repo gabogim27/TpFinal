@@ -14,7 +14,7 @@
         public bool Paga { get; set; }
         public DateTime Vencimiento { get; set; }
         public Poliza Poliza { get; set; }
-        public int NumeroCuota { get; set; }
+        public int? NumeroCuota { get; set; }
         public DetalleFactura DetalleFactura { get; set; }
     }
 }

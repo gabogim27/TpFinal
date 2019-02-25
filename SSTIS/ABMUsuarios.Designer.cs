@@ -199,7 +199,7 @@
             this.Controls.Add(this.gbGrillaUsuarios);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmABMUsuarios";
-            this.Text = "ABMUsuarios";
+            this.Text = "ABM Usuarios";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmABMUsuarios_FormClosing);
             this.Load += new System.EventHandler(this.ABMUsuarios_Load);
             this.Enter += new System.EventHandler(this.frmABMUsuarios_Enter);

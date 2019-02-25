@@ -59,11 +59,11 @@ namespace SSTIS
             }
         }
 
-        public bool CheckeoPatentes(Guid idPatente, bool esNegada = false)
+        public bool CheckeoPatentes(Guid idPatente, bool esNegada = false, Usuario usuario = null)
         {
             var returnValue = true;
 
-            returnValue = ServicioPatente.CheckeoFamiliaParaBorrar(null, null, idPatente, esNegada);
+            returnValue = ServicioPatente.CheckeoFamiliaParaBorrar(usuario, null, idPatente, esNegada);
 
             return returnValue;
 
@@ -117,7 +117,7 @@ namespace SSTIS
                             }
 
                         }
-                        else if (CheckeoPatentes(idPatente, true))
+                        else if (CheckeoPatentes(idPatente, true, UsuarioSeleccionado))
                         {
                             //Primerio guardamos la patente y luego la negamos
                             ServicioPatente.GuardarPatenteUsuario(idPatente, UsuarioSeleccionado.IdUsuario);

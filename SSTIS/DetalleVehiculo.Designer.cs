@@ -95,6 +95,7 @@
             this.Controls.Add(this.dgvVehiculo);
             this.Controls.Add(this.Label3);
             this.Controls.Add(this.btnBuscar);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "DetalleVehiculo";
             this.Text = "DetalleVehiculo";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DetalleVehiculo_FormClosing);

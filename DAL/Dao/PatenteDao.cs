@@ -504,6 +504,15 @@ namespace DAL.Dao
                 return true;
             }
 
+            //Si ya hay un usuario que tiene la patente y la misma se la negamos a otro, dejarlo pasar.
+            if (usuario != null && familiaABorrar == null && esNegado && patenteToCheck != Guid.Empty)
+            {
+                var usuariosToCheck = usuariosGlobales;
+                usuariosToCheck.RemoveAll(x => x.IdUsuario == usuario.IdUsuario);
+                if (usuariosToCheck.Any(x => x.Patentes.Any(y => y.IdPatente == idPatente && !y.Negada)))
+                    return true;
+            }
+
             //VERIFICA SI UNA FAMILIA ESTA ASIGNADA A MAS DE UN USUARIO Y SI ES ASO, VERIFICA QUE TENA TODAS LAS PATENTES
             //if (familiaABorrar != null)
             //{
@@ -552,7 +561,7 @@ namespace DAL.Dao
             //usuariosGlobales = usuariosGlobales.(user => user.Patentes.GroupBy(p => p.IdPatente));
 
             diccionarioPatentes = CargarDiccionario(usuariosGlobales, familiaABorrar, idPatente);
-
+            //anter era mayor que 1
             if ((familiaABorrar == null && !esNegado && patenteToCheck != Guid.Empty &&
                  diccionarioPatentes.All(x => x.Value > 1)) || (familiaABorrar != null &&
                                                                 !esNegado && diccionarioPatentes.Count > 0 && diccionarioPatentes.All(x => x.Value > 0)) || (esNegado &&

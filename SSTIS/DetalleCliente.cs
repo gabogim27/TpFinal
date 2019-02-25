@@ -44,7 +44,7 @@ namespace SSTIS
         private void MapClienteWithClienteUI()
         {
             ClienteFromUI.Clear();
-
+            TraerClientes();
             foreach (var cliente in ClienteBD)
             {
                 var clienteUI = new ClienteUI();
@@ -115,6 +115,26 @@ namespace SSTIS
         {
             Hide();
             e.Cancel = true;
+        }
+
+        private void txtDni_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvCliente_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void Label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void llQuitar_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
         }
     }
 

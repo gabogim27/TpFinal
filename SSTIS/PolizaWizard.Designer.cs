@@ -1046,7 +1046,7 @@
             this.wizardFactura.Controls.Add(this.grpDatosFactura);
             this.wizardFactura.IsFinishPage = true;
             this.wizardFactura.Name = "wizardFactura";
-            this.wizardFactura.Size = new System.Drawing.Size(781, 339);
+            this.wizardFactura.Size = new System.Drawing.Size(781, 374);
             this.wizardControl.SetStepText(this.wizardFactura, "Datos Factura");
             this.wizardFactura.TabIndex = 6;
             this.wizardFactura.Text = "Datos Factura";

@@ -1,4 +1,7 @@
-﻿using System.Security.Cryptography;
+﻿using System.Configuration;
+using System.IO;
+using System.Security.Cryptography;
+using System.Xml;
 
 namespace SSTIS.Encryption
 {
@@ -10,6 +13,9 @@ namespace SSTIS.Encryption
 
     public static class EncryptionHelper
     {
+        public static readonly string AppConfigFilePath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent?.FullName + "\\App.config";
+        public static string _connectionString = ConfigurationManager.ConnectionStrings["SistemaTISConnectionString"].ToString();
+
         public static string EncriptarASCII(string input)
         {
             Byte[] IV = ASCIIEncoding.ASCII.GetBytes("qualityi");
@@ -30,6 +36,41 @@ namespace SSTIS.Encryption
             des.Key = EncryptionKey;
             des.IV = IV;
             return Encoding.UTF8.GetString(des.CreateDecryptor().TransformFinalBlock(Buffer, 0, Buffer.Length));
+        }
+
+        public static void EncriptarConnectionString()
+        {
+            var connString = _connectionString;
+            var encriptedConnString = EncryptionHelper.EncriptarASCII(connString);
+
+            XmlDocument doc = new XmlDocument();
+            doc.Load(AppConfigFilePath);
+            XmlNodeList xmlnode;
+            xmlnode = doc.GetElementsByTagName("connectionStrings");
+            foreach (XmlNode nodo in xmlnode)
+            {
+                nodo.FirstChild.Attributes[1].InnerText = encriptedConnString;
+            }
+
+            doc.Save(AppConfigFilePath);
+        }
+
+        public static string DesEncriptarConnectionString()
+        {
+            var connString = _connectionString;
+            var decryptedConnString = EncryptionHelper.DesencriptarASCII(connString);
+
+            XmlDocument doc = new XmlDocument();
+            doc.Load(AppConfigFilePath);
+            XmlNodeList xmlnode;
+            xmlnode = doc.GetElementsByTagName("connectionStrings");
+            foreach (XmlNode nodo in xmlnode)
+            {
+                nodo.FirstChild.Attributes[1].InnerText = decryptedConnString;
+            }
+
+            //doc.Save(AppConfigFilePath);
+            return decryptedConnString;
         }
     }
 }

@@ -1,10 +1,12 @@
-﻿using System.Data;
+﻿using System.Configuration;
+using System.Data;
 using BE;
 using Dapper;
 using DAL.Interfaces;
 using DAL.Utils;
 using EasyEncryption;
 using log4net;
+using SSTIS.Encryption;
 
 namespace DAL.Dao
 {
@@ -48,6 +50,10 @@ namespace DAL.Dao
             GlobalContext.Properties["dvh"] = digitoVH;
             mensaje = DES.Encrypt(mensaje, Key, Iv);
 
+            var decript = EncryptionHelper.DesencriptarASCII(EncryptionHelper._connectionString);
+
+            SetLog4NetAppenderConnectionString(decript);
+            
             log.Info(mensaje);
 
             //var query = string.Format(
@@ -55,6 +61,28 @@ namespace DAL.Dao
             //    "('{0}','{1}', '{2}', '{3}', '{4}', '{5}', {6})", bitacora.IdBitacora, bitacora.Fecha,
             //    bitacora.Criticidad, bitacora.Actividad, mensaje, bitacora.IdUsuario, digitoVH);
             //SqlUtils.Exec(query);
+        }
+
+        protected void SetLog4NetAppenderConnectionString(string connectionString)
+        {
+            log4net.Repository.Hierarchy.Hierarchy hierarchy =
+                log4net.LogManager.GetLoggerRepository()
+                    as log4net.Repository.Hierarchy.Hierarchy;
+
+            if (hierarchy != null)
+            {
+                log4net.Appender.AdoNetAppender appender
+                    = (log4net.Appender.AdoNetAppender)hierarchy.GetAppenders()
+                        .Where(x => x.GetType() ==
+                                    typeof(log4net.Appender.AdoNetAppender))
+                        .FirstOrDefault();
+
+                if (appender != null)
+                {
+                    appender.ConnectionString = connectionString;
+                    appender.ActivateOptions();
+                }
+            }
         }
 
         public void FiltrarBitacora(BitacoraFiltros filtros)

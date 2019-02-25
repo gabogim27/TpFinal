@@ -81,7 +81,8 @@ namespace SSTIS
         private void MapPolizaWithPolizaUI()
         {
             PolizaUI.Clear();
-
+            //Refrescar el listado
+            TraerPolizas();
             foreach (var poliza in PolizaBD)
             {
                 var polizaUI = new PolizaUI();

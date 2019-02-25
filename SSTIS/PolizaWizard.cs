@@ -106,7 +106,7 @@ namespace SSTIS
                             if (!poliza.Estado.HasValue)
                             {
                                 MessageBox.Show("La Póliza con número: " + poliza.NroPoliza +
-                                                " se encuentra anulada. " +
+                                                " se encuentra anulada o no aprobada. " +
                                                 "Por favor ingrese un número de póliza válido.");
                                 e.Cancel = true;
                                 return;
@@ -191,7 +191,7 @@ namespace SSTIS
                 txtPrimaTotal.Text = string.Empty;
                 CargarGrillaCoberturas();
             }
-            else
+            else if (cboTransaccion.SelectedIndex != -1)
             {
 
                 CargarGrillaCoberturas();
@@ -200,6 +200,12 @@ namespace SSTIS
                 txtPrimaTotal.Text = PolizaGuardada.Detalle.Coberturas.Sum(x => x.PrimaAsegurada).ToString();
             }
 
+            if (cboTransaccion.SelectedIndex == -1)
+            {
+                txtPrimaTotal.Enabled = false;
+                txtPrimaTotal.Text = string.Empty;
+                CargarGrillaCoberturas();
+            }
         }
 
         private void CargarGrillaCoberturas()
@@ -369,6 +375,28 @@ namespace SSTIS
                 txtCelular.Text = ClienteGuardado.Contacto.Celular;
                 txtTelFijo.Text = ClienteGuardado.Contacto.Telefono;
             }
+
+            if (cboTransaccion.SelectedIndex == -1)
+            {
+                txtNombre.Text = string.Empty;
+                txtApellido.Text = string.Empty;
+                txtDni.Text = string.Empty;
+                dtpFechaNacimiento.Value = DateTime.Now;
+                txtEmail.Text = string.Empty;
+
+
+                rdbSexo.Checked = false;
+
+                rdbSexo2.Checked = false;
+
+                txtDomicilio.Text = string.Empty;
+                txtCp.Text = string.Empty;
+                cboProvincia.SelectedIndex = -1;
+                //CargarLocalidad();
+                cboLocalidad.SelectedIndex = -1;
+                txtCelular.Text = string.Empty;
+                txtTelFijo.Text = string.Empty;
+            }
         }
 
         private void wizardDatosCliente_Commit(object sender, WizardPageConfirmEventArgs e)
@@ -498,7 +526,7 @@ namespace SSTIS
                 CargarControlesVehiculo();
                 cboModelo.Enabled = false;
             }
-            else
+            else if (cboTransaccion.SelectedIndex == 1)
             {
                 CargarControlesVehiculo();
                 btnBorrarImagen1.Visible = false;
@@ -511,7 +539,12 @@ namespace SSTIS
                 txtNumChasis.Text = VehiculoGuardado.NumChasis;
                 cboTipoUso.SelectedIndex = cboTipoUso.FindStringExact(VehiculoGuardado._TipoUso.Descripcion);
                 cboMarca.SelectedIndex = cboMarca.FindStringExact(VehiculoGuardado.Marca.Descripcion);
-                CargarComboMarca();
+
+                if (cboMarca.SelectedIndex != -1)
+                {
+                    CargarComboMarca();
+                }
+
                 cboModelo.SelectedIndex = cboModelo.FindStringExact(VehiculoGuardado.Modelo.Descripcion);
                 cboCombustible.SelectedIndex = cboCombustible.FindStringExact(VehiculoGuardado.Combustible);
                 cboColor.SelectedIndex = cboColor.FindStringExact(VehiculoGuardado.Color);
@@ -541,6 +574,33 @@ namespace SSTIS
                     pbFoto4.Image = Image.FromStream(ms);
                     btnBorrarImagen4.Visible = true;
                 }
+            }
+            else if (cboTransaccion.SelectedIndex == -1)
+            {
+                CargarControlesVehiculo();
+                btnBorrarImagen1.Visible = false;
+                btnBorrarImagen2.Visible = false;
+                btnBorrarImagen3.Visible = false;
+                btnBorrarImagen4.Visible = false;
+                txtPatente.Text = string.Empty;
+                txtNumSerie.Text = string.Empty;
+                txtNumChasis.Text = string.Empty;
+                cboTipoUso.SelectedIndex = -1;
+                cboMarca.SelectedIndex = -1;
+
+                if (cboMarca.SelectedIndex != -1)
+                {
+                    CargarComboMarca();
+                }
+
+                cboModelo.SelectedIndex = -1;
+                cboCombustible.SelectedIndex = -1;
+                cboColor.SelectedIndex = -1;
+                cboCantPuertas.SelectedIndex = -1;
+                pbFoto1.Image = null;
+                pbFoto2.Image = null;
+                pbFoto3.Image = null;
+                pbFoto4.Image = null;
             }
         }
 
@@ -644,7 +704,7 @@ namespace SSTIS
         private void wizardFactura_Initialize(object sender, WizardPageInitEventArgs e)
         {
             //SI ES UNA NUEVA POLIZA TRAEMOS LOS DATOS DE LOS OTROS CONTROLES
-            if (cboTransaccion.SelectedItem.ToString().ToUpper() == "NUEVA PÓLIZA")
+            if (cboTransaccion.SelectedItem.ToString().ToUpper() == "NUEVA PÓLIZA" || cboTransaccion.SelectedItem.ToString().ToUpper() == "MODIFICACIÓN DE PÓLIZA")
             {
                 btnNuevaFac.Enabled = false;
                 btnAnular.Enabled = false;
@@ -677,7 +737,6 @@ namespace SSTIS
             else
             {
                 //TREAMOS LOS DATOS DE LA BASE DE DATOS
-
             }
 
         }
@@ -712,6 +771,14 @@ namespace SSTIS
             //2 - Guardamos los datos del vehiculo
             //3 - Guardamos los datos de la poliza
             //4 - Guardamos los datos de la factura
+            if (ValidarControlesFactura())
+            {
+                MessageBox.Show("Por favor complete todos los campos.");
+                e.Cancel = true;
+                return;
+            }
+
+
             var existeFactura = ServicioFactura.Retrive()
                 .Any(x => x.NumeroFactura == int.Parse(txtNumFactura.Text.Trim()));
 
@@ -720,6 +787,13 @@ namespace SSTIS
                 MessageBox.Show("El numero de factura ingresado ya existe.");
                 e.Cancel = true;
                 return;
+            }
+
+            if (cboTransaccion.SelectedIndex == 1 && PolizaGuardada != null)
+            {
+                GuardarDatosFactura();
+                MessageBox.Show("Factura creada correctamente.");
+                this.wizardControl.SelectedPage.NextPage = this.wizardInicio;
             }
 
             if (PolizaGuardada == null && FacturaGuardada == null && SavePolicy())
@@ -744,6 +818,10 @@ namespace SSTIS
                         if (GuardarDatosFactura())
                         {
                             MessageBox.Show("Poliza generada correctamente");
+                            ClienteGuardado = null;
+                            VehiculoGuardado = null;
+                            FacturaGuardada = null;
+                            PolizaGuardada = null;
                             return true;
                         }
                     }
@@ -1002,7 +1080,7 @@ namespace SSTIS
                 Estado = true,
                 Paga = false,
                 Poliza = PolizaGuardada,
-                DetalleFactura = new DetalleFactura()
+                DetalleFactura = new BE.DetalleFactura()
                 {
                     IdDetalle = Guid.NewGuid(),
                     Vehiculo = VehiculoGuardado,

@@ -25,6 +25,7 @@ namespace SSTIS
         private IDetallePoliza DetallePoliza;
         private IDetalleCliente DetalleCliente;
         public IDetalleVehiculo DetalleVehiculo;
+        public IDetalleFactura DetalleFactura;
 
 
         public frmPrincipal(IABMUsuarios abmUsuarios, ISessionInfo SessionInfo,
@@ -32,7 +33,7 @@ namespace SSTIS
             IRestaurarCopiaDeSeguridad RestaurarCopiaDeSeguridad, IABMFamilia ABMFamilia,
             ICambiarIdioma CambiarIdioma, ICambiarContraseña CambiarContraseña,
             IPolizaWizard PolizaWizard, IDetallePoliza DetallePoliza, IDetalleCliente DetalleCliente,
-            IDetalleVehiculo DetalleVehiculo)
+            IDetalleVehiculo DetalleVehiculo, IDetalleFactura DetalleFactura)
         {
             this.SessionInfo = SessionInfo;
             this.ABMFamilia = ABMFamilia;
@@ -46,6 +47,7 @@ namespace SSTIS
             this.DetallePoliza = DetallePoliza;
             this.DetalleCliente = DetalleCliente;
             this.DetalleVehiculo = DetalleVehiculo;
+            this.DetalleFactura = DetalleFactura;
             InitializeComponent();
         }
 
@@ -149,6 +151,12 @@ namespace SSTIS
         {
             DetalleVehiculo.MdiParent = this;
             DetalleVehiculo.Show();
+        }
+
+        private void VerDetalleFacturaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DetalleFactura.MdiParent = this;
+            DetalleFactura.Show();
         }
     }
 }

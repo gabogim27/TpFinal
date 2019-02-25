@@ -49,16 +49,17 @@ namespace DAL.Dao
                 //Guardamos la poliza
                 if (detalleGuardado)
                 {
-                    var query = "INSERT INTO dbo.Factura(IdFactura, IdDetalle, IdPoliza, NumeroFactura, " +
+                    var query = "INSERT INTO dbo.Factura(IdFactura, IdDetalle, IdPoliza, NumeroFactura, NumeroCuota, " +
                                       "Vencimiento, Estado, Paga) values " +
-                                      "(@idFactura,@idDetalle,@idPoliza,@numeroFactura,@vencimiento,@estado,@paga)";
+                                      "(@idFactura,@idDetalle,@idPoliza,@numeroFactura, @numeroCuota,@vencimiento,@estado,@paga)";
 
                     facturaGuardada = SqlUtils.Exec(query, new
                     {
                         @idFactura = entity.IdFactura,
                         @idDetalle = entity.DetalleFactura.IdDetalle,
                         @idPoliza = entity.Poliza.IdPoliza,
-                        @numeroFactura = entity.Estado,
+                        @numeroFactura = entity.NumeroFactura,
+                        @numeroCuota = entity.NumeroCuota,
                         @vencimiento = entity.Vencimiento,
                         @estado = entity.Estado,
                         @paga = entity.Paga

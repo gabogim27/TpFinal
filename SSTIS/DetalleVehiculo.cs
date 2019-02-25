@@ -42,7 +42,7 @@ namespace SSTIS
         private void MapVehiculoWithVehiculoUI()
         {
             VehiculoFromUI.Clear();
-
+            TraerVehiculos();
             foreach (var veh in VehiculoBD)
             {
                 var vehiculoUI = new VehiculoUI();

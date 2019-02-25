@@ -244,6 +244,7 @@
             this.Controls.Add(this.btnBuscarPoliza);
             this.Controls.Add(this.txtNumeroPolizaBuscar);
             this.Controls.Add(this.label3);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "DetallePoliza";
             this.Text = "DetallePoliza";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DetallePoliza_FormClosing);

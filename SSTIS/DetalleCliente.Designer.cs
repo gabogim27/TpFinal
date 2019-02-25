@@ -44,6 +44,7 @@
             this.Label3.Size = new System.Drawing.Size(67, 13);
             this.Label3.TabIndex = 7;
             this.Label3.Text = "Ingrese DNI:";
+            this.Label3.Click += new System.EventHandler(this.Label3_Click);
             // 
             // btnBuscar
             // 
@@ -65,6 +66,7 @@
             this.dgvCliente.ReadOnly = true;
             this.dgvCliente.Size = new System.Drawing.Size(873, 150);
             this.dgvCliente.TabIndex = 0;
+            this.dgvCliente.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCliente_CellContentClick);
             // 
             // txtDni
             // 
@@ -72,6 +74,7 @@
             this.txtDni.Name = "txtDni";
             this.txtDni.Size = new System.Drawing.Size(100, 20);
             this.txtDni.TabIndex = 8;
+            this.txtDni.TextChanged += new System.EventHandler(this.txtDni_TextChanged);
             this.txtDni.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDni_KeyPress);
             // 
             // llQuitar
@@ -83,6 +86,7 @@
             this.llQuitar.TabIndex = 9;
             this.llQuitar.TabStop = true;
             this.llQuitar.Text = "Quitar Filtros";
+            this.llQuitar.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llQuitar_LinkClicked);
             this.llQuitar.Click += new System.EventHandler(this.llQuitar_Click);
             // 
             // DetalleCliente
@@ -95,6 +99,7 @@
             this.Controls.Add(this.dgvCliente);
             this.Controls.Add(this.Label3);
             this.Controls.Add(this.btnBuscar);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "DetalleCliente";
             this.Text = "DetalleCliente";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DetalleCliente_FormClosing);
