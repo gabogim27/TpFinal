@@ -454,6 +454,7 @@
             this.txtCp.Name = "txtCp";
             this.txtCp.Size = new System.Drawing.Size(100, 23);
             this.txtCp.TabIndex = 35;
+            this.txtCp.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCp_KeyPress);
             // 
             // label8
             // 
@@ -498,6 +499,7 @@
             this.txtCelular.Name = "txtCelular";
             this.txtCelular.Size = new System.Drawing.Size(100, 23);
             this.txtCelular.TabIndex = 30;
+            this.txtCelular.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCelular_KeyPress);
             // 
             // txtTelFijo
             // 
@@ -505,6 +507,7 @@
             this.txtTelFijo.Name = "txtTelFijo";
             this.txtTelFijo.Size = new System.Drawing.Size(100, 23);
             this.txtTelFijo.TabIndex = 29;
+            this.txtTelFijo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTelFijo_KeyPress);
             // 
             // txtDomicilio
             // 
@@ -593,6 +596,7 @@
             this.txtDni.Name = "txtDni";
             this.txtDni.Size = new System.Drawing.Size(100, 23);
             this.txtDni.TabIndex = 26;
+            this.txtDni.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDni_KeyPress);
             // 
             // label14
             // 
@@ -616,6 +620,7 @@
             this.txtApellido.Name = "txtApellido";
             this.txtApellido.Size = new System.Drawing.Size(100, 23);
             this.txtApellido.TabIndex = 23;
+            this.txtApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtApellido_KeyPress);
             // 
             // txtNombre
             // 
@@ -623,6 +628,7 @@
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(100, 23);
             this.txtNombre.TabIndex = 22;
+            this.txtNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNombre_KeyPress);
             // 
             // rdbSexo2
             // 
@@ -866,6 +872,7 @@
             this.txtAño.Name = "txtAño";
             this.txtAño.Size = new System.Drawing.Size(100, 23);
             this.txtAño.TabIndex = 43;
+            this.txtAño.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAño_KeyPress);
             // 
             // cboCantPuertas
             // 
@@ -1015,6 +1022,7 @@
             this.txtNumSerie.Name = "txtNumSerie";
             this.txtNumSerie.Size = new System.Drawing.Size(100, 23);
             this.txtNumSerie.TabIndex = 3;
+            this.txtNumSerie.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumSerie_KeyPress);
             // 
             // lblTipoDeUSo
             // 
@@ -1031,6 +1039,7 @@
             this.txtPatente.Name = "txtPatente";
             this.txtPatente.Size = new System.Drawing.Size(100, 23);
             this.txtPatente.TabIndex = 1;
+            this.txtPatente.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPatente_KeyPress);
             // 
             // lblPatente
             // 

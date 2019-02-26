@@ -475,6 +475,12 @@ namespace SSTIS
 
         private void Button5_Click(object sender, EventArgs e)
         {
+            if (usuarioSeleccionado().IdUsuario == LoginInfo.Usuario.IdUsuario)
+            {
+                MessageBox.Show("No es posible bloquear el usuario que esta logueado.");
+                return;
+            }
+
             if ((dgvUsuarios.SelectedRows.Count == 1 && !usuarioSeleccionado().Bloqueado))
             {
                 var confirmResult = MessageBox.Show("Esta seguro que desea bloquear el usuario seleccionado?",
